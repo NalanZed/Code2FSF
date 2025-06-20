@@ -1,0 +1,18 @@
+start role user
+为下面的代码生成FSF:
+```
+class Temperatures {
+    public double[] convertTemperature(double celsius) {
+        return new double[]{celsius, celsius + 273.15, celsius * 1.80 + 32.00};
+    }
+}
+
+```
+*end* role user
+start role assistant
+T1: celsius ∈ ℝ  
+D1: output[0] = celsius ∧ output[1] = celsius + 273.15 ∧ output[2] = celsius × 1.80 + 32.00  
+
+T2: celsius is not a valid double  
+D2: Exception
+*end* role assistant

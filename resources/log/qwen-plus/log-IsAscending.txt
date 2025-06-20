@@ -1,0 +1,32 @@
+start role user
+为下面的代码生成FSF:
+```
+public class IsAscending {
+    public boolean isAscending (int[] arr) {
+        int n = arr.length;
+        if (n < 2) {
+            return true;
+        }
+        for (int i = 0; i < n; i++) {
+            if(arr[i] >= arr[i+1])
+                return false;
+        }
+        return true;
+    }
+}
+
+```
+*end* role user
+start role assistant
+T1: n < 2  
+D1: result == true  
+
+T2: n >= 2 && (∃i, 0 ≤ i < n-1, arr[i] >= arr[i+1])  
+D2: result == false  
+
+T3: n >= 2 && (∀i, 0 ≤ i < n-1, arr[i] < arr[i+1])  
+D3: result == true  
+
+T4: arr == null || n causes overflow in array indexing  
+D4: Exception
+*end* role assistant

@@ -1,0 +1,23 @@
+start role user
+为下面的代码生成FSF:
+```
+class IsBoomerang {
+    public boolean isBoomerang(int[][] points) {
+        int[] v1 = {points[1][0] - points[0][0], points[1][1] - points[0][1]};
+        int[] v2 = {points[2][0] - points[0][0], points[2][1] - points[0][1]};
+        return v1[0] * v2[1] - v1[1] * v2[0] != 0;
+    }
+}
+
+```
+*end* role user
+start role assistant
+T1: (points[1][0] - points[0][0]) * (points[2][1] - points[0][1]) - (points[1][1] - points[0][1]) * (points[2][0] - points[0][0]) != 0  
+D1: true  
+
+T2: (points[1][0] - points[0][0]) * (points[2][1] - points[0][1]) - (points[1][1] - points[0][1]) * (points[2][0] - points[0][0]) == 0  
+D2: false  
+
+T3: points is not a valid array of size 3x2 || any element of points is not an integer  
+D3: Exception
+*end* role assistant

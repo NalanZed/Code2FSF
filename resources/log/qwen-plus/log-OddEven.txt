@@ -1,0 +1,23 @@
+start role user
+为下面的代码生成FSF:
+```
+public class OddEven {	
+ 
+	 public  boolean isEven(int x) { 
+         	return x%2 == 0;
+       	 } 
+
+	 public  boolean isOdd(int x) { 
+         	return x%2 != 0;
+       	 } 
+}
+
+```
+*end* role user
+start role assistant
+T1: x % 2 == 0  
+D1: isEven(x) == true && isOdd(x) == false  
+
+T2: x % 2 != 0  
+D2: isEven(x) == false && isOdd(x) == true
+*end* role assistant

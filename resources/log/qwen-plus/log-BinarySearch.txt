@@ -1,0 +1,47 @@
+start role user
+为下面的代码生成FSF:
+```
+public class BinarySearch {
+
+    public static int Binary(int[] arr, int key) {
+        if (arr.length == 0) {
+            return -1;
+        } else {
+            int low = 0;
+            int high = arr.length;
+            int mid =  high / 2;
+
+            while (low < high && arr[mid] != key) {
+                if (arr[mid] < key) {
+                    low = mid + 1;
+                } else {
+                    high = mid;
+                }
+                mid = low + (high - low) / 2;
+            }
+            if (low >= high) {
+                return -1;
+            }
+            return mid;
+        }
+    }
+}
+
+```
+*end* role user
+start role assistant
+T1: arr.length == 0  
+D1: -1  
+
+T2: key < arr[0] || key > arr[arr.length - 1]  
+D2: -1  
+
+T3: ∃i ∈ [0, arr.length - 1], arr[i] == key  
+D3: i where arr[i] == key  
+
+T4: ∀i ∈ [0, arr.length - 1], arr[i] ≠ key  
+D4: -1  
+
+T5: arr is not sorted  
+D5: Exception
+*end* role assistant

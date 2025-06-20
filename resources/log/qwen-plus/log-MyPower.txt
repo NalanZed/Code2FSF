@@ -1,0 +1,21 @@
+start role user
+为下面的代码生成FSF:
+```
+class MyPower {
+    public static int power(int x, int n) {
+        int res = 1;
+        for(int i = 0; i < n; i++)
+	    res = res * x;
+        return res;
+    }
+}
+
+```
+*end* role user
+start role assistant
+T1: n >= 0  
+D1: res == x^n  
+
+T2: n < 0  
+D2: Exception
+*end* role assistant

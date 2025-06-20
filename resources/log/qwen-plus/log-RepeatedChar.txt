@@ -1,0 +1,38 @@
+start role user
+为下面的代码生成FSF:
+```
+import java.util.HashSet;
+
+class RepeatedChar {
+    public char repeatedCharacter(String s) {
+        Set<Character> seen = new HashSet<Character>();
+        
+        for (int i = 0; i < s.length(); i++) {
+            char ch = s.charAt(i);
+            if (!seen.add(ch)) {
+                return ch;
+            }
+        }
+        // impossible
+        return ' ';
+    }
+}
+
+```
+*end* role user
+start role assistant
+T1: s is null  
+D1: Exception  
+
+T2: s.length() == 0  
+D2: Exception  
+
+T3: s contains at least one repeated character  
+D3: ch == first repeated character in s  
+
+T4: s contains no repeated characters  
+D4: Exception  
+
+T5: s contains invalid characters (e.g., non-characters)  
+D5: Exception || D3
+*end* role assistant

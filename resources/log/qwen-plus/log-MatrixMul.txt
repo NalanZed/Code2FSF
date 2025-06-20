@@ -1,0 +1,26 @@
+start role user
+为下面的代码生成FSF:
+```
+public class MatrixMul {
+    
+    public int[][] multiply(int[][] a, int[][] b) {
+        int[][] c = new int[2][2];
+        for (int i = 0; i < 2; i++) {
+            for (int j = 0; j < 2; j++) {
+                c[i][j] = a[i][0] * b[0][j] + a[i][1] * b[1][j];
+            }
+        }
+        return c;
+    }
+
+}
+
+```
+*end* role user
+start role assistant
+T1: a is a 2x2 matrix && b is a 2x2 matrix  
+D1: c[0][0] = a[0][0]*b[0][0] + a[0][1]*b[1][0] && c[0][1] = a[0][0]*b[0][1] + a[0][1]*b[1][1] && c[1][0] = a[1][0]*b[0][0] + a[1][1]*b[1][0] && c[1][1] = a[1][0]*b[0][1] + a[1][1]*b[1][1]  
+
+T2: a is not a 2x2 matrix || b is not a 2x2 matrix  
+D2: Exception
+*end* role assistant

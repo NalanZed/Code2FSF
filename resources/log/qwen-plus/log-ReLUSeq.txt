@@ -1,0 +1,18 @@
+start role user
+为下面的代码生成FSF:
+```
+public class ReLUSeq {
+    public static double computeReLU(double x) {
+        return ((x >= 0) ? x : 0);
+    }
+}
+
+```
+*end* role user
+start role assistant
+T1: x >= 0  
+D1: computeReLU(x) == x  
+
+T2: x < 0  
+D2: computeReLU(x) == 0
+*end* role assistant

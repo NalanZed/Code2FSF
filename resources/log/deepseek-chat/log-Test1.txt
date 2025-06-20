@@ -1,0 +1,33 @@
+start role user
+为下面的代码生成FSF:
+```
+public class Test1{
+    public static int test(int n){
+        int ans = 0;
+        if(n > 0){
+            int x = n + 2;
+            if(x > 4){
+                ans = 1;
+            }
+            else{
+                ans = 1;
+            }
+        }else{
+            ans = 2;
+        }
+        return ans;
+    }
+}
+
+```
+*end* role user
+start role assistant
+```
+T1: n > 0
+D1: ans == 1
+
+T2: n <= 0
+D2: ans == 2
+
+```
+*end* role assistant

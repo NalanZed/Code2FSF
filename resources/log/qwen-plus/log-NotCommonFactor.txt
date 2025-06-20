@@ -1,0 +1,21 @@
+start role user
+为下面的代码生成FSF:
+```
+public class NotCommonFactor {
+    public boolean notCommonFactor (int a, int b, int factor) {
+        return a % factor != 0 || b % factor != 0;
+    }
+}
+
+```
+*end* role user
+start role assistant
+T1: a % factor == 0 && b % factor == 0  
+D1: result == False  
+
+T2: a % factor != 0 || b % factor != 0  
+D2: result == True  
+
+T3: factor == 0  
+D3: Exception
+*end* role assistant

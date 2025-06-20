@@ -1,0 +1,29 @@
+start role user
+为下面的代码生成FSF:
+```
+public class Swap {
+    public static void swap (int[] arr, int a, int b) {
+        if(a >= arr.length || a < 0 || b >= arr.length || b < 0) {
+            return;
+        }
+        int temp = arr[a];
+        arr[a] = arr[b];
+        arr[b] = temp;
+    }
+}
+
+```
+*end* role user
+start role assistant
+T1: a >= arr.length || a < 0 || b >= arr.length || b < 0  
+D1: arr remains unchanged  
+
+T2: 0 <= a < arr.length && 0 <= b < arr.length && a != b  
+D2: arr[a] = original arr[b] && arr[b] = original arr[a] && all other elements remain unchanged  
+
+T3: 0 <= a < arr.length && 0 <= b < arr.length && a == b  
+D3: arr remains unchanged  
+
+T4: arr is null  
+D4: Exception
+*end* role assistant

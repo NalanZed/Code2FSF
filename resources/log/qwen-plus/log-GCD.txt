@@ -1,0 +1,42 @@
+start role user
+为下面的代码生成FSF:
+```
+public class GCD {
+	
+	public static int gcd(int num1, int num2){
+		int result = 1; 
+	 	num1 = (0 <= num1) ? num1 : -num1;
+		num2 = (0 <= num2) ? num2 : -num2;
+
+		if (num1 == 0 && num2 == 0) {
+			return -1;	
+		}
+
+		if (num1 == 0 || num2 == 0) { 
+			return (num1 > num2) ? num1 : num2;
+		}
+
+		for (int i = 1; i <= num1 && i <= num2; i++) {
+            if (num1 % i == 0 && num2 % i == 0) {
+       			result = i;
+			}
+        }
+		return result;
+	}
+}
+
+```
+*end* role user
+start role assistant
+T1: num1 == 0 && num2 == 0  
+D1: result = -1  
+
+T2: num1 == 0 || num2 == 0  
+D2: result = max(abs(num1), abs(num2))  
+
+T3: num1 != 0 && num2 != 0  
+D3: result = max(i | 1 <= i <= min(abs(num1), abs(num2)) && abs(num1) % i == 0 && abs(num2) % i == 0)  
+
+T4: num1 < 0 || num2 < 0  
+D4: Exception || D1 || D2 || D3
+*end* role assistant

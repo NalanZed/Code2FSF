@@ -1,0 +1,26 @@
+start role user
+为下面的代码生成FSF:
+```
+public class MatrixAdd {
+    
+    public int[][] add(int[][] a, int[][] b) {
+        int[][] c = new int[2][2];
+        for (int i = 0; i < 2; i++) {
+            for (int j = 0; j < 2; j++) {
+                c[i][j] = a[i][j] + b[i][j];
+            }
+        }
+        return c;
+    }
+
+}
+
+```
+*end* role user
+start role assistant
+T1: ∀i ∈ [0,1], ∀j ∈ [0,1] (a[i][j] + b[i][j]) is within integer range  
+D1: ∀i ∈ [0,1], ∀j ∈ [0,1], c[i][j] = a[i][j] + b[i][j]
+
+T2: ∃i ∈ [0,1], ∃j ∈ [0,1] (a[i][j] + b[i][j]) overflows integer range  
+D2: Exception
+*end* role assistant

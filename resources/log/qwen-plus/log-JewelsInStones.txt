@@ -1,0 +1,33 @@
+start role user
+为下面的代码生成FSF:
+```
+class JewelsInStones {
+    public int numJewelsInStones(String jewels, String stones) {
+        int jewelsCount = 0;
+        int jewelsLength = jewels.length(), stonesLength = stones.length();
+        for (int i = 0; i < stonesLength; i++) {
+            char stone = stones.charAt(i);
+            for (int j = 0; j < jewelsLength; j++) {
+                char jewel = jewels.charAt(j);
+                if (stone == jewel) {
+                    jewelsCount++;
+                    break;
+                }
+            }
+        }
+        return jewelsCount;
+    }
+}
+
+```
+*end* role user
+start role assistant
+T1: jewels == "" || stones == ""
+D1: jewelsCount == 0
+
+T2: jewels != "" && stones != ""
+D2: jewelsCount == number of characters in 'stones' that appear in 'jewels'
+
+T3: jewels or stones is null
+D3: Exception ||
+*end* role assistant

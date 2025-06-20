@@ -1,0 +1,23 @@
+start role user
+为下面的代码生成FSF:
+```
+public class NegAbs {
+	
+	public int negAbs(int num) {
+		if (num < 0)
+			return num;
+		else
+			return -num;
+	}
+
+}
+
+```
+*end* role user
+start role assistant
+T1: num < 0  
+D1: result == num  
+
+T2: num >= 0  
+D2: result == -num
+*end* role assistant

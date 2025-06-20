@@ -1,0 +1,23 @@
+start role user
+为下面的代码生成FSF:
+```
+class MaxInArray {
+    public int maxElementInArray(int[] a) {
+        if (a.length == 0) return -1;
+        int res = Integer.MIN_VALUE;
+        for(int i = 0; i < a.length; i++) {
+            res = ((a[i] > res) ? a[i] : res);
+        }
+        return res;
+    }
+}
+
+```
+*end* role user
+start role assistant
+T1: a.length == 0  
+D1: Exception  
+
+T2: a.length > 0 && (∀i : 0 ≤ i < a.length, a[i] ≤ M) where M = max(a[0], a[1], ..., a[a.length-1])  
+D2: res == M
+*end* role assistant

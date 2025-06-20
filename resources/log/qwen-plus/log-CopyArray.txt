@@ -1,0 +1,25 @@
+start role user
+为下面的代码生成FSF:
+```
+public class CopyArray {
+ 
+    public static void CopyArray(int[] b, int iBegin, int iEnd, int[] a) {
+        int k = iBegin;
+
+        while (iEnd - k > 0) {
+            a[k] = b[k];
+            k = k + 1 ;
+        }
+    }
+}
+
+
+```
+*end* role user
+start role assistant
+T1: iBegin < iEnd && iEnd <= b.length && iBegin >= 0 && a.length >= iEnd  
+D1: ∀k (iBegin ≤ k < iEnd → a[k] = b[k])  
+
+T2: iBegin >= iEnd || iEnd > b.length || iBegin < 0 || a.length < iEnd  
+D2: Exception
+*end* role assistant

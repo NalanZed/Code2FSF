@@ -1,0 +1,39 @@
+start role user
+为下面的代码生成FSF:
+```
+public class IsSuffix {
+
+    public boolean isSuffix (String pat, String txt) {
+	
+        int i = pat.length() - 1;
+
+        while(i >= 0) {
+	    int j = i - pat.length() + txt.length();
+            if(j < 0 || pat.charAt(i) != txt.charAt(j))
+                return false;
+            i = i - 1;
+        }
+
+        return true;
+    }
+
+}
+
+```
+*end* role user
+start role assistant
+T1: pat == null || txt == null  
+D1: Exception  
+
+T2: pat.length() > txt.length()  
+D2: false  
+
+T3: pat.length() == 0  
+D3: true  
+
+T4: pat.length() <= txt.length() && pat.charAt(i) == txt.charAt(txt.length() - pat.length() + i) for all i from 0 to pat.length()-1  
+D4: true  
+
+T5: pat.length() <= txt.length() && exists i such that pat.charAt(i) != txt.charAt(txt.length() - pat.length() + i)  
+D5: false
+*end* role assistant

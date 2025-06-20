@@ -1,0 +1,40 @@
+start role user
+为下面的代码生成FSF:
+```
+class NextGreaterElem {
+    public int[] nextGreaterElement(int[] nums1, int[] nums2) {
+        int m = nums1.length, n = nums2.length;
+        int[] res = new int[m];
+        for (int i = 0; i < m; ++i) {
+            int j = 0;
+            while (j < n && nums2[j] != nums1[i]) {
+                ++j;
+            }
+            int k = j + 1;
+            while (k < n && nums2[k] < nums2[j]) {
+                ++k;
+            }
+            res[i] = k < n ? nums2[k] : -1;
+        }
+        return res;
+    }
+}
+
+```
+*end* role user
+start role assistant
+T1: m == 0 || n == 0  
+D1: res == []
+
+T2: ∀i ∈ [0, m-1], nums1[i] ∉ nums2  
+D2: res[i] == -1
+
+T3: ∀i ∈ [0, m-1], nums1[i] ∈ nums2 && ∃k > j, nums2[k] > nums2[j] (where j is the index of nums1[i] in nums2)  
+D3: res[i] == nums2[k]
+
+T4: ∀i ∈ [0, m-1], nums1[i] ∈ nums2 && ∀k > j, nums2[k] ≤ nums2[j] (where j is the index of nums1[i] in nums2)  
+D4: res[i] == -1 
+
+T5: Input arrays cause an exception (e.g., null input)  
+D5: Exception
+*end* role assistant

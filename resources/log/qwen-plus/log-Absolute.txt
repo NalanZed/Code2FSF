@@ -1,0 +1,36 @@
+start role user
+为下面的代码生成FSF:
+```
+public class Absolute {
+	
+	public  int Absolute(int num) {
+		if (0 <= num)
+			return num;
+		else
+			return -num;
+	}
+
+	
+	public  long Absolute(long num) {
+		if (0 <= num)
+			return num;
+		else
+			return -num;	
+	}
+}
+
+```
+*end* role user
+start role assistant
+T1: num >= 0 (for int)
+D1: result == num
+
+T2: num < 0 (for int)
+D2: result == -num
+
+T3: num >= 0 (for long)
+D3: result == num
+
+T4: num < 0 (for long)
+D4: result == -num
+*end* role assistant

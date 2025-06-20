@@ -1,0 +1,53 @@
+start role user
+为下面的代码生成FSF:
+```
+
+public class CalculatorShuffled {
+    
+    public  int calculate(int num1, int num2, char operator) {
+
+        int output;
+
+        switch (operator)
+        {
+            case '-':
+            	output = num1 * num2;
+                break;
+
+            case '*':
+            	output = num1 / num2;
+                break;
+
+            case '/':
+            	output = num1 + num2;
+                break;
+
+            case '+':
+            	output = num1 - num2;
+		break;
+
+            default:
+                return -1;
+        }
+        return output;
+    }
+}
+
+```
+*end* role user
+start role assistant
+T1: operator == '-'
+D1: output == num1 * num2
+
+T2: operator == '*'
+D2: output == num1 / num2 && num2 != 0 || Exception
+
+T3: operator == '/'
+D3: output == num1 + num2
+
+T4: operator == '+'
+D4: output == num1 - num2
+
+T5: operator ≠ '-' && operator ≠ '*' && operator ≠ '/' && operator ≠ '+'
+D5: output == -1
+*end* role assistant

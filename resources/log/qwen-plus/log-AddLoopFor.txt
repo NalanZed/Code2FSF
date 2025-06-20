@@ -1,0 +1,31 @@
+start role user
+为下面的代码生成FSF:
+```
+public class AddLoopFor {
+    public static int addLoop(int x, int y) {
+        int sum = y;
+        if (x > 0) {
+            for(int n = x; n > 0; n = n - 1) {
+                sum = sum + 1;
+            }
+        } else {
+            for(int n = -x; n > 0; n = n - 1) {
+                sum = sum - 1;
+            }
+        }
+        return sum;
+    }
+}
+
+```
+*end* role user
+start role assistant
+T1: x > 0  
+D1: sum == y + x  
+
+T2: x == 0  
+D2: sum == y  
+
+T3: x < 0  
+D3: sum == y + x
+*end* role assistant

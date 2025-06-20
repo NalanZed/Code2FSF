@@ -1,0 +1,29 @@
+start role user
+为下面的代码生成FSF:
+```
+import java.util.Arrays;
+
+public class SortLibrary {
+    public static void sort(int[] arr) {
+        Arrays.sort(arr);
+    }
+}
+
+```
+*end* role user
+start role assistant
+T1: arr is null  
+D1: Exception  
+
+T2: arr.length == 0  
+D2: arr remains unchanged  
+
+T3: arr contains all equal elements  
+D3: arr remains unchanged  
+
+T4: arr contains elements in any order  
+D4: arr is sorted in ascending order  
+
+```
+```
+*end* role assistant

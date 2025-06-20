@@ -1,0 +1,34 @@
+start role user
+为下面的代码生成FSF:
+```
+class CompareArray {
+
+    public static boolean arrcmp(int[] a, int[] b) {
+        if(a.length != b.length) {
+	    return false;
+        }
+
+        for(int i = 0; i < a.length; i++) {
+            if(a[i] != b[i]) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+}
+
+```
+*end* role user
+start role assistant
+T1: length(a) ≠ length(b)  
+D1: False  
+
+T2: length(a) = length(b) ∧ (∃i, 0 ≤ i < length(a) ∧ a[i] ≠ b[i])  
+D2: False  
+
+T3: length(a) = length(b) ∧ (∀i, 0 ≤ i < length(a) → a[i] = b[i])  
+D3: True  
+
+```
+*end* role assistant

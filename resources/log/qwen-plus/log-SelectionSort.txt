@@ -1,0 +1,49 @@
+start role user
+为下面的代码生成FSF:
+```
+public class SelectionSort {
+
+    public static void selectionSort(int[] arr){  
+        for (int i = 0; i < arr.length - 1; i++)  
+        {  
+            int index = i;  
+            for (int j = i + 1; j < arr.length; j++){  
+                if (arr[j] < arr[index]){  
+                    index = j;
+                }  
+            }  
+            int smallerNumber = arr[index];   
+            arr[index] = arr[i];  
+            arr[i] = smallerNumber;  
+        }  
+    }
+    
+}
+
+```
+*end* role user
+start role assistant
+T1: arr is null  
+D1: Exception  
+
+T2: arr.length == 0  
+D2: arr remains unchanged  
+
+T3: arr.length == 1  
+D3: arr remains unchanged  
+
+T4: arr contains two or more elements  
+D4: arr is sorted in non-decreasing order  
+
+T5: arr contains duplicate elements  
+D5: arr is sorted in non-decreasing order and duplicates are preserved  
+
+T6: arr contains negative numbers  
+D6: arr is sorted in non-decreasing order including negative numbers  
+
+T7: arr contains both positive and negative numbers  
+D7: arr is sorted in non-decreasing order including both positive and negative numbers  
+
+T8: arr contains all identical elements  
+D8: arr remains unchanged (already sorted)
+*end* role assistant

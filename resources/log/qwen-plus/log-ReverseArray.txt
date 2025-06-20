@@ -1,0 +1,26 @@
+start role user
+为下面的代码生成FSF:
+```
+public class ReverseArray {
+    public static int[] reverse(int[] original) {
+        int n = original.length;
+        int[] res = new int[n];
+        for(int i = 0; i < n ; i++) {
+            res[i] = original[n - i - 1];
+        }
+        return res;
+    }
+}
+
+```
+*end* role user
+start role assistant
+T1: n == 0  
+D1: res.length == 0  
+
+T2: n > 0  
+D2: ∀i (0 ≤ i < n → res[i] == original[n - i - 1])  
+
+T3: n < 0 (invalid input case, array length cannot be negative)  
+D3: Exception
+*end* role assistant

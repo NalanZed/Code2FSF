@@ -1,0 +1,55 @@
+start role user
+为下面的代码生成FSF:
+```
+public class FindFirstZero {
+
+    	 public static int FindFirstZero(int[] x) {
+         	assert x.length >= 0;
+         	if (x.length == 0) {
+            		return -1;
+        	} else {
+            		int index = 0;
+
+            		while (x.length - index > 0 && x[index] != 0) {
+                		index = index + 1;
+            		}
+            		if (x.length - index == 0) {
+               			index = -1;
+            		}
+            	return index;
+        	}
+    	}
+}
+
+
+```
+*end* role user
+start role assistant
+
+T1: x.length == 0
+D1: index == -1
+
+T2: x.length > 0 && ∃i(0 ≤ i < x.length ∧ x[i] == 0)
+D2: index == min{i | 0 ≤ i < x.length ∧ x[i] == 0}
+
+T3: x.length > 0 && ∀i(0 ≤ i < x.length, x[i] ≠ 0)
+D3: index == -1
+
+
+*end* role assistant
+start role user
+检查一下，重新回答！
+*end* role user
+start role assistant
+
+T1: x.length == 0
+D1: index == -1
+
+T2: x.length > 0 && ∃i (0 ≤ i < x.length ∧ x[i] == 0)
+D2: index == min{i | 0 ≤ i < x.length ∧ x[i] == 0}
+
+T3: x.length > 0 && ∀i (0 ≤ i < x.length ∧ x[i] ≠ 0)
+D3: index == -1
+
+
+*end* role assistant

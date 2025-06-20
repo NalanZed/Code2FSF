@@ -1,0 +1,26 @@
+start role user
+为下面的代码生成FSF:
+```
+class ReverseString {
+    public void reverseString(char[] s) {
+        int n = s.length;
+        for (int left = 0, right = n - 1; left < right; ++left, --right) {
+            char tmp = s[left];
+            s[left] = s[right];
+            s[right] = tmp;
+        }
+    }
+}
+
+```
+*end* role user
+start role assistant
+T1: n >= 0  
+D1: ∀i ∈ [0, (n-1)/2], s[i]_original = s[n-1-i]_reversed && s[n-1-i]_original = s[i]_reversed  
+
+T2: n == 0  
+D2: s = []  
+
+T3: n < 0 || s is null  
+D3: Exception
+*end* role assistant

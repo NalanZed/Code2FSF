@@ -1,0 +1,121 @@
+package org.zed;
+
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
+import org.zed.llm.ModelConfig;
+import org.zed.log.LogManager;
+import org.zed.trans.TransFileOperator;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import static org.zed.FSFGenerator.callTBFV4J;
+import static org.zed.FSFGenerator.runConversation;
+import static org.zed.log.LogManager.*;
+import static org.zed.tcg.ExecutionEnabler.*;
+import static org.zed.trans.ExecutionPathPrinter.addPrintStatementsWithJavaParser;
+import static org.zed.trans.TransWorker.pickSSMPCodes;
+
+
+/**
+ * Unit test for simple App.
+ */
+public class AppTest 
+    extends TestCase
+{
+    /**
+     * Create the test case
+     *
+     * @param testName name of the test case
+     */
+    public AppTest( String testName )
+    {
+        super( testName );
+    }
+
+    /**
+     * @return the suite of tests being tested
+     */
+    public static Test suite()
+    {
+        return new TestSuite( AppTest.class );
+    }
+
+    /**
+     * Rigourous Test :-)
+     */
+    public void testApp() throws Exception {
+        String testFileName = "Test1";
+        String testFileNameJava = testFileName+".java";
+        String testLogFileName = "log-" + testFileName+".txt";
+        pickSSMPCodes("resources/dataset/"+ testFileNameJava);
+        LogManager.cleanLogOfModel("deepseek-chat");
+        runConversation(1, new ModelConfig(), "resources/trans/oneStaticMdCodes/"+testFileNameJava);
+        List<String[]> TDList = getLastestTDsFromLog("resources/log/deepseek-chat/"+testLogFileName);
+        int n = 1;
+        for (String[] td : TDList){
+            String T = td[0];
+            String D = td[1];
+            String program = getProgramFromLog("resources/log/deepseek-chat/" + testLogFileName);
+            String mainMd = generateMainMdUnderT(T,program);
+            System.out.println(mainMd);
+            //插入main函数后形成新program
+            String runnableProgram = insertMainMdInSSMP(program, mainMd);
+            System.out.println("runnableProgram:"+runnableProgram);
+            // 保存文件
+            TransFileOperator.saveRunnablePrograms(testFileNameJava,runnableProgram,n);
+            n++;
+            //执行插桩，即验证前的准备工作
+            String addedPrintProgram = addPrintStatementsWithJavaParser(runnableProgram);
+            System.out.println("addedPrintProgram:"+addedPrintProgram);
+            //开始验证
+            List<String> preConstrains = new ArrayList<String>();
+            SpecUnit su =new SpecUnit(addedPrintProgram,T,D,preConstrains);
+            System.out.println("开始验证");
+            Result result = callTBFV4J(su);
+            if(result != null){
+                System.out.println(result);
+            }
+        }
+    }
+    public void testApp2() throws Exception {
+        String testFileName = "Test1";
+        String testFileNameJava = testFileName+".java";
+        String testLogFileName = "log-" + testFileName+".txt";
+        List<String[]> TDList = getLastestTDsFromLog("resources/log/deepseek-chat/"+testLogFileName);
+        int n = 1;
+        for (String[] td : TDList){
+            String T = td[0];
+            String D = td[1];
+//            System.out.println("T:" + T);
+//            System.out.println("D:" + D);
+            String program = getProgramFromLog("resources/log/deepseek-chat/" + testLogFileName);
+            String mainMd = generateMainMdUnderT(T,program);
+            System.out.println(mainMd);
+            //插入main函数后形成新program
+            String runnableProgram = insertMainMdInSSMP(program, mainMd);
+            TransFileOperator.saveRunnablePrograms(testFileNameJava,runnableProgram,n);
+            n++;
+            //执行format和插桩，即验证前的准备工作
+            String addedPrintProgram = addPrintStatementsWithJavaParser(runnableProgram);
+            //开始验证
+            List<String> preConstarins = new ArrayList<>();
+            System.out.println("T:"+T);
+            System.out.println("D:"+D);
+            System.out.println("addedPrintProgram:\n"+addedPrintProgram);
+            SpecUnit su =new SpecUnit(addedPrintProgram,T,D,preConstarins);
+            System.out.println("开始验证");
+            Result result = callTBFV4J(su);
+            if(result != null){
+                System.out.println(result);
+            }
+            break;
+        }
+    }
+    public void testApp3() throws Exception {
+        String program = file2String("resources/trans/formattedCodes/Example.java");
+        String s = addPrintStatementsWithJavaParser(program);
+        System.out.println(s);
+    }
+}

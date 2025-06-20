@@ -1,0 +1,37 @@
+start role user
+为下面的代码生成FSF:
+```
+class DominantIndex {
+    
+    public static int dominantIndex(int[] nums) {
+        int biggest_index = 0;
+
+        for (int i = 0; i < nums.length; i++) {
+            if (nums[i] > nums[biggest_index])
+                biggest_index = i;
+        }
+
+        for (int i = 0; i < nums.length; i++) {
+            if (i != biggest_index && 2 * nums[i] > nums[biggest_index])
+                return -1;
+        }
+
+        return biggest_index;
+    }
+}
+
+```
+*end* role user
+start role assistant
+T1: nums.length == 0  
+D1: Exception  
+
+T2: nums.length == 1  
+D2: result == 0  
+
+T3: nums.length > 1 && ∃ biggest_index ∈ [0, nums.length-1] s.t. ∀ i ≠ biggest_index, 2 * nums[i] ≤ nums[biggest_index]  
+D3: result == biggest_index  
+
+T4: nums.length > 1 && ∀ biggest_index ∈ [0, nums.length-1], ∃ i ≠ biggest_index s.t. 2 * nums[i] > nums[biggest_index]  
+D4: result == -1
+*end* role assistant

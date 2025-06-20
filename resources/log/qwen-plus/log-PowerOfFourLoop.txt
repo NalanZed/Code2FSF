@@ -1,0 +1,27 @@
+start role user
+为下面的代码生成FSF:
+```
+class PowerOfFourLoop {
+    public boolean isPowerOfFour(int n) {
+        if(n <= 0) {
+            return false;
+        }
+        while (n % 4 == 0) {
+            n /= 4;
+        }
+        return n == 1;
+    }
+}
+
+```
+*end* role user
+start role assistant
+T1: n <= 0  
+D1: Exception  
+
+T2: n > 0 && (存在整数 k 使得 n = 4^k)  
+D2: true  
+
+T3: n > 0 && (不存在整数 k 使得 n = 4^k)  
+D3: false
+*end* role assistant

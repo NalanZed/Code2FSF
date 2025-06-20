@@ -1,0 +1,18 @@
+start role user
+为下面的代码生成FSF:
+```
+public class DivisorGame {
+    public boolean divisorGame(int n) {
+        return n % 2 == 0;
+    }
+}
+
+```
+*end* role user
+start role assistant
+T1: n % 2 == 0  
+D1: true  
+
+T2: n % 2 != 0  
+D2: false
+*end* role assistant
