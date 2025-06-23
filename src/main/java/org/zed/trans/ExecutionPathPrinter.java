@@ -19,7 +19,8 @@ public class ExecutionPathPrinter {
     public static String addPrintStmt(String code){
         String c1 = addPrintStatementForIfStmt(code);
         String c2 = addPrintStmtForAssignStmt(c1);
-        return c2;
+        String c3 = addPrintStmtForVariableDeclarationExpr(c2) ;
+        return c3;
     }
 
     public static String addPrintStatementForIfStmt(String code){
@@ -70,128 +71,6 @@ public class ExecutionPathPrinter {
         return cu.toString();
     }
 
-
-
-    public static String addPrintStatementsWithJavaParser(String code) {
-        CompilationUnit cu = new JavaParser().parse(code).getResult().get();
-
-        cu.accept(new ModifierVisitor<Void>() {
-            @Override
-            public Visitable visit(WhileStmt whileStmt, Void arg) {
-                BlockStmt pb = generatePathPrintBlock(whileStmt);
-                whileStmt.setBody(pb);
-                return super.visit(whileStmt, arg);
-            }
-            @Override
-            public IfStmt visit(IfStmt ifStmt, Void arg) {
-                // 1. 首先处理嵌套的if语句（递归处理then和else部分）
-                if (ifStmt.getThenStmt() instanceof IfStmt) {
-                    ifStmt.setThenStmt(visit(ifStmt.getThenStmt().asIfStmt(), arg));
-                } else if (ifStmt.getThenStmt() instanceof BlockStmt) {
-                    BlockStmt thenBlock = ifStmt.getThenStmt().asBlockStmt();
-                    NodeList<Statement> newStatements = new NodeList<>();
-                    for (Statement stmt : thenBlock.getStatements()) {
-                        if (stmt instanceof IfStmt) {
-                            newStatements.add(visit(stmt.asIfStmt(), arg));
-                        } else {
-                            newStatements.add(stmt);
-                        }
-                    }
-                    thenBlock.setStatements(newStatements);
-                }
-
-                // 处理else部分中的嵌套if
-                if (ifStmt.getElseStmt().isPresent()) {
-                    Statement elseStmt = ifStmt.getElseStmt().get();
-                    if (elseStmt instanceof IfStmt) {
-                        ifStmt.setElseStmt(visit(elseStmt.asIfStmt(), arg));
-                    } else if (elseStmt instanceof BlockStmt) {
-                        BlockStmt elseBlock = elseStmt.asBlockStmt();
-                        NodeList<Statement> newStatements = new NodeList<>();
-                        for (Statement stmt : elseBlock.getStatements()) {
-                            if (stmt instanceof IfStmt) {
-                                newStatements.add(visit(stmt.asIfStmt(), arg));
-                            } else {
-                                newStatements.add(stmt);
-                            }
-                        }
-                        elseBlock.setStatements(newStatements);
-                    }
-                }
-
-                // 2. 然后处理当前if语句的插桩（只处理最外层的if-elseif-else链）
-                return handleIfElseChain(ifStmt);
-            }
-            @Override
-            public Visitable visit(ExpressionStmt stmt, Void arg) {
-                Expression expr = stmt.getExpression();
-                if (expr.isAssignExpr()) {
-                    AssignExpr assign = expr.asAssignExpr();
-                    String varName = assign.getTarget().toString();
-                    String op = assign.getOperator().asString();
-                    Expression value = assign.getValue();
-
-                    Statement printStmt = new ExpressionStmt(new MethodCallExpr(
-                            new NameExpr("System.out"),
-                            "println",
-                            NodeList.nodeList(new BinaryExpr(
-                                    new StringLiteralExpr(varName + " " + op + " " + value + ", current value of " + varName + ": "),
-                                    new NameExpr(varName),
-                                    BinaryExpr.Operator.PLUS
-                            ))
-                    ));
-
-                    return new BlockStmt(NodeList.nodeList(stmt, printStmt));
-                }
-
-                // 处理变量声明和初始化
-                if (expr.isVariableDeclarationExpr()) {
-                    VariableDeclarationExpr varDecl = expr.asVariableDeclarationExpr();
-                    NodeList<Statement> statements = new NodeList<>();
-                    statements.add(stmt);
-
-                    for (VariableDeclarator var : varDecl.getVariables()) {
-                        if (var.getInitializer().isPresent() &&
-                                !var.getInitializer().get().toString().contains("scanner.next")) {
-                            // 为每个有初始化的变量生成打印语句
-                            Statement printStmt = new ExpressionStmt(new MethodCallExpr(
-                                    new NameExpr("System.out"),
-                                    "println",
-                                    NodeList.nodeList(new BinaryExpr(
-                                            new StringLiteralExpr("Variable initialized: " + var.getName() + " = "),
-                                            new NameExpr(var.getNameAsString()),
-                                            BinaryExpr.Operator.PLUS
-                                    ))
-                            ));
-                            statements.add(printStmt);
-                        }
-                    }
-
-                    return statements.size() > 1 ? new BlockStmt(statements) : stmt;
-//                    return stmt;
-                }
-
-                // 跳过Scanner相关的语句
-                if (expr.toString().contains("scanner = new Scanner(System.in)")) {
-                    return stmt;
-                }
-
-                return super.visit(stmt, arg);
-            }
-
-            @Override
-            public Visitable visit(ReturnStmt returnStmt, Void arg) {
-                // 检查前一个语句是否是变量声明（需插桩）
-                BlockStmt blockStmt = generatePathPrintBlock(returnStmt);
-
-                return blockStmt;
-            }
-
-        }, null);
-
-        return cu.toString();
-    }
-
     public static String addPrintStmtForAssignStmt(String code){
         CompilationUnit cu = new JavaParser().parse(code).getResult().get();
         // 使用 ModifierVisitor 遍历并修改 AST
@@ -225,26 +104,41 @@ public class ExecutionPathPrinter {
                         ((BlockStmt) parentNode.get()).asBlockStmt().addStatement(index+1,printStmt);
                     }
                 }
+                return super.visit(stmt, arg);
+            }
+        }, null);
 
+        // 返回插桩后的代码
+        return cu.toString();
+    }
+
+    public static String addPrintStmtForVariableDeclarationExpr(String code){
+
+        CompilationUnit cu = new JavaParser().parse(code).getResult().get();
+        // 使用 ModifierVisitor 遍历并修改 AST
+        cu.accept(new ModifierVisitor<Void>() {
+            @Override
+            public Visitable visit(ExpressionStmt stmt, Void arg) {
+                Expression expr = stmt.getExpression();
                 // 处理变量声明并初始化（如 int x = 5;）
                 if (expr.isVariableDeclarationExpr()) {
                     VariableDeclarationExpr varDecl = expr.asVariableDeclarationExpr();
-                    BlockStmt block = new BlockStmt();
-                    block.addStatement(stmt);
+                   // BlockStmt block = new BlockStmt();
+                   // block.addStatement(stmt);
 
                     // 为每个变量生成打印语句
                     varDecl.getVariables().forEach(var -> {
                         if (var.getInitializer().isPresent()) {
                             String varName = var.getNameAsString();
-                            String op = var.getInitializer().get().toString();
-                            String value = var.getInitializer().get().toString();
-                            // 生成打印语句（格式：System.out.println("变量名: " + 变量名 + ", 当前值: " + 值);）
+//                            String op = var.getInitializer().get().isAssignExpr() ? var.getInitializer().get().asAssignExpr().getOperator().asString() : "=";
+                            String value = var.getInitializer().get().isAssignExpr() ? var.getInitializer().get().asAssignExpr().getValue().toString() : var.getInitializer().get().toString();
+                            Expression val = new EnclosedExpr(var.getInitializer().get());
                             Statement printStmt = new ExpressionStmt(new MethodCallExpr(
                                     new NameExpr("System.out"),
                                     "println",
                                     NodeList.nodeList(new BinaryExpr(
-                                            new StringLiteralExpr(varName + " " + op + " " + value + ", current value of " + varName + ": "),
-                                            new NameExpr(varName),
+                                            new StringLiteralExpr(varName + " " + "=" + " " + value + ", current value of " + varName + ": "),
+                                            new NameExpr(val.toString()),
                                             BinaryExpr.Operator.PLUS
                                     ))
                             ));
@@ -254,7 +148,7 @@ public class ExecutionPathPrinter {
 
                             if(parentNode.isPresent() && parentNode.get() instanceof BlockStmt){
                                 int index = ((BlockStmt) parentNode.get()).asBlockStmt().getStatements().indexOf(stmt);
-                                 ((BlockStmt) parentNode.get()).asBlockStmt().addStatement(index+1,printStmt);
+                                ((BlockStmt) parentNode.get()).asBlockStmt().addStatement(index+1,printStmt);
                             }
                         }
                     });
@@ -263,7 +157,6 @@ public class ExecutionPathPrinter {
             }
         }, null);
 
-        // 返回插桩后的代码
         return cu.toString();
     }
 
@@ -410,12 +303,13 @@ public class ExecutionPathPrinter {
     
     public static void main(String[] args) {
         String dir = "resources/dataset";
-        String testFileName = "Test1";
+        String testFileName = "LCM";
         String testFileNameJava = testFileName+".java";
         String testFilePath = dir + "/" + testFileNameJava;
 
         String pureCode = TransFileOperator.file2String(testFilePath);
         String targetCode = addPrintStmt(pureCode);
+//        String targetCode = addPrintStmtForVariableDeclarationExpr(pureCode);
         System.out.println(targetCode);
     }
 }

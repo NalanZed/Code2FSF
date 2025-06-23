@@ -12,7 +12,7 @@ import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 
 import static org.zed.log.LogManager.file2String;
-import static org.zed.trans.ExecutionPathPrinter.addPrintStatementsWithJavaParser;
+import static org.zed.trans.ExecutionPathPrinter.addPrintStmt;
 
 public class TestCaseAutoGenerator {
 
@@ -216,7 +216,7 @@ public class TestCaseAutoGenerator {
 
     public static void main(String[] args) {
         String program = file2String("resources/dataset/ChangeCase.java");
-        String s = addPrintStatementsWithJavaParser(program);
+        String s = addPrintStmt(program);
         System.out.println(s);
     }
 }

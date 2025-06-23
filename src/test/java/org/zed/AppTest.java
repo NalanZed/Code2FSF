@@ -14,7 +14,7 @@ import static org.zed.FSFGenerator.callTBFV4J;
 import static org.zed.FSFGenerator.runConversation;
 import static org.zed.log.LogManager.*;
 import static org.zed.tcg.ExecutionEnabler.*;
-import static org.zed.trans.ExecutionPathPrinter.addPrintStatementsWithJavaParser;
+import static org.zed.trans.ExecutionPathPrinter.addPrintStmt;
 import static org.zed.trans.TransWorker.pickSSMPCodes;
 
 
@@ -67,7 +67,7 @@ public class AppTest
             TransFileOperator.saveRunnablePrograms(testFileNameJava,runnableProgram,n);
             n++;
             //执行插桩，即验证前的准备工作
-            String addedPrintProgram = addPrintStatementsWithJavaParser(runnableProgram);
+            String addedPrintProgram = addPrintStmt(runnableProgram);
             System.out.println("addedPrintProgram:"+addedPrintProgram);
             //开始验证
             List<String> preConstrains = new ArrayList<String>();
@@ -98,7 +98,7 @@ public class AppTest
             TransFileOperator.saveRunnablePrograms(testFileNameJava,runnableProgram,n);
             n++;
             //执行format和插桩，即验证前的准备工作
-            String addedPrintProgram = addPrintStatementsWithJavaParser(runnableProgram);
+            String addedPrintProgram = addPrintStmt(runnableProgram);
             //开始验证
             List<String> preConstarins = new ArrayList<>();
             System.out.println("T:"+T);
@@ -115,7 +115,7 @@ public class AppTest
     }
     public void testApp3() throws Exception {
         String program = file2String("resources/trans/formattedCodes/Example.java");
-        String s = addPrintStatementsWithJavaParser(program);
+        String s = (program);
         System.out.println(s);
     }
 }
