@@ -6,22 +6,15 @@ import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
 import com.github.javaparser.ast.body.MethodDeclaration;
 import com.github.javaparser.ast.body.Parameter;
 import org.zed.SpecUnit;
-import org.zed.trans.ExecutionPathPrinter;
 import org.zed.trans.TransFileOperator;
 
 import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
-import java.util.concurrent.atomic.AtomicInteger;
 
 import static org.zed.tcg.TestCaseAutoGenerator.generateParamsDefUnderT;
-import static org.zed.trans.TransFileOperator.*;
 
 public class ExecutionEnabler {
 
@@ -36,12 +29,12 @@ public class ExecutionEnabler {
     }
 
 
-    public static String generateMainMdUnderT(SpecUnit su) throws Exception {
+    public static String generateMainMdUnderExpr(SpecUnit su) throws Exception {
         String program = su.getProgram();
         String T = su.getT();
-        return generateMainMdUnderT(T,program);
+        return generateMainMdUnderExpr(T,program);
     }
-    public static String generateMainMdUnderT(String T, String program) throws Exception {
+    public static String generateMainMdUnderExpr(String expr, String program) throws Exception {
         //1. 解析program
         JavaParser parser = new JavaParser();
         CompilationUnit cu = parser.parse(program).getResult().get();
@@ -57,7 +50,7 @@ public class ExecutionEnabler {
         builder.append("public static void main(String[] args) {\n");
 
         //3.拿到根据T生成的 param 以及 value
-        HashMap<String, String> testCaseMap = generateParamsDefUnderT(T, md);
+        HashMap<String, String> testCaseMap = generateParamsDefUnderT(expr, md);
 
         //4. 根据 testCase来组装main函数中的调用 static 方法前的参数定义
         if (parameters != null) {
@@ -90,14 +83,14 @@ public class ExecutionEnabler {
 
         return builder.toString();
     }
-    public static String generateMainMdUnderT(String T, File javaFile) throws Exception {
+    public static String generateMainMdUnderExpr(String T, File javaFile) throws Exception {
         String program = TransFileOperator.file2String(javaFile.getAbsolutePath());
-        return generateMainMdUnderT(T, program);
+        return generateMainMdUnderExpr(T, program);
     }
 
 
     public static String generateMainMethodWithoutT(String program) throws Exception {
-        return generateMainMdUnderT("true",program);
+        return generateMainMdUnderExpr("true",program);
     }
 
     public static MethodDeclaration getFirstStaticMethod(String program){

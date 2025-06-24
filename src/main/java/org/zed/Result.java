@@ -26,4 +26,9 @@ public class Result {
             throw new RuntimeException("JSON解析失败: " + e.getMessage(), e);
         }
     }
+    public Result(int status, String counterExample, String pathConstrain) {
+        this.status = status;
+        this.counterExample = counterExample;
+        this.pathConstrain = pathConstrain;
+    }
 }

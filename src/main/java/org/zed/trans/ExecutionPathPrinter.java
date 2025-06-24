@@ -144,7 +144,7 @@ public class ExecutionPathPrinter {
                             ));
 
                             Optional<Node> parentNode = stmt.getParentNode();
-                            System.out.println(parentNode.toString());
+//                            System.out.println(parentNode.toString());
 
                             if(parentNode.isPresent() && parentNode.get() instanceof BlockStmt){
                                 int index = ((BlockStmt) parentNode.get()).asBlockStmt().getStatements().indexOf(stmt);

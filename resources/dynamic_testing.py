@@ -135,6 +135,7 @@ def run_java_code(java_code: str) -> str:
             capture_output=True,
             text=True,
         )
+        print(" result.stdout:" + result.stdout)
         return result.stdout
     except subprocess.CalledProcessError:
         print("Error during Java execution.")
@@ -326,6 +327,36 @@ def repeat_execution_with_ct(java_code, T, D, rounds, input_variables):
             print("错误信息:", e)
 
         previous_cts.append(new_ct)
+def solver_check_z3(logic_expr:str)->str:
+    try:
+        preprocessed_input = preprocess_expression(logic_expr)
+        variables = {}
+        variable_names = extract_variables(preprocessed_input)
+        for var in variable_names:
+            variables[var] = Int(var)
+
+        parsed_expr = parse_to_z3(preprocessed_input, variables)
+        z3_expr = eval(parsed_expr, {"variables": variables, "And": And, "Or": Or, "Not": Not, "Implies": Implies})
+        solver.add(z3_expr)
+
+        if solver.check() == sat:
+            print("表达式是可满足的")
+            model = solver.model()
+            print("满足条件的解:")
+            counter_example = ""
+            for v in variables.values():
+                print(f"{v} = {model[v]}")
+                counter_example = counter_example + f"{v} = {model[v]}" + ","
+            return counter_example.strip().strip(",")
+        else:
+            print("The expression is unsatisfiable")
+            #创建 Result 对象
+            return "OK"
+
+    except Exception as e:
+        print("solver check fail!")
+        print("错误信息:", e)
+        return "ERROR"
 def derive_hoare_logic(specification: str, execution_path: list) -> (list, str, str):
     """
      The modified derive_hoare_logic supports D for complex mathematical expressions and handles single or multiple conditions.
@@ -486,9 +517,26 @@ def deal_with_spec_unit_json(spec_unit_json: str):
     print("\nExecution Path:")
     for step in execution_path:
         print(step)
+    print("end Execution Path")
     current_ct = get_ct_from_execution_path(execution_path);
     print(f"本次路径对应的_Ct_: {current_ct}")
-
+    new_d = update_D_with_execution_path(D,execution_path)
+    print("new_d:" + new_d)
+    # 构建新的逻辑表达式并检查可满足性
+    negated_d = f"!({new_d})"
+    new_logic_expression = f"{T} && {current_ct} && {negated_d}"
+    new_logic_expression = simplify_expression(new_logic_expression)
+    print(f"\nT && Ct && !D: {new_logic_expression}")
+    solver_result = solver_check_z3(new_logic_expression)
+    result = ""
+    if solver_result == "OK":
+        result = Result(0,"",current_ct)
+        print("result:" + result.to_json())
+    elif solver_result == "ERROR":
+        result = Result(1,"",current_ct)
+    else:
+        result = Result(2,solver_result,"")
+    # print("result:" + result.to_json())
 
 def get_ct_from_execution_path(execution_path:List[str]):
     ct = ""
@@ -520,8 +568,30 @@ def get_ct_from_execution_path(execution_path:List[str]):
                 value = assignment_match.group(2).strip()
                 ct = replace_variables(ct,variable,value)
 
-    return ct
+    #先去掉空格，再去掉多余的 &&
+    return ct.strip().strip("&&")
 
+def update_D_with_execution_path(D: str, execution_path: List[str]) -> str:
+    split_d = D.split("&&")
+    update_d = []
+    newd = ""
+    for step in reversed(execution_path):
+        if "current value" in step:
+            assignment_match = re.search(r"(.*?) = (.*?), current value of (.*?): (.*?)$", step)
+            if assignment_match:
+                variable = assignment_match.group(1).strip()
+                value = assignment_match.group(2).strip()
+                for sd in split_d:
+                    if variable in sd:
+                        # 替换 D 中的变量
+                        sd = replace_variables(sd, variable, value)
+                    update_d.append(sd.strip())
+                split_d = update_d
+                update_d = []
+
+    for ud in split_d:
+        newd = f"{newd} && ({ud})"
+    return newd.strip().strip("&&")
 
 # def deal_with_spec_unit_json(spec_unit_json: str):
 #     #读取SpecUnit对象

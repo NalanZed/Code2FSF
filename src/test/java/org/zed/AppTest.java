@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.zed.FSFGenerator.callTBFV4J;
-import static org.zed.FSFGenerator.runConversation;
+import static org.zed.FSFGenerator.runConversations;
 import static org.zed.log.LogManager.*;
 import static org.zed.tcg.ExecutionEnabler.*;
 import static org.zed.trans.ExecutionPathPrinter.addPrintStmt;
@@ -51,14 +51,14 @@ public class AppTest
         String testLogFileName = "log-" + testFileName+".txt";
         pickSSMPCodes("resources/dataset/"+ testFileNameJava);
         LogManager.cleanLogOfModel("deepseek-chat");
-        runConversation(1, new ModelConfig(), "resources/trans/oneStaticMdCodes/"+testFileNameJava);
+        runConversations(1, new ModelConfig(), "resources/trans/oneStaticMdCodes/"+testFileNameJava);
         List<String[]> TDList = getLastestTDsFromLog("resources/log/deepseek-chat/"+testLogFileName);
         int n = 1;
         for (String[] td : TDList){
             String T = td[0];
             String D = td[1];
             String program = getProgramFromLog("resources/log/deepseek-chat/" + testLogFileName);
-            String mainMd = generateMainMdUnderT(T,program);
+            String mainMd = generateMainMdUnderExpr(T,program);
             System.out.println(mainMd);
             //插入main函数后形成新program
             String runnableProgram = insertMainMdInSSMP(program, mainMd);
@@ -91,28 +91,39 @@ public class AppTest
 //            System.out.println("T:" + T);
 //            System.out.println("D:" + D);
             String program = getProgramFromLog("resources/log/deepseek-chat/" + testLogFileName);
-            String mainMd = generateMainMdUnderT(T,program);
+            String mainMd = generateMainMdUnderExpr(T,program);
             System.out.println(mainMd);
+            String addedPrintProgram = addPrintStmt(program);
             //插入main函数后形成新program
-            String runnableProgram = insertMainMdInSSMP(program, mainMd);
+            String runnableProgram = insertMainMdInSSMP(addedPrintProgram, mainMd);
             TransFileOperator.saveRunnablePrograms(testFileNameJava,runnableProgram,n);
             n++;
-            //执行format和插桩，即验证前的准备工作
-            String addedPrintProgram = addPrintStmt(runnableProgram);
             //开始验证
             List<String> preConstarins = new ArrayList<>();
             System.out.println("T:"+T);
             System.out.println("D:"+D);
-            System.out.println("addedPrintProgram:\n"+addedPrintProgram);
-            SpecUnit su =new SpecUnit(addedPrintProgram,T,D,preConstarins);
+            System.out.println("runnableProgram:\n"+runnableProgram);
+            SpecUnit su =new SpecUnit(runnableProgram,T,D,preConstarins);
             System.out.println("开始验证");
             Result result = callTBFV4J(su);
             if(result != null){
                 System.out.println(result);
             }
-            break;
         }
     }
+
+    public void aPathValidationTask(String T, List<String> pathConstrains,String program){
+        StringBuilder constrains  = new StringBuilder(T);
+        for(String pc : pathConstrains){
+            constrains.append("&&");
+            constrains.append(pc);
+        }
+        String cons = constrains.toString();
+        System.out.println("本次路径验证的约束条件为" + cons);
+
+    }
+
+
     public void testApp3() throws Exception {
         String program = file2String("resources/trans/formattedCodes/Example.java");
         String s = (program);

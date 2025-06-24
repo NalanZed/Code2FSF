@@ -3,15 +3,18 @@ package org.zed;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.zed.llm.*;
 import org.zed.log.LogManager;
-import org.zed.trans.TransWorker;
+import org.zed.tcg.ExecutionEnabler;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import static org.zed.tcg.ExecutionEnabler.generateMainMdUnderExpr;
+import static org.zed.tcg.ExecutionEnabler.insertMainMdInSSMP;
+import static org.zed.trans.ExecutionPathPrinter.addPrintStmt;
 import static org.zed.trans.TransWorker.pickSSMPCodes;
 
 public class FSFGenerator {
@@ -67,24 +70,96 @@ public class FSFGenerator {
         return argsMap;
     }
 
-    public static void runConversation(int maxRounds,ModelConfig mc,String inputFilePath) throws IOException {
-//        ModelPrompt fsfPrompt = new ModelPrompt(mc.getModelName(), inputFilePath);
-        ModelPrompt fsfPrompt = ModelPrompt.generateCode2FSFPrompt(mc.getModelName(),inputFilePath);
+    public static String constructConstrain(String T,List<String> preConstrains){
+        StringBuilder consExpr = new StringBuilder();
+        if(T.startsWith("(")){
+            consExpr.append(T);
+        }else {
+            consExpr.append('(').append(T).append(")");
+        }
+        for(String con : preConstrains){
+            consExpr.append(" && ");
+            if(con.startsWith("(")){
+                consExpr.append(con);
+            } else {
+                consExpr.append('(').append(con).append(")");
+            }
+        }
+        return consExpr.toString();
+    }
+
+    public static Result valid1Path(String pureProgram,List<String> prePathConstrains,String T,String D) throws Exception {
+        //构造当前测试约束
+        String conExpr = constructConstrain(T,prePathConstrains);
+        //生成main方法，即测试用例
+        String mainMd = ExecutionEnabler.generateMainMdUnderExpr(conExpr,pureProgram);
+        //给测试函数插桩
+        String addedPrintProgram = addPrintStmt(pureProgram);
+        //组装可执行程序
+        String runnableProgram = insertMainMdInSSMP(addedPrintProgram, mainMd);
+        //拿到SpecUnit
+        SpecUnit su =new SpecUnit(runnableProgram,T,D,prePathConstrains);
+        Result result = callTBFV4J(su);
+        if(result != null){
+            System.out.println(result);
+        }
+        return result;
+    }
+
+    public static void runConversations(int maxRounds, ModelConfig mc, String inputFilePath) throws Exception {
+        String modelName = mc.getModelName();
+        ModelPrompt fsfPrompt = ModelPrompt.generateCode2FSFPrompt(modelName,inputFilePath);
+        String logPath = LogManager.codePath2LogPath(inputFilePath, modelName);
         int count = 1;
         while(count <= maxRounds){
-            try {
-                System.out.println("["+mc.getModelName()+"]"+"正在进行第"+count+"轮对话");
-                make1RoundConversation(fsfPrompt,mc);
-                System.out.println("第"+count+"轮对话完成");
-                count++;
-                if(count <= maxRounds){
-                    ModelMessage msg = new ModelMessage("user","检查一下，重新回答！");
+            System.out.println("["+ modelName +"]"+"正在进行第"+count+"轮对话");
+            make1RoundConversation(fsfPrompt,mc);
+            System.out.println("第"+count+"轮对话完成");
+            List<String[]> FSF = LogManager.getLastestTDsFromLog(logPath);
+            count++;
+            Result r = new Result(0,"","");
+            if(count <= maxRounds){
+                //对每一个TD进行验证
+                for(String[] td : FSF) {
+                    String T = td[0];
+                    String D = td[1];
+                    String pureProgram = LogManager.file2String(inputFilePath);
+                    List<String> prePathConstrains = new ArrayList<>();
+
+                    while(r.getStatus() == 0){
+                        //对一个TD下所有路径验证
+                        r = valid1Path(pureProgram, prePathConstrains, T, D);
+                        prePathConstrains.add(r.getPathConstrain());
+                    }
+                    if (r.getStatus() == 3) { //status 为 3 表示 路径已经全部覆盖
+                        System.out.println("T：" + T + "\n" + "D: " + D + "\n" + "验证通过");
+                        continue;
+                    }
+                    if (r.getStatus() == 2) {
+                        System.out.println("T：" + T + "\n" + "D: " + D + "\n" + "验证出错");
+                        System.out.println("反例如下：\n" + r.getCounterExample());
+                        break;
+                    }
+                    if (r.getStatus() == 1) {
+                        System.out.println("验证过程出错,");
+                        break;
+                    }
+                }
+                if(r.getStatus() == 2){
+                    ModelMessage msg = new ModelMessage("user","现在经检验当变量赋值为"+r.getCounterExample()+"时，与所有TD约束都不相符，请结合这个例子重新回答！");
                     fsfPrompt.addMessage(msg);
                     LogManager.appendMessage(fsfPrompt.getCodePath(),msg,fsfPrompt.getModel());
+                    continue;
                 }
-
-            } catch (Exception e) {
-                e.printStackTrace();
+                if(r.getStatus() == 3){
+                    System.out.println("FSF生成以及检验任务完成，生成的FSF通过检验，且符合要求");
+                    return;
+                }else{
+                    System.out.println("本次任务失败!,r.status =" + r.getStatus());
+                    return ;
+                }
+            } else {
+                System.out.println("对话轮数超过最大值" + maxRounds + "，任务失败!");
             }
         }
     }
@@ -107,14 +182,14 @@ public class FSFGenerator {
         }
     }
 
-    public static void runConversationForDir(int maxRounds, ModelConfig mc, String inputDir) throws IOException {
+    public static void runConversationForDir(int maxRounds, ModelConfig mc, String inputDir) throws Exception {
         // 遍历输入目录下的所有文件
         int taskCount = 0;
         String[] filePaths = LogManager.fetchSuffixFilePathInDir(inputDir,".java");
         int totalTaskNum = filePaths.length;
         for (String filePath : filePaths) {
             System.out.println("Processing file: " + filePath + " (" + (++taskCount) + "/" + totalTaskNum + ")");
-            runConversation(maxRounds, mc, filePath);
+            runConversations(maxRounds, mc, filePath);
         }
     }
 
@@ -182,7 +257,7 @@ public class FSFGenerator {
         LogManager.cleanLogOfModel(model);
 
         if(inputDir == null || inputDir.isEmpty()){
-            runConversation(maxRounds, mc, inputFilePath);
+            runConversations(maxRounds, mc, inputFilePath);
         }
         else{
             runConversationForDir(maxRounds, mc, inputDir);
@@ -197,4 +272,6 @@ public class FSFGenerator {
     public static void testMain3() throws Exception {
         pickSSMPCodes("resources/dataset/Example.java");
     }
+
+
 }
