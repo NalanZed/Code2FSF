@@ -1,6 +1,6 @@
 public class ChangeCase {
 
-  public char changeCase(char c) {
+  public static char changeCase(char c) {
     char result = ' ';    
     if (c > 'z') {
       result = c;

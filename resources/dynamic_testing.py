@@ -135,7 +135,7 @@ def run_java_code(java_code: str) -> str:
             capture_output=True,
             text=True,
         )
-        print(" result.stdout:" + result.stdout)
+        # print(" result.stdout:" + result.stdout)
         return result.stdout
     except subprocess.CalledProcessError:
         print("Error during Java execution.")
@@ -495,7 +495,7 @@ def generate_test_spec_unit():
 def deal_with_spec_unit_json(spec_unit_json: str):
     #读取SpecUnit对象
     spec_unit = None
-    print(f"Processing SpecUnit JSON: {spec_unit_json}")
+    # print(f"Processing SpecUnit JSON: {spec_unit_json}")
     try:
         spec_unit = SpecUnit.from_json(spec_unit_json)
     except json.JSONDecodeError as e:

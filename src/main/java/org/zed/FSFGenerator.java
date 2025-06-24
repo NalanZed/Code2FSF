@@ -93,7 +93,7 @@ public class FSFGenerator {
         String conExpr = constructConstrain(T,prePathConstrains);
         System.out.println("当前测试用例生成条件为：" + conExpr);
         //生成main方法，即测试用例
-        String mainMd = ExecutionEnabler.generateMainMdUnderExpr(conExpr,pureProgram);
+        String mainMd = generateMainMdUnderExpr(conExpr,pureProgram);
         //给测试函数插桩
         String addedPrintProgram = addPrintStmt(pureProgram);
         //组装可执行程序
@@ -102,15 +102,17 @@ public class FSFGenerator {
         SpecUnit su =new SpecUnit(runnableProgram,T,D,prePathConstrains);
         Result result = callTBFV4J(su);
         if(result != null){
-            System.out.println(result);
+            System.out.println("验证返回 result: " + result);
+            return result;
         }
-        return result;
+        return null;
     }
 
-    public static void runConversations(int maxRounds, ModelConfig mc, String inputFilePath) throws Exception {
+    public static boolean runConversations(int maxRounds, ModelConfig mc, String inputFilePath) throws Exception {
         String modelName = mc.getModelName();
         ModelPrompt fsfPrompt = ModelPrompt.generateCode2FSFPrompt(modelName,inputFilePath);
         String logPath = LogManager.codePath2LogPath(inputFilePath, modelName);
+        String pureProgram = LogManager.file2String(inputFilePath);
         int count = 1;
         while(count <= maxRounds){
             System.out.println("["+ modelName +"]"+"正在进行第"+count+"轮对话");
@@ -118,38 +120,35 @@ public class FSFGenerator {
             System.out.println("第"+count+"轮对话完成");
             List<String[]> FSF = LogManager.getLastestTDsFromLog(logPath);
             count++;
-            Result r = new Result(0,"","");
-                //对每一个TD进行验证
+            Result r = null;
+            String T = "";
+            String D = "";
+            List<String> prePathConstrains = new ArrayList<>();
+            //对每一个TD进行验证
             for(String[] td : FSF) {
-                String T = td[0];
-                String D = td[1];
-                String pureProgram = LogManager.file2String(inputFilePath);
-                List<String> prePathConstrains = new ArrayList<>();
-
+                T = td[0];
+                D = td[1];
                 while(true){
                     //对一个TD下所有路径验证
                     r = valid1Path(pureProgram, prePathConstrains, T, D);
-                    if (r.getStatus() == 0) {
+                    if (r != null && r.getStatus() == 0) {
                         prePathConstrains.add(r.getPathConstrain());
                     }else{
                         break;
                     }
                 }
-                if (r.getStatus() == 3) { //status 为 3 表示 路径已经全部覆盖
+                if(r == null){
+                    System.out.println("验证过程发生错误，没有返回result");
+                    return false;
+                }else if (r.getStatus() == 3) { //status 为 3 表示 路径已经全部覆盖
                     System.out.println("T：" + T + "\n" + "D: " + D + "\n" + "验证通过");
-                    continue;
-                }
-                if (r.getStatus() == 2) {
-                    System.out.println("T：" + T + "\n" + "D: " + D + "\n" + "验证出错");
-                    System.out.println("反例如下：\n" + r.getCounterExample());
-                    break;
-                }
-                if (r.getStatus() == 1) {
-                    System.out.println("验证过程出错,");
+                }else{
                     break;
                 }
             }
             if(r.getStatus() == 2){
+                System.out.println("T：" + T + "\n" + "D: " + D + "\n" + "验证未通过，可能是FSF不准确, 需要重新生成");
+                System.out.println("反例如下：\n" + r.getCounterExample());
                 ModelMessage msg = new ModelMessage("user","现在经检验当变量赋值为"+r.getCounterExample()+"时，与所有TD约束都不相符，请结合这个例子重新回答！");
                 fsfPrompt.addMessage(msg);
                 LogManager.appendMessage(fsfPrompt.getCodePath(),msg,fsfPrompt.getModel());
@@ -157,13 +156,14 @@ public class FSFGenerator {
             }
             if(r.getStatus() == 3){
                 System.out.println("FSF生成以及检验任务完成，生成的FSF通过检验，且符合要求");
-                return;
+                return true;
             }else{
                 System.out.println("本次任务失败!,r.status =" + r.getStatus());
-                return ;
+                return false;
             }
         }
         System.out.println("对话轮数超过最大值" + maxRounds + "，任务失败!");
+        return false;
     }
 
     public static void make1RoundConversation(ModelPrompt prompt,ModelConfig mc) throws IOException {
@@ -191,7 +191,20 @@ public class FSFGenerator {
         int totalTaskNum = filePaths.length;
         for (String filePath : filePaths) {
             System.out.println("Processing file: " + filePath + " (" + (++taskCount) + "/" + totalTaskNum + ")");
-            runConversations(maxRounds, mc, filePath);
+            try{
+                boolean succ = runConversations(maxRounds, mc, filePath);
+                if(succ) {
+                    System.out.println("将成功的代码保存到 SuccDataset 目录下");
+                    LogManager.copyFileToSuccDataset(filePath);
+                } else {
+                    System.err.println("将失败的代码保存到 FailedDataset 目录下");
+                    LogManager.copyFileToFailedDataset(filePath);
+                }
+            }catch (IOException e){
+                System.err.println("Error during runConversations for file: " + filePath);
+                System.err.println("将失败的代码保存到 resources/failedDataset 目录下");
+                LogManager.copyFileToFailedDataset(filePath);
+            }
         }
     }
 

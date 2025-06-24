@@ -25,7 +25,7 @@ public class Test1 {
     }
 
     public static void main(String[] args) {
-        int n = -301;
+        int n = -124;
         int result = Test1.test(n);
     }
 }

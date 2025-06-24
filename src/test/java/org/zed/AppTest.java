@@ -7,11 +7,13 @@ import org.zed.llm.ModelConfig;
 import org.zed.log.LogManager;
 import org.zed.trans.TransFileOperator;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.zed.FSFGenerator.callTBFV4J;
-import static org.zed.FSFGenerator.runConversations;
+import static org.zed.FSFGenerator.*;
 import static org.zed.log.LogManager.*;
 import static org.zed.tcg.ExecutionEnabler.*;
 import static org.zed.trans.ExecutionPathPrinter.addPrintStmt;
@@ -126,10 +128,24 @@ public class AppTest
 
     public void testApp3() throws Exception {
         String resourceDir = "resources/dataset/";
-        String testFileName = "Test1";
+        String testFileName = "Example";
         String testFileNameJava = testFileName+".java";
         String filePath = resourceDir + testFileNameJava;
         ModelConfig modelConfig = new ModelConfig();
-        runConversations(1, modelConfig,filePath);
+        try {
+            runConversations(1, modelConfig, filePath);
+
+        }
+        catch (Exception e) {
+            System.err.println("Error during runConversations: " + e.getMessage());
+            //把验证失败的代码保存到文件中
+            Files.move(Path.of(filePath),Path.of("resources/failedDataset/"+testFileNameJava), StandardCopyOption.REPLACE_EXISTING);
+            e.printStackTrace();
+        }
+    }
+    public void testApp4() throws Exception {
+        String resourceDir = "resources/dataset/";
+        ModelConfig modelConfig = new ModelConfig();
+        runConversationForDir(1, modelConfig, resourceDir);
     }
 }

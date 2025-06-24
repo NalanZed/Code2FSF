@@ -11,7 +11,7 @@ public class Abs {
     }
 
     public static void main(String[] args) {
-        int num = 143;
+        int num = -107;
         int result = Abs.Abs(num);
     }
 }

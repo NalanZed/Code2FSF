@@ -15,11 +15,14 @@ import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 
 public class LogManager {
 
-    private static final String LOG_DIR = "resources/log/";
-    private static final String TRANS_WORK_DIR = "resources/trans";
+    private static final String RESOURCE_DIR = "resources";
+    private static final String LOG_DIR = RESOURCE_DIR + "/" +"log";
+    private static final String TRANS_WORK_DIR = RESOURCE_DIR + "/" + "trans";
     private static final String LOG_FILE_SUFFIX = ".txt";
     private static final String ADDED_PRINT_CODES_DIR = TRANS_WORK_DIR + "/"+ "addedPrintCodes";
     private static final String TRANS_SOURCE_CODES_DIR = TRANS_WORK_DIR + "/"+ "sourceCodes";
+    private static final String SUCC_DATASET_DIR = RESOURCE_DIR + "/" + "succDataset";
+    private static final String FAILED_DATASET_DIR = RESOURCE_DIR + "/" + "failedDataset";
 
 
     public static void appendMessage(String codePath, ModelMessage msg, String model) throws IOException {
@@ -197,6 +200,18 @@ public class LogManager {
         return program;
     }
 
+    public static void copyFileToSuccDataset(String filePath) throws IOException {
+        File file = new File(filePath);
+        String name = file.getName();
+        String succFilePath = SUCC_DATASET_DIR + "/" + name;
+        Files.copy(Path.of(filePath), Path.of(succFilePath), REPLACE_EXISTING);
+    }
+    public static void copyFileToFailedDataset(String filePath) throws IOException {
+        File file = new File(filePath);
+        String name = file.getName();
+        String succFilePath = FAILED_DATASET_DIR + "/" + name;
+        Files.copy(Path.of(filePath), Path.of(succFilePath), REPLACE_EXISTING);
+    }
 //    public static void main(String[] args) {
 //        String content = getLastestAssistantMsgFromLog(LOG_DIR + "/" + "deepseek-chat/"+"log-Abs.txt");
 //        List<String[]> TDs = parseTD(content);
