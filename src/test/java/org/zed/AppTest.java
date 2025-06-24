@@ -125,8 +125,11 @@ public class AppTest
 
 
     public void testApp3() throws Exception {
-        String program = file2String("resources/trans/formattedCodes/Example.java");
-        String s = (program);
-        System.out.println(s);
+        String resourceDir = "resources/dataset/";
+        String testFileName = "Test1";
+        String testFileNameJava = testFileName+".java";
+        String filePath = resourceDir + testFileNameJava;
+        ModelConfig modelConfig = new ModelConfig();
+        runConversations(1, modelConfig,filePath);
     }
 }

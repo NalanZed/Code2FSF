@@ -43,13 +43,13 @@ public class TestCaseAutoGenerator {
             variableNames.add(paramName);
         }
         //暴力生成测试用例
-        int maxCount = 1000;
+        int maxCount = 10000;
         boolean isOK = false;
         while(--maxCount >= 0) {
             for (Parameter p : parameters) {
                 Type type = p.getType();
-                Object o = generateRandomValue(type);
-                values.add(o);
+                String o = generateRandomValue(type);
+                collectValue(type, values, o);
             }
             if(isAcceptableCase(T,variableNames,values)){
                 isOK = true;
@@ -63,6 +63,44 @@ public class TestCaseAutoGenerator {
             return null;
         }
         return values.toArray(new Object[0]);
+    }
+    public static void collectValue(Type type, List<Object> values,String value) {
+        String typeName = type.asString();
+        switch (typeName) {
+            case "int": case "short": case "byte": case "long":
+                values.add(Integer.parseInt(value));
+                break;
+            case "float":
+                values.add(Float.parseFloat(value));
+                break;
+            case "double":
+                values.add(Double.parseDouble(value));
+                break;
+            case "boolean":
+                values.add(Boolean.parseBoolean(value));
+                break;
+            case "char":
+                values.add(Character.toString(value.charAt(0)));
+                break;
+            case "int[]":
+                values.add(value);
+                break;
+            case "char[]":
+                values.add(value);
+                break;
+            case "String":
+                values.add(value);
+                break;
+            case "double[]":
+                values.add(value);
+                break;
+            default:
+                if (typeName.endsWith("[]")) {
+                    values.add("new " + typeName.replace("[]", "[0]"));
+                } else {
+                    values.add(value);
+                }
+        }
     }
     /**
      * 求解逻辑表达式

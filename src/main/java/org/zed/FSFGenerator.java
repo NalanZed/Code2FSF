@@ -91,6 +91,7 @@ public class FSFGenerator {
     public static Result valid1Path(String pureProgram,List<String> prePathConstrains,String T,String D) throws Exception {
         //构造当前测试约束
         String conExpr = constructConstrain(T,prePathConstrains);
+        System.out.println("当前测试用例生成条件为：" + conExpr);
         //生成main方法，即测试用例
         String mainMd = ExecutionEnabler.generateMainMdUnderExpr(conExpr,pureProgram);
         //给测试函数插桩
@@ -118,50 +119,51 @@ public class FSFGenerator {
             List<String[]> FSF = LogManager.getLastestTDsFromLog(logPath);
             count++;
             Result r = new Result(0,"","");
-            if(count <= maxRounds){
                 //对每一个TD进行验证
-                for(String[] td : FSF) {
-                    String T = td[0];
-                    String D = td[1];
-                    String pureProgram = LogManager.file2String(inputFilePath);
-                    List<String> prePathConstrains = new ArrayList<>();
+            for(String[] td : FSF) {
+                String T = td[0];
+                String D = td[1];
+                String pureProgram = LogManager.file2String(inputFilePath);
+                List<String> prePathConstrains = new ArrayList<>();
 
-                    while(r.getStatus() == 0){
-                        //对一个TD下所有路径验证
-                        r = valid1Path(pureProgram, prePathConstrains, T, D);
+                while(true){
+                    //对一个TD下所有路径验证
+                    r = valid1Path(pureProgram, prePathConstrains, T, D);
+                    if (r.getStatus() == 0) {
                         prePathConstrains.add(r.getPathConstrain());
-                    }
-                    if (r.getStatus() == 3) { //status 为 3 表示 路径已经全部覆盖
-                        System.out.println("T：" + T + "\n" + "D: " + D + "\n" + "验证通过");
-                        continue;
-                    }
-                    if (r.getStatus() == 2) {
-                        System.out.println("T：" + T + "\n" + "D: " + D + "\n" + "验证出错");
-                        System.out.println("反例如下：\n" + r.getCounterExample());
-                        break;
-                    }
-                    if (r.getStatus() == 1) {
-                        System.out.println("验证过程出错,");
+                    }else{
                         break;
                     }
                 }
-                if(r.getStatus() == 2){
-                    ModelMessage msg = new ModelMessage("user","现在经检验当变量赋值为"+r.getCounterExample()+"时，与所有TD约束都不相符，请结合这个例子重新回答！");
-                    fsfPrompt.addMessage(msg);
-                    LogManager.appendMessage(fsfPrompt.getCodePath(),msg,fsfPrompt.getModel());
+                if (r.getStatus() == 3) { //status 为 3 表示 路径已经全部覆盖
+                    System.out.println("T：" + T + "\n" + "D: " + D + "\n" + "验证通过");
                     continue;
                 }
-                if(r.getStatus() == 3){
-                    System.out.println("FSF生成以及检验任务完成，生成的FSF通过检验，且符合要求");
-                    return;
-                }else{
-                    System.out.println("本次任务失败!,r.status =" + r.getStatus());
-                    return ;
+                if (r.getStatus() == 2) {
+                    System.out.println("T：" + T + "\n" + "D: " + D + "\n" + "验证出错");
+                    System.out.println("反例如下：\n" + r.getCounterExample());
+                    break;
                 }
-            } else {
-                System.out.println("对话轮数超过最大值" + maxRounds + "，任务失败!");
+                if (r.getStatus() == 1) {
+                    System.out.println("验证过程出错,");
+                    break;
+                }
+            }
+            if(r.getStatus() == 2){
+                ModelMessage msg = new ModelMessage("user","现在经检验当变量赋值为"+r.getCounterExample()+"时，与所有TD约束都不相符，请结合这个例子重新回答！");
+                fsfPrompt.addMessage(msg);
+                LogManager.appendMessage(fsfPrompt.getCodePath(),msg,fsfPrompt.getModel());
+                continue;
+            }
+            if(r.getStatus() == 3){
+                System.out.println("FSF生成以及检验任务完成，生成的FSF通过检验，且符合要求");
+                return;
+            }else{
+                System.out.println("本次任务失败!,r.status =" + r.getStatus());
+                return ;
             }
         }
+        System.out.println("对话轮数超过最大值" + maxRounds + "，任务失败!");
     }
 
     public static void make1RoundConversation(ModelPrompt prompt,ModelConfig mc) throws IOException {

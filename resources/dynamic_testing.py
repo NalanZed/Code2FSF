@@ -151,12 +151,12 @@ def parse_execution_path(execution_output: str) -> List[str]:
 
     return execution_path
 
-def combind_T_and_preCt(T: str , preCts: List[str]):
+def combind_expr_and_list(expr: str, exprList: List[str]):
     #默认T和preCts中的Ct都是用()包围起来的
-    com_expr = T
-    for ct in preCts:
+    com_expr = expr
+    for ct in exprList:
         com_expr = f"{com_expr} && {ct}"
-    return com_expr
+    return com_expr.strip().strip("&&")
 
 def generate_logical_expression(t, previous_cts):
     """
@@ -505,9 +505,6 @@ def deal_with_spec_unit_json(spec_unit_json: str):
     D = spec_unit.D
     previous_cts = spec_unit.pre_constrains
 
-    #组装 combined_expr
-    combined_expr = combind_T_and_preCt(T,previous_cts)
-
     #运行程序,获得路径输出
     execution_output = run_java_code(program)
     if not execution_output:
@@ -530,13 +527,23 @@ def deal_with_spec_unit_json(spec_unit_json: str):
     solver_result = solver_check_z3(new_logic_expression)
     result = ""
     if solver_result == "OK":
-        result = Result(0,"",current_ct)
+        #组装 combined_expr
+        previous_cts.append(current_ct)
+        combined_expr = combind_expr_and_list(f"!({T})", previous_cts)
+        print("完成一轮路径验证后，当前!(T) && (previous_cts) && (current_ct): " + combined_expr)
+        scr = solver_check_z3(combined_expr)
+        if(scr == "OK"):
+            result = Result(3,"",current_ct)
+        else:
+            result = Result(0,"",current_ct)
         print("result:" + result.to_json())
     elif solver_result == "ERROR":
         result = Result(1,"",current_ct)
     else:
         result = Result(2,solver_result,"")
     # print("result:" + result.to_json())
+
+
 
 def get_ct_from_execution_path(execution_path:List[str]):
     ct = ""
@@ -638,7 +645,7 @@ def main():
     deal_with_spec_unit_json(spec_unit_json)
 
 def test_main_2():
-    combined_expr = combind_T_and_preCt(" (num>0) ",["(num > 1)","(num > 2)"])
+    combined_expr = combind_expr_and_list(" (num>0) ", ["(num > 1)", "(num > 2)"])
     print(combined_expr)
 
 def init_files() -> None:

@@ -23,11 +23,223 @@ public class Test1{
 *end* role user
 start role assistant
 ```
-T1: n > 0
+T1: n > 0 && n + 2 > 4
 D1: ans == 1
 
-T2: n <= 0
-D2: ans == 2
+T2: n > 0 && n + 2 <= 4
+D2: ans == 1
 
+T3: n <= 0
+D3: ans == 2
+```
+*end* role assistant
+start role user
+为下面的代码生成FSF:
+```
+public class Test1{
+    public static int test(int n){
+        int ans = 0;
+        if(n > 0){
+            int x = n + 2;
+            if(x > 4){
+                ans = 1;
+            }
+            else{
+                ans = 1;
+            }
+        }else{
+            ans = 2;
+        }
+        return ans;
+    }
+}
+
+```
+*end* role user
+start role assistant
+```
+T1: n > 0 && n + 2 > 4
+D1: ans == 1
+
+T2: n > 0 && n + 2 <= 4
+D2: ans == 1
+
+T3: n <= 0
+D3: ans == 2
+```
+*end* role assistant
+start role user
+为下面的代码生成FSF:
+```
+public class Test1{
+    public static int test(int n){
+        int ans = 0;
+        if(n > 0){
+            int x = n + 2;
+            if(x > 4){
+                ans = 1;
+            }
+            else{
+                ans = 1;
+            }
+        }else{
+            ans = 2;
+        }
+        return ans;
+    }
+}
+
+```
+*end* role user
+start role assistant
+```
+T1: n > 0 && (n + 2) > 4
+D1: ans == 1
+
+T2: n > 0 && (n + 2) <= 4
+D2: ans == 1
+
+T3: n <= 0
+D3: ans == 2
+```
+*end* role assistant
+start role user
+为下面的代码生成FSF:
+```
+public class Test1{
+    public static int test(int n){
+        int ans = 0;
+        if(n > 0){
+            int x = n + 2;
+            if(x > 4){
+                ans = 1;
+            }
+            else{
+                ans = 1;
+            }
+        }else{
+            ans = 2;
+        }
+        return ans;
+    }
+}
+
+```
+*end* role user
+start role assistant
+```
+T1: n > 0 && n + 2 > 4
+D1: ans == 1
+
+T2: n > 0 && n + 2 <= 4
+D2: ans == 1
+
+T3: n <= 0
+D3: ans == 2
+```
+*end* role assistant
+start role user
+为下面的代码生成FSF:
+```
+public class Test1{
+    public static int test(int n){
+        int ans = 0;
+        if(n > 0){
+            int x = n + 2;
+            if(x > 100){
+                ans = 1;
+            }
+            else{
+                ans = 1;
+            }
+        }else{
+            ans = 2;
+        }
+        return ans;
+    }
+}
+
+```
+*end* role user
+start role assistant
+```
+T1: n > 0 && n + 2 > 100
+D1: ans == 1
+
+T2: n > 0 && n + 2 <= 100
+D2: ans == 1
+
+T3: n <= 0
+D3: ans == 2
+```
+*end* role assistant
+start role user
+为下面的代码生成FSF:
+```
+public class Test1{
+    public static int test(int n){
+        int ans = 0;
+        if(n > 0){
+            int x = n + 2;
+            if(x > 100){
+                ans = 1;
+            }
+            else{
+                ans = 1;
+            }
+        }else{
+            ans = 2;
+        }
+        return ans;
+    }
+}
+
+```
+*end* role user
+start role assistant
+```
+T1: n > 0 && n + 2 > 100
+D1: ans == 1
+
+T2: n > 0 && n + 2 <= 100
+D2: ans == 1
+
+T3: n <= 0
+D3: ans == 2
+```
+*end* role assistant
+start role user
+为下面的代码生成FSF:
+```
+public class Test1{
+    public static int test(int n){
+        int ans = 0;
+        if(n > 0){
+            int x = n + 2;
+            if(x > 100){
+                ans = 1;
+            }
+            else{
+                ans = 1;
+            }
+        }else{
+            ans = 2;
+        }
+        return ans;
+    }
+}
+
+```
+*end* role user
+start role assistant
+```
+T1: n > 0 && n + 2 > 100
+D1: ans == 1
+
+T2: n > 0 && n + 2 <= 100
+D2: ans == 1
+
+T3: n <= 0
+D3: ans == 2
 ```
 *end* role assistant

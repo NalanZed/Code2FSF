@@ -3,7 +3,7 @@ public class Test1{
         int ans = 0;
         if(n > 0){
             int x = n + 2;
-            if(x > 4){
+            if(x > 100){
                 ans = 1;
             }
             else{
