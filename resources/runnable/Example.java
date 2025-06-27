@@ -15,7 +15,7 @@ public class Example {
     }
 
     public static void main(String[] args) {
-        int num = 72;
+        int num = 428;
         int result = Example.Abs(num);
     }
 }

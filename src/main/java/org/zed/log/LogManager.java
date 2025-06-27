@@ -62,7 +62,12 @@ public class LogManager {
         //从文件路径中提取文件名（在Java程序中，即类名）
         String logTitle = codePath.substring(codePath.lastIndexOf("/") + 1, codePath.lastIndexOf("."));
         logTitle = "log" + "-" + logTitle;
-        return LOG_DIR  + model + "/" + logTitle + LOG_FILE_SUFFIX;
+        return LOG_DIR  + "/" +model + "/" + logTitle + LOG_FILE_SUFFIX;
+    }
+    public static String codePath2FailedPath(String codePath){
+        //从文件路径中提取文件名（在Java程序中，即类名）
+        String title = codePath.substring(codePath.lastIndexOf("/") + 1);
+        return FAILED_DATASET_DIR  + "/" + title;
     }
     public static String codePath2AddedPrintPath(String codePath){
         //从文件路径中提取文件名（在Java程序中，即类名）

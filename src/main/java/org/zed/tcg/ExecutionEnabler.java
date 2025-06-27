@@ -14,7 +14,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 
-import static org.zed.tcg.TestCaseAutoGenerator.generateParamsDefUnderT;
+import static org.zed.tcg.TestCaseAutoGenerator.generateParamsDefUnderExpr;
 
 public class ExecutionEnabler {
 
@@ -27,8 +27,6 @@ public class ExecutionEnabler {
         classOpt.get().addMember(mainMethodDec);
         return cu.toString();
     }
-
-
     public static String generateMainMdUnderExpr(SpecUnit su) throws Exception {
         String program = su.getProgram();
         String T = su.getT();
@@ -50,7 +48,11 @@ public class ExecutionEnabler {
         builder.append("public static void main(String[] args) {\n");
 
         //3.拿到根据T生成的 param 以及 value
-        HashMap<String, String> testCaseMap = generateParamsDefUnderT(expr, md);
+        HashMap<String, String> testCaseMap = generateParamsDefUnderExpr(expr, md);
+        if(testCaseMap == null){
+            System.out.println("生成main函数失败,因为没有生成正确的testCaseMap");
+            return null;
+        }
 
         //4. 根据 testCase来组装main函数中的调用 static 方法前的参数定义
         if (parameters != null) {

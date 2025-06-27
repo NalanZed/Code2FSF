@@ -4,7 +4,6 @@ import com.github.javaparser.JavaParser;
 import com.github.javaparser.ast.CompilationUnit;
 import com.github.javaparser.ast.Node;
 import com.github.javaparser.ast.NodeList;
-import com.github.javaparser.ast.body.VariableDeclarator;
 import com.github.javaparser.ast.expr.*;
 import com.github.javaparser.ast.stmt.*;
 import com.github.javaparser.ast.visitor.ModifierVisitor;
@@ -20,7 +19,8 @@ public class ExecutionPathPrinter {
         String c1 = addPrintStatementForIfStmt(code);
         String c2 = addPrintStmtForAssignStmt(c1);
         String c3 = addPrintStmtForVariableDeclarationExpr(c2) ;
-        return c3;
+        String c4 = addPrintStmtForReturnStmt(c3);
+        return c4;
     }
 
     public static String addPrintStatementForIfStmt(String code){
@@ -160,7 +160,22 @@ public class ExecutionPathPrinter {
         return cu.toString();
     }
 
-    
+    public static String addPrintStmtForReturnStmt(String code) {
+        CompilationUnit cu = new JavaParser().parse(code).getResult().get();
+        cu.accept(new ModifierVisitor<Void>() {
+            @Override
+            public Visitable visit(ReturnStmt stmt, Void arg) {
+                Optional<Node> parentNode = stmt.getParentNode();
+                if(parentNode.isPresent() && parentNode.get() instanceof BlockStmt){
+                    int index = ((BlockStmt) parentNode.get()).asBlockStmt().getStatements().indexOf(stmt);
+                    Statement printStmt = generatePathPrintStmt(stmt);
+                    ((BlockStmt) parentNode.get()).addStatement(index,printStmt);
+                }
+                return super.visit(stmt, arg);
+            }
+        }, null);
+        return cu.toString();
+    }
     public static BlockStmt generatePathPrintBlock(IfStmt ifStmt){
         //0. 没有用{}的先加{}
         Statement thenStmt = ifStmt.getThenStmt();
@@ -213,22 +228,24 @@ public class ExecutionPathPrinter {
         printBlock.addStatement(0,printStmt);
         return printBlock;
     }
-    public static BlockStmt generatePathPrintBlock(ReturnStmt returnStmt){
-        // 1. 获取 return 的表达式（如果有）
+    public static Statement generatePathPrintStmt(ReturnStmt returnStmt){
+        // 获取 return 的表达式（如果有）
         Optional<Expression> returnExpr = returnStmt.getExpression();
+        //如果是常量，打印语句变量名 固定为 return_value
+        String returnValueName = returnExpr.get().toString();
 
         // 2. 生成打印语句
         Statement printStmt = new ExpressionStmt(new MethodCallExpr(
                 new NameExpr("System.out"),
                 "println",
                 NodeList.nodeList(new BinaryExpr(
-                        new StringLiteralExpr("Return statement: " + returnStmt + ", return value is: "),
+                        new StringLiteralExpr("return_value = " + returnValueName + " , current value of return_value : "),
                         returnExpr.orElse(new StringLiteralExpr("void")), // 处理无返回值的情况
                         BinaryExpr.Operator.PLUS
                 ))
         ));
         // 3. 将打印语句和原 return 语句包装成 BlockStmt
-        return new BlockStmt(NodeList.nodeList(printStmt, returnStmt));
+        return printStmt;
     }
     private static IfStmt handleIfElseChain(IfStmt ifStmt) {
         List<Expression> preIfConditions = new ArrayList<>();
@@ -303,13 +320,13 @@ public class ExecutionPathPrinter {
     
     public static void main(String[] args) {
         String dir = "resources/dataset";
-        String testFileName = "LCM";
+        String testFileName = "Test1";
         String testFileNameJava = testFileName+".java";
         String testFilePath = dir + "/" + testFileNameJava;
 
         String pureCode = TransFileOperator.file2String(testFilePath);
-        String targetCode = addPrintStmt(pureCode);
-//        String targetCode = addPrintStmtForVariableDeclarationExpr(pureCode);
+//        String targetCode = addPrintStmt(pureCode);
+        String targetCode = addPrintStmtForReturnStmt(pureCode);
         System.out.println(targetCode);
     }
 }

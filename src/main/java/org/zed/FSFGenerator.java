@@ -4,10 +4,14 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.zed.llm.*;
 import org.zed.log.LogManager;
 import org.zed.tcg.ExecutionEnabler;
+import org.zed.trans.TransWorker;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -93,11 +97,24 @@ public class FSFGenerator {
         String conExpr = constructConstrain(T,prePathConstrains);
         System.out.println("当前测试用例生成条件为：" + conExpr);
         //生成main方法，即测试用例
-        String mainMd = generateMainMdUnderExpr(conExpr,pureProgram);
+
+        //确保是ssmp
+        String ssmp = TransWorker.trans2SSMP(pureProgram);
+        if(ssmp.isEmpty()){
+            System.out.println("无法转换为单静态方法程序，无法检验！");
+            return null;
+        }
+
+        String mainMd = generateMainMdUnderExpr(conExpr,ssmp);
+        if(mainMd == null){
+            System.out.println("generateMainMdUnderExpr 返回 null");
+            return null;
+        }
         //给测试函数插桩
-        String addedPrintProgram = addPrintStmt(pureProgram);
+        String addedPrintProgram = addPrintStmt(ssmp);
         //组装可执行程序
         String runnableProgram = insertMainMdInSSMP(addedPrintProgram, mainMd);
+        System.out.println("runnableProgram: " + runnableProgram);
         //拿到SpecUnit
         SpecUnit su =new SpecUnit(runnableProgram,T,D,prePathConstrains);
         Result result = callTBFV4J(su);
@@ -113,12 +130,18 @@ public class FSFGenerator {
         ModelPrompt fsfPrompt = ModelPrompt.generateCode2FSFPrompt(modelName,inputFilePath);
         String logPath = LogManager.codePath2LogPath(inputFilePath, modelName);
         String pureProgram = LogManager.file2String(inputFilePath);
+        List<String[]> FSF;
         int count = 1;
         while(count <= maxRounds){
             System.out.println("["+ modelName +"]"+"正在进行第"+count+"轮对话");
             make1RoundConversation(fsfPrompt,mc);
             System.out.println("第"+count+"轮对话完成");
-            List<String[]> FSF = LogManager.getLastestTDsFromLog(logPath);
+            try{
+                FSF = LogManager.getLastestTDsFromLog(logPath);
+            }catch (Exception e){
+                System.out.println("对话生成FSF失败，跳过本次任务");
+                return false;
+            }
             count++;
             Result r = null;
             String T = "";
@@ -141,7 +164,7 @@ public class FSFGenerator {
                     System.out.println("验证过程发生错误，没有返回result");
                     return false;
                 }else if (r.getStatus() == 3) { //status 为 3 表示 路径已经全部覆盖
-                    System.out.println("T：" + T + "\n" + "D: " + D + "\n" + "验证通过");
+                    System.out.println("T：" + T + " ; " + "D: " + D + "====>" + "验证通过");
                 }else{
                     break;
                 }
@@ -190,7 +213,13 @@ public class FSFGenerator {
         String[] filePaths = LogManager.fetchSuffixFilePathInDir(inputDir,".java");
         int totalTaskNum = filePaths.length;
         for (String filePath : filePaths) {
+
             System.out.println("Processing file: " + filePath + " (" + (++taskCount) + "/" + totalTaskNum + ")");
+            String canNotHandleFilePath = LogManager.codePath2FailedPath(filePath);
+            if(Files.exists(Path.of(canNotHandleFilePath))){
+                System.out.println("文件已存在于failedDataset目录中，跳过");
+                continue;
+            }
             try{
                 boolean succ = runConversations(maxRounds, mc, filePath);
                 if(succ) {
@@ -275,6 +304,7 @@ public class FSFGenerator {
             runConversations(maxRounds, mc, inputFilePath);
         }
         else{
+            inputDir = TransWorker.pickSSMPCodes(inputDir);
             runConversationForDir(maxRounds, mc, inputDir);
         }
     }
@@ -282,11 +312,5 @@ public class FSFGenerator {
     public static void testMain2() throws Exception {
 
     }
-
-    //测试 transfer2SSMP
-    public static void testMain3() throws Exception {
-        pickSSMPCodes("resources/dataset/Example.java");
-    }
-
 
 }

@@ -6,7 +6,6 @@ import com.github.javaparser.ast.body.MethodDeclaration;
 import com.github.javaparser.ast.body.Parameter;
 import com.github.javaparser.ast.type.Type;
 import org.mvel2.MVEL;
-import org.zed.trans.TransFileOperator;
 
 import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
@@ -17,15 +16,21 @@ import static org.zed.trans.ExecutionPathPrinter.addPrintStmt;
 public class TestCaseAutoGenerator {
 
     //为函数生成符合 T 要求的参数赋值，Map<key,value>，key为参数名，value就是具体赋值
-    public static HashMap<String,String> generateParamsDefUnderT(String T, MethodDeclaration md) throws Exception {
+    public static HashMap<String,String> generateParamsDefUnderExpr(String expr, MethodDeclaration md){
         HashMap<String,String> testCase = new HashMap<>();
+        Object[] values;
         List<Parameter> params = md.getParameters();
         if (params == null || params.isEmpty()) {
            return testCase;
         }
-        Object[] values = generateAcceptableValue(T, params);
-        if (values == null || values.length == 0) {
-            throw new Exception("generateAcceptableValue 没有正确为参数赋值");
+        try{
+            values = generateAcceptableValue(expr, params);
+            if (values == null || values.length == 0) {
+                throw new Exception("generateAcceptableValue 没有正确为参数赋值");
+            }
+        } catch (Exception e) {
+            System.out.println("生成参数赋值时异常！");
+            return null;
         }
         for(int i = 0 ; i < values.length ; i++){
             testCase.put(params.get(i).getNameAsString(),Objects.toString(values[i]));
@@ -165,7 +170,7 @@ public class TestCaseAutoGenerator {
                 return randomIntGen();
             case "float": return randomFloatGen();
             case "double": return randomDoubleGen();
-            case "boolean": return "false";
+            case "boolean": return randomBooleanGen();
             case "char": return randomCharGen();
             case "int[]": return randomIntArrayGen();
             case "char[]": return randomCharArrayGen();
@@ -178,6 +183,16 @@ public class TestCaseAutoGenerator {
                 return "null";
         }
     }
+
+    private static String randomBooleanGen() {
+        int randomInt = ThreadLocalRandom.current().nextInt();
+        if(randomInt % 2 == 0){
+            return "true";
+        }else {
+            return "false";
+        }
+    }
+
     public static String randomIntGen(){
         int n = ThreadLocalRandom.current().nextInt(-500,500);
         return String.valueOf(n);

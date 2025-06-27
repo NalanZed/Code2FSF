@@ -42,8 +42,8 @@ public class LCM {
     }
 
     public static void main(String[] args) {
-        int num1 = 303;
-        int num2 = 0;
+        int num1 = 0;
+        int num2 = -407;
         int result = LCM.lcm(num1, num2);
     }
 }

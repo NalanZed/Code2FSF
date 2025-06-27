@@ -93,7 +93,7 @@ public class TransFileOperator {
     /*
      * @description 把非static方法，加上 static 修饰符，并转移到 ONE_STATIC_MD_CODES_DIR 目录
      */
-    public static void addStaticFlag4OneNormalMd() throws IOException {
+    public static void addStaticFlag4OneNormalMdInDefaultDir() throws IOException {
         int count = 0;
         String addedStaticFlagDir = ADDED_STATIC_FLAG_DIR;
         if(Files.exists(Paths.get(addedStaticFlagDir))) {
@@ -133,6 +133,19 @@ public class TransFileOperator {
             count++;
         }
         System.out.println( "为"+ count + "个文件的非静态方法添加了static标志，处理完成！" );
+    }
+    public static String addStaticFlag2SNMP(String snmp){
+        JavaParser parser = new JavaParser();
+        CompilationUnit cu = parser.parse(snmp).getResult().get();
+        //给所有非静态方法添加static标志
+        cu.findAll(com.github.javaparser.ast.body.MethodDeclaration.class).stream()
+                .filter(md -> !md.isStatic())
+                .forEach(m -> {
+                    NodeList<Modifier> modifiers = m.getModifiers();
+                    modifiers.add(Modifier.staticModifier());
+                    m.setModifiers(modifiers);
+                });
+        return cu.toString();
     }
     public static boolean hasMainMdProgram(String program){
         JavaParser parser = new JavaParser();
@@ -329,6 +342,34 @@ public class TransFileOperator {
         } catch (IOException e) {
             System.out.println("写入文件时发生错误: " + e.getMessage());
         }
+    }
+
+    public static boolean isSSMP(String program){
+        if(countStaticMethodProgram(program) == 1){
+            return true;
+        }
+        return false;
+    }
+    //只含有一个普通方法的程序
+    public static boolean isSNMP(String program){
+        if(countNormalMethodProgram(program) == 1){
+            return true;
+        }
+        return false;
+    }
+
+    public static String trans2SSMP(String pureProgram){
+        if(isSSMP(pureProgram)){
+            return pureProgram;
+        }
+        if(isSNMP(pureProgram)){
+            String transProgram = addStaticFlag2SNMP(pureProgram);
+            if(isSSMP(transProgram)){
+                return transProgram;
+            }
+        }
+        System.out.println("转换为SSMP失败!");
+        return "";
     }
 
 }

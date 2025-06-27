@@ -2,7 +2,7 @@ package org.zed.trans;
 
 import java.io.IOException;
 
-import static org.zed.trans.TransFileOperator.ADDED_PRINT_CODES_DIR;
+import static org.zed.trans.TransFileOperator.ONE_STATIC_MD_CODES_DIR;
 
 public class TransWorker {
     public static void prepareSourceCodes(String sourceCodesPath) throws IOException {
@@ -15,17 +15,20 @@ public class TransWorker {
         prepareSourceCodes(sourceCodesPath);
     }
 
-    public static void pickSSMPCodes(String sourceCodesPath) throws Exception {
+    public static String pickSSMPCodes(String sourceCodesPath) throws Exception {
         //0. 准备工作目录和源代码
         initTransWork(sourceCodesPath);
         //1. 给程序分类
         TransFileOperator.classifySourceCodes();
-        TransFileOperator.addStaticFlag4OneNormalMd();
+        TransFileOperator.addStaticFlag4OneNormalMdInDefaultDir();
         // 清理中间文件
         TransFileOperator.cleanUnusableFilesInTrans();
+        return ONE_STATIC_MD_CODES_DIR;
     }
 
-
+    public static String trans2SSMP(String pureProgram){
+       return TransFileOperator.trans2SSMP(pureProgram);
+    }
 
 
     public static String getPrintProgram(String fileName){

@@ -38,3 +38,7 @@ build/
 .DS_Storeresources/config/*
 resources/config/*
 resources/config/*
+resources/trans/*.java
+resources/failedDataset/*
+resources/runnable/*
+resources/log/*
