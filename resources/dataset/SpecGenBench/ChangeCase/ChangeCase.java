@@ -5,11 +5,11 @@ public class ChangeCase {
     if (c > 'z') {
       result = c;
     } else if (c >= 'a') {
-      result =  (char)(c - 'a' + 'A');
+      result = (char)(c - 'a' + 'A');
     } else if (c > 'Z') {
       result =  c;
     } else if (c >= 'A') {
-      result =  (char)(c - 'A' + 'a');
+      result = (char)(c - 'A' + 'a');
     } else {
       result = c;
     }

@@ -206,12 +206,15 @@ public class TestCaseAutoGenerator {
         return String.valueOf(n);
     }
     public static String randomCharGen() {
-        int choice = ThreadLocalRandom.current().nextInt(4); // 0: A-Z, 1: a-z, 2: 0-9
+        int choice = ThreadLocalRandom.current().nextInt(6); // 0: A-Z, 1: a-z, 2: 0-9
         char c = switch (choice) {
             case 0 -> (char) ThreadLocalRandom.current().nextInt('A', 'Z' + 1);
             case 1 -> (char) ThreadLocalRandom.current().nextInt('a', 'z' + 1);
             case 2 -> (char) ThreadLocalRandom.current().nextInt('0', '9' + 1);
-            case 3 -> (char) ThreadLocalRandom.current().nextInt('z' + 1, '~' + 1);
+            case 3 -> (char) ThreadLocalRandom.current().nextInt('Z' + 1, 'a' - 1);
+            case 4 -> (char) ThreadLocalRandom.current().nextInt('z' + 1, '~');
+            case 5 -> (char) ThreadLocalRandom.current().nextInt('9' + 1, 'A' - 1);
+            case 6 -> (char) ThreadLocalRandom.current().nextInt('!', '0' - 1);
             default -> throw new IllegalStateException();
         };
         return String.valueOf(c);

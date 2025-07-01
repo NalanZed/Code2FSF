@@ -12,6 +12,9 @@ public class Test1{
         }else{
             ans = 2;
         }
+        if(n < 0){
+            ans = 1;
+        }
         return ans;
     }
 }

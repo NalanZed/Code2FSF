@@ -32,7 +32,8 @@ public class ExecutionPathPrinter {
                 // 1. 首先处理嵌套的if语句（递归处理then和else部分）
                 if (ifStmt.getThenStmt() instanceof IfStmt) {
                     ifStmt.setThenStmt(visit(ifStmt.getThenStmt().asIfStmt(), arg));
-                } else if (ifStmt.getThenStmt() instanceof BlockStmt) {
+                }
+                else if (ifStmt.getThenStmt() instanceof BlockStmt) {
                     BlockStmt thenBlock = ifStmt.getThenStmt().asBlockStmt();
                     NodeList<Statement> newStatements = new NodeList<>();
                     for (Statement stmt : thenBlock.getStatements()) {
@@ -46,23 +47,24 @@ public class ExecutionPathPrinter {
                 }
 
                 // 处理else部分中的嵌套if
-                if (ifStmt.getElseStmt().isPresent()) {
-                    Statement elseStmt = ifStmt.getElseStmt().get();
-                    if (elseStmt instanceof IfStmt) {
-                        ifStmt.setElseStmt(visit(elseStmt.asIfStmt(), arg));
-                    } else if (elseStmt instanceof BlockStmt) {
-                        BlockStmt elseBlock = elseStmt.asBlockStmt();
-                        NodeList<Statement> newStatements = new NodeList<>();
-                        for (Statement stmt : elseBlock.getStatements()) {
-                            if (stmt instanceof IfStmt) {
-                                newStatements.add(visit(stmt.asIfStmt(), arg));
-                            } else {
-                                newStatements.add(stmt);
-                            }
-                        }
-                        elseBlock.setStatements(newStatements);
-                    }
-                }
+//                if (ifStmt.getElseStmt().isPresent()) {
+//                    Statement elseStmt = ifStmt.getElseStmt().get();
+//                    if (elseStmt instanceof IfStmt) {
+//                        ifStmt.setElseStmt(visit(elseStmt.asIfStmt(), arg));
+//                    }
+////                    else if (elseStmt instanceof BlockStmt) {
+////                        BlockStmt elseBlock = elseStmt.asBlockStmt();
+////                        NodeList<Statement> newStatements = new NodeList<>();
+////                        for (Statement stmt : elseBlock.getStatements()) {
+////                            if (stmt instanceof IfStmt) {
+////                                newStatements.add(visit(stmt.asIfStmt(), arg));
+////                            } else {
+////                                newStatements.add(stmt);
+////                            }
+////                        }
+////                        elseBlock.setStatements(newStatements);
+////                    }
+//                }
                 // 2. 然后处理当前if语句的插桩（只处理最外层的if-elseif-else链）
                 return handleIfElseChain(ifStmt);
             }
@@ -84,6 +86,7 @@ public class ExecutionPathPrinter {
                     AssignExpr assignExpr = expr.asAssignExpr();
                     String varName = assignExpr.getTarget().toString();
                     Expression value = assignExpr.getValue();
+                    String valueStr = value.toString().replace("(char)","");
                     String op = assignExpr.getOperator().asString();
 
                     // 生成打印语句（格式：System.out.println("变量名: " + 变量名 + ", 当前值: " + 值);）
@@ -91,7 +94,7 @@ public class ExecutionPathPrinter {
                             new NameExpr("System.out"),
                             "println",
                             NodeList.nodeList(new BinaryExpr(
-                                    new StringLiteralExpr(varName + " " + op + " " + value + ", current value of " + varName + ": "),
+                                    new StringLiteralExpr(varName + " " + op + " " + valueStr + ", current value of " + varName + ": "),
                                     new NameExpr(varName),
                                     BinaryExpr.Operator.PLUS
                             ))
@@ -320,13 +323,14 @@ public class ExecutionPathPrinter {
     
     public static void main(String[] args) {
         String dir = "resources/dataset";
-        String testFileName = "Test1";
+        String testFileName = "ChangeCase1";
         String testFileNameJava = testFileName+".java";
         String testFilePath = dir + "/" + testFileNameJava;
 
         String pureCode = TransFileOperator.file2String(testFilePath);
 //        String targetCode = addPrintStmt(pureCode);
-        String targetCode = addPrintStmtForReturnStmt(pureCode);
+//        String targetCode = addPrintStmtForReturnStmt(pureCode);
+        String targetCode = addPrintStatementForIfStmt(pureCode);
         System.out.println(targetCode);
     }
 }

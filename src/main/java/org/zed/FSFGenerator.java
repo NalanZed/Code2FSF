@@ -252,7 +252,8 @@ public class FSFGenerator {
         Result res =null;
 
         String suJson = new ObjectMapper().writeValueAsString(su);
-        ProcessBuilder pb = new ProcessBuilder("python3", "resources/dynamic_testing.py", "--specunit",suJson);
+//        ProcessBuilder pb = new ProcessBuilder("python3", "resources/dynamic_testing.py", "--specunit",suJson);
+        ProcessBuilder pb = new ProcessBuilder("python3", "resources/z3_validation_runner.py", "--specunit",suJson);
         Process process = pb.start();
         BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
         String line;

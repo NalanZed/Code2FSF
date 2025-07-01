@@ -1,11 +1,11 @@
 import subprocess
 import re
-import random
 import json
 import argparse
 import time
 from typing import List
 from z3 import *
+import ast
 
 start_time = 0
 # Create the Z3 solver
@@ -13,52 +13,6 @@ solver = Solver()
 
 RESOURCE_DIR = "resources"
 RUNNABLE_DOR= "resources/runnable"
-
-def extract_variables(expr):
-    """
-    Extract variable names (identifiers starting with a letter) from the logical expression, excluding Z3 keywords.
-    """
-    z3_keywords = {"And", "Or", "Not", "Implies", "True", "False"}
-    all_vars = set(re.findall(r'\b[a-zA-Z]\w*\b', expr))
-    return all_vars - z3_keywords
-
-def preprocess_expression(expr):
-    """
-    Preprocess the logical expression:
-    1. Remove meaningless underscores (_)
-    2. Replace logical operators
-    3. Replace special symbols (e.g., → replaced with Implies)
-    4. Replace boolean values (true/false replaced with True/False)
-    """
-    # Remove meaningless underscores after variable names
-    expr = re.sub(r'\b(\w+)_\b', r'\1', expr)
-
-    # Replace boolean values
-    expr = expr.replace("true", "True").replace("false", "False")
-
-    # Replace logical operators
-    expr = expr.replace("&&", ",").replace("||", ",")
-    expr = re.sub(r'!\s*\((.*?)\)', r'Not(\1)', expr)  # !(...) -> Not(...)
-    # Replace '=' with '==' to avoid ===
-    expr = re.sub(r'(?<![<>=!])=(?!=)', '==', expr)  # Replace single "=" with "=="
-    expr = expr.replace("→", ", Implies")  # Replace logical symbols
-
-    # Replace logical operators with function form
-    expr = re.sub(r'\bAnd\b', 'And', expr)
-    expr = re.sub(r'\bOr\b', 'Or', expr)
-
-    # Remove extra spaces
-    expr = re.sub(r'\s+', ' ', expr)
-    return expr
-
-def parse_to_z3(user_expr, variables):
-    """
-    Parse the user input logical expression to a Z3-compatible expression, ensuring logical keywords are not replaced.
-    """
-    # Replace variable names with Z3 symbolic variable references
-    for var in variables:
-        user_expr = re.sub(rf'\b{var}\b', f'variables["{var}"]', user_expr)
-    return user_expr
 
 def get_class_name(java_code: str):
     match = re.search(r'class\s+(\w+)', java_code)
@@ -108,25 +62,6 @@ def combind_expr_and_list(expr: str, exprList: List[str]):
         com_expr = f"{com_expr} && !({ct})"
     return com_expr.strip().strip("&&")
 
-def generate_logical_expression(t, previous_cts):
-    """
-    Combine T and historical Ct conditions to generate a new logical expression.
-    :param t: Test condition T (for example, "x >= 0"). repeat_execution_with_ct
-    :param previous_cts: list of historical Ct conditions.
-    :return: indicates a new logical expression.
-    """
-    # The initial logical expression is T
-    combined_expression = t
-
-    # Use set weight removal to avoid duplicate Ct conditions
-    unique_cts = list(set(previous_cts))
-
-    # Accumulate all Ct conditions and invert them
-    for ct in unique_cts:
-        combined_expression = f"{combined_expression} && !( {ct} )"
-
-    return combined_expression
-
 def simplify_expression(expression):
     """
     Simplify logical expressions and remove redundant negations and redundant conditions.
@@ -136,36 +71,7 @@ def simplify_expression(expression):
     expression = re.sub(r'\s+', ' ', expression)  # Remove excess space
     return expression
 
-def solver_check_z3(logic_expr:str)->str:
-    try:
-        preprocessed_input = preprocess_expression(logic_expr)
-        variables = {}
-        variable_names = extract_variables(preprocessed_input)
-        for var in variable_names:
-            variables[var] = Int(var)
 
-        parsed_expr = parse_to_z3(preprocessed_input, variables)
-        z3_expr = eval(parsed_expr, {"variables": variables, "And": And, "Or": Or, "Not": Not, "Implies": Implies})
-        solver.add(z3_expr)
-
-        if solver.check() == sat:
-            print("表达式是可满足的")
-            model = solver.model()
-            print("满足条件的解:")
-            counter_example = ""
-            for v in variables.values():
-                print(f"{v} = {model[v]}")
-                counter_example = counter_example + f"{v} = {model[v]}" + ","
-            return counter_example.strip().strip(",")
-        else:
-            print("The expression is unsatisfiable")
-            #创建 Result 对象
-            return "OK"
-
-    except Exception as e:
-        print("solver check fail!")
-        print("错误信息:", e)
-        return "ERROR"
 
 def replace_variables(current_condition: str, variable: str, new_value: str) -> str:
     """
@@ -215,6 +121,160 @@ class SpecUnit:
     def __str__(self):
         return f"SpecUnit(name={self.program}, T={self.T}, D={self.D},pre_constrains={self.pre_constrains})"
 
+############# java_expr_z3_expr ##############
+def solver_check_z3(z3_expr:str)->str:
+    try:
+        solver = Solver()
+        solver.add(z3_expr)
+
+        if solver.check() == sat:
+            print("The expression is satisfiable ❌")
+            model = solver.model()
+            print(model)
+            return model
+        else:
+            print("The expression is unsatisfiable ✅")
+            #创建 Result 对象
+            return "OK"
+
+    except Exception as e:
+        print("solver check fail!")
+        print("错误信息:", e)
+        return "ERROR"
+
+    except Exception as e:
+        print("solver check fail!")
+        print("错误信息:", e)
+        return "ERROR"
+    
+def replace_char_literals(expr):
+    # 替换 Java 表达式中的字符字面量，如 'a' -> 97
+    return re.sub(r"'(.)'", lambda m: str(ord(m.group(1))), expr)
+
+def java_expr_to_z3(expr_str, var_types: dict):
+    """
+    :param expr_str: Java格式逻辑表达式，如 "(b1 == true && x > 5)"
+    :param var_types: dict，变量名到类型的映射，如 {'b1': 'bool', 'x': 'int'}
+    :return: Z3 表达式
+    """
+
+    # 构建 Z3 变量
+    z3_vars = {}
+    for name, vtype in var_types.items():
+        if vtype == 'bool':
+            z3_vars[name] = z3.Bool(name)
+        elif vtype == 'int':
+            z3_vars[name] = z3.Int(name)
+        elif vtype == 'char':
+            z3_vars[name] = z3.BitVec(name, 16)
+        else:
+            raise ValueError(f"不支持的变量类型: {vtype}")
+
+    # 替换 Java 风格语法
+    expr_str = replace_char_literals(expr_str)
+    expr_str = expr_str.replace("true", "True").replace("false", "False")
+    expr_str = expr_str.replace("&&", " and ").replace("||", " or ").replace("!", " not ")
+    expr_str = expr_str.replace("not =","!=") # 纠错，由于将! 替换为 not,会导致 != 变为 not =，需要纠正为 !=
+
+    # AST 转换器
+    class Z3Transformer(ast.NodeTransformer):
+        def visit_Name(self, node):
+            if node.id in z3_vars:
+                return z3_vars[node.id]
+            elif node.id in {"char","int", "boolean"}:
+                return ""
+            else:
+                raise ValueError(f"未知变量: {node.id}")
+
+        def visit_Constant(self, node):
+            if isinstance(node.value, (int, bool, str)):
+                return node.value
+            else:
+                raise ValueError(f"不支持的常量类型: {node.value}")
+
+        def visit_BoolOp(self, node):
+            values = [self.visit(v) for v in node.values]
+            if isinstance(node.op, ast.And):
+                return z3.And(*values)
+            elif isinstance(node.op, ast.Or):
+                return z3.Or(*values)
+            else:
+                raise ValueError(f"不支持的布尔操作: {type(node.op)}")
+
+        def visit_UnaryOp(self, node):
+            if isinstance(node.op, ast.Not):
+                return z3.Not(self.visit(node.operand))
+            if isinstance(node.op, ast.USub):
+                return self.visit(node.operand)
+            else:
+                raise ValueError(f"不支持的一元操作: {type(node.op)}")
+
+        def visit_Compare(self, node):
+            left = self.visit(node.left)
+            right = self.visit(node.comparators[0])
+            op = node.ops[0]
+
+            if isinstance(op, ast.Eq):
+                return left == right
+            if isinstance(op,ast.NotEq):
+                return left != right
+            elif isinstance(op, ast.NotEq):
+                return left != right
+            elif isinstance(op, ast.Gt):
+                return left > right
+            elif isinstance(op, ast.GtE):
+                return left >= right
+            elif isinstance(op, ast.Lt):
+                return left < right
+            elif isinstance(op, ast.LtE):
+                return left <= right
+            else:
+                raise ValueError(f"不支持的比较运算符: {type(op)}")
+
+        def visit_BinOp(self, node):
+            left = self.visit(node.left)
+            right = self.visit(node.right)
+            op = node.op
+
+            if isinstance(op, ast.Add):
+                return left + right
+            elif isinstance(op, ast.Sub):
+                return left - right
+            elif isinstance(op, ast.Mult):
+                return left * right
+            elif isinstance(op, ast.Div):
+                return left / right
+            elif isinstance(op, ast.Mod):
+                return left % right
+            # elif isinstance(op, ast.BitAnd):
+            #     return left & right
+            else:
+                raise ValueError(f"不支持的算术操作: {type(op)}")
+
+    parsed = ast.parse(expr_str, mode="eval")
+    z3_expr = Z3Transformer().visit(parsed.body)
+    return z3_expr
+
+def parse_md_def(java_code: str) -> dict:
+    lines = java_code.splitlines()
+    var_types = {}
+    for line in lines:
+        line = line.strip()
+        if line.startswith("public static") and "main" not in line:
+            return_type = line.split()[2]
+            params_def = line.split("(")[1].split(")")[0]
+            var_types["return_value"] = return_type
+            if params_def.strip():  # 非空才处理
+                params = params_def.split(",")
+                for param in params:
+                    param = param.strip()
+                    param_type = param.split()[0]
+                    param_name = param.split()[1]
+                    var_types[param_name] = param_type
+            print(var_types)
+    return var_types
+############# java_expr_z3_expr ##############
+
 def generate_test_spec_unit():
     program = read_java_code_from_file(RESOURCE_DIR + "/" + "TestCase.java")
     T = "num < 0"
@@ -254,17 +314,21 @@ def deal_with_spec_unit_json(spec_unit_json: str):
     print("new_d:" + new_d)
     # 构建新的逻辑表达式并检查可满足性
     negated_d = f"!({new_d})"
-    new_logic_expression = f"{T} && {current_ct} && {negated_d}"
+    new_logic_expression = f"({T}) && ({current_ct}) && ({negated_d})"
     new_logic_expression = simplify_expression(new_logic_expression)
     print(f"\nT && Ct && !D: {new_logic_expression}")
-    solver_result = solver_check_z3(new_logic_expression)
-    result = ""
+
+    var_types = parse_md_def(program)
+    z3_expr = java_expr_to_z3(new_logic_expression, var_types)
+    print("Z3表达式: " + str(z3_expr))
+    solver_result = solver_check_z3(z3_expr)
     if solver_result == "OK":
         #组装 combined_expr
         previous_cts.append(current_ct)
         combined_expr = combind_expr_and_list(f"({T})", previous_cts)
         print("完成一轮路径验证后，当前(T) && !(previous_cts) && !(current_ct): " + combined_expr)
-        scr = solver_check_z3(combined_expr)
+        z3_expr = java_expr_to_z3(new_logic_expression, var_types)
+        scr = solver_check_z3(z3_expr)
         if(scr == "OK"):
             result = Result(3,"",current_ct)
         elif(scr == "ERROR"):
@@ -359,10 +423,6 @@ def main():
         print("请提供输入SpecUnit对象的JSON字符串")
         return
     deal_with_spec_unit_json(spec_unit_json)
-
-def test_main_2():
-    combined_expr = combind_expr_and_list(" (num>0) ", ["(num > 1)", "(num > 2)"])
-    print(combined_expr)
 
 def test_main_3():
     execution_path = ["Evaluating if condition: (b1 == false) is evaluated as: true",

@@ -3,6 +3,7 @@ public class LCM {
     public static int lcm(int num1, int num2) {
         if (num1 == 0 || num2 == 0) {
             System.out.println("Evaluating if condition: (num1 == 0 || num2 == 0) is evaluated as: " + (num1 == 0 || num2 == 0));
+            System.out.println("return_value = -1 , current value of return_value : " + -1);
             return -1;
         } else {
             System.out.println("Evaluating if condition: !(num1 == 0 || num2 == 0) is evaluated as: " + !(num1 == 0 || num2 == 0));
@@ -34,16 +35,18 @@ public class LCM {
         }
         if (result % num1 == 0 && result % num2 == 0) {
             System.out.println("Evaluating if condition: (result % num1 == 0 && result % num2 == 0) is evaluated as: " + (result % num1 == 0 && result % num2 == 0));
+            System.out.println("return_value = result , current value of return_value : " + result);
             return result;
         } else {
             System.out.println("Evaluating if condition: !(result % num1 == 0 && result % num2 == 0) is evaluated as: " + !(result % num1 == 0 && result % num2 == 0));
         }
+        System.out.println("return_value = -1 , current value of return_value : " + -1);
         return -1;
     }
 
     public static void main(String[] args) {
         int num1 = 0;
-        int num2 = -407;
+        int num2 = -64;
         int result = LCM.lcm(num1, num2);
     }
 }
