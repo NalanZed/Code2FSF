@@ -22,7 +22,8 @@ import static org.zed.trans.ExecutionPathPrinter.addPrintStmt;
 import static org.zed.trans.TransWorker.pickSSMPCodes;
 
 public class FSFGenerator {
-
+    static final String YELLOW = "\u001B[33m";
+    static final String RESET = "\u001B[0m";
     private static final String LLMS_CONFIG_DIR = "resources/config";
 
     public static HashMap<String, ModelConfig> modelConfigs;
@@ -151,6 +152,7 @@ public class FSFGenerator {
             for(String[] td : FSF) {
                 T = td[0];
                 D = td[1];
+                System.out.println(YELLOW + "正在进行验证的TD对为：" + "T: " + T + " ; D: " + D + RESET);
                 while(true){
                     //对一个TD下所有路径验证
                     r = valid1Path(pureProgram, prePathConstrains, T, D);

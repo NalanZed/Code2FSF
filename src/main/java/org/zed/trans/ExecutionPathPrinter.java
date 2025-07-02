@@ -4,11 +4,15 @@ import com.github.javaparser.JavaParser;
 import com.github.javaparser.ast.CompilationUnit;
 import com.github.javaparser.ast.Node;
 import com.github.javaparser.ast.NodeList;
+import com.github.javaparser.ast.body.MethodDeclaration;
+import com.github.javaparser.ast.body.Parameter;
 import com.github.javaparser.ast.expr.*;
 import com.github.javaparser.ast.stmt.*;
 import com.github.javaparser.ast.visitor.ModifierVisitor;
 import com.github.javaparser.ast.visitor.Visitable;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -16,14 +20,16 @@ import java.util.Optional;
 public class ExecutionPathPrinter {
 
     public static String addPrintStmt(String code){
-        String c1 = addPrintStatementForIfStmt(code);
-        String c2 = addPrintStmtForAssignStmt(c1);
-        String c3 = addPrintStmtForVariableDeclarationExpr(c2) ;
-        String c4 = addPrintStmtForReturnStmt(c3);
-        return c4;
+        String c1 = addPrintStmtAtMethodBegin(code);
+        String c2 = addPrintStmtForIfStmt(c1);
+        String c3 = addPrintStmtForAssignStmt(c2);
+        String c4 = addPrintStmtForVariableDeclarationExpr(c3);
+        String c5 = addPrintStmtForReturnStmt(c4);
+//        String c6 = addPrintStmtForForLoopStmt(c5);
+        return c5;
     }
 
-    public static String addPrintStatementForIfStmt(String code){
+    public static String addPrintStmtForIfStmt(String code){
         CompilationUnit cu = new JavaParser().parse(code).getResult().get();
 
         cu.accept(new ModifierVisitor<Void>() {
@@ -46,24 +52,24 @@ public class ExecutionPathPrinter {
                     thenBlock.setStatements(newStatements);
                 }
 
-                // 处理else部分中的嵌套if
+                 //处理else部分中的嵌套if
 //                if (ifStmt.getElseStmt().isPresent()) {
 //                    Statement elseStmt = ifStmt.getElseStmt().get();
 //                    if (elseStmt instanceof IfStmt) {
 //                        ifStmt.setElseStmt(visit(elseStmt.asIfStmt(), arg));
 //                    }
-////                    else if (elseStmt instanceof BlockStmt) {
-////                        BlockStmt elseBlock = elseStmt.asBlockStmt();
-////                        NodeList<Statement> newStatements = new NodeList<>();
-////                        for (Statement stmt : elseBlock.getStatements()) {
-////                            if (stmt instanceof IfStmt) {
-////                                newStatements.add(visit(stmt.asIfStmt(), arg));
-////                            } else {
-////                                newStatements.add(stmt);
-////                            }
-////                        }
-////                        elseBlock.setStatements(newStatements);
-////                    }
+//                    else if (elseStmt instanceof BlockStmt) {
+//                        BlockStmt elseBlock = elseStmt.asBlockStmt();
+//                        NodeList<Statement> newStatements = new NodeList<>();
+//                        for (Statement stmt : elseBlock.getStatements()) {
+//                            if (stmt instanceof IfStmt) {
+//                                newStatements.add(visit(stmt.asIfStmt(), arg));
+//                            } else {
+//                                newStatements.add(stmt);
+//                            }
+//                        }
+//                        elseBlock.setStatements(newStatements);
+//                    }
 //                }
                 // 2. 然后处理当前if语句的插桩（只处理最外层的if-elseif-else链）
                 return handleIfElseChain(ifStmt);
@@ -72,6 +78,61 @@ public class ExecutionPathPrinter {
 
         return cu.toString();
     }
+
+    public static String addPrintStmtForForLoopStmt(String code) {
+        StringBuilder result = new StringBuilder();
+        String[] lines = code.split("\n");
+
+        Pattern forPattern = Pattern.compile("for\\((.*?);(.*?);(.*?)\\)");
+        boolean insideForLoop = false;
+        String loopCondition = "";
+
+        for (int i = 0; i < lines.length; i++) {
+            String rawLine = lines[i];
+            String line = rawLine.trim();
+
+            Matcher forMatcher = forPattern.matcher(line);
+
+            // 检测 for 循环语句
+            if (forMatcher.find()) {
+                insideForLoop = true;
+                loopCondition = forMatcher.group(2).trim();
+                result.append(rawLine).append("\n");
+
+                // 添加进入循环的变量状态打印
+                Matcher varMatcher = Pattern.compile("\\b([a-zA-Z_][a-zA-Z0-9_]*)\\b").matcher(loopCondition);
+                while (varMatcher.find()) {
+                    String var = varMatcher.group(1);
+                    if (!var.equals("true") && !var.equals("false")) {
+                        result.append("System.out.println(\"" + var + " = \" + " + var + ");\n");
+                    }
+                }
+                result.append("System.out.println(\"Entering loop with condition: ")
+                        .append(loopCondition)
+                        .append(" is evaluated as: \" + (")
+                        .append(loopCondition)
+                        .append("));\n");
+                continue;
+            }
+
+            // 检测循环结束括号
+            if (insideForLoop && line.equals("}")) {
+                result.append(rawLine).append("\n");
+                result.append("System.out.println(\"Exiting loop, condition no longer holds: ")
+                        .append(loopCondition)
+                        .append(" is evaluated as: \" + (")
+                        .append(loopCondition)
+                        .append("));\n");
+                insideForLoop = false;
+                continue;
+            }
+
+            // 默认情况直接追加原始代码行
+            result.append(rawLine).append("\n");
+        }
+        return result.toString();
+    }
+
 
     public static String addPrintStmtForAssignStmt(String code){
         CompilationUnit cu = new JavaParser().parse(code).getResult().get();
@@ -86,6 +147,7 @@ public class ExecutionPathPrinter {
                     AssignExpr assignExpr = expr.asAssignExpr();
                     String varName = assignExpr.getTarget().toString();
                     Expression value = assignExpr.getValue();
+                    //要把强制类型转换去掉
                     String valueStr = value.toString().replace("(char)","");
                     String op = assignExpr.getOperator().asString();
 
@@ -102,9 +164,15 @@ public class ExecutionPathPrinter {
 
                     //找到父blockStatement
                     Optional<Node> parentNode = stmt.getParentNode();
-                    if(parentNode.isPresent() && parentNode.get() instanceof BlockStmt){
+                    if(parentNode.isEmpty()){
+                        return super.visit(stmt, arg);
+                    }
+                    if(parentNode.get() instanceof BlockStmt){
                         int index = ((BlockStmt) parentNode.get()).asBlockStmt().getStatements().indexOf(stmt);
                         ((BlockStmt) parentNode.get()).asBlockStmt().addStatement(index+1,printStmt);
+                    }else if(parentNode.get() instanceof SwitchEntry){
+                        int index = ((SwitchEntry) parentNode.get()).getStatements().indexOf(stmt);
+                        ((SwitchEntry) parentNode.get()).addStatement(index+1,printStmt);
                     }
                 }
                 return super.visit(stmt, arg);
@@ -126,8 +194,8 @@ public class ExecutionPathPrinter {
                 // 处理变量声明并初始化（如 int x = 5;）
                 if (expr.isVariableDeclarationExpr()) {
                     VariableDeclarationExpr varDecl = expr.asVariableDeclarationExpr();
-                   // BlockStmt block = new BlockStmt();
-                   // block.addStatement(stmt);
+                    // BlockStmt block = new BlockStmt();
+                    // block.addStatement(stmt);
 
                     // 为每个变量生成打印语句
                     varDecl.getVariables().forEach(var -> {
@@ -163,6 +231,38 @@ public class ExecutionPathPrinter {
         return cu.toString();
     }
 
+    public static String addPrintStmtAtMethodBegin(String code){
+        CompilationUnit cu = new JavaParser().parse(code).getResult().get();
+        // 使用 ModifierVisitor 遍历并修改 AST
+        cu.accept(new ModifierVisitor<Void>() {
+            @Override
+            public Visitable visit(MethodDeclaration md, Void arg) {
+                if(md.isStatic() && !md.getNameAsString().equals("main")){
+                    for(Parameter param : md.getParameters()) {
+                        String type = param.getType().toString();
+                        Statement printStmt = new ExpressionStmt(new MethodCallExpr(
+                                new NameExpr("System.out"),
+                                "println",
+                                NodeList.nodeList(new BinaryExpr(
+                                        new StringLiteralExpr("Function input " + type + " " + "parameter " + param.getName() + " = "),
+                                        new NameExpr(param.getNameAsString()),
+                                        BinaryExpr.Operator.PLUS
+                                ))
+                        ));
+                        // 将打印语句插入到方法体的开头
+                        if (md.getBody().isPresent()) {
+                            BlockStmt body = md.getBody().get();
+                            body.addStatement(0, printStmt);
+                        }
+                    }
+                }
+                return super.visit(md, arg);
+            }
+        }, null);
+
+        return cu.toString();
+    }
+
     public static String addPrintStmtForReturnStmt(String code) {
         CompilationUnit cu = new JavaParser().parse(code).getResult().get();
         cu.accept(new ModifierVisitor<Void>() {
@@ -170,9 +270,28 @@ public class ExecutionPathPrinter {
             public Visitable visit(ReturnStmt stmt, Void arg) {
                 Optional<Node> parentNode = stmt.getParentNode();
                 if(parentNode.isPresent() && parentNode.get() instanceof BlockStmt){
+                    //return expr;
+                    //这里插桩的是 return_value = expr, current value of return_value: expr
                     int index = ((BlockStmt) parentNode.get()).asBlockStmt().getStatements().indexOf(stmt);
                     Statement printStmt = generatePathPrintStmt(stmt);
                     ((BlockStmt) parentNode.get()).addStatement(index,printStmt);
+
+//                    //return expr;
+//                    //这里插桩的 expr = expr, current value of expr: expr
+//                    //要插入两条语句，因为不确定LLM生成D时用的是 return_value,还是 expr
+//                    Optional<Expression> returnExpr = stmt.getExpression();
+//                    //如果是常量，打印语句变量名 固定为 return_value
+//                    String returnValueName = returnExpr.get().toString();
+//                    printStmt = new ExpressionStmt(new MethodCallExpr(
+//                            new NameExpr("System.out"),
+//                            "println",
+//                            NodeList.nodeList(new BinaryExpr(
+//                                    new StringLiteralExpr(returnValueName + " = " + returnValueName + ", current value of " + returnValueName + ": "),
+//                                    returnExpr.orElse(new StringLiteralExpr("void")), // 处理无返回值的情况
+//                                    BinaryExpr.Operator.PLUS
+//                            ))
+//                    ));
+//                    ((BlockStmt) parentNode.get()).asBlockStmt().addStatement(index,printStmt);
                 }
                 return super.visit(stmt, arg);
             }
@@ -320,17 +439,18 @@ public class ExecutionPathPrinter {
 
         return ifStmt;
     }
-    
+
     public static void main(String[] args) {
-        String dir = "resources/dataset";
-        String testFileName = "ChangeCase1";
+        String dir = "resources/dataset/someBench/";
+        String testFileName = "CalculatorShuffled";
         String testFileNameJava = testFileName+".java";
         String testFilePath = dir + "/" + testFileNameJava;
 
         String pureCode = TransFileOperator.file2String(testFilePath);
-//        String targetCode = addPrintStmt(pureCode);
+        String targetCode = addPrintStmt(pureCode);
 //        String targetCode = addPrintStmtForReturnStmt(pureCode);
-        String targetCode = addPrintStatementForIfStmt(pureCode);
+//        String targetCode = addPrintStmtAtMethodBegin(pureCode);
+//        String targetCode = addPrintStmtForForLoopStmt(pureCode);
         System.out.println(targetCode);
     }
 }

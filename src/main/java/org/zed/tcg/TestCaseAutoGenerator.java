@@ -194,7 +194,7 @@ public class TestCaseAutoGenerator {
     }
 
     public static String randomIntGen(){
-        int n = ThreadLocalRandom.current().nextInt(-500,500);
+        int n = ThreadLocalRandom.current().nextInt(-50,50);
         return String.valueOf(n);
     }
     public static String randomFloatGen(){
@@ -202,11 +202,20 @@ public class TestCaseAutoGenerator {
         return String.valueOf(n);
     }
     public static String randomDoubleGen(){
+        int choice = ThreadLocalRandom.current().nextInt(2); // 0: A-Z, 1: a-z, 2: 0-9
+        int sign = 1;
+        if(choice == 0){
+            sign = -1;
+        }else if(choice == 1){
+            sign = 1;
+        }
         double n = ThreadLocalRandom.current().nextDouble(0.0, 10.0);
+//        n = Math.round(n * 1000.0) / 1000.0;
+        n = n * sign;
         return String.valueOf(n);
     }
     public static String randomCharGen() {
-        int choice = ThreadLocalRandom.current().nextInt(6); // 0: A-Z, 1: a-z, 2: 0-9
+        int choice = ThreadLocalRandom.current().nextInt(7); // 0: A-Z, 1: a-z, 2: 0-9
         char c = switch (choice) {
             case 0 -> (char) ThreadLocalRandom.current().nextInt('A', 'Z' + 1);
             case 1 -> (char) ThreadLocalRandom.current().nextInt('a', 'z' + 1);
@@ -217,7 +226,11 @@ public class TestCaseAutoGenerator {
             case 6 -> (char) ThreadLocalRandom.current().nextInt('!', '0' - 1);
             default -> throw new IllegalStateException();
         };
-        return String.valueOf(c);
+        if(c == '\\'){
+            return randomCharGen();
+        }else{
+            return String.valueOf(c);
+        }
     }
     public static String randomIntArrayGen(){
         StringBuilder sb = new StringBuilder();

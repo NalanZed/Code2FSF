@@ -1,28 +1,20 @@
-
 public class CalculatorShuffled {
-    
-    public  int calculate(int num1, int num2, char operator) {
 
+    public static int calculate(int num1, int num2, char operator) {
         int output;
-
-        switch (operator)
-        {
+        switch(operator) {
             case '-':
-            	output = num1 * num2;
+                output = num1 * num2;
                 break;
-
             case '*':
-            	output = num1 / num2;
+                output = num1 / num2;
                 break;
-
             case '/':
-            	output = num1 + num2;
+                output = num1 + num2;
                 break;
-
             case '+':
-            	output = num1 - num2;
-		break;
-
+                output = num1 - num2;
+                break;
             default:
                 return -1;
         }

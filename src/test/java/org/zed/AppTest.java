@@ -5,7 +5,6 @@ import junit.framework.TestCase;
 import junit.framework.TestSuite;
 import org.zed.llm.ModelConfig;
 import org.zed.log.LogManager;
-import org.zed.trans.TransFileOperator;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -14,9 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.zed.FSFGenerator.*;
-import static org.zed.log.LogManager.*;
 import static org.zed.tcg.ExecutionEnabler.*;
-import static org.zed.trans.ExecutionPathPrinter.addPrintStmt;
 import static org.zed.trans.TransWorker.pickSSMPCodes;
 
 
@@ -142,7 +139,8 @@ public class AppTest
         }
     }
     public void testApp4() throws Exception {
-        String resourceDir = "resources/dataset/SpecGenBench/";
+//        String resourceDir = "resources/dataset/SpecGenBench/";
+        String resourceDir = "resources/dataset/someBench/";
         ModelConfig modelConfig = new ModelConfig();
         String SSMPDir = pickSSMPCodes(resourceDir);
         runConversationForDir(1, modelConfig, SSMPDir);
@@ -150,5 +148,10 @@ public class AppTest
     public void testApp5() throws Exception {
         String program = LogManager.file2String("resources/testCases/Conjunction.java");
         generateMainMdUnderExpr("(b1 == true && b2 == false)",program);
+    }
+    public void testApp6() throws Exception {
+        String program = LogManager.file2String("resources/dataset/Example.java");
+        List<String> pathConstrains = new ArrayList<String>();
+        valid1Path(program,pathConstrains,"true","true");
     }
 }

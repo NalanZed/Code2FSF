@@ -50,7 +50,7 @@ def parse_execution_path(execution_output: str) -> List[str]:
 
     for line in lines:
         if "current value" in line or "Entering loop" in line or "Exiting loop" in line or "Evaluating if condition" in line \
-                or "Return statement" in line:
+                or "Return statement" in line or "Function input" in line:
             execution_path.append(line)
 
     return execution_path
@@ -161,12 +161,14 @@ def java_expr_to_z3(expr_str, var_types: dict):
     # 构建 Z3 变量
     z3_vars = {}
     for name, vtype in var_types.items():
-        if vtype == 'bool':
+        if vtype == 'boolean' or vtype == 'bool':
             z3_vars[name] = z3.Bool(name)
         elif vtype == 'int':
             z3_vars[name] = z3.Int(name)
         elif vtype == 'char':
             z3_vars[name] = z3.BitVec(name, 16)
+        elif vtype == 'double':
+            z3_vars[name] = z3.Real(name)
         else:
             raise ValueError(f"不支持的变量类型: {vtype}")
 
@@ -181,13 +183,13 @@ def java_expr_to_z3(expr_str, var_types: dict):
         def visit_Name(self, node):
             if node.id in z3_vars:
                 return z3_vars[node.id]
-            elif node.id in {"char","int", "boolean"}:
+            elif node.id in {"char","int", "boolean","float", "double"}: #避免 Java 中的类型名被误认为变量
                 return ""
             else:
                 raise ValueError(f"未知变量: {node.id}")
 
         def visit_Constant(self, node):
-            if isinstance(node.value, (int, bool, str)):
+            if isinstance(node.value, (int, bool, str, float)):
                 return node.value
             else:
                 raise ValueError(f"不支持的常量类型: {node.value}")
@@ -205,7 +207,7 @@ def java_expr_to_z3(expr_str, var_types: dict):
             if isinstance(node.op, ast.Not):
                 return z3.Not(self.visit(node.operand))
             if isinstance(node.op, ast.USub):
-                return self.visit(node.operand)
+                return -self.visit(node.operand)
             else:
                 raise ValueError(f"不支持的一元操作: {type(node.op)}")
 
@@ -376,24 +378,37 @@ def get_ct_from_execution_path(execution_path:List[str]):
     return ct.strip().strip("&&")
 
 def update_D_with_execution_path(D: str, execution_path: List[str]) -> str:
-    split_d = D.split("&&")
-    update_d = []
-    newd = ""
+    # split_d = D.split("&&")
+    # update_d = []
+    newd = D
     for step in reversed(execution_path):
-        if "current value" in step:
+        if "current value" in step or "Input parameter" in step:
             assignment_match = re.search(r"(.*?) = (.*?), current value of (.*?): (.*?)$", step)
+            input_param_match = re.search(r"Function input (.*)? parameter (.*?) = (.*?)$", step)
             if assignment_match:
+                type = ""
                 variable = assignment_match.group(1).strip()
                 value = assignment_match.group(2).strip()
-                for sd in split_d:
-                    if variable in sd:
-                        # 替换 D 中的变量
-                        sd = replace_variables(sd, variable, value)
-                    update_d.append(sd.strip())
-                split_d = update_d
-                update_d = []
-    for ud in split_d:
-        newd = f"{newd} && ({ud})"
+            elif input_param_match:
+                type = input_param_match.group(1).strip()
+                variable = input_param_match.group(2).strip()
+                value = input_param_match.group(3).strip()
+            else :
+                continue
+            # for sd in split_d:
+            #     if variable in sd:
+            #         # 替换 D 中的变量
+            #         sd = replace_variables(sd, variable, value)
+            #     update_d.append(sd.strip())
+            # split_d = update_d
+            # update_d = []
+            if(type and type == "char"):
+                value = f"'{value}'" # 给char类型变量带上''
+            value = f"({value})" # 确保value不会影响newd结构
+            newd = replace_variables(newd,variable,value)
+    # for ud in split_d:
+    #     newd = f"{newd} && ({ud})"
+
     return newd.strip().strip("&&")
 
 def read_java_code_from_file(file_path):
@@ -425,9 +440,64 @@ def main():
     deal_with_spec_unit_json(spec_unit_json)
 
 def test_main_3():
-    execution_path = ["Evaluating if condition: (b1 == false) is evaluated as: true",
-                      "return_value = false , current value of return_value: false"]
-    D = "return_value == false"
+    execution_path = """
+    Input parameter a = 3
+    Input parameter b = 40
+    res = 0, current value of res: 0
+    Evaluating if condition: (b >= 0) is evaluated as: true
+    i = 0, current value of i: 0
+    res = res + a, current value of res: 40
+    res = res + a, current value of res: 80
+    res = res + a, current value of res: 120
+    res = res + a, current value of res: 160
+    res = res + a, current value of res: 200
+    res = res + a, current value of res: 240
+    res = res + a, current value of res: 280
+    res = res + a, current value of res: 320
+    res = res + a, current value of res: 360
+    res = res + a, current value of res: 400
+    res = res + a, current value of res: 440
+    res = res + a, current value of res: 480
+    res = res + a, current value of res: 520
+    res = res + a, current value of res: 560
+    res = res + a, current value of res: 600
+    res = res + a, current value of res: 640
+    res = res + a, current value of res: 680
+    res = res + a, current value of res: 720
+    res = res + a, current value of res: 760
+    res = res + a, current value of res: 800
+    res = res + a, current value of res: 840
+    res = res + a, current value of res: 880
+    res = res + a, current value of res: 920
+    res = res + a, current value of res: 960
+    res = res + a, current value of res: 1000
+    res = res + a, current value of res: 1040
+    res = res + a, current value of res: 1080
+    res = res + a, current value of res: 1120
+    res = res + a, current value of res: 1160
+    res = res + a, current value of res: 1200
+    res = res + a, current value of res: 1240
+    res = res + a, current value of res: 1280
+    res = res + a, current value of res: 1320
+    res = res + a, current value of res: 1360
+    res = res + a, current value of res: 1400
+    res = res + a, current value of res: 1440
+    res = res + a, current value of res: 1480
+    res = res + a, current value of res: 1520
+    res = res + a, current value of res: 1560
+    res = res + a, current value of res: 1600
+    res = res + a, current value of res: 1640
+    res = res + a, current value of res: 1680
+    res = res + a, current value of res: 1720
+    res = res + a, current value of res: 1760
+    res = res + a, current value of res: 1800
+    res = res + a, current value of res: 1840
+    res = res + a, current value of res: 1880
+    res = res + a, current value of res: 1920
+    res = res + a, current value of res: 1960
+    return_value = res , current value of return_value : 1960
+    """.split('\n')
+    D = "res == a * b"
     r = update_D_with_execution_path(D,execution_path)
     print(r)
 
@@ -460,9 +530,20 @@ def init_files():
             """
         with open(RESOURCE_DIR + "/TestCase.java", "w") as file:
             file.write(program)
+def test_main_4():
+    # expr = "(!((((((((((((((((((((((((((((((((((((0) - (8)) - (8)) - (8)) - (8)) - (8)) - (8)) - (8)) - (8)) - (8)) - (8)) - (8)) - (8)) - (8)) - (8)) - (8)) - (8)) - (8)) - (8)) - (8)) - (8)) - (8)) - (8)) - (8)) - (8)) - (8)) - (8)) - (8)) - (8)) - (8)) - (8)) - (8)) - (8)) - (8)) - (8)) == (8) * (-34)))"
+    expr = "(0-8) == (-8)"
+    var_types = {
+        "a": "int",
+        "b": "int",
+        "res": "int"
+    }
+    z3_expr = java_expr_to_z3(expr, var_types)
+    print("Z3表达式: " + str(z3_expr))
 if __name__ == "__main__":
     # test_main_2()
     # test_main_3()
     # test_main()
     main()
+    # test_main_4()
 
