@@ -217,6 +217,12 @@ public class LogManager {
         String succFilePath = FAILED_DATASET_DIR + "/" + name;
         Files.copy(Path.of(filePath), Path.of(succFilePath), REPLACE_EXISTING);
     }
+
+    public static String codePath2SuccPath(String codePath) {
+        //从文件路径中提取文件名（在Java程序中，即类名）
+        String title = codePath.substring(codePath.lastIndexOf("/") + 1);
+        return SUCC_DATASET_DIR  + "/" + title;
+    }
 //    public static void main(String[] args) {
 //        String content = getLastestAssistantMsgFromLog(LOG_DIR + "/" + "deepseek-chat/"+"log-Abs.txt");
 //        List<String[]> TDs = parseTD(content);

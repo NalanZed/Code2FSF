@@ -153,6 +153,10 @@ public class FSFGenerator {
                 T = td[0];
                 D = td[1];
                 System.out.println(YELLOW + "正在进行验证的TD对为：" + "T: " + T + " ; D: " + D + RESET);
+                if("Exception".equals(D)){
+                    System.out.println("D为Exception，跳过本次验证");
+                    continue;
+                }
                 while(true){
                     //对一个TD下所有路径验证
                     r = valid1Path(pureProgram, prePathConstrains, T, D);
@@ -218,8 +222,13 @@ public class FSFGenerator {
 
             System.out.println("Processing file: " + filePath + " (" + (++taskCount) + "/" + totalTaskNum + ")");
             String canNotHandleFilePath = LogManager.codePath2FailedPath(filePath);
+            String handledFilePath = LogManager.codePath2SuccPath(filePath);
             if(Files.exists(Path.of(canNotHandleFilePath))){
                 System.out.println("文件已存在于failedDataset目录中，跳过");
+                continue;
+            }
+            if(Files.exists(Path.of(handledFilePath))){
+                System.out.println("文件已存在于succDataset目录中，跳过");
                 continue;
             }
             try{

@@ -129,7 +129,7 @@ def solver_check_z3(z3_expr:str)->str:
 
         if solver.check() == sat:
             print("The expression is satisfiable ❌")
-            model = solver.model()
+            model = f"{solver.model()}"
             print(model)
             return model
         else:
@@ -337,12 +337,16 @@ def deal_with_spec_unit_json(spec_unit_json: str):
             result = Result(1,scr,"")
         else:
             result = Result(0,"",current_ct)
-        print("result:" + result.to_json())
     elif solver_result == "ERROR":
         result = Result(1,"",current_ct)
     else:
         result = Result(2,solver_result,"")
-    # print("result:" + result.to_json())
+    print("result:" + result.to_json())
+
+def remove_type_transfer_stmt_in_expr(expr: str) -> str:
+    ans = expr.replace("(long)","").replace("(int)","").replace("(short)","").replace("(byte)","").replace("(char)","")
+    return ans
+
 
 def get_ct_from_execution_path(execution_path:List[str]):
     ct = ""
@@ -351,6 +355,7 @@ def get_ct_from_execution_path(execution_path:List[str]):
             condition_match = re.search(r"Evaluating if condition: (.*?) is evaluated as: (.*?)", step)
             if condition_match:
                 if_condition = condition_match.group(1).strip()
+                if_condition = remove_type_transfer_stmt_in_expr(if_condition)
                 ct = f"{ct} && ({if_condition})"
             # Check whether it is a condition to enter the loop
         if "Entering loop" in step:
@@ -382,7 +387,7 @@ def update_D_with_execution_path(D: str, execution_path: List[str]) -> str:
     # update_d = []
     newd = D
     for step in reversed(execution_path):
-        if "current value" in step or "Input parameter" in step:
+        if "current value" in step or "Function input" in step:
             assignment_match = re.search(r"(.*?) = (.*?), current value of (.*?): (.*?)$", step)
             input_param_match = re.search(r"Function input (.*)? parameter (.*?) = (.*?)$", step)
             if assignment_match:
@@ -441,63 +446,47 @@ def main():
 
 def test_main_3():
     execution_path = """
-    Input parameter a = 3
-    Input parameter b = 40
+    Execution Path:
+    Function input int parameter x = 34
     res = 0, current value of res: 0
-    Evaluating if condition: (b >= 0) is evaluated as: true
-    i = 0, current value of i: 0
-    res = res + a, current value of res: 40
-    res = res + a, current value of res: 80
-    res = res + a, current value of res: 120
-    res = res + a, current value of res: 160
-    res = res + a, current value of res: 200
-    res = res + a, current value of res: 240
-    res = res + a, current value of res: 280
-    res = res + a, current value of res: 320
-    res = res + a, current value of res: 360
-    res = res + a, current value of res: 400
-    res = res + a, current value of res: 440
-    res = res + a, current value of res: 480
-    res = res + a, current value of res: 520
-    res = res + a, current value of res: 560
-    res = res + a, current value of res: 600
-    res = res + a, current value of res: 640
-    res = res + a, current value of res: 680
-    res = res + a, current value of res: 720
-    res = res + a, current value of res: 760
-    res = res + a, current value of res: 800
-    res = res + a, current value of res: 840
-    res = res + a, current value of res: 880
-    res = res + a, current value of res: 920
-    res = res + a, current value of res: 960
-    res = res + a, current value of res: 1000
-    res = res + a, current value of res: 1040
-    res = res + a, current value of res: 1080
-    res = res + a, current value of res: 1120
-    res = res + a, current value of res: 1160
-    res = res + a, current value of res: 1200
-    res = res + a, current value of res: 1240
-    res = res + a, current value of res: 1280
-    res = res + a, current value of res: 1320
-    res = res + a, current value of res: 1360
-    res = res + a, current value of res: 1400
-    res = res + a, current value of res: 1440
-    res = res + a, current value of res: 1480
-    res = res + a, current value of res: 1520
-    res = res + a, current value of res: 1560
-    res = res + a, current value of res: 1600
-    res = res + a, current value of res: 1640
-    res = res + a, current value of res: 1680
-    res = res + a, current value of res: 1720
-    res = res + a, current value of res: 1760
-    res = res + a, current value of res: 1800
-    res = res + a, current value of res: 1840
-    res = res + a, current value of res: 1880
-    res = res + a, current value of res: 1920
-    res = res + a, current value of res: 1960
-    return_value = res , current value of return_value : 1960
+    res = res + 1, current value of res: 1
+    res = res + 1, current value of res: 2
+    res = res + 1, current value of res: 3
+    res = res + 1, current value of res: 4
+    res = res + 1, current value of res: 5
+    res = res + 1, current value of res: 6
+    res = res + 1, current value of res: 7
+    res = res + 1, current value of res: 8
+    res = res + 1, current value of res: 9
+    res = res + 1, current value of res: 10
+    res = res + 1, current value of res: 11
+    res = res + 1, current value of res: 12
+    res = res + 1, current value of res: 13
+    res = res + 1, current value of res: 14
+    res = res + 1, current value of res: 15
+    res = res + 1, current value of res: 16
+    res = res + 1, current value of res: 17
+    res = res + 1, current value of res: 18
+    res = res + 1, current value of res: 19
+    res = res + 1, current value of res: 20
+    res = res + 1, current value of res: 21
+    res = res + 1, current value of res: 22
+    res = res + 1, current value of res: 23
+    res = res + 1, current value of res: 24
+    res = res + 1, current value of res: 25
+    res = res + 1, current value of res: 26
+    res = res + 1, current value of res: 27
+    res = res + 1, current value of res: 28
+    res = res + 1, current value of res: 29
+    res = res + 1, current value of res: 30
+    res = res + 1, current value of res: 31
+    res = res + 1, current value of res: 32
+    res = res + 1, current value of res: 33
+    res = res + 1, current value of res: 34
+    return_value = res , current value of return_value : 34
+    end Execution Path
     """.split('\n')
-    D = "res == a * b"
+    D = "res == x"
     r = update_D_with_execution_path(D,execution_path)
     print(r)
 
@@ -531,15 +520,7 @@ def init_files():
         with open(RESOURCE_DIR + "/TestCase.java", "w") as file:
             file.write(program)
 def test_main_4():
-    # expr = "(!((((((((((((((((((((((((((((((((((((0) - (8)) - (8)) - (8)) - (8)) - (8)) - (8)) - (8)) - (8)) - (8)) - (8)) - (8)) - (8)) - (8)) - (8)) - (8)) - (8)) - (8)) - (8)) - (8)) - (8)) - (8)) - (8)) - (8)) - (8)) - (8)) - (8)) - (8)) - (8)) - (8)) - (8)) - (8)) - (8)) - (8)) - (8)) == (8) * (-34)))"
-    expr = "(0-8) == (-8)"
-    var_types = {
-        "a": "int",
-        "b": "int",
-        "res": "int"
-    }
-    z3_expr = java_expr_to_z3(expr, var_types)
-    print("Z3表达式: " + str(z3_expr))
+    print(remove_type_transfer_stmt_in_expr("(long) (x + 1) == (long) (y + 1)"))
 if __name__ == "__main__":
     # test_main_2()
     # test_main_3()

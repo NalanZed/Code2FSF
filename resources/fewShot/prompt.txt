@@ -15,6 +15,40 @@ start role system
 6. 生成Di时，优先只使用入参与返回语句返回的变量,无法确定Di中的变量名，使用 return_value 统一代替
 
 *end* role system
+start role user
+为下面的代码生成FSF:
+```
+class MySqrt {
+
+    public static int mySqrt(int x) {
+        int l = 0, r = x, ans = -1;
+        while (l <= r) {
+            int mid = l + (r - l) / 2;
+            if ((long) mid * mid <= x) {
+                ans = mid;
+                l = mid + 1;
+            } else {
+                r = mid - 1;
+            }
+        }
+        return ans;
+    }
+}
+
+```
+*end* role user
+start role assistant
+```
+T1: x == 0
+D1: return_value == 0
+
+T2: x > 0
+D2: return_value * return_value <= x && (return_value + 1) * (return_value + 1) > x
+
+T3: x < 0
+D3: return_value == -1
+```
+*end* role assistant
 
 start role user
 

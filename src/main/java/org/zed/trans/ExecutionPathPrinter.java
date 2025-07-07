@@ -145,19 +145,23 @@ public class ExecutionPathPrinter {
                 // 处理赋值语句（如 x = 5;）
                 if (expr.isAssignExpr()) {
                     AssignExpr assignExpr = expr.asAssignExpr();
+                    String op = assignExpr.getOperator().asString();
                     String varName = assignExpr.getTarget().toString();
                     Expression value = assignExpr.getValue();
-                    //要把强制类型转换去掉
-                    String valueStr = value.toString().replace("(char)","");
-                    String op = assignExpr.getOperator().asString();
-
+                    if(op.equals("+=")){
+                        value = new BinaryExpr(new NameExpr(varName), value, BinaryExpr.Operator.PLUS);
+                    }
+                    //要把强制类型转换去掉,避免在validation环节将类型转换误认为一个变量
+                    String valueStr = value.toString().replace("(char)","").replace("(long)","")
+                            .replace("(int)","").replace("(double)","").replace("(float)","");
+                    EnclosedExpr enclosedExpr = new EnclosedExpr(new NameExpr(varName)); //避免 varName含有&&、||、%等操作符，导致拼接字符串时报错
                     // 生成打印语句（格式：System.out.println("变量名: " + 变量名 + ", 当前值: " + 值);）
                     Statement printStmt = new ExpressionStmt(new MethodCallExpr(
                             new NameExpr("System.out"),
                             "println",
                             NodeList.nodeList(new BinaryExpr(
-                                    new StringLiteralExpr(varName + " " + op + " " + valueStr + ", current value of " + varName + ": "),
-                                    new NameExpr(varName),
+                                    new StringLiteralExpr(varName + " = " + valueStr + ", current value of " + varName + ": "),
+                                    enclosedExpr,
                                     BinaryExpr.Operator.PLUS
                             ))
                     ));
@@ -269,29 +273,21 @@ public class ExecutionPathPrinter {
             @Override
             public Visitable visit(ReturnStmt stmt, Void arg) {
                 Optional<Node> parentNode = stmt.getParentNode();
-                if(parentNode.isPresent() && parentNode.get() instanceof BlockStmt){
+                if(parentNode.isEmpty()){
+                    return super.visit(stmt, arg);
+                }
+                if(parentNode.get() instanceof BlockStmt){
                     //return expr;
                     //这里插桩的是 return_value = expr, current value of return_value: expr
                     int index = ((BlockStmt) parentNode.get()).asBlockStmt().getStatements().indexOf(stmt);
                     Statement printStmt = generatePathPrintStmt(stmt);
                     ((BlockStmt) parentNode.get()).addStatement(index,printStmt);
-
-//                    //return expr;
-//                    //这里插桩的 expr = expr, current value of expr: expr
-//                    //要插入两条语句，因为不确定LLM生成D时用的是 return_value,还是 expr
-//                    Optional<Expression> returnExpr = stmt.getExpression();
-//                    //如果是常量，打印语句变量名 固定为 return_value
-//                    String returnValueName = returnExpr.get().toString();
-//                    printStmt = new ExpressionStmt(new MethodCallExpr(
-//                            new NameExpr("System.out"),
-//                            "println",
-//                            NodeList.nodeList(new BinaryExpr(
-//                                    new StringLiteralExpr(returnValueName + " = " + returnValueName + ", current value of " + returnValueName + ": "),
-//                                    returnExpr.orElse(new StringLiteralExpr("void")), // 处理无返回值的情况
-//                                    BinaryExpr.Operator.PLUS
-//                            ))
-//                    ));
-//                    ((BlockStmt) parentNode.get()).asBlockStmt().addStatement(index,printStmt);
+                }else if(parentNode.get() instanceof SwitchEntry){
+                    //return expr;
+                    //这里插桩的是 return_value = expr, current value of return_value: expr
+                    int index = ((SwitchEntry) parentNode.get()).getStatements().indexOf(stmt);
+                    Statement printStmt = generatePathPrintStmt(stmt);
+                    ((SwitchEntry) parentNode.get()).addStatement(index,printStmt);
                 }
                 return super.visit(stmt, arg);
             }
@@ -357,12 +353,13 @@ public class ExecutionPathPrinter {
         String returnValueName = returnExpr.get().toString();
 
         // 2. 生成打印语句
+        EnclosedExpr enclosedExpr = new EnclosedExpr(new NameExpr(returnValueName));
         Statement printStmt = new ExpressionStmt(new MethodCallExpr(
                 new NameExpr("System.out"),
                 "println",
                 NodeList.nodeList(new BinaryExpr(
                         new StringLiteralExpr("return_value = " + returnValueName + " , current value of return_value : "),
-                        returnExpr.orElse(new StringLiteralExpr("void")), // 处理无返回值的情况
+                        enclosedExpr,
                         BinaryExpr.Operator.PLUS
                 ))
         ));
@@ -442,7 +439,7 @@ public class ExecutionPathPrinter {
 
     public static void main(String[] args) {
         String dir = "resources/dataset/someBench/";
-        String testFileName = "CalculatorShuffled";
+        String testFileName = "MyPower";
         String testFileNameJava = testFileName+".java";
         String testFilePath = dir + "/" + testFileNameJava;
 
@@ -451,6 +448,7 @@ public class ExecutionPathPrinter {
 //        String targetCode = addPrintStmtForReturnStmt(pureCode);
 //        String targetCode = addPrintStmtAtMethodBegin(pureCode);
 //        String targetCode = addPrintStmtForForLoopStmt(pureCode);
+//        String targetCode = addPrintStmtForAssignStmt(pureCode);
         System.out.println(targetCode);
     }
 }

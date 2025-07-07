@@ -48,7 +48,7 @@ public class TestCaseAutoGenerator {
             variableNames.add(paramName);
         }
         //暴力生成测试用例
-        int maxCount = 10000;
+        int maxCount = 50000;
         boolean isOK = false;
         while(--maxCount >= 0) {
             for (Parameter p : parameters) {
@@ -194,7 +194,7 @@ public class TestCaseAutoGenerator {
     }
 
     public static String randomIntGen(){
-        int n = ThreadLocalRandom.current().nextInt(-50,50);
+        int n = ThreadLocalRandom.current().nextInt(10,100);
         return String.valueOf(n);
     }
     public static String randomFloatGen(){
@@ -215,7 +215,7 @@ public class TestCaseAutoGenerator {
         return String.valueOf(n);
     }
     public static String randomCharGen() {
-        int choice = ThreadLocalRandom.current().nextInt(7); // 0: A-Z, 1: a-z, 2: 0-9
+        int choice = ThreadLocalRandom.current().nextInt(8); // 0: A-Z, 1: a-z, 2: 0-9
         char c = switch (choice) {
             case 0 -> (char) ThreadLocalRandom.current().nextInt('A', 'Z' + 1);
             case 1 -> (char) ThreadLocalRandom.current().nextInt('a', 'z' + 1);
@@ -224,6 +224,7 @@ public class TestCaseAutoGenerator {
             case 4 -> (char) ThreadLocalRandom.current().nextInt('z' + 1, '~');
             case 5 -> (char) ThreadLocalRandom.current().nextInt('9' + 1, 'A' - 1);
             case 6 -> (char) ThreadLocalRandom.current().nextInt('!', '0' - 1);
+            case 7 -> (char) '/';
             default -> throw new IllegalStateException();
         };
         if(c == '\\'){

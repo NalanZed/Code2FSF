@@ -1,10 +1,9 @@
 public class Abs {
-	
-	public static int Abs(int num) {
-		if (num < 0)
-			return -num;
-		else
-			return num;
-	}
 
+    public static int Abs(int num) {
+        if (num < 0)
+            return -num;
+        else
+            return num;
+    }
 }
