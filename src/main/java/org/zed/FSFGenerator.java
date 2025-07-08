@@ -75,27 +75,9 @@ public class FSFGenerator {
         return argsMap;
     }
 
-    public static String constructConstrain(String T,List<String> preConstrains){
-        StringBuilder consExpr = new StringBuilder();
-        if(T.startsWith("(")){
-            consExpr.append(T);
-        }else {
-            consExpr.append('(').append(T).append(")");
-        }
-        for(String con : preConstrains){
-            consExpr.append(" && ");
-            if(con.startsWith("(")){
-                consExpr.append(con);
-            } else {
-                consExpr.append('(').append(con).append(")");
-            }
-        }
-        return consExpr.toString();
-    }
-
     public static Result valid1Path(String pureProgram,List<String> prePathConstrains,String T,String D) throws Exception {
         //构造当前测试约束
-        String conExpr = constructConstrain(T,prePathConstrains);
+        String conExpr = ExecutionEnabler.constructConstrain(T,prePathConstrains);
         System.out.println("当前测试用例生成条件为：" + conExpr);
         //生成main方法，即测试用例
 
@@ -108,8 +90,7 @@ public class FSFGenerator {
 
         String mainMd = generateMainMdUnderExpr(conExpr,ssmp);
         if(mainMd == null){
-            System.out.println("generateMainMdUnderExpr 返回 null");
-            return null;
+            return new Result(99,"","参数生成失败!");
         }
         //给测试函数插桩
         String addedPrintProgram = addPrintStmt(ssmp);
@@ -117,13 +98,21 @@ public class FSFGenerator {
         String runnableProgram = insertMainMdInSSMP(addedPrintProgram, mainMd);
         System.out.println("runnableProgram: " + runnableProgram);
         //拿到SpecUnit
-        SpecUnit su =new SpecUnit(runnableProgram,T,D,prePathConstrains);
+        SpecUnit su = new SpecUnit(runnableProgram,T,D,prePathConstrains);
         Result result = callTBFV4J(su);
         if(result != null){
             System.out.println("验证返回 result: " + result);
             return result;
         }
         return null;
+    }
+
+    public static Result valid1Path(SpecUnit su) throws Exception {
+        String pureProgram = su.getProgram();
+        String T = su.getT();
+        String D = su.getD();
+        List<String> prePathConstrains = su.getPreconditions();
+        return valid1Path(pureProgram,prePathConstrains,T,D);
     }
 
     public static boolean runConversations(int maxRounds, ModelConfig mc, String inputFilePath) throws Exception {
@@ -227,10 +216,10 @@ public class FSFGenerator {
                 System.out.println("文件已存在于failedDataset目录中，跳过");
                 continue;
             }
-            if(Files.exists(Path.of(handledFilePath))){
-                System.out.println("文件已存在于succDataset目录中，跳过");
-                continue;
-            }
+//            if(Files.exists(Path.of(handledFilePath))){
+//                System.out.println("文件已存在于succDataset目录中，跳过");
+//                continue;
+//            }
             try{
                 boolean succ = runConversations(maxRounds, mc, filePath);
                 if(succ) {
@@ -306,7 +295,7 @@ public class FSFGenerator {
 
         //执行测试程序
         if(testMode != null && testMode.equals("2")){
-            testMain2();
+//            testMain2();
         }
         ModelConfig mc = initModel(model);
         //先清理一下旧日志
@@ -319,10 +308,6 @@ public class FSFGenerator {
             inputDir = TransWorker.pickSSMPCodes(inputDir);
             runConversationForDir(maxRounds, mc, inputDir);
         }
-    }
-
-    public static void testMain2() throws Exception {
-
     }
 
 }

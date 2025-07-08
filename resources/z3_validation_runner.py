@@ -52,6 +52,9 @@ def parse_execution_path(execution_output: str) -> List[str]:
         if "current value" in line or "Entering loop" in line or "Exiting loop" in line or "Evaluating if condition" in line \
                 or "Return statement" in line or "Function input" in line:
             execution_path.append(line)
+        if "Under condition" in line and "true" in line:
+            execution_path.append(line)
+
 
     return execution_path
 
@@ -387,17 +390,21 @@ def update_D_with_execution_path(D: str, execution_path: List[str]) -> str:
     # update_d = []
     newd = D
     for step in reversed(execution_path):
-        if "current value" in step or "Function input" in step:
+        if "current value" in step or "Function input" in step or "Under condition" in step:
             assignment_match = re.search(r"(.*?) = (.*?), current value of (.*?): (.*?)$", step)
             input_param_match = re.search(r"Function input (.*)? parameter (.*?) = (.*?)$", step)
+            condition_assignment_match = re.search(r"Under condition (.*) = (.*), condition is : (.*)", step)
+            type = ""
             if assignment_match:
-                type = ""
                 variable = assignment_match.group(1).strip()
                 value = assignment_match.group(2).strip()
             elif input_param_match:
                 type = input_param_match.group(1).strip()
                 variable = input_param_match.group(2).strip()
                 value = input_param_match.group(3).strip()
+            elif condition_assignment_match:
+                variable = condition_assignment_match.group(1).strip()
+                value = condition_assignment_match.group(2).strip()
             else :
                 continue
             # for sd in split_d:

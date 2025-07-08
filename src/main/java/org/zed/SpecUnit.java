@@ -23,6 +23,9 @@ public class SpecUnit {
         this.D = D;
         this.preConstrains = preConstrains;
     }
+    public List<String> getPreconditions() {
+        return preConstrains;
+    }
 
     public SpecUnit(String codePath){
         this.program = LogManager.file2String(codePath);

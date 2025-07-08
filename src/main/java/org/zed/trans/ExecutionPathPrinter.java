@@ -25,8 +25,9 @@ public class ExecutionPathPrinter {
         String c3 = addPrintStmtForAssignStmt(c2);
         String c4 = addPrintStmtForVariableDeclarationExpr(c3);
         String c5 = addPrintStmtForReturnStmt(c4);
-//        String c6 = addPrintStmtForForLoopStmt(c5);
-        return c5;
+        String c6 = addPrintStmtForForLoopStmt(c5);
+        String c7 = addPrintForWhileLoopStmt(c6);
+        return c7;
     }
 
     public static String addPrintStmtForIfStmt(String code){
@@ -83,7 +84,7 @@ public class ExecutionPathPrinter {
         StringBuilder result = new StringBuilder();
         String[] lines = code.split("\n");
 
-        Pattern forPattern = Pattern.compile("for\\((.*?);(.*?);(.*?)\\)");
+        Pattern forPattern = Pattern.compile("for \\((.*?);(.*?);(.*?)\\)");
         boolean insideForLoop = false;
         String loopCondition = "";
 
@@ -133,6 +134,35 @@ public class ExecutionPathPrinter {
         return result.toString();
     }
 
+    public static String addPrintForWhileLoopStmt(String code) {
+        CompilationUnit cu = new JavaParser().parse(code).getResult().get();
+        // 使用 ModifierVisitor 遍历并修改 AST
+        cu.accept(new ModifierVisitor<Void>() {
+            @Override
+            public Visitable visit(WhileStmt whileStmt, Void arg) {
+                // 确保 while 的 body 被 {} 包围
+                if (!whileStmt.getBody().isBlockStmt()) {
+                    Statement body = whileStmt.getBody();
+                    BlockStmt blockStmt = new BlockStmt();
+                    blockStmt.addStatement(body);
+                    whileStmt.setBody(blockStmt);
+                }
+                // 获取 condition，构造 print statement
+                Statement enterLoopStmt = generateEnteringLoopPrintStmt(whileStmt);
+                whileStmt.getBody().asBlockStmt().addStatement(0,enterLoopStmt);
+                Statement exitLoopStmt = generateExitingLoopPrintStmt(whileStmt);
+                Optional<Node> parentNode = whileStmt.getParentNode();
+                if(parentNode.get() instanceof BlockStmt){
+                    int index = ((BlockStmt) parentNode.get()).asBlockStmt().getStatements().indexOf(whileStmt);
+                    ((BlockStmt) parentNode.get()).asBlockStmt().addStatement(index+1,exitLoopStmt);
+//                    ((BlockStmt) parentNode.get()).asBlockStmt().addStatement(index,enterLoopStmt);
+                }
+                return super.visit(whileStmt, arg);
+            }
+        }, null);
+
+        return cu.toString();
+    }
 
     public static String addPrintStmtForAssignStmt(String code){
         CompilationUnit cu = new JavaParser().parse(code).getResult().get();
@@ -148,35 +178,64 @@ public class ExecutionPathPrinter {
                     String op = assignExpr.getOperator().asString();
                     String varName = assignExpr.getTarget().toString();
                     Expression value = assignExpr.getValue();
-                    if(op.equals("+=")){
-                        value = new BinaryExpr(new NameExpr(varName), value, BinaryExpr.Operator.PLUS);
+                    System.out.println(value.getClass());
+                    System.out.println(value);
+                    Expression innerValue = value;
+                    //去掉括号包装
+                    while(innerValue.isEnclosedExpr()){
+                        innerValue = innerValue.asEnclosedExpr().getInner();
                     }
-                    //要把强制类型转换去掉,避免在validation环节将类型转换误认为一个变量
-                    String valueStr = value.toString().replace("(char)","").replace("(long)","")
-                            .replace("(int)","").replace("(double)","").replace("(float)","");
-                    EnclosedExpr enclosedExpr = new EnclosedExpr(new NameExpr(varName)); //避免 varName含有&&、||、%等操作符，导致拼接字符串时报错
-                    // 生成打印语句（格式：System.out.println("变量名: " + 变量名 + ", 当前值: " + 值);）
-                    Statement printStmt = new ExpressionStmt(new MethodCallExpr(
-                            new NameExpr("System.out"),
-                            "println",
-                            NodeList.nodeList(new BinaryExpr(
-                                    new StringLiteralExpr(varName + " = " + valueStr + ", current value of " + varName + ": "),
-                                    enclosedExpr,
-                                    BinaryExpr.Operator.PLUS
-                            ))
-                    ));
+                    //处理三目运算符
+                    if(innerValue.isConditionalExpr()){
+                        Statement[] conditionPrintStmts = generateConditionExprPrintStmt(varName,innerValue.asConditionalExpr());
+                        Statement printStmtTrue = conditionPrintStmts[0];
+                        Statement printStmtFalse = conditionPrintStmts[1];
 
-                    //找到父blockStatement
-                    Optional<Node> parentNode = stmt.getParentNode();
-                    if(parentNode.isEmpty()){
-                        return super.visit(stmt, arg);
+                        //找到父blockStatement
+                        Optional<Node> parentNode = stmt.getParentNode();
+                        if(parentNode.isEmpty()){
+                            return super.visit(stmt, arg);
+                        }
+                        if(parentNode.get() instanceof BlockStmt){
+                            int index = ((BlockStmt) parentNode.get()).asBlockStmt().getStatements().indexOf(stmt);
+                            ((BlockStmt) parentNode.get()).asBlockStmt().addStatement(index+1,printStmtTrue);
+                            ((BlockStmt) parentNode.get()).asBlockStmt().addStatement(index+1,printStmtFalse);
+                        }else if(parentNode.get() instanceof SwitchEntry){
+                            int index = ((SwitchEntry) parentNode.get()).getStatements().indexOf(stmt);
+                            ((SwitchEntry) parentNode.get()).addStatement(index+1,printStmtTrue);
+                            ((SwitchEntry) parentNode.get()).addStatement(index+1,printStmtFalse);
+                        }
                     }
-                    if(parentNode.get() instanceof BlockStmt){
-                        int index = ((BlockStmt) parentNode.get()).asBlockStmt().getStatements().indexOf(stmt);
-                        ((BlockStmt) parentNode.get()).asBlockStmt().addStatement(index+1,printStmt);
-                    }else if(parentNode.get() instanceof SwitchEntry){
-                        int index = ((SwitchEntry) parentNode.get()).getStatements().indexOf(stmt);
-                        ((SwitchEntry) parentNode.get()).addStatement(index+1,printStmt);
+                    else {
+                        if(op.equals("+=")){
+                            value = new BinaryExpr(new NameExpr(varName), value, BinaryExpr.Operator.PLUS);
+                        }
+                        //要把强制类型转换去掉,避免在validation环节将类型转换误认为一个变量
+                        String valueStr = value.toString().replace("(char)","").replace("(long)","")
+                                .replace("(int)","").replace("(double)","").replace("(float)","");
+                        EnclosedExpr enclosedExpr = new EnclosedExpr(new NameExpr(varName)); //避免 varName含有&&、||、%等操作符，导致拼接字符串时报错
+                        // 生成打印语句（格式：System.out.println("变量名: " + 变量名 + ", 当前值: " + 值);）
+                        Statement printStmt = new ExpressionStmt(new MethodCallExpr(
+                                new NameExpr("System.out"),
+                                "println",
+                                NodeList.nodeList(new BinaryExpr(
+                                        new StringLiteralExpr(varName + " = " + valueStr + ", current value of " + varName + ": "),
+                                        enclosedExpr,
+                                        BinaryExpr.Operator.PLUS
+                                ))
+                        ));
+                        //找到父blockStatement
+                        Optional<Node> parentNode = stmt.getParentNode();
+                        if(parentNode.isEmpty()){
+                            return super.visit(stmt, arg);
+                        }
+                        if(parentNode.get() instanceof BlockStmt){
+                            int index = ((BlockStmt) parentNode.get()).asBlockStmt().getStatements().indexOf(stmt);
+                            ((BlockStmt) parentNode.get()).asBlockStmt().addStatement(index+1,printStmt);
+                        }else if(parentNode.get() instanceof SwitchEntry){
+                            int index = ((SwitchEntry) parentNode.get()).getStatements().indexOf(stmt);
+                            ((SwitchEntry) parentNode.get()).addStatement(index+1,printStmt);
+                        }
                     }
                 }
                 return super.visit(stmt, arg);
@@ -276,18 +335,42 @@ public class ExecutionPathPrinter {
                 if(parentNode.isEmpty()){
                     return super.visit(stmt, arg);
                 }
-                if(parentNode.get() instanceof BlockStmt){
-                    //return expr;
-                    //这里插桩的是 return_value = expr, current value of return_value: expr
-                    int index = ((BlockStmt) parentNode.get()).asBlockStmt().getStatements().indexOf(stmt);
-                    Statement printStmt = generatePathPrintStmt(stmt);
-                    ((BlockStmt) parentNode.get()).addStatement(index,printStmt);
-                }else if(parentNode.get() instanceof SwitchEntry){
-                    //return expr;
-                    //这里插桩的是 return_value = expr, current value of return_value: expr
-                    int index = ((SwitchEntry) parentNode.get()).getStatements().indexOf(stmt);
-                    Statement printStmt = generatePathPrintStmt(stmt);
-                    ((SwitchEntry) parentNode.get()).addStatement(index,printStmt);
+                // 获取 return 的表达式（如果有）
+                Optional<Expression> returnExpr = stmt.getExpression();
+                System.out.println(returnExpr.get());
+                Expression innerValue = returnExpr.get();
+                while(innerValue.isEnclosedExpr()){
+                    innerValue = innerValue.asEnclosedExpr().getInner();
+                }
+                //三目运算符的处理
+                if(innerValue.isConditionalExpr()){
+                    Statement[] conditionPrintStmts = generateConditionExprPrintStmt("return_value",innerValue.asConditionalExpr());
+                    Statement printStmtTrue = conditionPrintStmts[0];
+                    Statement printStmtFalse = conditionPrintStmts[1];
+                    if(parentNode.get() instanceof BlockStmt){
+                        int index = ((BlockStmt) parentNode.get()).asBlockStmt().getStatements().indexOf(stmt);
+                        ((BlockStmt) parentNode.get()).addStatement(index,printStmtFalse);
+                        ((BlockStmt) parentNode.get()).addStatement(index,printStmtTrue);
+                    }else if(parentNode.get() instanceof SwitchEntry){
+
+                        int index = ((SwitchEntry) parentNode.get()).getStatements().indexOf(stmt);
+                        ((SwitchEntry) parentNode.get()).addStatement(index,printStmtFalse);
+                        ((SwitchEntry) parentNode.get()).addStatement(index,printStmtTrue);
+                    }
+                }
+                else{
+                    Statement printStmt = generateReturnValuePrintStmt(stmt);
+                    if(parentNode.get() instanceof BlockStmt){
+                        //return expr;
+                        //这里插桩的是 return_value = expr, current value of return_value: expr
+                        int index = ((BlockStmt) parentNode.get()).asBlockStmt().getStatements().indexOf(stmt);
+                        ((BlockStmt) parentNode.get()).addStatement(index,printStmt);
+                    }else if(parentNode.get() instanceof SwitchEntry){
+                        //return expr;
+                        //这里插桩的是 return_value = expr, current value of return_value: expr
+                        int index = ((SwitchEntry) parentNode.get()).getStatements().indexOf(stmt);
+                        ((SwitchEntry) parentNode.get()).addStatement(index,printStmt);
+                    }
                 }
                 return super.visit(stmt, arg);
             }
@@ -321,15 +404,8 @@ public class ExecutionPathPrinter {
         newBlock.addStatement(0,printStmt);
         return newBlock;
     }
-    public static BlockStmt generatePathPrintBlock(WhileStmt whileStmt){
-        //1. 确保while 的 body 被 {} 围起来
-        if(!whileStmt.getBody().isBlockStmt()){
-            Statement body = whileStmt.getBody();
-            BlockStmt blockStmt = new BlockStmt();
-            blockStmt.addStatement(body);
-            whileStmt.setBody(blockStmt);
-        }
-        //2. 获取condition，构造print statement
+    public static Statement generateEnteringLoopPrintStmt(WhileStmt whileStmt){
+        //获取condition，构造print statement
         Expression condition = whileStmt.getCondition();
         condition = new EnclosedExpr(condition);
         Statement printStmt = new ExpressionStmt(new MethodCallExpr(
@@ -341,17 +417,58 @@ public class ExecutionPathPrinter {
                         BinaryExpr.Operator.PLUS
                 ))
         ));
-        //3. 把print statement 插入到while body里
-        BlockStmt printBlock = whileStmt.getBody().asBlockStmt();
-        printBlock.addStatement(0,printStmt);
-        return printBlock;
+        return printStmt;
     }
-    public static Statement generatePathPrintStmt(ReturnStmt returnStmt){
+    public static Statement generateExitingLoopPrintStmt(WhileStmt whileStmt){
+        //获取condition，构造print statement
+        Expression condition = whileStmt.getCondition();
+        condition = new EnclosedExpr(condition);
+        Statement printStmt = new ExpressionStmt(new MethodCallExpr(
+                new NameExpr("System.out"),
+                "println",
+                NodeList.nodeList(new BinaryExpr(
+                        new StringLiteralExpr("Exiting loop, condition no longer holds: " + condition + " is evaluated as: "),
+                        condition,
+                        BinaryExpr.Operator.PLUS
+                ))
+        ));
+        return printStmt;
+    }
+
+    //三目运算符的printStmt生成
+    public static Statement[] generateConditionExprPrintStmt(String varName, ConditionalExpr expr){
+        Expression condition = expr.getCondition();
+        condition = new EnclosedExpr(condition);
+        Expression negCondition = new UnaryExpr(condition, UnaryExpr.Operator.LOGICAL_COMPLEMENT);
+        Expression thenExpr = expr.getThenExpr();
+        thenExpr = new EnclosedExpr(thenExpr);
+        Expression elseExpr = expr.getElseExpr();
+        elseExpr = new EnclosedExpr(elseExpr);
+        Statement printStmtTrue = new ExpressionStmt(new MethodCallExpr(
+                new NameExpr("System.out"),
+                "println",
+                NodeList.nodeList(new BinaryExpr(
+                        new StringLiteralExpr("Under condition " + varName + " = " + thenExpr + ", condition is " + ": "),
+                        condition,
+                        BinaryExpr.Operator.PLUS
+                ))
+        ));
+        Statement printStmtFalse = new ExpressionStmt(new MethodCallExpr(
+                new NameExpr("System.out"),
+                "println",
+                NodeList.nodeList(new BinaryExpr(
+                        new StringLiteralExpr("Under condition " + varName + " = " + elseExpr + ", condition is " + ": "),
+                        negCondition,
+                        BinaryExpr.Operator.PLUS
+                ))
+        ));
+        return new Statement[]{printStmtTrue, printStmtFalse};
+    }
+
+    public static Statement generateReturnValuePrintStmt(ReturnStmt returnStmt){
         // 获取 return 的表达式（如果有）
         Optional<Expression> returnExpr = returnStmt.getExpression();
-        //如果是常量，打印语句变量名 固定为 return_value
         String returnValueName = returnExpr.get().toString();
-
         // 2. 生成打印语句
         EnclosedExpr enclosedExpr = new EnclosedExpr(new NameExpr(returnValueName));
         Statement printStmt = new ExpressionStmt(new MethodCallExpr(
@@ -439,7 +556,7 @@ public class ExecutionPathPrinter {
 
     public static void main(String[] args) {
         String dir = "resources/dataset/someBench/";
-        String testFileName = "MyPower";
+        String testFileName = "FizzBuzzSeq";
         String testFileNameJava = testFileName+".java";
         String testFilePath = dir + "/" + testFileNameJava;
 
@@ -449,6 +566,7 @@ public class ExecutionPathPrinter {
 //        String targetCode = addPrintStmtAtMethodBegin(pureCode);
 //        String targetCode = addPrintStmtForForLoopStmt(pureCode);
 //        String targetCode = addPrintStmtForAssignStmt(pureCode);
+//        String targetCode = addPrintForWhileLoopStmt(pureCode) ;
         System.out.println(targetCode);
     }
 }

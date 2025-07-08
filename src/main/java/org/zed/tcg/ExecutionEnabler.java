@@ -30,7 +30,9 @@ public class ExecutionEnabler {
     public static String generateMainMdUnderExpr(SpecUnit su) throws Exception {
         String program = su.getProgram();
         String T = su.getT();
-        return generateMainMdUnderExpr(T,program);
+        List<String> preconditions = su.getPreconditions();
+        String conExpr = constructConstrain(T, preconditions);
+        return generateMainMdUnderExpr(conExpr,program);
     }
     public static String generateMainMdUnderExpr(String expr, String program) throws Exception {
         //1. 解析program
@@ -42,6 +44,7 @@ public class ExecutionEnabler {
             throw new Exception(className + "没有可检验的static方法");
         }
         List<Parameter> parameters = md.getParameters();
+        int paramNum = parameters.size();
 
         //2. 组装main函数定义的开头
         StringBuilder builder = new StringBuilder();
@@ -85,15 +88,6 @@ public class ExecutionEnabler {
 
         return builder.toString();
     }
-    public static String generateMainMdUnderExpr(String T, File javaFile) throws Exception {
-        String program = TransFileOperator.file2String(javaFile.getAbsolutePath());
-        return generateMainMdUnderExpr(T, program);
-    }
-
-
-    public static String generateMainMethodWithoutT(String program) throws Exception {
-        return generateMainMdUnderExpr("true",program);
-    }
 
     public static MethodDeclaration getFirstStaticMethod(String program){
         JavaParser parser = new JavaParser();
@@ -112,6 +106,23 @@ public class ExecutionEnabler {
                 .filter(m -> m.isStatic() && !m.getNameAsString().equals("main"))
                 .findFirst();
         return staticMethodOpt.get();
+    }
+    public static String constructConstrain(String T,List<String> preConstrains){
+        StringBuilder consExpr = new StringBuilder();
+        if(T.startsWith("(")){
+            consExpr.append(T);
+        }else {
+            consExpr.append('(').append(T).append(")");
+        }
+        for(String con : preConstrains){
+            consExpr.append(" && ");
+            if(con.startsWith("(")){
+                consExpr.append(con);
+            } else {
+                consExpr.append('(').append(con).append(")");
+            }
+        }
+        return consExpr.toString();
     }
 
 //    public static String prepareForAutoVerification(String program,String fileName) throws Exception {
