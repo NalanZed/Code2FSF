@@ -28,12 +28,15 @@ public class ExecutionEnabler {
         return cu.toString();
     }
     public static String generateMainMdUnderExpr(SpecUnit su) throws Exception {
-        String program = su.getProgram();
-        String T = su.getT();
-        List<String> preconditions = su.getPreconditions();
-        String conExpr = constructConstrain(T, preconditions);
-        return generateMainMdUnderExpr(conExpr,program);
+        return generateMainMdUnderExpr(su.getT(), su.getPreconditions(), su.getProgram());
     }
+
+    public static String generateMainMdUnderExpr(String T, List<String> preconditions, String program) throws Exception {
+        String conExpr = constructConstrain(T, preconditions);
+        System.out.println("本次生成测试用例的约束条件为：" + conExpr);
+        return generateMainMdUnderExpr(conExpr, program);
+    }
+
     public static String generateMainMdUnderExpr(String expr, String program) throws Exception {
         //1. 解析program
         JavaParser parser = new JavaParser();
@@ -108,6 +111,9 @@ public class ExecutionEnabler {
         return staticMethodOpt.get();
     }
     public static String constructConstrain(String T,List<String> preConstrains){
+        if(preConstrains == null || preConstrains.isEmpty()){
+            return T;
+        }
         StringBuilder consExpr = new StringBuilder();
         if(T.startsWith("(")){
             consExpr.append(T);
@@ -116,6 +122,7 @@ public class ExecutionEnabler {
         }
         for(String con : preConstrains){
             consExpr.append(" && ");
+            consExpr.append(" !");
             if(con.startsWith("(")){
                 consExpr.append(con);
             } else {

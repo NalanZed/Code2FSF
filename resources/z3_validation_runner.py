@@ -325,14 +325,15 @@ def deal_with_spec_unit_json(spec_unit_json: str):
 
     var_types = parse_md_def(program)
     z3_expr = java_expr_to_z3(new_logic_expression, var_types)
-    print("Z3表达式: " + str(z3_expr))
+    print("T && Ct && !D 转Z3表达式: " + str(z3_expr))
     solver_result = solver_check_z3(z3_expr)
     if solver_result == "OK":
         #组装 combined_expr
         previous_cts.append(current_ct)
         combined_expr = combind_expr_and_list(f"({T})", previous_cts)
         print("完成一轮路径验证后，当前(T) && !(previous_cts) && !(current_ct): " + combined_expr)
-        z3_expr = java_expr_to_z3(new_logic_expression, var_types)
+        z3_expr = java_expr_to_z3(combined_expr, var_types)
+        print("(T) && !(previous_cts) && !(current_ct) 转 Z3表达式: " + str(z3_expr))
         scr = solver_check_z3(z3_expr)
         if(scr == "OK"):
             result = Result(3,"",current_ct)

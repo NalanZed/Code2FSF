@@ -3,13 +3,15 @@ public class AddLoopFor {
         int sum = y;
         if (x > 0) {
             int n = 0;
-            for(n = x; n > 0; n = n - 1) {
+            for(n = x; n > 0; ) {
                 sum = sum + 1;
+                n = n - 1;
             }
         } else {
             int n = 0;
-            for(n = -x; n > 0; n = n - 1) {
+            for(n = -x; n > 0; ) {
                 sum = sum - 1;
+                n = n - 1;
             }
         }
         return sum;

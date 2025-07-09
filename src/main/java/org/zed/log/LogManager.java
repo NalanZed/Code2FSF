@@ -182,7 +182,7 @@ public class LogManager {
         return logString.substring(lastIndexOfAssisStart + 1, lastIndexOfAssisEnd);
     }
 
-    public static List<String[]> getLastestTDsFromLog(String logFilePath){
+    public static List<String[]> getLastestFSFFromLog(String logFilePath){
         String content = getLastestAssistantMsgFromLog(logFilePath);
         return parseTD(content);
     }
@@ -223,6 +223,18 @@ public class LogManager {
         String title = codePath.substring(codePath.lastIndexOf("/") + 1);
         return SUCC_DATASET_DIR  + "/" + title;
     }
+
+    public static void saveHistoryTestcases(String codePath,List<String> testCases){
+        int totalNum = testCases.size();
+        int count = 0;
+        System.out.println(codePath + "的测试用例历史记录如下，共[" + totalNum + "]个");
+        for (String testcase : testCases) {
+            System.out.println("------------------["+(++count) +"/"+totalNum+"]------------------");
+            System.out.println(testcase);
+        }
+        System.out.println("----------------------------------------");
+    }
+
 //    public static void main(String[] args) {
 //        String content = getLastestAssistantMsgFromLog(LOG_DIR + "/" + "deepseek-chat/"+"log-Abs.txt");
 //        List<String[]> TDs = parseTD(content);

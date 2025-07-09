@@ -7,7 +7,6 @@ import org.zed.tcg.ExecutionEnabler;
 import org.zed.trans.TransWorker;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.file.Files;
@@ -19,7 +18,6 @@ import java.util.List;
 import static org.zed.tcg.ExecutionEnabler.generateMainMdUnderExpr;
 import static org.zed.tcg.ExecutionEnabler.insertMainMdInSSMP;
 import static org.zed.trans.ExecutionPathPrinter.addPrintStmt;
-import static org.zed.trans.TransWorker.pickSSMPCodes;
 
 public class FSFGenerator {
     static final String YELLOW = "\u001B[33m";
@@ -107,12 +105,20 @@ public class FSFGenerator {
         return null;
     }
 
-    public static Result valid1Path(SpecUnit su) throws Exception {
-        String pureProgram = su.getProgram();
-        String T = su.getT();
-        String D = su.getD();
-        List<String> prePathConstrains = su.getPreconditions();
-        return valid1Path(pureProgram,prePathConstrains,T,D);
+    public static Result valid1Path(String ssmp,String mainMd,List<String> prePathConstrains,String T,String D) throws Exception {
+        //给测试函数插桩
+        String addedPrintProgram = addPrintStmt(ssmp);
+        //组装可执行程序
+        String runnableProgram = insertMainMdInSSMP(addedPrintProgram, mainMd);
+        System.out.println("runnableProgram: " + runnableProgram);
+        //拿到SpecUnit
+        SpecUnit su = new SpecUnit(runnableProgram,T,D,prePathConstrains);
+        Result r = callTBFV4J(su);
+        if(r != null){
+            System.out.println("验证返回 result: " + r);
+            return r;
+        }
+        return null;
     }
 
     public static boolean runConversations(int maxRounds, ModelConfig mc, String inputFilePath) throws Exception {
@@ -120,6 +126,8 @@ public class FSFGenerator {
         ModelPrompt fsfPrompt = ModelPrompt.generateCode2FSFPrompt(modelName,inputFilePath);
         String logPath = LogManager.codePath2LogPath(inputFilePath, modelName);
         String pureProgram = LogManager.file2String(inputFilePath);
+        List<String> historyTestcases = new ArrayList<>();
+        int maxRoundsOf1CoupleOfTD = 10;
         List<String[]> FSF;
         int count = 1;
         while(count <= maxRounds){
@@ -127,7 +135,7 @@ public class FSFGenerator {
             make1RoundConversation(fsfPrompt,mc);
             System.out.println("第"+count+"轮对话完成");
             try{
-                FSF = LogManager.getLastestTDsFromLog(logPath);
+                FSF = LogManager.getLastestFSFFromLog(logPath);
             }catch (Exception e){
                 System.out.println("对话生成FSF失败，跳过本次任务");
                 return false;
@@ -137,6 +145,7 @@ public class FSFGenerator {
             String T = "";
             String D = "";
             List<String> prePathConstrains = new ArrayList<>();
+            String mainMd = "";
             //对每一个TD进行验证
             for(String[] td : FSF) {
                 T = td[0];
@@ -146,23 +155,41 @@ public class FSFGenerator {
                     System.out.println("D为Exception，跳过本次验证");
                     continue;
                 }
-                while(true){
+                int countOfPathValidated = 0;
+                while(countOfPathValidated < maxRoundsOf1CoupleOfTD){
                     //对一个TD下所有路径验证
-                    r = valid1Path(pureProgram, prePathConstrains, T, D);
-                    if (r != null && r.getStatus() == 0) {
-                        prePathConstrains.add(r.getPathConstrain());
-                    }else{
+                    //确保是ssmp
+                    String ssmp = TransWorker.trans2SSMP(pureProgram);
+                    if(ssmp.isEmpty()){
+                        System.out.println("无法转换为单静态方法程序，无法检验！");
+                        return false;
+                    }
+                    //生成main方法，即测试用例
+                    mainMd = generateMainMdUnderExpr(T,prePathConstrains,ssmp);
+                    historyTestcases.add(mainMd);
+                    if(mainMd == null){
+                        System.out.println("参数生成失败！");
+                        return false;
+                    }
+                    r = valid1Path(ssmp,mainMd,prePathConstrains,T,D);
+                    if(r == null){
+                        System.out.println("验证过程发生错误，没有返回result");
+                        return false;
+                    }
+                    if(r.getStatus() != 0){
                         break;
                     }
+                    prePathConstrains.add(r.getPathConstrain());
+                    countOfPathValidated++;
+                    System.out.println("T：" + T + " ; " + "D: " + D + "====>" + "第[" + countOfPathValidated + "]条路径测试完毕");
                 }
-                if(r == null){
-                    System.out.println("验证过程发生错误，没有返回result");
-                    return false;
-                }else if (r.getStatus() == 3) { //status 为 3 表示 路径已经全部覆盖
-                    System.out.println("T：" + T + " ; " + "D: " + D + "====>" + "验证通过");
-                }else{
+                if(countOfPathValidated >= maxRoundsOf1CoupleOfTD){
+                    System.out.println("超出最大路径验证次数" + maxRoundsOf1CoupleOfTD + "结束对当前TD组的验证");
+                }
+                if(r.getStatus() != 0 && r.getStatus() !=3){
                     break;
                 }
+                System.out.println("T：" + T + " ; " + "D: " + D + "====>" + "验证通过");
             }
             if(r.getStatus() == 2){
                 System.out.println("T：" + T + "\n" + "D: " + D + "\n" + "验证未通过，可能是FSF不准确, 需要重新生成");
@@ -172,8 +199,14 @@ public class FSFGenerator {
                 LogManager.appendMessage(fsfPrompt.getCodePath(),msg,fsfPrompt.getModel());
                 continue;
             }
+            if(r.getStatus() == 0){
+                System.out.println("超出最大路径验证次数" + maxRoundsOf1CoupleOfTD + "，partially verified!");
+                LogManager.saveHistoryTestcases(inputFilePath, historyTestcases);
+                return true;
+            }
             if(r.getStatus() == 3){
-                System.out.println("FSF生成以及检验任务完成，生成的FSF通过检验，且符合要求");
+                System.out.println("FSF生成以及检验任务完成, totally verified! 生成的FSF通过检验，且符合要求");
+                LogManager.saveHistoryTestcases(inputFilePath, historyTestcases);
                 return true;
             }else{
                 System.out.println("本次任务失败!,r.status =" + r.getStatus());
