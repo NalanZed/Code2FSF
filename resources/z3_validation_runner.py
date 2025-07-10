@@ -50,9 +50,8 @@ def parse_execution_path(execution_output: str) -> List[str]:
 
     for line in lines:
         if "current value" in line or "Entering loop" in line or "Exiting loop" in line or "Evaluating if condition" in line \
-                or "Return statement" in line or "Function input" in line:
-            execution_path.append(line)
-        if "Under condition" in line and "true" in line:
+                or "Return statement" in line or "Function input" in line or "Entering forloop" in line \
+                or "Exiting forloop" in line or ("Under condition" in line and "true" in line):
             execution_path.append(line)
 
 
@@ -81,6 +80,7 @@ def replace_variables(current_condition: str, variable: str, new_value: str) -> 
     Replace the variable in the logical condition with the new value.
     """
     pattern = rf'\b{re.escape(variable)}\b'  # Match variable names exactly
+    new_value = f"({new_value})"
     return re.sub(pattern, new_value, current_condition)
 
 class Result:
@@ -362,8 +362,13 @@ def get_ct_from_execution_path(execution_path:List[str]):
                 if_condition = remove_type_transfer_stmt_in_expr(if_condition)
                 ct = f"{ct} && ({if_condition})"
             # Check whether it is a condition to enter the loop
-        if "Entering loop" in step:
+        elif "Entering loop" in step:
             condition_match = re.search(r"Entering loop with condition: (.*?) is evaluated as: true", step)
+            if condition_match:
+                loop_condition = condition_match.group(1).strip()
+                ct = f"{ct} && ({loop_condition})"
+        elif "Entering forloop" in step:
+            condition_match = re.search(r"Entering forloop with condition: (.*?) is evaluated as: true", step)
             if condition_match:
                 loop_condition = condition_match.group(1).strip()
                 ct = f"{ct} && ({loop_condition})"
@@ -374,6 +379,11 @@ def get_ct_from_execution_path(execution_path:List[str]):
             if condition_match:
                 loop_condition = condition_match.group(1).strip()
                 ct = f"{ct} && !({loop_condition})"
+        elif "Exiting forloop" in step:
+            condition_match = re.search(r"Exiting forloop, condition no longer holds: (.*?) is evaluated as: false", step)
+            if condition_match:
+                loop_condition = condition_match.group(1).strip()
+                ct = f"{ct} && !({loop_condition})"
 
             # Check for variable assignment
         elif "current value" in step:
@@ -381,6 +391,12 @@ def get_ct_from_execution_path(execution_path:List[str]):
             if assignment_match:
                 variable = assignment_match.group(1).strip()
                 value = assignment_match.group(2).strip()
+                ct = replace_variables(ct,variable,value)
+        elif "Under condition" in step:
+            condition_assignment_match = re.search(r"Under condition (.*) = (.*), condition is : (.*)", step)
+            if condition_assignment_match:
+                variable = condition_assignment_match.group(1).strip()
+                value = condition_assignment_match.group(2).strip()
                 ct = replace_variables(ct,variable,value)
 
     #先去掉空格，再去掉多余的 &&

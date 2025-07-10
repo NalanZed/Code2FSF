@@ -6,6 +6,7 @@ import com.github.javaparser.ast.Node;
 import com.github.javaparser.ast.NodeList;
 import com.github.javaparser.ast.body.MethodDeclaration;
 import com.github.javaparser.ast.body.Parameter;
+import com.github.javaparser.ast.body.VariableDeclarator;
 import com.github.javaparser.ast.expr.*;
 import com.github.javaparser.ast.stmt.*;
 import com.github.javaparser.ast.visitor.ModifierVisitor;
@@ -80,7 +81,7 @@ public class ExecutionPathPrinter {
         return cu.toString();
     }
 
-    public static String addPrintStmtForForLoopStmt(String code) {
+    public static String addPrintStmtForForLoopStmt2(String code) {
         StringBuilder result = new StringBuilder();
         String[] lines = code.split("\n");
 
@@ -132,6 +133,60 @@ public class ExecutionPathPrinter {
             result.append(rawLine).append("\n");
         }
         return result.toString();
+    }
+    public static String addPrintStmtForForLoopStmt(String code) {
+        CompilationUnit cu = new JavaParser().parse(code).getResult().get();
+        cu.accept(new ModifierVisitor<Void>() {
+            @Override
+            public Visitable visit(ForStmt forStmt, Void arg) {
+                // 确保 for 的 body 被 {} 包围
+                if (!forStmt.getBody().isBlockStmt()) {
+                    Statement body = forStmt.getBody();
+                    BlockStmt blockStmt = new BlockStmt();
+                    blockStmt.addStatement(body);
+                    forStmt.setBody(blockStmt);
+                }
+                // 在for循环上方打印初始化语句
+                List<Statement> initialStmts = generateInitialStmtsOfForLoop(forStmt);
+                if(!initialStmts.isEmpty()) {
+                    Optional<Node> parentNode = forStmt.getParentNode();
+                    if(parentNode.isEmpty()) {
+                        return super.visit(forStmt, arg);
+                    }
+                    for(Statement s : initialStmts){
+                        if(parentNode.get() instanceof BlockStmt) {
+                            int index = ((BlockStmt) parentNode.get()).asBlockStmt().getStatements().indexOf(forStmt);
+                            ((BlockStmt) parentNode.get()).asBlockStmt().addStatement(index, s);
+                        }
+                    }
+                }
+
+                //在循环体内打印Entering loop condition
+                Statement enterLoopStmt = generateEnteringLoopPrintStmt(forStmt);
+                forStmt.getBody().asBlockStmt().addStatement(0,enterLoopStmt);
+
+                //在循环体内打印 update 语句，这样可以获取到赋值
+                List<Statement> updateStmts = generateUpdateStmtOfForLoop(forStmt);
+                if(!updateStmts.isEmpty()) {
+                    for(Statement s : updateStmts){
+                        int length = forStmt.getBody().asBlockStmt().getStatements().size();
+                        forStmt.getBody().asBlockStmt().addStatement(length,s);
+                    }
+                }
+                //打印退出循环的语句 Exiting loop condition
+                Statement exitLoopStmt = generateExitingLoopPrintStmt(forStmt);
+                Optional<Node> parentNode = forStmt.getParentNode();
+                if(parentNode.isEmpty()) {
+                    return super.visit(forStmt, arg);
+                }
+                if(parentNode.get() instanceof BlockStmt) {
+                    int index = ((BlockStmt) parentNode.get()).asBlockStmt().getStatements().indexOf(forStmt);
+                    ((BlockStmt) parentNode.get()).asBlockStmt().addStatement(index+1,exitLoopStmt);
+                }
+                return super.visit(forStmt, arg);
+            }
+        },null);
+        return cu.toString();
     }
 
     public static String addPrintForWhileLoopStmt(String code) {
@@ -419,6 +474,109 @@ public class ExecutionPathPrinter {
         ));
         return printStmt;
     }
+    public static Statement generateEnteringLoopPrintStmt(ForStmt forStmt){
+        //获取condition，构造print statement
+        Expression condition = forStmt.getCompare().get();
+        condition = new EnclosedExpr(condition);
+        Statement printStmt = new ExpressionStmt(new MethodCallExpr(
+                new NameExpr("System.out"),
+                "println",
+                NodeList.nodeList(new BinaryExpr(
+                        new StringLiteralExpr("Entering forloop with condition: " + condition + " is evaluated as: "),
+                        condition,
+                        BinaryExpr.Operator.PLUS
+                ))
+        ));
+        return printStmt;
+    }
+
+    public static List<Statement> generateUpdateStmtOfForLoop(ForStmt forStmt){
+        List<Statement > updateStmts = new ArrayList<>();
+        List<Expression> update = forStmt.getUpdate();
+        Statement printStmt = null;
+        if(!update.isEmpty()){
+            for(Expression expr : update){
+                if(expr.isUnaryExpr()){
+                    UnaryExpr unaryExpr = expr.asUnaryExpr();
+                    String varName = unaryExpr.getExpression().toString();
+                    String operator = unaryExpr.getOperator().asString();
+                    String expandAssignExpr = "";
+                    if(operator.equals("++")){
+                        expandAssignExpr = varName + " = " + "(" + varName + " + 1" + ")";
+                    }else if(operator.equals("--")){
+                        expandAssignExpr = varName + " = " + "(" + varName + " - 1" + ")";
+                    }
+                    printStmt = new ExpressionStmt(new MethodCallExpr(
+                            new NameExpr("System.out"),
+                            "println",
+                            NodeList.nodeList(new BinaryExpr(
+                                    new StringLiteralExpr( expandAssignExpr + ", current value of " + varName + ": "),
+                                    unaryExpr.getExpression(),
+                                    BinaryExpr.Operator.PLUS
+                            ))
+                    ));
+                }
+                else if(expr.isAssignExpr()){
+                    AssignExpr assignExpr = expr.asAssignExpr();
+                    String varName = assignExpr.getTarget().toString();
+                    String value = assignExpr.getValue().toString();
+                    printStmt = new ExpressionStmt(new MethodCallExpr(
+                            new NameExpr("System.out"),
+                            "println",
+                            NodeList.nodeList(new BinaryExpr(
+                                    new StringLiteralExpr(varName + " = " + value + ", current value of " + varName + ": "),
+                                    assignExpr.getValue(),
+                                    BinaryExpr.Operator.PLUS
+                            ))
+                    ));
+                }
+                updateStmts.add(printStmt);
+            }
+        }
+        return updateStmts;
+    }
+
+    public static List<Statement> generateInitialStmtsOfForLoop(ForStmt forStmt){
+        //获取condition，构造print statement
+        List<Statement> pstmts = new ArrayList<>();
+        Statement printStmt = null;
+        List<Expression> initializations = forStmt.getInitialization();
+        for(Expression expr : initializations){
+            if(expr.isAssignExpr()){
+                AssignExpr assignExpr = expr.asAssignExpr();
+                String varName = assignExpr.getTarget().toString();
+                String value = assignExpr.getValue().toString();
+                printStmt = new ExpressionStmt(new MethodCallExpr(
+                        new NameExpr("System.out"),
+                        "println",
+                        NodeList.nodeList(new BinaryExpr(
+                                new StringLiteralExpr(varName + " = " + value + ", current value of " + varName + ": "),
+                                new EnclosedExpr(expr),
+                                BinaryExpr.Operator.PLUS
+                        ))
+                ));
+                pstmts.add(printStmt);
+            }
+            else if(expr.isVariableDeclarationExpr()){
+                VariableDeclarationExpr varDecl = expr.asVariableDeclarationExpr();
+                for (VariableDeclarator var : varDecl.getVariables()) {
+                    String varName = var.getNameAsString();
+                    String value = var.getInitializer().isPresent() ? var.getInitializer().get().toString() : "undefined";
+                    printStmt = new ExpressionStmt(new MethodCallExpr(
+                            new NameExpr("System.out"),
+                            "println",
+                            NodeList.nodeList(new BinaryExpr(
+                                    new StringLiteralExpr(varName + " = " + value + ", current value of " + varName + ": "),
+                                    new NameExpr("\"out of forloop area, can't see it!\""),
+                                    BinaryExpr.Operator.PLUS
+                            ))
+                    ));
+                    pstmts.add(printStmt);
+                }
+            }
+        }
+        return pstmts;
+    }
     public static Statement generateExitingLoopPrintStmt(WhileStmt whileStmt){
         //获取condition，构造print statement
         Expression condition = whileStmt.getCondition();
@@ -429,6 +587,21 @@ public class ExecutionPathPrinter {
                 NodeList.nodeList(new BinaryExpr(
                         new StringLiteralExpr("Exiting loop, condition no longer holds: " + condition + " is evaluated as: "),
                         condition,
+                        BinaryExpr.Operator.PLUS
+                ))
+        ));
+        return printStmt;
+    }
+    public static Statement generateExitingLoopPrintStmt(ForStmt forStmt){
+        //获取condition，构造print statement
+        Expression condition = forStmt.getCompare().get();
+        condition = new EnclosedExpr(condition);
+        Statement printStmt = new ExpressionStmt(new MethodCallExpr(
+                new NameExpr("System.out"),
+                "println",
+                NodeList.nodeList(new BinaryExpr(
+                        new StringLiteralExpr("Exiting forloop, condition no longer holds: " + condition + " is evaluated as: "),
+                        new NameExpr("false"),
                         BinaryExpr.Operator.PLUS
                 ))
         ));
@@ -556,7 +729,7 @@ public class ExecutionPathPrinter {
 
     public static void main(String[] args) {
         String dir = "resources/dataset/someBench/";
-        String testFileName = "FizzBuzzSeq";
+        String testFileName = "AltitudeController";
         String testFileNameJava = testFileName+".java";
         String testFilePath = dir + "/" + testFileNameJava;
 
@@ -564,7 +737,8 @@ public class ExecutionPathPrinter {
         String targetCode = addPrintStmt(pureCode);
 //        String targetCode = addPrintStmtForReturnStmt(pureCode);
 //        String targetCode = addPrintStmtAtMethodBegin(pureCode);
-//        String targetCode = addPrintStmtForForLoopStmt(pureCode);
+//        String targetCode = addPrintStmtForForLoopStmt2(pureCode);
+//        targetCode = addPrintStmtForAssignStmt(targetCode);
 //        String targetCode = addPrintStmtForAssignStmt(pureCode);
 //        String targetCode = addPrintForWhileLoopStmt(pureCode) ;
         System.out.println(targetCode);

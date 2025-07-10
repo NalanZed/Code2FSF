@@ -194,7 +194,7 @@ public class TestCaseAutoGenerator {
     }
 
     public static String randomIntGen(){
-        int n = ThreadLocalRandom.current().nextInt(-20,20);
+        int n = ThreadLocalRandom.current().nextInt(-120,120);
         return String.valueOf(n);
     }
     public static String randomFloatGen(){
