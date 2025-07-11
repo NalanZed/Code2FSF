@@ -490,51 +490,6 @@ public class ExecutionPathPrinter {
         return printStmt;
     }
 
-    public static List<Statement> generateUpdateStmtOfForLoop(ForStmt forStmt){
-        List<Statement > updateStmts = new ArrayList<>();
-        List<Expression> update = forStmt.getUpdate();
-        Statement printStmt = null;
-        if(!update.isEmpty()){
-            for(Expression expr : update){
-                if(expr.isUnaryExpr()){
-                    UnaryExpr unaryExpr = expr.asUnaryExpr();
-                    String varName = unaryExpr.getExpression().toString();
-                    String operator = unaryExpr.getOperator().asString();
-                    String expandAssignExpr = "";
-                    if(operator.equals("++")){
-                        expandAssignExpr = varName + " = " + "(" + varName + " + 1" + ")";
-                    }else if(operator.equals("--")){
-                        expandAssignExpr = varName + " = " + "(" + varName + " - 1" + ")";
-                    }
-                    printStmt = new ExpressionStmt(new MethodCallExpr(
-                            new NameExpr("System.out"),
-                            "println",
-                            NodeList.nodeList(new BinaryExpr(
-                                    new StringLiteralExpr( expandAssignExpr + ", current value of " + varName + ": "),
-                                    unaryExpr.getExpression(),
-                                    BinaryExpr.Operator.PLUS
-                            ))
-                    ));
-                }
-                else if(expr.isAssignExpr()){
-                    AssignExpr assignExpr = expr.asAssignExpr();
-                    String varName = assignExpr.getTarget().toString();
-                    String value = assignExpr.getValue().toString();
-                    printStmt = new ExpressionStmt(new MethodCallExpr(
-                            new NameExpr("System.out"),
-                            "println",
-                            NodeList.nodeList(new BinaryExpr(
-                                    new StringLiteralExpr(varName + " = " + value + ", current value of " + varName + ": "),
-                                    assignExpr.getValue(),
-                                    BinaryExpr.Operator.PLUS
-                            ))
-                    ));
-                }
-                updateStmts.add(printStmt);
-            }
-        }
-        return updateStmts;
-    }
 
     public static List<Statement> generateInitialStmtsOfForLoop(ForStmt forStmt){
         //获取condition，构造print statement
@@ -591,6 +546,51 @@ public class ExecutionPathPrinter {
                 ))
         ));
         return printStmt;
+    }
+    public static List<Statement> generateUpdateStmtOfForLoop(ForStmt forStmt){
+        List<Statement > updateStmts = new ArrayList<>();
+        List<Expression> update = forStmt.getUpdate();
+        Statement printStmt = null;
+        if(!update.isEmpty()){
+            for(Expression expr : update){
+                if(expr.isUnaryExpr()){
+                    UnaryExpr unaryExpr = expr.asUnaryExpr();
+                    String varName = unaryExpr.getExpression().toString();
+                    String operator = unaryExpr.getOperator().asString();
+                    String expandAssignExpr = "";
+                    if(operator.equals("++")){
+                        expandAssignExpr = varName + " = " + "(" + varName + " + 1" + ")";
+                    }else if(operator.equals("--")){
+                        expandAssignExpr = varName + " = " + "(" + varName + " - 1" + ")";
+                    }
+                    printStmt = new ExpressionStmt(new MethodCallExpr(
+                            new NameExpr("System.out"),
+                            "println",
+                            NodeList.nodeList(new BinaryExpr(
+                                    new StringLiteralExpr( expandAssignExpr + ", current value of " + varName + ": "),
+                                    unaryExpr.getExpression(),
+                                    BinaryExpr.Operator.PLUS
+                            ))
+                    ));
+                }
+                else if(expr.isAssignExpr()){
+                    AssignExpr assignExpr = expr.asAssignExpr();
+                    String varName = assignExpr.getTarget().toString();
+                    String value = assignExpr.getValue().toString();
+                    printStmt = new ExpressionStmt(new MethodCallExpr(
+                            new NameExpr("System.out"),
+                            "println",
+                            NodeList.nodeList(new BinaryExpr(
+                                    new StringLiteralExpr(varName + " = " + value + ", current value of " + varName + ": "),
+                                    assignExpr.getValue(),
+                                    BinaryExpr.Operator.PLUS
+                            ))
+                    ));
+                }
+                updateStmts.add(printStmt);
+            }
+        }
+        return updateStmts;
     }
     public static Statement generateExitingLoopPrintStmt(ForStmt forStmt){
         //获取condition，构造print statement

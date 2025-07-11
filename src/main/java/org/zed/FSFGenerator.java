@@ -73,37 +73,28 @@ public class FSFGenerator {
         return argsMap;
     }
 
-    public static Result valid1Path(String pureProgram,List<String> prePathConstrains,String T,String D) throws Exception {
-        //构造当前测试约束
-        String conExpr = ExecutionEnabler.constructConstrain(T,prePathConstrains);
-        System.out.println("当前测试用例生成条件为：" + conExpr);
-        //生成main方法，即测试用例
-
-        //确保是ssmp
-        String ssmp = TransWorker.trans2SSMP(pureProgram);
-        if(ssmp.isEmpty()){
-            System.out.println("无法转换为单静态方法程序，无法检验！");
-            return null;
-        }
-
-        String mainMd = generateMainMdUnderExpr(conExpr,ssmp);
-        if(mainMd == null){
-            return new Result(99,"","参数生成失败!");
-        }
-        //给测试函数插桩
-        String addedPrintProgram = addPrintStmt(ssmp);
-        //组装可执行程序
-        String runnableProgram = insertMainMdInSSMP(addedPrintProgram, mainMd);
-        System.out.println("runnableProgram: " + runnableProgram);
-        //拿到SpecUnit
-        SpecUnit su = new SpecUnit(runnableProgram,T,D,prePathConstrains);
-        Result result = callTBFV4J(su);
-        if(result != null){
-            System.out.println("验证返回 result: " + result);
-            return result;
-        }
-        return null;
-    }
+//    public static int validateFSFExclusivity(List<String[]> fsf, String ssmp){
+//        FSFValidationUnit fsfValidationUnit = new FSFValidationUnit(ssmp, fsf);
+//        try {
+//            Result r = callTBFV4J(fsfValidationUnit);
+//            if(r == null){
+//                System.out.println("互斥性验证失败，没有返回result");
+//                return -2;
+//            }
+//            if(r.getStatus() == 2){
+//                System.out.println("Ts is not mutually exclusive! Need Regenerate FSF!");
+//                return -1;
+//            } else if(r.getStatus() == 0){
+//                System.out.println("Ts is mutually exclusive! Successfully validated!");
+//                return 1;
+//            } else {
+//                System.out.println(r.getCounterExample());
+//                return false;
+//            }
+//        } catch (IOException e) {
+//            throw new RuntimeException(e);
+//        }
+//    }
 
     public static Result valid1Path(String ssmp,String mainMd,List<String> prePathConstrains,String T,String D) throws Exception {
         //给测试函数插桩
@@ -126,6 +117,8 @@ public class FSFGenerator {
         ModelPrompt fsfPrompt = ModelPrompt.generateCode2FSFPrompt(modelName,inputFilePath);
         String logPath = LogManager.codePath2LogPath(inputFilePath, modelName);
         String pureProgram = LogManager.file2String(inputFilePath);
+        //确保是ssmp
+        String ssmp = TransWorker.trans2SSMP(pureProgram);
         List<String> historyTestcases = new ArrayList<>();
         int maxRoundsOf1CoupleOfTD = 10;
         List<String[]> FSF;
@@ -140,6 +133,18 @@ public class FSFGenerator {
                 System.out.println("对话生成FSF失败，跳过本次任务");
                 return false;
             }
+            //对FSF中T的互斥性进行验证
+            FSFValidationUnit fsfValidationUnit = new FSFValidationUnit(ssmp, FSF);
+            Result exclusivityResult = callTBFV4J(fsfValidationUnit);
+            if(exclusivityResult.getStatus() == 2){
+                String exclusivityWrongMsg = "检查到FSF中T不满足互斥性,具体是 Ti && Tj :[" + exclusivityResult.getCounterExample()+ "] 有解" +
+                        exclusivityResult.getPathConstrain() + "，请重新生成FSF，确保T之间的互斥性";
+                ModelMessage msg = new ModelMessage("user", exclusivityWrongMsg);
+                fsfPrompt.addMessage(msg);
+                LogManager.appendMessage(fsfPrompt.getCodePath(), msg, fsfPrompt.getModel());
+                continue;
+            }
+
             count++;
             Result r = null;
             String T = "";
@@ -158,8 +163,6 @@ public class FSFGenerator {
                 int countOfPathValidated = 0;
                 while(countOfPathValidated < maxRoundsOf1CoupleOfTD){
                     //对一个TD下所有路径验证
-                    //确保是ssmp
-                    String ssmp = TransWorker.trans2SSMP(pureProgram);
                     if(ssmp.isEmpty()){
                         System.out.println("无法转换为单静态方法程序，无法检验！");
                         return false;
@@ -315,6 +318,39 @@ public class FSFGenerator {
             throw new RuntimeException(e);
         }
 
+        return res;
+    }
+    public static Result callTBFV4J(FSFValidationUnit fu) throws IOException {
+        Result res =null;
+        String fuJson = fu.toJson();
+        ProcessBuilder pb = new ProcessBuilder("python3", "resources/z3_validation_runner.py", "--fu",fuJson);
+        Process process = pb.start();
+        BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+        String line;
+        while((line = reader.readLine()) != null){
+            if(line.startsWith("FSF validation result:")){
+                String resultJson = line.substring("FSF validation result:".length()).trim();
+                res = new Result(resultJson);
+            }
+            System.out.println(line);
+        }
+
+        if(res == null){
+            System.out.println("没有收到TBFV给出的 result");
+        }
+
+        // 读取错误信息
+        BufferedReader errReader = new BufferedReader(new InputStreamReader(process.getErrorStream()));
+        while((line = errReader.readLine()) != null){
+            System.err.println("Error: " + line);
+        }
+
+        // 等待进程结束
+        try {
+            process.waitFor();
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
         return res;
     }
 

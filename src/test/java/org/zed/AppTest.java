@@ -4,7 +4,9 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 import org.zed.llm.ModelConfig;
+import org.zed.llm.ModelMessage;
 import org.zed.log.LogManager;
+import org.zed.trans.TransWorker;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -146,12 +148,26 @@ public class AppTest
         runConversationForDir(3, modelConfig, SSMPDir);
     }
     public void testApp5() throws Exception {
-        String program = LogManager.file2String("resources/testCases/Conjunction.java");
-        generateMainMdUnderExpr("(b1 == true && b2 == false)",program);
-    }
-    public void testApp6() throws Exception {
-        String program = LogManager.file2String("resources/dataset/Example.java");
-        List<String> pathConstrains = new ArrayList<String>();
-        valid1Path(program,pathConstrains,"true","true");
+        String program = LogManager.file2String("resources/testCases/Test2.java");
+        String ssmp = TransWorker.trans2SSMP(program);
+        List<String[]> FSF = new ArrayList<>();
+        FSF.add(new String[]{"x > 0 && x < 10", "y > 0"});
+        FSF.add(new String[]{"x < 0", "y > 1"});
+        FSF.add(new String[]{"x > 10", "y <= 1"});
+        FSF.add(new String[]{"x == 0", "y <= 1"});
+        FSF.add(new String[]{"x == 10", "y <= 1"});
+        FSF.add(new String[]{"x == 10", "y <= 1"});
+        //对FSF中T的互斥性进行验证
+        FSFValidationUnit fsfValidationUnit = new FSFValidationUnit(ssmp, FSF);
+        Result exclusivityResult = callTBFV4J(fsfValidationUnit);
+        if(exclusivityResult.getStatus() == 2){
+            String exclusivityWrongMsg = "检查到FSF中T不满足互斥性,具体是 Ti && Tj :[" + exclusivityResult.getCounterExample()+ "] 有解" +
+                    exclusivityResult.getPathConstrain() + "，请重新生成FSF，确保T之间的互斥性";
+            System.out.println(exclusivityWrongMsg);
+//            ModelMessage msg = new ModelMessage("user", exclusivityWrongMsg);
+//            fsfPrompt.addMessage(msg);
+//            LogManager.appendMessage(fsfPrompt.getCodePath(), msg, fsfPrompt.getModel());
+//            continue;
+        }
     }
 }

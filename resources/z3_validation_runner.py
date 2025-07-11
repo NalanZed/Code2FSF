@@ -124,6 +124,27 @@ class SpecUnit:
     def __str__(self):
         return f"SpecUnit(name={self.program}, T={self.T}, D={self.D},pre_constrains={self.pre_constrains})"
 
+class FSFValidationUnit:
+    def __init__(self, allTs: List[str], vars: List[str]):
+        self.allTs = allTs  # string 类型字段
+        self.vars = vars
+    def to_json(self) -> str:
+        """
+        将 FSFValidationUnit 对象序列化为 JSON 字符串
+        """
+        return json.dumps(self.__dict__)
+
+    @classmethod
+    def from_json(cls, json_string: str) -> 'FSFValidationUnit':
+        """
+        从 JSON 字符串反序列化为 FSFValidationUnit 对象
+        """
+        data_dict = json.loads(json_string)
+        return cls(data_dict["allTs"], data_dict["vars"])
+
+    def __str__(self):
+        return f"FSFValidationUnit(name={self.allTs}, T={self.vars})"
+
 ############# java_expr_z3_expr ##############
 def solver_check_z3(z3_expr:str)->str:
     try:
@@ -460,59 +481,46 @@ def main():
     parser = argparse.ArgumentParser()
     # 添加参数定义
     parser.add_argument('-s', '--specUnit', '--specunit', help='输入要验证的SpecUnit对象的JSON字符串', required=False)
+    parser.add_argument('-f', '--fu', '--fsfValidationUnit', help='输入要验证的fsfValidationUnit对象的JSON字符串', required=False)
     # 解析命令行参数
     args = parser.parse_args()
     spec_unit_json = args.specUnit
-    if(spec_unit_json is None):
-        print("请提供输入SpecUnit对象的JSON字符串")
+    fsf_validation_unit_json = args.fu
+    if(spec_unit_json is None and fsf_validation_unit_json is None):
+        print("请提供输入要验证的JSON字符串")
         return
-    deal_with_spec_unit_json(spec_unit_json)
+    if(spec_unit_json is not None):
+        deal_with_spec_unit_json(spec_unit_json)
+    if(fsf_validation_unit_json is not None):
+        fsf_exclusivity_validate(fsf_validation_unit_json)
 
-def test_main_3():
-    execution_path = """
-    Execution Path:
-    Function input int parameter x = 34
-    res = 0, current value of res: 0
-    res = res + 1, current value of res: 1
-    res = res + 1, current value of res: 2
-    res = res + 1, current value of res: 3
-    res = res + 1, current value of res: 4
-    res = res + 1, current value of res: 5
-    res = res + 1, current value of res: 6
-    res = res + 1, current value of res: 7
-    res = res + 1, current value of res: 8
-    res = res + 1, current value of res: 9
-    res = res + 1, current value of res: 10
-    res = res + 1, current value of res: 11
-    res = res + 1, current value of res: 12
-    res = res + 1, current value of res: 13
-    res = res + 1, current value of res: 14
-    res = res + 1, current value of res: 15
-    res = res + 1, current value of res: 16
-    res = res + 1, current value of res: 17
-    res = res + 1, current value of res: 18
-    res = res + 1, current value of res: 19
-    res = res + 1, current value of res: 20
-    res = res + 1, current value of res: 21
-    res = res + 1, current value of res: 22
-    res = res + 1, current value of res: 23
-    res = res + 1, current value of res: 24
-    res = res + 1, current value of res: 25
-    res = res + 1, current value of res: 26
-    res = res + 1, current value of res: 27
-    res = res + 1, current value of res: 28
-    res = res + 1, current value of res: 29
-    res = res + 1, current value of res: 30
-    res = res + 1, current value of res: 31
-    res = res + 1, current value of res: 32
-    res = res + 1, current value of res: 33
-    res = res + 1, current value of res: 34
-    return_value = res , current value of return_value : 34
-    end Execution Path
-    """.split('\n')
-    D = "res == x"
-    r = update_D_with_execution_path(D,execution_path)
-    print(r)
+def fsf_exclusivity_validate(fuJson: str):
+    fu = FSFValidationUnit.from_json(fuJson)
+    print(fu)
+    ts = fu.allTs
+    ts_size = len(ts)
+    and_ts = []
+    for i in range(ts_size):
+        for j in range(i + 1, ts_size):
+            t1 = ts[i]
+            t2 = ts[j]
+            and_ts.append(f"({t1}) && ({t2})")
+    for and_t in and_ts:
+        result = Result(0, "", "")
+        print("正在验证: " + and_t)
+        z3_expr = java_expr_to_z3(and_t, fu.vars)
+        r = solver_check_z3(z3_expr)
+        if(r == "OK"):
+            continue
+        if(r == "ERROR"):
+            result = Result(1, "FSF VALIDATION ERROR!", "")
+            return
+        else:
+            result = Result(2, and_t, r)
+            print("FSF validation result:" + result.to_json())
+            return
+        # 这里可以添加对组合T的进一步处理逻辑
+    print("FSF validation result:" + result.to_json())
 
 
 def init_files():
@@ -547,7 +555,7 @@ def test_main_4():
     print(remove_type_transfer_stmt_in_expr("(long) (x + 1) == (long) (y + 1)"))
 if __name__ == "__main__":
     # test_main_2()
-    # test_main_3()
+    # test_main_3("{\"allTs\":[\"T1\",\"T2\"],\"vars\":{\"a\":\"int\",\"b\":\"String\"}}")
     # test_main()
     main()
     # test_main_4()
