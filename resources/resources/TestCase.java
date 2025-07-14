@@ -11,7 +11,7 @@
                 }
             
                 public static void main(String[] args){
-                    int num = -3;
+                    int num = Integer.MIN_VALUE; // Using Integer.MIN_VALUE to test edge case
                     int result = TestCase.Abs(num);
                     System.out.println("result = Abs.Abs(num), current value of result: " + result);
                 }

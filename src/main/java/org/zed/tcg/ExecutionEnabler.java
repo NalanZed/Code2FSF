@@ -18,7 +18,7 @@ import static org.zed.tcg.TestCaseAutoGenerator.generateParamsDefUnderExpr;
 
 public class ExecutionEnabler {
 
-    public static String insertMainMdInSSMP(String ssmp,String mainMd) throws IOException {
+    public static String insertMainMdInSSMP(String ssmp,String mainMd) {
         JavaParser parser = new JavaParser();
         CompilationUnit cu = parser.parse(ssmp).getResult().get();
         String className = cu.getTypes().get(0).getNameAsString();
@@ -31,21 +31,19 @@ public class ExecutionEnabler {
         return generateMainMdUnderExpr(su.getT(), su.getPreconditions(), su.getProgram());
     }
 
-    public static String generateMainMdUnderExpr(String T, List<String> preconditions, String program) throws Exception {
+    public static String generateMainMdUnderExpr(String T, List<String> preconditions, String program) {
         String conExpr = constructConstrain(T, preconditions);
         System.out.println("本次生成测试用例的约束条件为：" + conExpr);
         return generateMainMdUnderExpr(conExpr, program);
     }
 
-    public static String generateMainMdUnderExpr(String expr, String program) throws Exception {
+    public static String generateMainMdUnderExpr(String expr, String ssmp) {
         //1. 解析program
         JavaParser parser = new JavaParser();
-        CompilationUnit cu = parser.parse(program).getResult().get();
+        CompilationUnit cu = parser.parse(ssmp).getResult().get();
         String className = cu.getTypes().get(0).getNameAsString();
-        MethodDeclaration md = getFirstStaticMethod(program);
-        if(md==null){
-            throw new Exception(className + "没有可检验的static方法");
-        }
+        MethodDeclaration md = getFirstStaticMethod(ssmp);
+
         List<Parameter> parameters = md.getParameters();
         int paramNum = parameters.size();
 

@@ -3,7 +3,7 @@ import re
 import json
 import argparse
 import time
-from typing import List
+from typing import List, Any
 from z3 import *
 import ast
 
@@ -21,7 +21,7 @@ def get_class_name(java_code: str):
     else:
         return None  # 如果没有匹配到，返回 None
 
-def run_java_code(java_code: str) -> str:
+def run_java_code(java_code: str):
     classname = get_class_name(java_code)
     file_path = RUNNABLE_DOR + "/"  + classname + ".java"
     with open(file_path, "w") as file:
@@ -39,11 +39,10 @@ def run_java_code(java_code: str) -> str:
             text=True,
         )
         # print(" result.stdout:" + result.stdout)
-        return result.stdout
+        return result
     except subprocess.CalledProcessError:
         print("Error during Java execution.")
-        return ""
-
+        return None
 def parse_execution_path(execution_output: str) -> List[str]:
     lines = execution_output.splitlines()
     execution_path = []
@@ -125,7 +124,7 @@ class SpecUnit:
         return f"SpecUnit(name={self.program}, T={self.T}, D={self.D},pre_constrains={self.pre_constrains})"
 
 class FSFValidationUnit:
-    def __init__(self, allTs: List[str], vars: List[str]):
+    def __init__(self, allTs: List[str], vars: dict):
         self.allTs = allTs  # string 类型字段
         self.vars = vars
     def to_json(self) -> str:
@@ -181,7 +180,10 @@ def java_expr_to_z3(expr_str, var_types: dict):
     :param var_types: dict，变量名到类型的映射，如 {'b1': 'bool', 'x': 'int'}
     :return: Z3 表达式
     """
-
+    expr_str = expr_str.strip()
+    expr_str = expr_str.lstrip()  # 进一步去除前导空白
+    expr_str = " ".join(expr_str.splitlines())  # 合并为单行，去除多余缩进
+    print(f"Java表达式: {repr(expr_str)}")  # 用repr��便调试不可见字符
     # 构建 Z3 变量
     z3_vars = {}
     for name, vtype in var_types.items():
@@ -201,6 +203,7 @@ def java_expr_to_z3(expr_str, var_types: dict):
     expr_str = expr_str.replace("true", "True").replace("false", "False")
     expr_str = expr_str.replace("&&", " and ").replace("||", " or ").replace("!", " not ")
     expr_str = expr_str.replace("not =","!=") # 纠错，由于将! 替换为 not,会导致 != 变为 not =，需要纠正为 !=
+    expr_str = expr_str.strip()  # 再次去除前后空白，防止前导空格导致IndentationError
 
     # AST 转换器
     class Z3Transformer(ast.NodeTransformer):
@@ -277,7 +280,11 @@ def java_expr_to_z3(expr_str, var_types: dict):
             else:
                 raise ValueError(f"不支持的算术操作: {type(op)}")
 
-    parsed = ast.parse(expr_str, mode="eval")
+    try:
+        parsed = ast.parse(expr_str, mode="eval")
+    except Exception as e:
+        print(f"ast.parse error: {e}, expr_str={repr(expr_str)}")
+        raise
     z3_expr = Z3Transformer().visit(parsed.body)
     return z3_expr
 
@@ -322,8 +329,25 @@ def deal_with_spec_unit_json(spec_unit_json: str):
     D = spec_unit.D
     previous_cts = spec_unit.pre_constrains
 
-    #运行程序,获得路径输出
-    execution_output = run_java_code(program)
+    #运行程序,获得输出
+    output = run_java_code(program)
+    execution_output = ""
+    if(output is None):
+        print("Java code execution failed.")
+        return
+
+    #特殊处理为Exception的TD组
+    if "Exception" in D:
+        if output.stderr is not None and "Exception" in output.stderr:
+            result = Result(0,"","Exception founded!")
+            print("result:" + result.to_json())
+        else :
+            result = Result(1,"","No exception founded!")
+            print("result:" + result.to_json())
+        return
+
+    if(output.stdout is not None):
+        execution_output = output.stdout
     if not execution_output:
         print("No output from Java code execution.")
     #分析路径输出，得到本次执行路径相关的Ct
@@ -447,7 +471,7 @@ def update_D_with_execution_path(D: str, execution_path: List[str]) -> str:
                 continue
             # for sd in split_d:
             #     if variable in sd:
-            #         # 替换 D 中的变量
+            #         # 替换 D 中的变��
             #         sd = replace_variables(sd, variable, value)
             #     update_d.append(sd.strip())
             # split_d = update_d
@@ -468,6 +492,54 @@ def read_java_code_from_file(file_path):
     with open(file_path, "r") as file:
         java_code = file.read()
     return java_code
+
+def fsf_exclusivity_validate(fuJson: str):
+    fu = FSFValidationUnit.from_json(fuJson)
+    print(fu)
+    ts = fu.allTs
+    ts_size = len(ts)
+    and_ts = []
+    or_connect_ts = ""
+
+    #先验证完整性，即!（T1 || T2 || T3 || ...）无解
+    for t in ts:
+        or_connect_ts = f"{or_connect_ts}||({t})"
+    or_connect_ts = or_connect_ts.strip().strip("||").strip()
+    or_connect_ts = f"!({or_connect_ts})"
+    print("验证完备性: " + or_connect_ts)
+    z3_expr = java_expr_to_z3(or_connect_ts, fu.vars)
+    r = solver_check_z3(z3_expr)
+    if(r == "ERROR"):
+        result = Result(1, "FSF VALIDATION ERROR!", "")
+        print("FSF validation result:" + result.to_json())
+        return
+    if(r == "OK"): #unsat，具有完备性
+        print("T具有完备性")
+    else: #不具有完备性
+        result = Result(3, or_connect_ts, "不具有完备性")
+        print("FSF validation result:" + result.to_json())
+        return
+
+    #验证排他性，即T1 && T2无解
+    for i in range(ts_size):
+        for j in range(i + 1, ts_size):
+            t1 = ts[i]
+            t2 = ts[j]
+            and_ts.append(f"({t1}) && ({t2})")
+    for and_t in and_ts:
+        result = Result(0, "", "")
+        print("正在验证: " + and_t)
+        z3_expr = java_expr_to_z3(and_t, fu.vars)
+        r = solver_check_z3(z3_expr)
+        if(r == "OK"):
+            continue
+        if(r == "ERROR"):
+            result = Result(1, "FSF VALIDATION ERROR!", "")
+            break
+        else:
+            result = Result(2, and_t, r)
+            break
+    print("FSF validation result:" + result.to_json())
 
 def test_main():
     init_files();
@@ -494,33 +566,7 @@ def main():
     if(fsf_validation_unit_json is not None):
         fsf_exclusivity_validate(fsf_validation_unit_json)
 
-def fsf_exclusivity_validate(fuJson: str):
-    fu = FSFValidationUnit.from_json(fuJson)
-    print(fu)
-    ts = fu.allTs
-    ts_size = len(ts)
-    and_ts = []
-    for i in range(ts_size):
-        for j in range(i + 1, ts_size):
-            t1 = ts[i]
-            t2 = ts[j]
-            and_ts.append(f"({t1}) && ({t2})")
-    for and_t in and_ts:
-        result = Result(0, "", "")
-        print("正在验证: " + and_t)
-        z3_expr = java_expr_to_z3(and_t, fu.vars)
-        r = solver_check_z3(z3_expr)
-        if(r == "OK"):
-            continue
-        if(r == "ERROR"):
-            result = Result(1, "FSF VALIDATION ERROR!", "")
-            return
-        else:
-            result = Result(2, and_t, r)
-            print("FSF validation result:" + result.to_json())
-            return
-        # 这里可以添加对组合T的进一步处理逻辑
-    print("FSF validation result:" + result.to_json())
+
 
 
 def init_files():
@@ -552,11 +598,23 @@ def init_files():
         with open(RESOURCE_DIR + "/TestCase.java", "w") as file:
             file.write(program)
 def test_main_4():
-    print(remove_type_transfer_stmt_in_expr("(long) (x + 1) == (long) (y + 1)"))
+    program = read_java_code_from_file("resources/Chufa.java")
+    print(program)
+    output = run_java_code(program)
+    if output is None:
+        return "Java code execution failed!"
+    if output.stderr is not None and "Exception" in output.stderr:
+        print(output.stderr)
+        return "Exception founded!"
+    else :
+        return "No Exception founded!"
+
+
 if __name__ == "__main__":
     # test_main_2()
     # test_main_3("{\"allTs\":[\"T1\",\"T2\"],\"vars\":{\"a\":\"int\",\"b\":\"String\"}}")
     # test_main()
     main()
     # test_main_4()
+
 

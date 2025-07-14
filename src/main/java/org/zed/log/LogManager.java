@@ -165,8 +165,8 @@ public class LogManager {
         while (i < specs.length) {
             if(specs[i].startsWith("T")){
                 String[] TD = new String[2];
-                TD[0] = specs[i].substring(specs[i].lastIndexOf(":")+1).trim();
-                TD[1] = specs[i+1].substring(specs[i+1].lastIndexOf(":")+1).trim();
+                TD[0] = specs[i].substring(specs[i].indexOf(":")+1).trim();
+                TD[1] = specs[i+1].substring(specs[i+1].indexOf(":")+1).trim();
                 TDs.add(TD);
                 i += 2;
             }else {

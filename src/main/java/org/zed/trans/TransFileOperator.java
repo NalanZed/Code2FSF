@@ -369,7 +369,7 @@ public class TransFileOperator {
             }
         }
         System.out.println("转换为SSMP失败!");
-        return "";
+        return null;
     }
 
 }

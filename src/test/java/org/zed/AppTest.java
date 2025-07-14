@@ -145,7 +145,7 @@ public class AppTest
         String resourceDir = "resources/dataset/someBench/";
         ModelConfig modelConfig = new ModelConfig();
         String SSMPDir = pickSSMPCodes(resourceDir);
-        runConversationForDir(3, modelConfig, SSMPDir);
+        runConversationForDir(10, modelConfig, SSMPDir);
     }
     public void testApp5() throws Exception {
         String program = LogManager.file2String("resources/testCases/Test2.java");

@@ -10,4 +10,9 @@ public class Example {
 			return ans;
 		}
 	}
+
+	public static void main(String[] args) {
+		int a = Abs(10);
+		System.out.println("Abs(10) = " + a);
+	}
 }
