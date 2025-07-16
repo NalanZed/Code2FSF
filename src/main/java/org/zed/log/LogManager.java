@@ -2,6 +2,7 @@ package org.zed.log;
 
 
 import org.zed.llm.ModelMessage;
+import org.zed.llm.ModelPrompt;
 
 import java.io.File;
 import java.io.IOException;
@@ -17,6 +18,8 @@ public class LogManager {
 
     private static final String RESOURCE_DIR = "resources";
     private static final String LOG_DIR = RESOURCE_DIR + "/" +"log";
+    private static final String CODE_GEN_LOG_DIR = LOG_DIR + "/" + "codegen";
+    private static final String FSF_REVIEW_LOG_DIR = LOG_DIR + "/" +"FSFReview";
     private static final String TRANS_WORK_DIR = RESOURCE_DIR + "/" + "trans";
     private static final String LOG_FILE_SUFFIX = ".txt";
     private static final String ADDED_PRINT_CODES_DIR = TRANS_WORK_DIR + "/"+ "addedPrintCodes";
@@ -44,6 +47,53 @@ public class LogManager {
             e.printStackTrace();
         }
     }
+    //自由指定log目录位置
+    public static void appendMessageInDiyDir(String codePath, ModelMessage msg, String model,String diy) throws IOException {
+        String logFilePath = codePath2DiyLogPath(codePath,model,diy);
+        java.nio.file.Path outputPath = java.nio.file.Paths.get(logFilePath);
+        java.nio.file.Files.createDirectories(outputPath.getParent());
+        try (java.io.BufferedWriter writer = java.nio.file.Files.newBufferedWriter(
+                outputPath,
+                java.nio.charset.StandardCharsets.UTF_8,
+                java.nio.file.StandardOpenOption.CREATE,
+                java.nio.file.StandardOpenOption.APPEND)) {
+            writer.write("start role " + msg.getRole());
+            writer.newLine();
+            writer.write(msg.getContent());
+            writer.newLine();
+            writer.write("*end* role " + msg.getRole());
+            writer.newLine();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static String codePath2CodeReviewLogPath(String codePath, String model) {
+        //从文件路径中提取文件名（在Java程序中，即类名）
+        String logTitle = codePath.substring(codePath.lastIndexOf("/") + 1, codePath.lastIndexOf("."));
+        logTitle = "log" + "-" + logTitle;
+        return FSF_REVIEW_LOG_DIR  + "/" +model + "/" + logTitle + LOG_FILE_SUFFIX;
+    }
+
+    public static void appendFSFReviewSummary(String codePath, String summary, String model, String diy) throws IOException {
+        String logFilePath = codePath2DiyLogPath(codePath,model,diy);
+        java.nio.file.Path outputPath = java.nio.file.Paths.get(logFilePath);
+        java.nio.file.Files.createDirectories(outputPath.getParent());
+        try (java.io.BufferedWriter writer = java.nio.file.Files.newBufferedWriter(
+                outputPath,
+                java.nio.charset.StandardCharsets.UTF_8,
+                java.nio.file.StandardOpenOption.CREATE,
+                java.nio.file.StandardOpenOption.APPEND)) {
+            writer.write("start log summary" );
+            writer.newLine();
+            writer.write(summary);
+            writer.newLine();
+            writer.write("*end* log summary");
+            writer.newLine();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     public static String file2String(String FilePath) {
         StringBuilder sb = new StringBuilder();
@@ -64,6 +114,13 @@ public class LogManager {
         logTitle = "log" + "-" + logTitle;
         return LOG_DIR  + "/" +model + "/" + logTitle + LOG_FILE_SUFFIX;
     }
+    public static String codePath2DiyLogPath(String codePath,String model,String diy){
+        //从文件路径中提取文件名（在Java程序中，即类名）
+        String logTitle = codePath.substring(codePath.lastIndexOf("/") + 1, codePath.lastIndexOf("."));
+        logTitle = "log" + "-" + logTitle;
+        return diy  + "/" +model + "/" + logTitle + LOG_FILE_SUFFIX;
+    }
+
     public static String codePath2FailedPath(String codePath){
         //从文件路径中提取文件名（在Java程序中，即类名）
         String title = codePath.substring(codePath.lastIndexOf("/") + 1);
@@ -98,8 +155,6 @@ public class LogManager {
                 .filter(p -> p.toString().endsWith(".java"))
                 .forEach(p -> p.toFile().delete());
     }
-
-
 
     //删除Log目录下所有模型的日志文件
     public static void cleanLogOfModel(){
@@ -200,9 +255,17 @@ public class LogManager {
     }
     public static String getProgramFromLog(String logFilePath){
         String logString = file2String(logFilePath);
-        String program = logString.substring(logString.indexOf("public class"), logString.indexOf( "```\n"+
-                "*end* role user"));
-        return program;
+        if(logString.contains("public class")){
+            String program = logString.substring(logString.indexOf("public class"), logString.indexOf( "```\n"+
+                    "*end* role user"));
+            return program;
+        }
+        if(logString.contains("class")){
+            String program = logString.substring(logString.indexOf("class"), logString.indexOf( "```\n"+
+                    "*end* role user"));
+            return program;
+        }
+        return "";
     }
 
     public static void copyFileToSuccDataset(String filePath) throws IOException {
@@ -233,6 +296,65 @@ public class LogManager {
             System.out.println(testcase);
         }
         System.out.println("----------------------------------------");
+    }
+
+    public static boolean saveACodeGenMsg(ModelMessage msg,String model,String className){
+        String logFilePath = CODE_GEN_LOG_DIR + "/" + model + "/" + className + ".txt";
+        java.nio.file.Path outputPath = java.nio.file.Paths.get(logFilePath);
+        try {
+            Files.createDirectories(outputPath.getParent());
+        } catch (IOException e) {
+            System.out.println("记录CodeGenLog时失败");
+            return false;
+        }
+        try (java.io.BufferedWriter writer = java.nio.file.Files.newBufferedWriter(
+                outputPath,
+                java.nio.charset.StandardCharsets.UTF_8,
+                java.nio.file.StandardOpenOption.CREATE,
+                java.nio.file.StandardOpenOption.APPEND)) {
+            writer.write("start role " + msg.getRole());
+            writer.newLine();
+            writer.write(msg.getContent());
+            writer.newLine();
+            writer.write("*end* role " + msg.getRole());
+            writer.newLine();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
+    }
+
+    public static String getClassNameInCodeGenPrompt(ModelPrompt prompt){
+        String className = "";
+        List<ModelMessage> msgs = prompt.getMessages();
+        String content = msgs.get(msgs.size()-1).getContent();
+        if(content.contains("public static class")){
+            className = content.substring(content.indexOf("public static class") + "public static class".length(),
+                    content.indexOf("{")).trim();
+        }
+        if(className.isEmpty() && content.contains("public class")){
+            className = content.substring(content.indexOf("public class") + "public class".length(),
+                    content.indexOf("{")).trim();
+        }
+        if(className.isEmpty()){
+            System.err.println("生成的代码中没有类名, 记录日志失败！");
+            return className;
+        }
+        return className;
+    }
+
+    public static void saveACodeGenPrompt(ModelPrompt prompt){
+        List<ModelMessage> msgs = prompt.getMessages();
+        String content = msgs.get(msgs.size()-1).getContent();
+        String className = getClassNameInCodeGenPrompt(prompt);
+        System.out.println("className = " + className);
+        for (ModelMessage msg : msgs) {
+            boolean succ = LogManager.saveACodeGenMsg(msg, prompt.getModel(),className);
+            if (!succ) {
+                break;
+            }
+        }
     }
 
 //    public static void main(String[] args) {

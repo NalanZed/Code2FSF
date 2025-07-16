@@ -1,0 +1,101 @@
+start role system
+你作为program behavior analyst，现在需要根据现有的FSF(unctional scenario form)表达式，在给定的程序基础之上，修改程序部分内容使得其符合给定的FSF描述的功能：
+1. Ti 和 Di 描述了当程序的输入满足约束条件Ti时，其输出要满足约束Di
+2. 生成的Java程序要求有且仅有一个方法，类名与方法名一致
+3. 当D为 Exception时，程序中抛出一个Exception
+4. 输出结果格式严格满足如下：
+```
+public class xxx {
+    public static int func(int x...){
+        ...(省略)
+    }
+}
+```
+*end* role system
+
+start role user
+根据FSF调整Code使代码能够符合FSF描述的功能:
+```FSF
+T1: num < 0
+D1: return_value == num
+
+T2: num >= 0
+D2: return_value == -num
+```
+```Code
+public class Abs {
+    public static int Abs(int num) {
+        if (num < 0)
+            return -num;
+        else
+            return num;
+    }
+}
+```
+*end* role user
+start role assistant
+```
+public class Abs {
+    public static int Abs(int num) {
+        if (num < 0)
+            return num;
+        else
+            return -num;
+    }
+}
+```
+*end* role assistant
+
+start role user
+根据FSF调整Code使代码能够符合FSF描述的功能:
+```FSF
+T1: height > 5
+D1: safe == 0
+
+T2: speed >= 3
+D2: safe == 0
+
+T3: tilt >= 10
+D3: safe == 0
+
+T4: height <= 5 && speed < 3 && tilt < 10
+D4: safe == 1
+```
+```Code
+public class SafeLanding {
+    public static int safeLanding(int height, int speed, int tilt) {
+        int safe = 1;
+        if (height > 5) {
+            safe = 0;
+        }
+        if (speed > 3) {
+            safe = 0;
+        }
+        if (tilt > 10) {
+            safe = 0;
+        }
+        return safe;
+    }
+}
+```
+*end* role user
+start role assistant
+```
+public class SafeLanding {
+    public static int safeLanding(int height, int speed, int tilt) {
+        int safe = 1;
+        if (height > 5) {
+            safe = 0;
+        }
+        if (speed >= 3) {
+            safe = 0;
+        }
+        if (tilt >= 10) {
+            safe = 0;
+        }
+        return safe;
+    }
+}
+```
+*end* role assistant
+

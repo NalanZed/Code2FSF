@@ -2,6 +2,7 @@ package org.zed.llm;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
+import lombok.Setter;
 import org.zed.log.LogManager;
 
 import java.io.BufferedReader;
@@ -12,6 +13,7 @@ import java.util.List;
 
 public class ModelPrompt {
     @Getter
+    @Setter
     private String model;
     @Getter
     private List<ModelMessage> messages = new ArrayList<>();
@@ -21,7 +23,9 @@ public class ModelPrompt {
     //一次连续的对话请求，始终对应同一个测试程序，记录此程序的位置信息。
     private String codePath = "";
     @JsonIgnore
-    private static final String CODE2FSF_FEW_SHOT_PATH = "resources/fewShot/prompt.txt";
+//    private static final String CODE2FSF_FEW_SHOT_PATH = "resources/fewShot/prompt.txt";
+    private static final String CODE2FSF_FEW_SHOT_PATH = "resources/fewShot/prompt2.0.txt";
+    private static final String CODEGEN_FEW_SHOT_PATH = "resources/fewShot/codeGenPrompt.txt";
 
     public ModelPrompt(){
 
@@ -49,6 +53,17 @@ public class ModelPrompt {
         //记录日志
         mp.codePath = codeFilePath;
         LogManager.appendMessage(codeFilePath,message,model);
+        return mp;
+    }
+
+    public static ModelPrompt generateCodeGenBasicPrompt(List<String[]> FSF){
+        ModelPrompt mp = new ModelPrompt();
+        if(FSF.isEmpty()) {
+            System.out.println("FSF为空, 无法进行code生成");
+            return null;
+        }
+        List<ModelMessage> preMessages = mp.assembleMessages(CODEGEN_FEW_SHOT_PATH);
+        mp.messages.addAll(preMessages);
         return mp;
     }
 

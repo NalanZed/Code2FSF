@@ -1,5 +1,8 @@
-public class Test2 {
-    public int test2(int x){
-        return x;
+public class Example {
+    public int example(int x){
+       //...
     }
 }
+
+
+

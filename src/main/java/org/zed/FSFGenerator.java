@@ -85,6 +85,106 @@ public class FSFGenerator {
         return r;
     }
 
+    public static String FSFValidationTask(String ssmp,List<String[]> FSF){
+        //对FSF中T的互斥性进行验证
+        FSFValidationUnit fsfValidationUnit = new FSFValidationUnit(ssmp, FSF);
+        Result exclusivityResult = null;
+        try {
+            exclusivityResult = callTBFV4J(fsfValidationUnit);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        if(exclusivityResult == null || exclusivityResult.getStatus() == -1){
+            //FSF解析失败，都没到验证完备性和互斥性那一步
+            return "检查到FSF中T不满足要求导致无法解析，请严格审视我最初的要求，并重新生成FSF";
+        }
+        if(exclusivityResult.getStatus() == 2){
+            return "检查到FSF中T不满足互斥性,具体是 Ti && Tj :[" + exclusivityResult.getCounterExample()+ "] 有解" +
+                    exclusivityResult.getPathConstrain() + "，请重新生成FSF，确保T之间的互斥性";
+        }
+        if(exclusivityResult.getStatus() == 3){
+            return "检查到FSF中T用 || 连接不具有完备性，即" + "(" + exclusivityResult.getCounterExample() + ")" + "有解" +
+                    exclusivityResult.getPathConstrain() + "，请重新生成FSF，确保T的完整性";
+        }
+        return "SUCCESS";
+    }
+
+    public static String validATAndD(String ssmp, String T, String D, int maxRoundsOf1CoupleOfTD, List<String> historyTestcases, List<Result> finalResultsOfTDs) throws Exception {
+        int countOfPathValidated = 0;
+        Result r = null;
+        String currentTD = "T: " + T + "\n" + "D: " + D;
+        List<String> prePathConstrains = new ArrayList<>();
+
+        if("Exception".equals(D)){
+            System.out.println("D 为 Exception");
+            if(validateExceptionPath(ssmp, T)){
+                finalResultsOfTDs.add(new Result(3,"Exception路径符合预期",""));
+                return "SUCCESS";
+            }
+            //需要提示LLM，重新生成该TD组
+            return "经验证，对于" + "T :" + T + "，此时程序没有抛出异常，请思考后重新生成";
+        }
+
+        while(countOfPathValidated < maxRoundsOf1CoupleOfTD){
+            //对一个TD下所有路径验证
+            //生成main方法，即测试用例
+            String mainMd = generateMainMdUnderExpr(T,prePathConstrains,ssmp);
+            historyTestcases.add(mainMd);
+            if(mainMd == null){
+                System.err.println("参数生成失败！");
+                return "ERROR";
+            }
+            r = valid1Path(ssmp,mainMd,prePathConstrains,T,D);
+            if(r.getStatus() == 0){
+                prePathConstrains.add(r.getPathConstrain());
+                countOfPathValidated++;
+                System.out.println(currentTD + "====>" + "第[" + countOfPathValidated + "]条路径测试完毕");
+            }
+            else break;
+        }
+        if(r.getStatus() == 0 && countOfPathValidated == maxRoundsOf1CoupleOfTD){
+            System.out.println("超出最大路径验证次数" + maxRoundsOf1CoupleOfTD + "结束对当前TD组的验证");
+            finalResultsOfTDs.add(r);
+            return "PARTIALLY SUCCESS";
+        }
+        if(r.getStatus() == 3){
+            System.out.println(currentTD + "====>" + "验证通过");
+            finalResultsOfTDs.add(r);
+            return "SUCCESS";
+        }
+        if(r.getStatus() == 1){
+            System.err.println(currentTD + "====>" + "验证过程出错！");
+            finalResultsOfTDs.add(r);
+            return "ERROR";
+        }
+        if(r.getStatus() == 2){
+            System.out.println(currentTD + "\n" + "验证未通过, 需要重新生成");
+            System.out.println("反例如下：\n" + r.getCounterExample());
+            return "当变量赋值为"+r.getCounterExample()+"时，与" + currentTD + "相违背，请结合这个反例重新生成！";
+        }
+        if(r.getStatus() == -1){
+            System.out.println(currentTD + "\n" + "验证过程中验证器报错");
+            return "对" + currentTD + " 验证过程中出错，" + r.getCounterExample() + ", 请参考报错信息重新生成";
+        }
+        return "ERROR";
+    }
+
+    public static boolean isTotallyVerified(List<Result> finalResultsOfEveryCoupleOfTD){
+        //对整个验证任务的评价，不应该局限在最后一个验证任务结果上
+        //正确的方法是，要记录所有TD组验证的结果,逐个遍历
+        boolean totallyVerified = true;
+        for(Result res : finalResultsOfEveryCoupleOfTD){
+            if(res.getStatus() == 1){
+                System.out.println("validation task failed!");
+                return false;
+            }
+            if(res.getStatus() == 0){
+                totallyVerified = false;
+            }
+        }
+        return totallyVerified;
+    }
+
     public static boolean runConversations(int maxRounds, ModelConfig mc, String inputFilePath) throws Exception {
         String modelName = mc.getModelName();
         ModelPrompt fsfPrompt = ModelPrompt.generateCode2FSFPrompt(modelName,inputFilePath);
@@ -97,7 +197,7 @@ public class FSFGenerator {
             return false;
         }
         List<String> historyTestcases = new ArrayList<>();
-        int maxRoundsOf1CoupleOfTD = 10;
+        int maxRoundsOf1CoupleOfTD = 5;
         List<String[]> FSF;
         int count = 1;
         while(count <= maxRounds){
@@ -119,126 +219,50 @@ public class FSFGenerator {
                 return false;
             }
             //对FSF中T的互斥性进行验证
-            FSFValidationUnit fsfValidationUnit = new FSFValidationUnit(ssmp, FSF);
-            Result exclusivityResult = callTBFV4J(fsfValidationUnit);
-            if(exclusivityResult.getStatus() == 2){
-                String exclusivityWrongMsg = "检查到FSF中T不满足互斥性,具体是 Ti && Tj :[" + exclusivityResult.getCounterExample()+ "] 有解" +
-                        exclusivityResult.getPathConstrain() + "，请重新生成FSF，确保T之间的互斥性";
-                ModelMessage msg = new ModelMessage("user", exclusivityWrongMsg);
-                fsfPrompt.addMessage(msg);
-                LogManager.appendMessage(fsfPrompt.getCodePath(), msg, fsfPrompt.getModel());
-                continue;
-            }
-            if(exclusivityResult.getStatus() == 3){
-                String msgStr = "检查到FSF中T用 || 连接不具有完备性，即" + "(" + exclusivityResult.getCounterExample() + ")" + "有解" +
-                        exclusivityResult.getPathConstrain() + "，请重新生成FSF，确保T的完整性";
-                ModelMessage msg = new ModelMessage("user", msgStr);
+            String FSFValidationResult = FSFValidationTask(ssmp,FSF);
+            if(!FSFValidationResult.equals("SUCCESS")){
+                ModelMessage msg = new ModelMessage("user", FSFValidationResult);
                 fsfPrompt.addMessage(msg);
                 LogManager.appendMessage(fsfPrompt.getCodePath(), msg, fsfPrompt.getModel());
                 continue;
             }
 
             count++;
-            Result r = null;
             String T = "";
             String D = "";
-            List<String> prePathConstrains = new ArrayList<>();
-            String mainMd = "";
-            //对每一个TD进行验证
             List<Result> finalResultsOfEveryCoupleOfTD = new ArrayList<>();//记录每个TD对的验证结果
+            //对每一个TD进行验证
             for(String[] td : FSF) {
                 T = td[0];
                 D = td[1];
-                System.out.println(YELLOW + "正在进行验证的TD对为：" + "T: " + T + " ; D: " + D + RESET);
-                if("Exception".equals(D)){
-                    System.out.println("D 为 Exception");
-                    if(validateExceptionPath(ssmp, T)){
-                        finalResultsOfEveryCoupleOfTD.add(new Result(3,"Exception路径符合预期",""));
-                        continue;
-                    }
-                    //需要提示LLM，重新生成该TD组
-                    String dIsNotExceptionMsg = "经验证，对于" + "T :" + T + "，此时D不应为Exception，请思考后重新FSF";
-                    ModelMessage msg = new ModelMessage("user", dIsNotExceptionMsg);
-                    fsfPrompt.addMessage(msg);
-                    LogManager.appendMessage(fsfPrompt.getCodePath(),msg,fsfPrompt.getModel());
-                    regenerateFlag = true;
-                    break;
-                }
-                int countOfPathValidated = 0;
-                while(countOfPathValidated < maxRoundsOf1CoupleOfTD){
-                    //对一个TD下所有路径验证
-                    //生成main方法，即测试用例
-                    mainMd = generateMainMdUnderExpr(T,prePathConstrains,ssmp);
-                    historyTestcases.add(mainMd);
-                    if(mainMd == null){
-                        System.out.println("参数生成失败！");
-                        return false;
-                    }
-                    r = valid1Path(ssmp,mainMd,prePathConstrains,T,D);
-                    if(r.getStatus() == 0){
-                        prePathConstrains.add(r.getPathConstrain());
-                        countOfPathValidated++;
-                        System.out.println("T：" + T + " ; " + "D: " + D + "====>" + "第[" + countOfPathValidated + "]条路径测试完毕");
-                    }
-                    else break;
-                }
-                if(r.getStatus() == 0 && countOfPathValidated == maxRoundsOf1CoupleOfTD){
-                    System.out.println("超出最大路径验证次数" + maxRoundsOf1CoupleOfTD + "结束对当前TD组的验证");
-                    finalResultsOfEveryCoupleOfTD.add(r);
+                String currentTD = "T: " + T + "\n" + "D: " + D;
+                System.out.println(YELLOW + "正在进行验证的TD对为：" + currentTD + RESET);
+                String validationTDResult = validATAndD(ssmp, T, D, maxRoundsOf1CoupleOfTD,
+                                                                    historyTestcases, finalResultsOfEveryCoupleOfTD);
+                if(validationTDResult.equals("SUCCESS") || validationTDResult.equals("PARTIALLY SUCCESS")){
                     continue;
                 }
-                if(r.getStatus() == 3){
-                    System.out.println("T：" + T + " ; " + "D: " + D + "====>" + "验证通过");
-                    finalResultsOfEveryCoupleOfTD.add(r);
-                    continue;
+                if(validationTDResult.equals("ERROR")){
+                    System.err.println(currentTD + "\n" + "========>验证过程出现严重错误，跳过本次任务");
+                    return false;
                 }
-                if(r.getStatus() == 1){
-                    System.out.println("T：" + T + " ; " + "D: " + D + "====>" + "验证过程出错！");
-                    finalResultsOfEveryCoupleOfTD.add(r);
-                    break;
-                }
-                if(r.getStatus() == 2){
-                    System.out.println("T：" + T + "\n" + "D: " + D + "\n" + "验证未通过，可能是FSF不准确, 需要重新生成");
-                    System.out.println("反例如下：\n" + r.getCounterExample());
-                    ModelMessage msg = new ModelMessage("user","现在经检验当变量赋值为"+r.getCounterExample()+"时，与所有TD约束都不相符，请结合这个例子重新回答！");
-                    fsfPrompt.addMessage(msg);
-                    LogManager.appendMessage(fsfPrompt.getCodePath(),msg,fsfPrompt.getModel());
-                    regenerateFlag = true;
-                    break;
-                }
-                if(r.getStatus() == -1){
-                    System.out.println("T：" + T + "\n" + "D: " + D + "\n" + "验证过程中验证器报错");
-                    String z3ValidationErrorMsg = "对T：" + T + "\n" + "D: " + D + " 验证过程中出错，" + r.getCounterExample() + ", 请参考报错信息重新生成FSF";
-                    ModelMessage msg = new ModelMessage("user",z3ValidationErrorMsg);
-                    fsfPrompt.addMessage(msg);
-                    LogManager.appendMessage(fsfPrompt.getCodePath(),msg,fsfPrompt.getModel());
-                    regenerateFlag = true;
-                    break;
-                }
+                regenerateFlag = true;
+                ModelMessage msg = new ModelMessage("user", validationTDResult);
+                fsfPrompt.addMessage(msg);
+                LogManager.appendMessage(inputFilePath,msg,fsfPrompt.getModel());
+                break;
             }
             if(regenerateFlag){
                 //因为某些原因，需要重新进行一轮对话生成FSF
                 continue;
             }
-            //对整个验证任务的评价，不应该局限在最后一个验证任务结果上
-            //正确的方法是，要记录所有TD组验证的结果,逐个遍历
-            boolean partiallyVerified = false;
-            for(Result res : finalResultsOfEveryCoupleOfTD){
-                if(res.getStatus() == 1){
-                    System.out.println("validation task failed!");
-                    return false;
-                }
-                if(res.getStatus() == 0){
-                    partiallyVerified = true;
-                }
-            }
-            String verifyType = partiallyVerified ? "partially verified!" : "totally verified!";
-            System.out.println(verifyType);
+            String verifyType = isTotallyVerified(finalResultsOfEveryCoupleOfTD) ? "totally verified!" : "partially verified!";
+            System.out.println(inputFilePath + "is" + verifyType);
             //记录历史测试用例
             LogManager.saveHistoryTestcases(inputFilePath,historyTestcases);
             return true;
         }
-        System.out.println("对话轮数超过最大值" + maxRounds + "，任务失败!");
+        System.err.println("对话轮数超过最大值" + maxRounds + "，任务失败!");
         return false;
     }
 
@@ -275,7 +299,7 @@ public class FSFGenerator {
         return false;
     }
 
-    public static void make1RoundConversation(ModelPrompt prompt,ModelConfig mc) throws IOException {
+    public static void make1RoundConversation(ModelPrompt prompt,ModelConfig mc){
         ModelClient client = new ModelClient(mc);
         try {
             //调用DeepSeekApi得到回复
@@ -303,14 +327,14 @@ public class FSFGenerator {
             System.out.println("Processing file: " + filePath + " (" + (++taskCount) + "/" + totalTaskNum + ")");
             String canNotHandleFilePath = LogManager.codePath2FailedPath(filePath);
             String handledFilePath = LogManager.codePath2SuccPath(filePath);
-            if(Files.exists(Path.of(canNotHandleFilePath))){
-                System.out.println("文件已存在于failedDataset目录中，跳过");
-                continue;
-            }
-//            if(Files.exists(Path.of(handledFilePath))){
-//                System.out.println("文件已存在于succDataset目录中，跳过");
+//            if(Files.exists(Path.of(canNotHandleFilePath))){
+//                System.out.println("文件已存在于failedDataset目录中，跳过");
 //                continue;
 //            }
+            if(Files.exists(Path.of(handledFilePath))){
+                System.out.println("文件已存在于succDataset目录中，跳过");
+                continue;
+            }
             try{
                 boolean succ = runConversations(maxRounds, mc, filePath);
                 if(succ) {
@@ -328,6 +352,122 @@ public class FSFGenerator {
         }
     }
 
+    public static boolean FSFReview(ModelConfig mc,String inputFilePath) throws IOException {
+        String modelName = mc.getModelName();
+        int maxRounds = 10;
+        int failOnMutualExclusivityTimes = 0;
+        int failOnCompletenessTimes = 0;
+        String FSFReviewLogDir = "resources/log/FSFReview";
+        ModelPrompt fsfPrompt = null;
+        try {
+            fsfPrompt = ModelPrompt.generateCode2FSFPrompt(modelName,inputFilePath);
+        } catch (IOException e) {
+            System.out.println("生成prompt失败");
+            return false;
+        }
+        String logPath = LogManager.codePath2DiyLogPath(inputFilePath, modelName,FSFReviewLogDir);
+        String pureProgram = LogManager.file2String(inputFilePath);
+        //确保是ssmp
+        String ssmp = TransWorker.trans2SSMP(pureProgram);
+        if(ssmp == null || ssmp.isEmpty()){
+            System.out.println("转换为单静态方法程序失败，无法进行后续操作");
+            return false;
+        }
+        List<String[]> FSF;
+        int count = 0;
+        while(count <= maxRounds){
+            System.out.println("["+ modelName +"]"+"正在进行第"+(++count)+"轮对话");
+            ModelClient client = new ModelClient(mc);
+            try {
+                //调用DeepSeekApi得到回复
+                ModelResponse response = client.call(fsfPrompt);
+                //将json格式的回复转化为对象chatResponse
+                //这里指定第一个choice做记录，因为对话中只可能收到一个choice
+                ModelMessage respMsg = response.getChoices().get(0).getMessage();
+                //将回复msg写入deepseekRequest
+                fsfPrompt.getMessages().add(respMsg);
+                //将回复写入日志
+                LogManager.appendMessageInDiyDir(fsfPrompt.getCodePath(), respMsg,fsfPrompt.getModel(),FSFReviewLogDir);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            System.out.println("第"+count+"轮对话完成");
+            try{
+                FSF = LogManager.getLastestFSFFromLog(logPath);
+            }catch (Exception e){
+                System.out.println("对话生成FSF失败，跳过本次任务");
+                return false;
+            }
+            //对FSF中T的互斥性进行验证
+            FSFValidationUnit fsfValidationUnit = new FSFValidationUnit(ssmp, FSF);
+            Result exclusivityResult = null;
+            try {
+                exclusivityResult = callTBFV4J(fsfValidationUnit);
+            } catch (IOException e) {
+                System.out.println("callTBFV4J 验证工作返回异常!");
+                return false;
+            }
+            if(exclusivityResult == null){
+                System.out.println("异常终止！");
+                LogManager.appendFSFReviewSummary(inputFilePath, "异常终止", fsfPrompt.getModel(),FSFReviewLogDir);
+                return false;
+            }
+
+            if(exclusivityResult.getStatus() == 2){
+                String exclusivityWrongMsg = "检查到FSF中T不满足互斥性,具体是 Ti && Tj :[" + exclusivityResult.getCounterExample()+ "] 有解" +
+                        exclusivityResult.getPathConstrain() + "，请重新生成FSF，确保T之间的互斥性";
+                ModelMessage msg = new ModelMessage("user", exclusivityWrongMsg);
+                fsfPrompt.addMessage(msg);
+                try {
+                    LogManager.appendMessageInDiyDir(fsfPrompt.getCodePath(), msg, fsfPrompt.getModel(),FSFReviewLogDir);
+                } catch (IOException e) {
+                    System.out.println("记录日志失败");
+                    return false;
+                }
+                failOnMutualExclusivityTimes++;
+                continue;
+            }
+            if(exclusivityResult.getStatus() == 3){
+                String msgStr = "检查到FSF中T用 || 连接不具有完备性，即" + "(" + exclusivityResult.getCounterExample() + ")" + "有解" +
+                        exclusivityResult.getPathConstrain() + "，请重新生成FSF，确保T的完整性";
+                ModelMessage msg = new ModelMessage("user", msgStr);
+                fsfPrompt.addMessage(msg);
+                try {
+                    LogManager.appendMessageInDiyDir(fsfPrompt.getCodePath(), msg, fsfPrompt.getModel(),FSFReviewLogDir);
+                } catch (IOException e) {
+                    System.out.println("记录日志失败");
+                    return false;
+                }
+                failOnMutualExclusivityTimes++;
+                continue;
+            }
+            String summary = "mutual exclusivity fail times = " + failOnMutualExclusivityTimes + "\n" +
+                    "completeness fail times = " + failOnCompletenessTimes + "\n" +
+                    "total conversation times = " + count;
+            try {
+                LogManager.appendFSFReviewSummary(inputFilePath,summary,mc.getModelName(),FSFReviewLogDir);
+            } catch (IOException e) {
+                System.out.println("记录日志失败");
+                return false;
+            }
+            return true;
+        }
+        System.out.println("对话轮数超过最大值" + maxRounds + "，任务失败!");
+        return true;
+    }
+    public static void FSFReviewOnDir(ModelConfig mc, String inputDir) throws Exception {
+        // 遍历输入目录下的所有文件
+        int taskCount = 0;
+        String[] filePaths = LogManager.fetchSuffixFilePathInDir(inputDir,".java");
+        int totalTaskNum = filePaths.length;
+        for (String filePath : filePaths) {
+            System.out.println("Processing file: " + filePath + " (" + (++taskCount) + "/" + totalTaskNum + ")");
+            boolean checkOK = FSFReview(mc, filePath);
+            if(!checkOK){
+                LogManager.appendFSFReviewSummary("neverSuccess.java",filePath,mc.getModelName(),"log/FSFReview");
+            }
+        }
+    }
     public static void makeSureModelIsAvailable(String model) {
         if(!modelConfigs.containsKey(model)){
             System.out.println("Model " + model + " is not available. Please check your model configuration.");

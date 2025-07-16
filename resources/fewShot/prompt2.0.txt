@@ -1,0 +1,182 @@
+start role system
+你作为program behavior analyst，为以下代码生成FSF表达式：
+1. Ti仅含输入变量，禁止使用函数（如Math.abs()）；
+2. Di优先用输入/返回变量，否则用return_value；
+3. 异常情况Di标记为Exception；
+4. 禁止合并相同Di的Ti；
+5. 严格按格式输出，无需解释：
+```
+T1:
+D1:
+  ...
+Tn:
+Dn:
+```
+*end* role system
+start role user
+为下面的代码生成FSF:
+```
+class MySqrt {
+
+    public static int mySqrt(int x) {
+        int l = 0, r = x, ans = -1;
+        while (l <= r) {
+            int mid = l + (r - l) / 2;
+            if ((long) mid * mid <= x) {
+                ans = mid;
+                l = mid + 1;
+            } else {
+                r = mid - 1;
+            }
+        }
+        return ans;
+    }
+}
+
+```
+*end* role user
+start role assistant
+```
+T1: x == 0
+D1: return_value == 0
+
+T2: x > 0
+D2: return_value * return_value <= x && (return_value + 1) * (return_value + 1) > x
+
+T3: x < 0
+D3: return_value == -1
+```
+*end* role assistant
+
+start role user
+
+```Java
+public class AddLoop {
+    public static int AddLoop(int x, int y) {
+        int sum = x;
+        if (y > 0) {
+            int n = y;
+            while (n > 0) {
+                sum = sum + 1;
+                n = n - 1;
+            }
+        } else {
+            int n = -y;
+            while (n > 0) {
+                sum = sum - 1;
+                n = n - 1;
+            }
+        }
+        return sum;
+    }
+}
+```
+*end* role user
+
+start role assistant
+
+T1: y > 0
+D1: sum == x + y
+
+T2: y == 0
+D2: sum == x
+
+T3: y < 0
+D3: sum == x + y
+
+*end* role assistant
+
+start role user
+为下面的代码生成FSF:
+```
+public class Abs {
+
+    public static int Abs(int num) {
+        if (num < 0) {
+            int ans = -num;
+            return ans;
+        } else {
+            int ans = num;
+            return ans;
+        }
+    }
+}
+
+```
+*end* role user
+start role assistant
+```
+T1: num < 0
+D1: ans == -num
+
+T2: num >= 0
+D2: ans == num
+```
+*end* role assistant
+
+start role user
+为下面的代码生成FSF:
+```
+public class ChangeCase {
+
+    public static char changeCase(char c) {
+        char result = ' ';
+        if (c > 'z') {
+            result = c;
+        } else if (c >= 'a') {
+            result = (char) (c - 'a' + 'A');
+        } else if (c > 'Z') {
+            result = c;
+        } else if (c >= 'A') {
+            result = (char) (c - 'A' + 'a');
+        } else {
+            result = c;
+        }
+        return result;
+    }
+}
+
+```
+*end* role user
+start role assistant
+```
+T1: c > 'z'
+D1: result == c
+
+T2: c >= 'a' && c <= 'z'
+D2: result == c - 'a' + 'A'
+
+T3: c > 'Z' && c < 'a'
+D3: result == c
+
+T4: c >= 'A' && c <= 'Z'
+D4: result == c - 'A' + 'a'
+
+T5: c < 'A'
+D5: result == c
+```
+*end* role assistant
+
+start role user
+为下面的代码生成FSF:
+```
+public class ReLU {
+    public static double computeReLU(double x) {
+        if(x >= 0) {
+            return x;
+        }
+        return 0.0;
+    }
+}
+
+```
+*end* role user
+start role assistant
+```
+T1: x >= 0
+D1: return_value == x
+
+T2: x < 0
+D2: return_value == 0.0
+```
+*end* role assistant

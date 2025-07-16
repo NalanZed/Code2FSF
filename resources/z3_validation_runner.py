@@ -279,13 +279,17 @@ def java_expr_to_z3(expr_str, var_types: dict):
             #     return left & right
             else:
                 raise ValueError(f"不支持的算术操作: {type(op)}")
-
     try:
         parsed = ast.parse(expr_str, mode="eval")
     except Exception as e:
         print(f"ast.parse error: {e}, expr_str={repr(expr_str)}")
-        raise
-    z3_expr = Z3Transformer().visit(parsed.body)
+        z3_expr = f"ERROR Info: {e}"  # 或者根据需要设置默认值
+        return z3_expr
+    try:
+        z3_expr = Z3Transformer().visit(parsed.body)
+    except Exception as e:
+        print(f"Z3Transformer 处理异常: {e}")
+        z3_expr = f"ERROR Info: {e}"  # 或者根据需要设置默认值
     return z3_expr
 
 def parse_md_def(java_code: str) -> dict:
@@ -370,6 +374,10 @@ def deal_with_spec_unit_json(spec_unit_json: str):
 
     var_types = parse_md_def(program)
     z3_expr = java_expr_to_z3(new_logic_expression, var_types)
+    # if z3_expr.startswith("ERROR"):
+    #     result = Result(1,z3_expr,"")
+    #     print("result:" + result.to_json())
+    #     return
     print("T && Ct && !D 转Z3表达式: " + str(z3_expr))
     solver_result = solver_check_z3(z3_expr)
     if solver_result == "OK":
@@ -450,6 +458,9 @@ def get_ct_from_execution_path(execution_path:List[str]):
 def update_D_with_execution_path(D: str, execution_path: List[str]) -> str:
     # split_d = D.split("&&")
     # update_d = []
+    print(f"original D : {D}")
+    D = D.replace("(char)", "")
+    print(f"now D is {D}")
     newd = D
     for step in reversed(execution_path):
         if "current value" in step or "Function input" in step or "Under condition" in step:
@@ -508,6 +519,10 @@ def fsf_exclusivity_validate(fuJson: str):
     or_connect_ts = f"!({or_connect_ts})"
     print("验证完备性: " + or_connect_ts)
     z3_expr = java_expr_to_z3(or_connect_ts, fu.vars)
+    if isinstance(z3_expr, str) and z3_expr.startswith("ERROR"):
+        result = Result(-1, z3_expr, "")
+        print("FSF validation result:" + result.to_json())
+        return
     r = solver_check_z3(z3_expr)
     if(r == "ERROR"):
         result = Result(1, "FSF VALIDATION ERROR!", "")
@@ -526,8 +541,8 @@ def fsf_exclusivity_validate(fuJson: str):
             t1 = ts[i]
             t2 = ts[j]
             and_ts.append(f"({t1}) && ({t2})")
+    result = Result(0, "", "")
     for and_t in and_ts:
-        result = Result(0, "", "")
         print("正在验证: " + and_t)
         z3_expr = java_expr_to_z3(and_t, fu.vars)
         r = solver_check_z3(z3_expr)

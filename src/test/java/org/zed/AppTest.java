@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.zed.FSFGenerator.*;
-import static org.zed.tcg.ExecutionEnabler.*;
+import static org.zed.llm.ModelConfig.CreateChatGptModel;
 import static org.zed.trans.TransWorker.pickSSMPCodes;
 
 
@@ -144,6 +144,7 @@ public class AppTest
 //        String resourceDir = "resources/dataset/SpecGenBench/";
         String resourceDir = "resources/dataset/someBench/";
         ModelConfig modelConfig = new ModelConfig();
+//        ModelConfig modelConfig = CreateChatGptModel();
         String SSMPDir = pickSSMPCodes(resourceDir);
         runConversationForDir(10, modelConfig, SSMPDir);
     }
@@ -151,12 +152,8 @@ public class AppTest
         String program = LogManager.file2String("resources/testCases/Test2.java");
         String ssmp = TransWorker.trans2SSMP(program);
         List<String[]> FSF = new ArrayList<>();
-        FSF.add(new String[]{"x > 0 && x < 10", "y > 0"});
-        FSF.add(new String[]{"x < 0", "y > 1"});
-        FSF.add(new String[]{"x > 10", "y <= 1"});
-        FSF.add(new String[]{"x == 0", "y <= 1"});
-        FSF.add(new String[]{"x == 10", "y <= 1"});
-        FSF.add(new String[]{"x == 10", "y <= 1"});
+        FSF.add(new String[]{"x > 0", "y > 0"});
+        FSF.add(new String[]{"x <= 0", "y > 1"});
         //对FSF中T的互斥性进行验证
         FSFValidationUnit fsfValidationUnit = new FSFValidationUnit(ssmp, FSF);
         Result exclusivityResult = callTBFV4J(fsfValidationUnit);
@@ -170,4 +167,16 @@ public class AppTest
 //            continue;
         }
     }
+
+    // FSF审查阶段实验，统计平均多少回LLM生成的FSF可以通过FSF审查，即具备完备性和互斥性
+    public void testExperimentFSFReview() throws Exception {
+        String resourceDir = "resources/succDataset";
+//        ModelConfig modelConfig = new ModelConfig();
+        ModelConfig modelConfig = CreateChatGptModel();
+        FSFReviewOnDir(modelConfig, resourceDir);
+    }
+
+
+
+
 }

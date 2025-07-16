@@ -9,6 +9,7 @@ public class ModelConfig {
     private String modelName;
     private String url;
     private String apiKey;
+    private static final String LLMS_CONFIG_DIR = "resources/config";
 
     public ModelConfig(String configPath){
         this.modelName = configPath.substring(configPath.lastIndexOf("/")+1, configPath.lastIndexOf("."));
@@ -26,6 +27,10 @@ public class ModelConfig {
         this.modelName = "deepseek-chat";
         this.apiKey = "sk-bfb078d9e3ec4681b89309271bfc4265";
         this.url = "https://api.deepseek.com/chat/completions";
+    }
+    public static ModelConfig CreateChatGptModel(){
+        String configPath = LLMS_CONFIG_DIR + "/" + "gpt-4o.txt";
+        return new ModelConfig(configPath);
     }
 
     public static HashMap<String,ModelConfig> GetAllModels(String configDir) {
