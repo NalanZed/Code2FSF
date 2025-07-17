@@ -1,12 +1,14 @@
 package org.zed.trans;
 
 import com.github.javaparser.JavaParser;
+import com.github.javaparser.StaticJavaParser;
 import com.github.javaparser.ast.CompilationUnit;
 import com.github.javaparser.ast.Node;
 import com.github.javaparser.ast.NodeList;
 import com.github.javaparser.ast.body.MethodDeclaration;
 import com.github.javaparser.ast.body.Parameter;
 import com.github.javaparser.ast.body.VariableDeclarator;
+import com.github.javaparser.ast.comments.Comment;
 import com.github.javaparser.ast.expr.*;
 import com.github.javaparser.ast.stmt.*;
 import com.github.javaparser.ast.visitor.ModifierVisitor;
@@ -21,6 +23,7 @@ import java.util.Optional;
 public class ExecutionPathPrinter {
 
     public static String addPrintStmt(String code){
+//        String c0 = removeAllComments(code);
         String c1 = addPrintStmtAtMethodBegin(code);
         String c2 = addPrintStmtForIfStmt(c1);
         String c3 = addPrintStmtForAssignStmt(c2);
@@ -29,6 +32,12 @@ public class ExecutionPathPrinter {
         String c6 = addPrintStmtForForLoopStmt(c5);
         String c7 = addPrintForWhileLoopStmt(c6);
         return c7;
+    }
+
+    public static String removeAllComments(String code){
+        CompilationUnit cu = StaticJavaParser.parse(code);
+        cu.getAllContainedComments().forEach(Comment::remove);
+        return cu.toString();
     }
 
     public static String addPrintStmtForIfStmt(String code){
