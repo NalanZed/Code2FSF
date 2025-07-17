@@ -1,9 +1,9 @@
-public class AltitudeController {
+public class AltitudeController_Mutant4 {
     public static int altitudeController(int currentHeight,int targetHeight) {
         int error = targetHeight - currentHeight;
         int absError = error < 0 ? -error : error;
         int controlSignal = 0;
-        if (absError > 30) {
+        if (absError >= 30) { //Changed > to >=
             controlSignal = error > 0 ? 5 : -5;
         } else if (absError > 20) {
             controlSignal = error > 0 ? 3 : -3;

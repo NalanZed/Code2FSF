@@ -43,7 +43,7 @@ public class FSFGenerator {
             argsMap.put("input", "resources/dataset/Example.java");
         }
         if(!argsMap.containsKey("maxRounds")){
-            argsMap.put("maxRounds", "1");
+            argsMap.put("maxRounds", "5");
         }
     }
 
@@ -132,7 +132,7 @@ public class FSFGenerator {
             historyTestcases.add(mainMd);
             if(mainMd == null){
                 System.err.println("参数生成失败！");
-                return "ERROR";
+                return "ERROR: 参数生成失败";
             }
             r = valid1Path(ssmp,mainMd,prePathConstrains,T,D);
             if(r.getStatus() == 0){
@@ -153,9 +153,9 @@ public class FSFGenerator {
             return "SUCCESS";
         }
         if(r.getStatus() == 1){
-            System.err.println(currentTD + "====>" + "验证过程出错！");
+            System.err.println(currentTD + "====>" + "验证器出错！");
             finalResultsOfTDs.add(r);
-            return "ERROR";
+            return "ERROR: 验证器出错！";
         }
         if(r.getStatus() == 2){
             System.out.println(currentTD + "\n" + "验证未通过, 需要重新生成");
@@ -166,7 +166,7 @@ public class FSFGenerator {
             System.out.println(currentTD + "\n" + "验证过程中验证器报错");
             return "对" + currentTD + " 验证过程中出错，" + r.getCounterExample() + ", 请参考报错信息重新生成";
         }
-        return "ERROR";
+        return "ERROR: 未知原因";
     }
 
     public static boolean isTotallyVerified(List<Result> finalResultsOfEveryCoupleOfTD){
@@ -193,29 +193,33 @@ public class FSFGenerator {
         //确保是ssmp
         String ssmp = TransWorker.trans2SSMP(pureProgram);
         if(ssmp == null || ssmp.isEmpty()){
-            System.out.println("转换为单静态方法程序失败，无法进行后续操作");
+            System.err.println("转换为单静态方法程序失败，无法进行后续操作");
+            LogManager.appendCode2FSFRemark(logPath,"Validation FAIL 验证失败--转换为单静态方法程序失败，无法进行后续操作!");
+            LogManager.appendCode2FSFRemark(logPath,"本次实验对话轮次为: [0]");
             return false;
         }
         List<String> historyTestcases = new ArrayList<>();
         int maxRoundsOf1CoupleOfTD = 5;
         List<String[]> FSF;
-        int count = 1;
-        while(count <= maxRounds){
+        int count = 0;
+        while(count < maxRounds){
             boolean regenerateFlag = false; //标记是否需要重新生成FSF
-            System.out.println("["+ modelName +"]"+"正在进行第"+count+"轮对话");
+            System.out.println("["+ modelName +"]"+"正在进行第"+(++count)+"轮对话");
             make1RoundConversation(fsfPrompt,mc);
             System.out.println("第"+count+"轮对话完成");
             try{
                 FSF = LogManager.getLastestFSFFromLog(logPath);
-                String FSFFormWrongMsg = "FSF生成的格式不符合我在前面说明的那些规范，请重新生成";
-                if(!isTheFSFFormOK(FSF)){
-                    ModelMessage msg = new ModelMessage("user", FSFFormWrongMsg);
-                    fsfPrompt.addMessage(msg);
-                    LogManager.appendMessage(fsfPrompt.getCodePath(), msg, fsfPrompt.getModel());
-                    continue;
-                }
+//                String FSFFormWrongMsg = "FSF生成的格式不符合我在前面说明的那些规范，请重新生成";
+//                if(!isTheFSFFormOK(FSF)){
+//                    ModelMessage msg = new ModelMessage("user", FSFFormWrongMsg);
+//                    fsfPrompt.addMessage(msg);
+//                    LogManager.appendMessage(fsfPrompt.getCodePath(), msg, fsfPrompt.getModel());
+//                    continue;
+//                }
             }catch (Exception e){
                 System.out.println("对话生成FSF失败，跳过本次任务");
+                LogManager.appendCode2FSFRemark(logPath,"Validation FAIL 验证失败--对话生成FSF失败!");
+                LogManager.appendCode2FSFRemark(logPath,"本次实验对话轮次为: [" + count + "]");
                 return false;
             }
             //对FSF中T的互斥性进行验证
@@ -226,8 +230,6 @@ public class FSFGenerator {
                 LogManager.appendMessage(fsfPrompt.getCodePath(), msg, fsfPrompt.getModel());
                 continue;
             }
-
-            count++;
             String T = "";
             String D = "";
             List<Result> finalResultsOfEveryCoupleOfTD = new ArrayList<>();//记录每个TD对的验证结果
@@ -244,6 +246,8 @@ public class FSFGenerator {
                 }
                 if(validationTDResult.equals("ERROR")){
                     System.err.println(currentTD + "\n" + "========>验证过程出现严重错误，跳过本次任务");
+                    LogManager.appendCode2FSFRemark(logPath,"Validation FAIL 验证失败--验证过程出现严重错误");
+                    LogManager.appendCode2FSFRemark(logPath,"本次实验对话轮次为: [" + count + "]");
                     return false;
                 }
                 regenerateFlag = true;
@@ -256,13 +260,17 @@ public class FSFGenerator {
                 //因为某些原因，需要重新进行一轮对话生成FSF
                 continue;
             }
-            String verifyType = isTotallyVerified(finalResultsOfEveryCoupleOfTD) ? "totally verified!" : "partially verified!";
-            System.out.println(inputFilePath + "is" + verifyType);
+            String verifyType = isTotallyVerified(finalResultsOfEveryCoupleOfTD) ? "totally verified!" : "Iteration_N verified!";
+            System.out.println(inputFilePath + " is " + verifyType);
             //记录历史测试用例
-            LogManager.saveHistoryTestcases(inputFilePath,historyTestcases);
+            LogManager.saveHistoryTestcases(logPath,historyTestcases);
+            LogManager.appendCode2FSFRemark(logPath,"Validation SUCCESS 验证成功--" + verifyType);
+            LogManager.appendCode2FSFRemark(logPath,"本次实验对话轮次为: [" + count + "]");
             return true;
         }
         System.err.println("对话轮数超过最大值" + maxRounds + "，任务失败!");
+        LogManager.appendCode2FSFRemark(logPath,"Validation FAIL 验证失败--对话轮数超过最大值");
+        LogManager.appendCode2FSFRemark(logPath,"本次实验对话轮次为: [" + count + "]");
         return false;
     }
 
@@ -323,7 +331,6 @@ public class FSFGenerator {
         String[] filePaths = LogManager.fetchSuffixFilePathInDir(inputDir,".java");
         int totalTaskNum = filePaths.length;
         for (String filePath : filePaths) {
-
             System.out.println("Processing file: " + filePath + " (" + (++taskCount) + "/" + totalTaskNum + ")");
             String canNotHandleFilePath = LogManager.codePath2FailedPath(filePath);
             String handledFilePath = LogManager.codePath2SuccPath(filePath);
@@ -331,10 +338,10 @@ public class FSFGenerator {
 //                System.out.println("文件已存在于failedDataset目录中，跳过");
 //                continue;
 //            }
-            if(Files.exists(Path.of(handledFilePath))){
-                System.out.println("文件已存在于succDataset目录中，跳过");
-                continue;
-            }
+//            if(Files.exists(Path.of(handledFilePath))){
+//                System.out.println("文件已存在于succDataset目录中，跳过");
+//                continue;
+//            }
             try{
                 boolean succ = runConversations(maxRounds, mc, filePath);
                 if(succ) {
@@ -532,14 +539,18 @@ public class FSFGenerator {
             System.out.println(line);
         }
 
-        if(res == null){
-            System.out.println("没有收到TBFV给出的 result");
+        StringBuilder errorInfo = new StringBuilder();
+        while((line = reader.readLine()) != null){
+            if(line.startsWith("result:")){
+                String resultJson = line.substring("result:".length()).trim();
+                res = new Result(resultJson);
+            }
+            System.out.println(line);
         }
-
-        // 读取错误信息
         BufferedReader errReader = new BufferedReader(new InputStreamReader(process.getErrorStream()));
         while((line = errReader.readLine()) != null){
             System.err.println("Error: " + line);
+            errorInfo.append(line).append("\n");
         }
 
         // 等待进程结束
@@ -547,6 +558,11 @@ public class FSFGenerator {
             process.waitFor();
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
+        }
+
+        if(res == null && !errorInfo.toString().isEmpty()){
+            System.out.println("没有收到TBFV给出的 result");
+            res = new Result(-1,"z3验证器验证过程中报错：\n" + errorInfo, "");
         }
         return res;
     }

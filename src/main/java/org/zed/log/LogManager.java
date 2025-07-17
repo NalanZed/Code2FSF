@@ -95,6 +95,25 @@ public class LogManager {
         }
     }
 
+    public static void appendCode2FSFRemark(String logFilePath, String content) throws IOException {
+        java.nio.file.Path outputPath = java.nio.file.Paths.get(logFilePath);
+        java.nio.file.Files.createDirectories(outputPath.getParent());
+        try (java.io.BufferedWriter writer = java.nio.file.Files.newBufferedWriter(
+                outputPath,
+                java.nio.charset.StandardCharsets.UTF_8,
+                java.nio.file.StandardOpenOption.CREATE,
+                java.nio.file.StandardOpenOption.APPEND)) {
+            writer.write("start role remark");
+            writer.newLine();
+            writer.write(content);
+            writer.newLine();
+            writer.write("*end* role remark" );
+            writer.newLine();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public static String file2String(String FilePath) {
         StringBuilder sb = new StringBuilder();
         try (java.io.BufferedReader br = new java.io.BufferedReader(new java.io.FileReader(FilePath))) {
@@ -287,15 +306,15 @@ public class LogManager {
         return SUCC_DATASET_DIR  + "/" + title;
     }
 
-    public static void saveHistoryTestcases(String codePath,List<String> testCases){
+    public static void saveHistoryTestcases(String logFilePath,List<String> testCases) throws IOException {
         int totalNum = testCases.size();
         int count = 0;
-        System.out.println(codePath + "的测试用例历史记录如下，共[" + totalNum + "]个");
+        appendCode2FSFRemark(logFilePath ,"的测试用例历史记录如下，共[" + totalNum + "]个");
         for (String testcase : testCases) {
-            System.out.println("------------------["+(++count) +"/"+totalNum+"]------------------");
+            appendCode2FSFRemark(logFilePath,"------------------["+(++count) +"/"+totalNum+"]------------------");
             System.out.println(testcase);
         }
-        System.out.println("----------------------------------------");
+        appendCode2FSFRemark(logFilePath,"----------------------------------------");
     }
 
     public static boolean saveACodeGenMsg(ModelMessage msg,String model,String className){

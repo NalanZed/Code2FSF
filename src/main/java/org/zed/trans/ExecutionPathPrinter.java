@@ -161,9 +161,7 @@ public class ExecutionPathPrinter {
                     }
                 }
 
-                //在循环体内打印Entering loop condition
-                Statement enterLoopStmt = generateEnteringLoopPrintStmt(forStmt);
-                forStmt.getBody().asBlockStmt().addStatement(0,enterLoopStmt);
+
 
                 //在循环体内打印 update 语句，这样可以获取到赋值
                 List<Statement> updateStmts = generateUpdateStmtOfForLoop(forStmt);
@@ -173,15 +171,19 @@ public class ExecutionPathPrinter {
                         forStmt.getBody().asBlockStmt().addStatement(length,s);
                     }
                 }
-                //打印退出循环的语句 Exiting loop condition
-                Statement exitLoopStmt = generateExitingLoopPrintStmt(forStmt);
                 Optional<Node> parentNode = forStmt.getParentNode();
                 if(parentNode.isEmpty()) {
                     return super.visit(forStmt, arg);
                 }
+                Statement enterLoopStmt = generateEnteringLoopPrintStmt(forStmt);
+                //在循环体内打印Entering loop condition
+                forStmt.getBody().asBlockStmt().addStatement(0,enterLoopStmt);
+                //打印退出循环的语句 Exiting loop condition
+                Statement exitLoopStmt = generateExitingLoopPrintStmt(forStmt);
                 if(parentNode.get() instanceof BlockStmt) {
                     int index = ((BlockStmt) parentNode.get()).asBlockStmt().getStatements().indexOf(forStmt);
                     ((BlockStmt) parentNode.get()).asBlockStmt().addStatement(index+1,exitLoopStmt);
+//                    ((BlockStmt) parentNode.get()).asBlockStmt().addStatement(index,enterLoopStmt);
                 }
                 return super.visit(forStmt, arg);
             }
@@ -484,6 +486,7 @@ public class ExecutionPathPrinter {
                 NodeList.nodeList(new BinaryExpr(
                         new StringLiteralExpr("Entering forloop with condition: " + condition + " is evaluated as: "),
                         condition,
+//                        new NameExpr("true"),
                         BinaryExpr.Operator.PLUS
                 ))
         ));

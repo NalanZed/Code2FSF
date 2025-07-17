@@ -116,7 +116,7 @@ public class CodeGenerator {
             String verifyType = isTotallyVerified(finalResultsOfEveryCoupleOfTD) ? "totally verified!" : "partially verified!";
             System.out.println(className + "is" + verifyType);
             //记录历史测试用例
-            LogManager.saveHistoryTestcases(className,historyTestcases);
+//            LogManager.saveHistoryTestcases(className,historyTestcases);
             return true;
         }
         System.err.println("CodeGen超过最大对话次数,结束");

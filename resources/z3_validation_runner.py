@@ -163,12 +163,9 @@ def solver_check_z3(z3_expr:str)->str:
     except Exception as e:
         print("solver check fail!")
         print("错误信息:", e)
-        return "ERROR"
+        raise
+        # return "ERROR"
 
-    except Exception as e:
-        print("solver check fail!")
-        print("错误信息:", e)
-        return "ERROR"
     
 def replace_char_literals(expr):
     # 替换 Java 表达式中的字符字面量，如 'a' -> 97
@@ -284,12 +281,13 @@ def java_expr_to_z3(expr_str, var_types: dict):
     except Exception as e:
         print(f"ast.parse error: {e}, expr_str={repr(expr_str)}")
         z3_expr = f"ERROR Info: {e}"  # 或者根据需要设置默认值
-        return z3_expr
+        raise
     try:
         z3_expr = Z3Transformer().visit(parsed.body)
     except Exception as e:
         print(f"Z3Transformer 处理异常: {e}")
         z3_expr = f"ERROR Info: {e}"  # 或者根据需要设置默认值
+        raise
     return z3_expr
 
 def parse_md_def(java_code: str) -> dict:
@@ -390,12 +388,12 @@ def deal_with_spec_unit_json(spec_unit_json: str):
         scr = solver_check_z3(z3_expr)
         if(scr == "OK"):
             result = Result(3,"",current_ct)
-        elif(scr == "ERROR"):
-            result = Result(1,scr,"")
+        # elif(scr == "ERROR"):
+        #     result = Result(1,scr,"")
         else:
             result = Result(0,"",current_ct)
-    elif solver_result == "ERROR":
-        result = Result(1,"",current_ct)
+    # elif solver_result == "ERROR":
+    #     result = Result(1,"",current_ct)
     else:
         result = Result(2,solver_result,"")
     print("result:" + result.to_json())
@@ -524,10 +522,10 @@ def fsf_exclusivity_validate(fuJson: str):
         print("FSF validation result:" + result.to_json())
         return
     r = solver_check_z3(z3_expr)
-    if(r == "ERROR"):
-        result = Result(1, "FSF VALIDATION ERROR!", "")
-        print("FSF validation result:" + result.to_json())
-        return
+    # if(r == "ERROR"):
+    #     result = Result(1, "FSF VALIDATION ERROR!", "")
+    #     print("FSF validation result:" + result.to_json())
+    #     return
     if(r == "OK"): #unsat，具有完备性
         print("T具有完备性")
     else: #不具有完备性
@@ -548,9 +546,9 @@ def fsf_exclusivity_validate(fuJson: str):
         r = solver_check_z3(z3_expr)
         if(r == "OK"):
             continue
-        if(r == "ERROR"):
-            result = Result(1, "FSF VALIDATION ERROR!", "")
-            break
+        # if(r == "ERROR"):
+        #     result = Result(1, "FSF VALIDATION ERROR!", "")
+        #     break
         else:
             result = Result(2, and_t, r)
             break
