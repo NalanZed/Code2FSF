@@ -66,9 +66,38 @@ public class AppTest
 //            e.printStackTrace();
 //        }
 //    }
+
+    public void testApp2(){
+        String logDir = "resources/log/deepseek-chat";
+        String[] logFilePaths = LogManager.fetchSuffixFilePathInDir(logDir, ".txt");
+        for(String path : logFilePaths){
+            if(path.contains("summary")) continue;
+            String logName = path.substring(path.lastIndexOf("/"), path.indexOf(".txt"));
+            System.out.println("processing==>" + logName);
+            List<String[]> FSF = LogManager.getLastestFSFFromLog(path);
+            String code = LogManager.getProgramFromLog(path);
+            List<String> vars = fetchUnknownVarInFSF(FSF, code);
+            if(!vars.isEmpty()){
+                vars.stream().forEach(System.out::println);
+                System.err.println(path);
+            }
+
+        }
+    }
+    public void testApp3(){
+        String path = "resources/log/deepseek-chat/log-MySqrt_Mutant2.txt";
+        List<String[]> FSF = LogManager.getLastestFSFFromLog(path);
+        String code = LogManager.getProgramFromLog(path);
+        List<String> vars = fetchUnknownVarInFSF(FSF, code);
+        if(!vars.isEmpty()){
+            System.err.println(path);
+        }
+    }
+
     public void testApp4() throws Exception {
-//        String resourceDir = "resources/dataset/SpecGenBench/";
-        String resourceDir ="resources/dataset/AllCode2PartA";
+        String resourceDir = "resources/dataset/someBench/";
+//        String resourceDir ="resources/dataset/AllCode2PartLM";
+//        String resourceDir ="resources/dataset/tmp";
         ModelConfig modelConfig = new ModelConfig();
 //        ModelConfig modelConfig = CreateChatGptModel();
         String SSMPDir = pickSSMPCodes(resourceDir);

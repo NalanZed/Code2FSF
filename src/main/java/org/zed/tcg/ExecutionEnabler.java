@@ -108,6 +108,20 @@ public class ExecutionEnabler {
                 .findFirst();
         return staticMethodOpt.get();
     }
+    public static List<Parameter> getParamsOfOneStaticMethod(String program){
+        CompilationUnit cu = new JavaParser().parse(program).getResult().get();
+        String className = cu.getTypes().get(0).getNameAsString();
+        Optional<MethodDeclaration> staticMethodOpt = cu.findAll(MethodDeclaration.class).stream()
+                .filter(m -> m.isStatic() && !m.getNameAsString().equals("main"))
+                .findFirst();
+        if (staticMethodOpt.isEmpty()) {
+            System.out.println("未找到静态方法，跳过: " + className);
+            return null;
+        }
+        MethodDeclaration staticMethod = staticMethodOpt.get();
+        List<Parameter> parameters = staticMethod.getParameters();
+        return parameters;
+    }
     public static String constructConstrain(String T,List<String> preConstrains){
         if(preConstrains == null || preConstrains.isEmpty()){
             return T;

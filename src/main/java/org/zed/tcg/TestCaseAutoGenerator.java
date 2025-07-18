@@ -69,6 +69,7 @@ public class TestCaseAutoGenerator {
         }
         return values.toArray(new Object[0]);
     }
+
     public static void collectValue(Type type, List<Object> values,String value) {
         String typeName = type.asString();
         switch (typeName) {
@@ -143,26 +144,14 @@ public class TestCaseAutoGenerator {
             throw new IllegalArgumentException("表达式解析失败: " + e.getMessage(), e);
         }
     }
+
     public static boolean isAcceptableCase( String T,
                                             List<String> variableNames,
                                             List<Object> variableValues) {
 
         return evaluateLogicExpression(T,variableNames.toArray(new String[0]),variableValues.toArray(new Object[0])); // 默认接受所有表达式
     }
-    public static List<Parameter> getParamsOfOneStaticMethod(String program){
-        CompilationUnit cu = new JavaParser().parse(program).getResult().get();
-        String className = cu.getTypes().get(0).getNameAsString();
-        Optional<MethodDeclaration> staticMethodOpt = cu.findAll(MethodDeclaration.class).stream()
-                .filter(m -> m.isStatic() && !m.getNameAsString().equals("main"))
-                .findFirst();
-        if (staticMethodOpt.isEmpty()) {
-            System.out.println("未找到静态方法，跳过: " + className);
-            return null;
-        }
-        MethodDeclaration staticMethod = staticMethodOpt.get();
-        List<Parameter> parameters = staticMethod.getParameters();
-        return parameters;
-    }
+
     public static String generateRandomValue(Type type) {
         String typeName = type.asString();
         switch (typeName) {

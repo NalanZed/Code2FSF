@@ -1,24 +1,24 @@
 package org.zed;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.github.javaparser.ast.body.Parameter;
 import org.zed.llm.*;
 import org.zed.log.LogManager;
+import org.zed.tcg.ExecutionEnabler;
+import org.zed.trans.ExecutionPathPrinter;
 import org.zed.trans.TransWorker;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 import static org.zed.tcg.ExecutionEnabler.generateMainMdUnderExpr;
 import static org.zed.tcg.ExecutionEnabler.insertMainMdInSSMP;
 import static org.zed.trans.ExecutionPathPrinter.addPrintStmt;
 
 public class FSFGenerator {
+
     static final String YELLOW = "\u001B[33m";
     static final String RESET = "\u001B[0m";
     private static final String LLMS_CONFIG_DIR = "resources/config";
@@ -72,7 +72,7 @@ public class FSFGenerator {
         return argsMap;
     }
 
-    public static Result valid1Path(String ssmp,String mainMd,List<String> prePathConstrains,String T,String D) throws Exception {
+    public static Result validate1Path(String ssmp, String mainMd, List<String> prePathConstrains, String T, String D) throws Exception {
         //给测试函数插桩
         String addedPrintProgram = addPrintStmt(ssmp);
         //组装可执行程序
@@ -88,28 +88,45 @@ public class FSFGenerator {
     public static String FSFValidationTask(String ssmp,List<String[]> FSF){
         //对FSF中T的互斥性进行验证
         FSFValidationUnit fsfValidationUnit = new FSFValidationUnit(ssmp, FSF);
-        Result exclusivityResult = null;
+        //互斥性以及完备性
+        Result exclusivityAndCompltenessResult = null;
         try {
-            exclusivityResult = callTBFV4J(fsfValidationUnit);
+            exclusivityAndCompltenessResult = callTBFV4J(fsfValidationUnit);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        if(exclusivityResult == null || exclusivityResult.getStatus() == -1){
+        if(exclusivityAndCompltenessResult == null || exclusivityAndCompltenessResult.getStatus() == -1){
             //FSF解析失败，都没到验证完备性和互斥性那一步
             return "检查到FSF中T不满足要求导致无法解析，请严格审视我最初的要求，并重新生成FSF";
         }
-        if(exclusivityResult.getStatus() == 2){
-            return "检查到FSF中T不满足互斥性,具体是 Ti && Tj :[" + exclusivityResult.getCounterExample()+ "] 有解" +
-                    exclusivityResult.getPathConstrain() + "，请重新生成FSF，确保T之间的互斥性";
+        if(exclusivityAndCompltenessResult.getStatus() == 2){
+            return "检查到FSF中T不满足互斥性,具体是 Ti && Tj :[" + exclusivityAndCompltenessResult.getCounterExample()+ "] 有解" +
+                    exclusivityAndCompltenessResult.getPathConstrain() + "，请重新生成FSF，确保T之间的互斥性";
         }
-        if(exclusivityResult.getStatus() == 3){
-            return "检查到FSF中T用 || 连接不具有完备性，即" + "(" + exclusivityResult.getCounterExample() + ")" + "有解" +
-                    exclusivityResult.getPathConstrain() + "，请重新生成FSF，确保T的完整性";
+        if(exclusivityAndCompltenessResult.getStatus() == 3){
+            return "检查到FSF中T用 || 连接不具有完备性，即" + "(" + exclusivityAndCompltenessResult.getCounterExample() + ")" + "有解" +
+                    exclusivityAndCompltenessResult.getPathConstrain() + "，请重新生成FSF，确保T的完整性";
         }
         return "SUCCESS";
     }
 
-    public static String validATAndD(String ssmp, String T, String D, int maxRoundsOf1CoupleOfTD, List<String> historyTestcases, List<Result> finalResultsOfTDs) throws Exception {
+    public static Result checkBadFormFSF(List<String[]> FSF, String ssmp){
+        Result r = new Result();
+        List<String> vars = fetchUnknownVarInFSF(FSF, ssmp);
+        if(vars.isEmpty()){
+            r.setStatus(0);
+        }else{
+            r.setStatus(1);
+            StringBuilder varsList = new StringBuilder();
+            for(String var : vars){
+                varsList.append(var).append(",");
+            }
+            r.setCounterExample(varsList.toString());
+        }
+        return r;
+    }
+
+    public static String validateATAndD(String ssmp, String T, String D, int maxRoundsOf1CoupleOfTD, List<String> historyTestcases, List<Result> finalResultsOfTDs) throws Exception {
         int countOfPathValidated = 0;
         Result r = null;
         String currentTD = "T: " + T + "\n" + "D: " + D;
@@ -134,7 +151,7 @@ public class FSFGenerator {
                 System.err.println("参数生成失败！");
                 return "ERROR: 参数生成失败";
             }
-            r = valid1Path(ssmp,mainMd,prePathConstrains,T,D);
+            r = validate1Path(ssmp,mainMd,prePathConstrains,T,D);
             if(r.getStatus() == 0){
                 prePathConstrains.add(r.getPathConstrain());
                 countOfPathValidated++;
@@ -194,8 +211,8 @@ public class FSFGenerator {
         String ssmp = TransWorker.trans2SSMP(pureProgram);
         if(ssmp == null || ssmp.isEmpty()){
             System.err.println("转换为单静态方法程序失败，无法进行后续操作");
-            LogManager.appendCode2FSFRemark(logPath,"Validation FAIL 验证失败--转换为单静态方法程序失败，无法进行后续操作!");
-            LogManager.appendCode2FSFRemark(logPath,"本次实验对话轮次为: [0]");
+            LogManager.appendCode2FSFRemark(logPath,"Validation FAIL 验证失败--转换为单静态方法程序失败，无法进行后续操作!"
+            + "\n" + "本次实验对话轮次为: [0]");
             return false;
         }
         List<String> historyTestcases = new ArrayList<>();
@@ -203,7 +220,7 @@ public class FSFGenerator {
         List<String[]> FSF;
         int count = 0;
         while(count < maxRounds){
-            boolean regenerateFlag = false; //标记是否需要重新生成FSF
+
             System.out.println("["+ modelName +"]"+"正在进行第"+(++count)+"轮对话");
             make1RoundConversation(fsfPrompt,mc);
             System.out.println("第"+count+"轮对话完成");
@@ -218,10 +235,22 @@ public class FSFGenerator {
 //                }
             }catch (Exception e){
                 System.out.println("对话生成FSF失败，跳过本次任务");
-                LogManager.appendCode2FSFRemark(logPath,"Validation FAIL 验证失败--对话生成FSF失败!");
-                LogManager.appendCode2FSFRemark(logPath,"本次实验对话轮次为: [" + count + "]");
+                LogManager.appendCode2FSFRemark(logPath,"Validation FAIL 验证失败--对话生成FSF失败!"
+                        + "\n" + "本次实验对话轮次为: [" + count + "]");
                 return false;
             }
+
+            //对FSF的形式进行检查
+            Result formResult = checkBadFormFSF(FSF,ssmp);
+            if(formResult.getStatus() == 1){
+                String msgContent = "生成的FSF的T中含有非入参变量" + formResult.getCounterExample() + " 请重新生成FSF";
+                System.out.println(msgContent);
+                ModelMessage msg = new ModelMessage("user", msgContent);
+                fsfPrompt.addMessage(msg);
+                LogManager.appendMessage(fsfPrompt.getCodePath(), msg, fsfPrompt.getModel());
+                continue;
+            }
+
             //对FSF中T的互斥性进行验证
             String FSFValidationResult = FSFValidationTask(ssmp,FSF);
             if(!FSFValidationResult.equals("SUCCESS")){
@@ -233,21 +262,22 @@ public class FSFGenerator {
             String T = "";
             String D = "";
             List<Result> finalResultsOfEveryCoupleOfTD = new ArrayList<>();//记录每个TD对的验证结果
+            boolean regenerateFlag = false; //标记是否需要重新生成FSF
             //对每一个TD进行验证
             for(String[] td : FSF) {
                 T = td[0];
                 D = td[1];
                 String currentTD = "T: " + T + "\n" + "D: " + D;
                 System.out.println(YELLOW + "正在进行验证的TD对为：" + currentTD + RESET);
-                String validationTDResult = validATAndD(ssmp, T, D, maxRoundsOf1CoupleOfTD,
+                String validationTDResult = validateATAndD(ssmp, T, D, maxRoundsOf1CoupleOfTD,
                                                                     historyTestcases, finalResultsOfEveryCoupleOfTD);
                 if(validationTDResult.equals("SUCCESS") || validationTDResult.equals("PARTIALLY SUCCESS")){
                     continue;
                 }
                 if(validationTDResult.equals("ERROR")){
                     System.err.println(currentTD + "\n" + "========>验证过程出现严重错误，跳过本次任务");
-                    LogManager.appendCode2FSFRemark(logPath,"Validation FAIL 验证失败--验证过程出现严重错误");
-                    LogManager.appendCode2FSFRemark(logPath,"本次实验对话轮次为: [" + count + "]");
+                    LogManager.appendCode2FSFRemark(logPath,"Validation FAIL 验证失败--验证过程出现严重错误"+
+                            "\n" + "本次实验对话轮次为: [" + count + "]");
                     return false;
                 }
                 regenerateFlag = true;
@@ -263,24 +293,15 @@ public class FSFGenerator {
             String verifyType = isTotallyVerified(finalResultsOfEveryCoupleOfTD) ? "totally verified!" : "Iteration_N verified!";
             System.out.println(inputFilePath + " is " + verifyType);
             //记录历史测试用例
-            LogManager.saveHistoryTestcases(logPath,historyTestcases);
-            LogManager.appendCode2FSFRemark(logPath,"Validation SUCCESS 验证成功--" + verifyType);
-            LogManager.appendCode2FSFRemark(logPath,"本次实验对话轮次为: [" + count + "]");
+//            LogManager.saveHistoryTestcases(logPath,historyTestcases);
+            LogManager.appendCode2FSFRemark(logPath,"Validation SUCCESS 验证成功--" + verifyType
+                    +  "\n" + "本次实验对话轮次为: [" + count + "]");
             return true;
         }
         System.err.println("对话轮数超过最大值" + maxRounds + "，任务失败!");
-        LogManager.appendCode2FSFRemark(logPath,"Validation FAIL 验证失败--对话轮数超过最大值");
-        LogManager.appendCode2FSFRemark(logPath,"本次实验对话轮次为: [" + count + "]");
+        LogManager.appendCode2FSFRemark(logPath,"Validation FAIL 验证失败--对话轮数超过最大值"+ "\n"
+                + "本次实验对话轮次为: [" + count + "]");
         return false;
-    }
-
-    private static boolean isTheFSFFormOK(List<String[]> fsf) {
-//        for(String[] couple : fsf){
-//            String T = couple[0];
-//            String D = couple[1];
-//            if(T.contains("?")) return false;
-//        }
-        return true;
     }
 
     private static boolean validateExceptionPath(String ssmp, String t) {
@@ -290,7 +311,7 @@ public class FSFGenerator {
             return true;
         }
         try {
-            Result result = valid1Path(ssmp, mainMd, null, t, "Exception");
+            Result result = validate1Path(ssmp, mainMd, null, t, "Exception");
             if(result == null){
                 System.out.println("验证过程发生错误，没有返回result");
                 return false;
@@ -365,7 +386,7 @@ public class FSFGenerator {
         int failOnMutualExclusivityTimes = 0;
         int failOnCompletenessTimes = 0;
         String FSFReviewLogDir = "resources/log/FSFReview";
-        ModelPrompt fsfPrompt = null;
+        ModelPrompt fsfPrompt;
         try {
             fsfPrompt = ModelPrompt.generateCode2FSFPrompt(modelName,inputFilePath);
         } catch (IOException e) {
@@ -462,6 +483,7 @@ public class FSFGenerator {
         System.out.println("对话轮数超过最大值" + maxRounds + "，任务失败!");
         return true;
     }
+
     public static void FSFReviewOnDir(ModelConfig mc, String inputDir) throws Exception {
         // 遍历输入目录下的所有文件
         int taskCount = 0;
@@ -475,6 +497,7 @@ public class FSFGenerator {
             }
         }
     }
+
     public static void makeSureModelIsAvailable(String model) {
         if(!modelConfigs.containsKey(model)){
             System.out.println("Model " + model + " is not available. Please check your model configuration.");
@@ -524,6 +547,7 @@ public class FSFGenerator {
         }
         return res;
     }
+
     public static Result callTBFV4J(FSFValidationUnit fu) throws IOException {
         Result res =null;
         String fuJson = fu.toJson();
@@ -565,6 +589,48 @@ public class FSFGenerator {
             res = new Result(-1,"z3验证器验证过程中报错：\n" + errorInfo, "");
         }
         return res;
+    }
+
+    //获取到 FSF 的 所有 T 中的未知变量（即，非入参变量）
+    public static List<String> fetchUnknownVarInFSF(List<String[]> FSF, String ssmp){
+        List<String> unKnownVars = new ArrayList<>();
+        //拿到params
+        List<Parameter> paramList = ExecutionEnabler.getParamsOfOneStaticMethod(ssmp);
+        if(paramList == null || paramList.isEmpty()){
+            return unKnownVars;
+        }
+        Set<String> params = new HashSet<>(paramList.size());
+        for(Parameter p : paramList){
+            params.add(p.getNameAsString());
+        }
+        params.add("return_value");
+        params.add("Exception");
+        //遍历FSF中的变量
+        Set<String> varsInFSF = new HashSet<>();
+        for(String[] td : FSF){
+            String T = td[0];
+//            String D = td[1];
+            if(T.contains("//")){
+                T = T.substring(0,T.indexOf("//"));
+            }
+//            if(D.contains("//")){
+//                D = D.substring(0,D.indexOf("//"));
+//            }
+            try{
+                varsInFSF.addAll(ExecutionPathPrinter.extractVariablesInLogicalExpr(T));
+//                varsInFSF.addAll(ExecutionPathPrinter.extractVariablesInLogicalExpr(D));
+            }catch(Exception e){
+                unKnownVars.add("Bad Form!");
+                return unKnownVars;
+            }
+        }
+        for(String var : varsInFSF){
+            if(!params.contains(var)){
+                unKnownVars.add(var);
+            }
+        }
+
+        return unKnownVars;
     }
 
     public static void main(String[] args) throws Exception {

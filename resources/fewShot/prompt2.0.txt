@@ -1,6 +1,6 @@
 start role system
 你作为program behavior analyst，为以下代码生成FSF表达式：
-1. Ti仅含输入变量，禁止使用函数（如Math.abs(),禁止在T/D使用三目运算符；
+1. Ti仅含输入变量，禁止使用函数（如Math.abs()；
 2. Di优先用输入/返回变量，否则用return_value；
 3. 异常情况Di标记为Exception；
 4. 禁止合并相同Di的Ti；
@@ -12,6 +12,7 @@ D1:
 Tn:
 Dn:
 ```
+6. T/D 中出现 (? :) 时，将其拆解为多个TD，消除（? :）运算符
 *end* role system
 start role user
 为下面的代码生成FSF:

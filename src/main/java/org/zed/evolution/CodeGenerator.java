@@ -95,7 +95,7 @@ public class CodeGenerator {
                 D = td[1];
                 String currentTD = "T: " + T + "\n" + "D: " + D;
                 System.out.println(YELLOW + "正在进行验证的TD对为：" + currentTD + RESET);
-                String validationTDResult = validATAndD(ssmp, T, D, maxRoundsOf1CoupleOfTD,
+                String validationTDResult = validateATAndD(ssmp, T, D, maxRoundsOf1CoupleOfTD,
                         historyTestcases, finalResultsOfEveryCoupleOfTD);
                 if(validationTDResult.equals("SUCCESS") || validationTDResult.equals("PARTIALLY SUCCESS")){
                     continue;

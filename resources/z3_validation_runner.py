@@ -42,7 +42,8 @@ def run_java_code(java_code: str):
         return result
     except subprocess.CalledProcessError:
         print("Error during Java execution.")
-        return None
+        raise
+
 def parse_execution_path(execution_output: str) -> List[str]:
     lines = execution_output.splitlines()
     execution_path = []
@@ -72,14 +73,12 @@ def simplify_expression(expression):
     expression = re.sub(r'\s+', ' ', expression)  # Remove excess space
     return expression
 
-
-
 def replace_variables(current_condition: str, variable: str, new_value: str) -> str:
     """
     Replace the variable in the logical condition with the new value.
     """
     pattern = rf'\b{re.escape(variable)}\b'  # Match variable names exactly
-    new_value = f"({new_value})"
+    new_value = f"{new_value}"
     return re.sub(pattern, new_value, current_condition)
 
 class Result:
@@ -166,7 +165,6 @@ def solver_check_z3(z3_expr:str)->str:
         raise
         # return "ERROR"
 
-    
 def replace_char_literals(expr):
     # 替换 Java 表达式中的字符字面量，如 'a' -> 97
     return re.sub(r"'(.)'", lambda m: str(ord(m.group(1))), expr)
@@ -310,14 +308,6 @@ def parse_md_def(java_code: str) -> dict:
     return var_types
 ############# java_expr_z3_expr ##############
 
-def generate_test_spec_unit():
-    program = read_java_code_from_file(RESOURCE_DIR + "/" + "TestCase.java")
-    T = "num < 0"
-    D = "result == -num"
-    pre_constrains = {}
-    su = SpecUnit(program, T, D,pre_constrains)
-    return su.to_json()
-
 def deal_with_spec_unit_json(spec_unit_json: str):
     #读取SpecUnit对象
     spec_unit = None
@@ -334,7 +324,7 @@ def deal_with_spec_unit_json(spec_unit_json: str):
     #运行程序,获得输出
     output = run_java_code(program)
     execution_output = ""
-    if(output is None):
+    if output is None:
         print("Java code execution failed.")
         return
 
@@ -348,7 +338,7 @@ def deal_with_spec_unit_json(spec_unit_json: str):
             print("result:" + result.to_json())
         return
 
-    if(output.stdout is not None):
+    if output.stdout is not None:
         execution_output = output.stdout
     if not execution_output:
         print("No output from Java code execution.")
@@ -359,7 +349,7 @@ def deal_with_spec_unit_json(spec_unit_json: str):
         print(step)
     print("end Execution Path")
     current_ct = get_ct_from_execution_path(execution_path);
-    if(current_ct == ""):
+    if current_ct == "":
         current_ct = "true"
     print(f"本次路径对应的_Ct_: {current_ct}")
     new_d = update_D_with_execution_path(D,execution_path)
@@ -386,7 +376,7 @@ def deal_with_spec_unit_json(spec_unit_json: str):
         z3_expr = java_expr_to_z3(combined_expr, var_types)
         print("(T) && !(previous_cts) && !(current_ct) 转 Z3表达式: " + str(z3_expr))
         scr = solver_check_z3(z3_expr)
-        if(scr == "OK"):
+        if scr == "OK":
             result = Result(3,"",current_ct)
         # elif(scr == "ERROR"):
         #     result = Result(1,scr,"")
@@ -402,7 +392,6 @@ def remove_type_transfer_stmt_in_expr(expr: str) -> str:
     ans = expr.replace("(long)","").replace("(int)","").replace("(short)","").replace("(byte)","").replace("(char)","")
     return ans
 
-
 def get_ct_from_execution_path(execution_path:List[str]):
     ct = ""
     for step in reversed (execution_path):
@@ -411,30 +400,30 @@ def get_ct_from_execution_path(execution_path:List[str]):
             if condition_match:
                 if_condition = condition_match.group(1).strip()
                 if_condition = remove_type_transfer_stmt_in_expr(if_condition)
-                ct = f"{ct} && ({if_condition})"
+                ct = f"{ct} && {if_condition}"
             # Check whether it is a condition to enter the loop
         elif "Entering loop" in step:
             condition_match = re.search(r"Entering loop with condition: (.*?) is evaluated as: true", step)
             if condition_match:
                 loop_condition = condition_match.group(1).strip()
-                ct = f"{ct} && ({loop_condition})"
+                ct = f"{ct} && {loop_condition}"
         elif "Entering forloop" in step:
             condition_match = re.search(r"Entering forloop with condition: (.*?) is evaluated as: true", step)
             if condition_match:
                 loop_condition = condition_match.group(1).strip()
-                ct = f"{ct} && ({loop_condition})"
+                ct = f"{ct} && {loop_condition}"
 
             # Check whether it is a condition for exiting the loop
         elif "Exiting loop" in step:
             condition_match = re.search(r"Exiting loop, condition no longer holds: (.*?) is evaluated as: false", step)
             if condition_match:
                 loop_condition = condition_match.group(1).strip()
-                ct = f"{ct} && !({loop_condition})"
+                ct = f"{ct} && !{loop_condition}"
         elif "Exiting forloop" in step:
             condition_match = re.search(r"Exiting forloop, condition no longer holds: (.*?) is evaluated as: false", step)
             if condition_match:
                 loop_condition = condition_match.group(1).strip()
-                ct = f"{ct} && !({loop_condition})"
+                ct = f"{ct} && !{loop_condition}"
 
             # Check for variable assignment
         elif "current value" in step:
@@ -457,7 +446,7 @@ def update_D_with_execution_path(D: str, execution_path: List[str]) -> str:
     # split_d = D.split("&&")
     # update_d = []
     print(f"original D : {D}")
-    D = D.replace("(char)", "")
+    D = D.replace("(char)", "").replace("(long)","").replace("(int)","").replace("(double)","")
     print(f"now D is {D}")
     newd = D
     for step in reversed(execution_path):
@@ -485,12 +474,10 @@ def update_D_with_execution_path(D: str, execution_path: List[str]) -> str:
             #     update_d.append(sd.strip())
             # split_d = update_d
             # update_d = []
-            if(type and type == "char"):
+            if type and type == "char":
                 value = f"'{value}'" # 给char类型变量带上''
-            value = f"({value})" # 确保value不会影响newd结构
+            # value = f"({value})" # 确保value不会影响newd结构
             newd = replace_variables(newd,variable,value)
-    # for ud in split_d:
-    #     newd = f"{newd} && ({ud})"
 
     return newd.strip().strip("&&")
 
@@ -502,8 +489,8 @@ def read_java_code_from_file(file_path):
         java_code = file.read()
     return java_code
 
-def fsf_exclusivity_validate(fuJson: str):
-    fu = FSFValidationUnit.from_json(fuJson)
+def fsf_exclusivity_validate(fu_json: str):
+    fu = FSFValidationUnit.from_json(fu_json)
     print(fu)
     ts = fu.allTs
     ts_size = len(ts)
@@ -526,7 +513,7 @@ def fsf_exclusivity_validate(fuJson: str):
     #     result = Result(1, "FSF VALIDATION ERROR!", "")
     #     print("FSF validation result:" + result.to_json())
     #     return
-    if(r == "OK"): #unsat，具有完备性
+    if r == "OK": #unsat，具有完备性
         print("T具有完备性")
     else: #不具有完备性
         result = Result(3, or_connect_ts, "不具有完备性")
@@ -544,22 +531,13 @@ def fsf_exclusivity_validate(fuJson: str):
         print("正在验证: " + and_t)
         z3_expr = java_expr_to_z3(and_t, fu.vars)
         r = solver_check_z3(z3_expr)
-        if(r == "OK"):
+        if r == "OK":
             continue
-        # if(r == "ERROR"):
-        #     result = Result(1, "FSF VALIDATION ERROR!", "")
-        #     break
         else:
             result = Result(2, and_t, r)
             break
     print("FSF validation result:" + result.to_json())
 
-def test_main():
-    init_files();
-    spec_unit_json = generate_test_spec_unit()
-    print(spec_unit_json)
-    if spec_unit_json is not None:
-        deal_with_spec_unit_json(spec_unit_json)
 
 def main():
     #创建解析器
@@ -571,16 +549,13 @@ def main():
     args = parser.parse_args()
     spec_unit_json = args.specUnit
     fsf_validation_unit_json = args.fu
-    if(spec_unit_json is None and fsf_validation_unit_json is None):
+    if spec_unit_json is None and fsf_validation_unit_json is None:
         print("请提供输入要验证的JSON字符串")
         return
-    if(spec_unit_json is not None):
+    if spec_unit_json is not None:
         deal_with_spec_unit_json(spec_unit_json)
-    if(fsf_validation_unit_json is not None):
+    if fsf_validation_unit_json is not None:
         fsf_exclusivity_validate(fsf_validation_unit_json)
-
-
-
 
 def init_files():
     import os
@@ -588,7 +563,7 @@ def init_files():
         os.makedirs(RESOURCE_DIR)
     if not os.path.exists(RUNNABLE_DOR):
         os.makedirs(RUNNABLE_DOR)
-    if(not os.path.exists(RESOURCE_DIR + "/TestCase.java")):
+    if not os.path.exists(RESOURCE_DIR + "/TestCase.java"):
         program = """
             public class TestCase{
                 public static int Abs(int num){

@@ -313,13 +313,17 @@ public class LogManager {
     }
 
     public static void saveHistoryTestcases(String logFilePath,List<String> testCases) throws IOException {
+        if(testCases == null || testCases.isEmpty()) return;
         int totalNum = testCases.size();
         int count = 0;
         appendCode2FSFRemark(logFilePath ,"的测试用例历史记录如下，共[" + totalNum + "]个");
-        for (String testcase : testCases) {
-            appendCode2FSFRemark(logFilePath,"------------------["+(++count) +"/"+totalNum+"]------------------");
-            System.out.println(testcase);
-        }
+//        for (String testcase : testCases) {
+//            appendCode2FSFRemark(logFilePath,"------------------["+(++count) +"/"+totalNum+"]------------------");
+////            System.out.println(testcase);
+////            if(!testcase.isEmpty()){
+////                appendCode2FSFRemark(logFilePath,testcase);
+////            }
+//        }
         appendCode2FSFRemark(logFilePath,"----------------------------------------");
     }
 
@@ -379,6 +383,15 @@ public class LogManager {
             if (!succ) {
                 break;
             }
+        }
+    }
+
+    public static void printFSF(List<String[]> FSF){
+        for (int i = 0; i < FSF.size(); i++) {
+            String T = FSF.get(i)[0];
+            String D = FSF.get(i)[1];
+            System.out.println("T"+ i + ": " + T);
+            System.out.println("D"+ i + ": " + D + "\n");
         }
     }
 
