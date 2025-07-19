@@ -12,7 +12,6 @@ import java.util.List;
 import static org.zed.FSFGenerator.*;
 import static org.zed.evolution.ModifyFSF.exchangeTRandomly;
 import static org.zed.log.LogManager.*;
-import static org.zed.tcg.ExecutionEnabler.generateMainMdUnderExpr;
 
 public class CodeGenerator {
     static final String YELLOW = "\u001B[33m";

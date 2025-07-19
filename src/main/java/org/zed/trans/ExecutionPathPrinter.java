@@ -14,6 +14,7 @@ import com.github.javaparser.ast.stmt.*;
 import com.github.javaparser.ast.visitor.ModifierVisitor;
 import com.github.javaparser.ast.visitor.Visitable;
 import com.github.javaparser.ast.visitor.VoidVisitorAdapter;
+import org.zed.log.LogManager;
 
 import java.util.*;
 import java.util.regex.Matcher;
@@ -702,19 +703,84 @@ public class ExecutionPathPrinter {
         return variables;
     }
 
+    /**
+     * 检查代码中所有方法是否包含循环，返回方法名与结果的映射。
+     *
+     * @param ssmp Java 代码字符串
+     * @return Map<方法名, 是否包含循环>
+     */
+    public static boolean ssmpHasLoopStmt(String ssmp) {
+        Map<String, Boolean> result = new HashMap<>();
+        try {
+            CompilationUnit cu = new JavaParser().parse(ssmp).getResult().get();
+            // 遍历所有方法
+            MethodDeclaration md = cu.findFirst(MethodDeclaration.class).get();
+            return containsLoop(md);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public static boolean containsLoop(MethodDeclaration method) {
+
+        return method.getBody()
+                .map(body -> body.getStatements().stream()
+                        .anyMatch(ExecutionPathPrinter::stmtHasLoopStmt))
+                .orElse(false);
+    }
+
+    public static boolean stmtHasLoopStmt(Statement stmt){
+        if(isLoopStatement(stmt)){
+            return true;
+        }
+        boolean b = false;
+        if(stmt instanceof IfStmt){
+            Statement thenStmt = ((IfStmt) stmt).getThenStmt();
+            if(thenStmt instanceof BlockStmt){
+                NodeList<Statement> childStmts = ((BlockStmt) thenStmt).getStatements();
+                for(Statement childStmt : childStmts){
+                    b = b || stmtHasLoopStmt(childStmt);
+                }
+            }
+            if(b) return b;
+            if(((IfStmt) stmt).getElseStmt().isPresent()){
+                Statement elseStmt = ((IfStmt) stmt).getElseStmt().get();
+                b = b || stmtHasLoopStmt(elseStmt);
+            }
+            if(b) return b;
+        }
+        if(stmt instanceof BlockStmt){
+            NodeList<Statement> childStmts = ((BlockStmt) stmt).getStatements();
+            for(Statement childStmt : childStmts){
+                b = b || stmtHasLoopStmt(childStmt);
+            }
+        }
+        return b;
+    }
+
+    public static boolean isLoopStatement(Statement stmt) {
+        return stmt instanceof ForStmt ||
+                stmt instanceof WhileStmt ||
+                stmt instanceof DoStmt ||
+                stmt instanceof ForEachStmt;
+    }
+
     public static void main(String[] args) throws Exception {
         String dir = "resources/dataset/someBench/";
-        String testFileName = "AltitudeController";
+        String testFileName = "AddLoop_Original";
         String testFileNameJava = testFileName+".java";
         String testFilePath = dir + "/" + testFileNameJava;
+        String ssmp = TransWorker.trans2SSMP(LogManager.file2String(testFilePath));
+        System.out.println(ssmpHasLoopStmt(ssmp));
 
 //        String pureCode = TransFileOperator.file2String(testFilePath);
 //        String targetCode = addPrintStmt(pureCode);
-        String T = "!(a+b < f && e) > b && c < (d ? g : u) && a == return_value";
-        Set<String> strings = extractVariablesInLogicalExpr(T);
-        for (String s : strings) {
-            System.out.println(s);
-        }
+//        String T = "!(a+b < f && e) > b && c < (d ? g : u) && a == return_value";
+//        Set<String> strings = extractVariablesInLogicalExpr(T);
+//        for (String s : strings) {
+//            System.out.println(s);
+//        }
 //        System.out.println(targetCode);
     }
 

@@ -13,6 +13,8 @@ solver = Solver()
 
 RESOURCE_DIR = "resources"
 RUNNABLE_DOR= "resources/runnable"
+UNHANDLED_ERROR = "Unhandled error"
+TESTCASE_GENERATION_RESULT = "Testcase generation result"
 
 def get_class_name(java_code: str):
     match = re.search(r'class\s+(\w+)', java_code)
@@ -240,8 +242,6 @@ def java_expr_to_z3(expr_str, var_types: dict):
 
             if isinstance(op, ast.Eq):
                 return left == right
-            if isinstance(op,ast.NotEq):
-                return left != right
             elif isinstance(op, ast.NotEq):
                 return left != right
             elif isinstance(op, ast.Gt):
@@ -502,17 +502,13 @@ def fsf_exclusivity_validate(fu_json: str):
         or_connect_ts = f"{or_connect_ts}||({t})"
     or_connect_ts = or_connect_ts.strip().strip("||").strip()
     or_connect_ts = f"!({or_connect_ts})"
-    print("验证完备性: " + or_connect_ts)
+    # print("验证完备性: " + or_connect_ts)
     z3_expr = java_expr_to_z3(or_connect_ts, fu.vars)
     if isinstance(z3_expr, str) and z3_expr.startswith("ERROR"):
         result = Result(-1, z3_expr, "")
         print("FSF validation result:" + result.to_json())
         return
     r = solver_check_z3(z3_expr)
-    # if(r == "ERROR"):
-    #     result = Result(1, "FSF VALIDATION ERROR!", "")
-    #     print("FSF validation result:" + result.to_json())
-    #     return
     if r == "OK": #unsat，具有完备性
         print("T具有完备性")
     else: #不具有完备性
@@ -520,7 +516,7 @@ def fsf_exclusivity_validate(fu_json: str):
         print("FSF validation result:" + result.to_json())
         return
 
-    #验证排他性，即T1 && T2无解
+    #验证互斥性，即T1 && T2无解
     for i in range(ts_size):
         for j in range(i + 1, ts_size):
             t1 = ts[i]
@@ -528,7 +524,7 @@ def fsf_exclusivity_validate(fu_json: str):
             and_ts.append(f"({t1}) && ({t2})")
     result = Result(0, "", "")
     for and_t in and_ts:
-        print("正在验证: " + and_t)
+        # print("正在验证: " + and_t)
         z3_expr = java_expr_to_z3(and_t, fu.vars)
         r = solver_check_z3(z3_expr)
         if r == "OK":
@@ -538,24 +534,49 @@ def fsf_exclusivity_validate(fu_json: str):
             break
     print("FSF validation result:" + result.to_json())
 
+def z3_generate_testcase(spec_unit_json:str):
+    spec_unit = None
+    r = Result(0,"","")
+    # print(f"Processing SpecUnit JSON: {spec_unit_json}")
+    try:
+        spec_unit = SpecUnit.from_json(spec_unit_json)
+    except json.JSONDecodeError as e:
+        print(f"{UNHANDLED_ERROR}: z3_solver_runner 解析 spec_unit 失败 {e}")
+    constrains_expr = spec_unit.T
+    program = spec_unit.program
+    var_types = parse_md_def(program)
+    z3_expr = java_expr_to_z3(constrains_expr, var_types)
+    print(f"z3 generating testcase under constrains: [{z3_expr}]")
+    var_values = solver_check_z3(z3_expr)
+    if(var_values == "OK"):
+        #没有可用解
+        r = Result(1,"","")
+    else:
+        r = Result(0,var_values,"")
+    print(f"{TESTCASE_GENERATION_RESULT}: {r.to_json()}")
+
 
 def main():
     #创建解析器
     parser = argparse.ArgumentParser()
     # 添加参数定义
-    parser.add_argument('-s', '--specUnit', '--specunit', help='输入要验证的SpecUnit对象的JSON字符串', required=False)
+    parser.add_argument('-s', '--su', '--specUnit', help='输入要验证的SpecUnit对象的JSON字符串', required=False)
     parser.add_argument('-f', '--fu', '--fsfValidationUnit', help='输入要验证的fsfValidationUnit对象的JSON字符串', required=False)
+    parser.add_argument('-g', '--gu', '--generationUnit', help='输入带有约束条件和程序的generationUnit', required=False)
     # 解析命令行参数
     args = parser.parse_args()
-    spec_unit_json = args.specUnit
+    spec_unit_json = args.su
     fsf_validation_unit_json = args.fu
-    if spec_unit_json is None and fsf_validation_unit_json is None:
+    generation_unit = args.gu
+    if spec_unit_json is None and fsf_validation_unit_json is None and generation_unit is None:
         print("请提供输入要验证的JSON字符串")
         return
     if spec_unit_json is not None:
         deal_with_spec_unit_json(spec_unit_json)
     if fsf_validation_unit_json is not None:
         fsf_exclusivity_validate(fsf_validation_unit_json)
+    if(generation_unit is not None):
+        z3_generate_testcase(generation_unit)
 
 def init_files():
     import os
@@ -585,17 +606,13 @@ def init_files():
             """
         with open(RESOURCE_DIR + "/TestCase.java", "w") as file:
             file.write(program)
+
 def test_main_4():
-    program = read_java_code_from_file("resources/Chufa.java")
+    program = read_java_code_from_file("resources/TestCase.java")
     print(program)
-    output = run_java_code(program)
-    if output is None:
-        return "Java code execution failed!"
-    if output.stderr is not None and "Exception" in output.stderr:
-        print(output.stderr)
-        return "Exception founded!"
-    else :
-        return "No Exception founded!"
+    expr = "num < 0 && num >= -2"
+    su = SpecUnit(program,expr,"",[]).to_json()
+    z3_generate_testcase(su)
 
 
 if __name__ == "__main__":

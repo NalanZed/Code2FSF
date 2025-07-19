@@ -1,18 +1,17 @@
 package org.zed;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.javaparser.ast.body.Parameter;
 import org.zed.llm.*;
 import org.zed.log.LogManager;
+import org.zed.solver.Z3Solver;
 import org.zed.tcg.ExecutionEnabler;
 import org.zed.trans.ExecutionPathPrinter;
 import org.zed.trans.TransWorker;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.*;
 
+import static org.zed.solver.Z3Solver.callZ3Solver;
 import static org.zed.tcg.ExecutionEnabler.generateMainMdUnderExpr;
 import static org.zed.tcg.ExecutionEnabler.insertMainMdInSSMP;
 import static org.zed.trans.ExecutionPathPrinter.addPrintStmt;
@@ -80,7 +79,7 @@ public class FSFGenerator {
         System.out.println("runnableProgram: " + runnableProgram);
         //拿到SpecUnit
         SpecUnit su = new SpecUnit(runnableProgram,T,D,prePathConstrains);
-        Result r = callTBFV4J(su);
+        Result r = Z3Solver.callZ3Solver(su);
         System.out.println("验证返回 result: " + r);
         return r;
     }
@@ -91,7 +90,7 @@ public class FSFGenerator {
         //互斥性以及完备性
         Result exclusivityAndCompltenessResult = null;
         try {
-            exclusivityAndCompltenessResult = callTBFV4J(fsfValidationUnit);
+            exclusivityAndCompltenessResult = callZ3Solver(fsfValidationUnit);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -145,6 +144,7 @@ public class FSFGenerator {
         while(countOfPathValidated < maxRoundsOf1CoupleOfTD){
             //对一个TD下所有路径验证
             //生成main方法，即测试用例
+
             String mainMd = generateMainMdUnderExpr(T,prePathConstrains,ssmp);
             historyTestcases.add(mainMd);
             if(mainMd == null){
@@ -216,7 +216,7 @@ public class FSFGenerator {
             return false;
         }
         List<String> historyTestcases = new ArrayList<>();
-        int maxRoundsOf1CoupleOfTD = 5;
+        int maxRoundsOf1CoupleOfTD = 20;
         List<String[]> FSF;
         int count = 0;
         while(count < maxRounds){
@@ -430,7 +430,7 @@ public class FSFGenerator {
             FSFValidationUnit fsfValidationUnit = new FSFValidationUnit(ssmp, FSF);
             Result exclusivityResult = null;
             try {
-                exclusivityResult = callTBFV4J(fsfValidationUnit);
+                exclusivityResult = callZ3Solver(fsfValidationUnit);
             } catch (IOException e) {
                 System.out.println("callTBFV4J 验证工作返回异常!");
                 return false;
@@ -507,88 +507,6 @@ public class FSFGenerator {
             }
             System.exit(1);
         }
-    }
-
-    public static Result callTBFV4J(SpecUnit su) throws IOException {
-        Result res =null;
-
-        String suJson = new ObjectMapper().writeValueAsString(su);
-//        ProcessBuilder pb = new ProcessBuilder("python3", "resources/dynamic_testing.py", "--specunit",suJson);
-        ProcessBuilder pb = new ProcessBuilder("python3", "resources/z3_validation_runner.py", "--specunit",suJson);
-        Process process = pb.start();
-        BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
-        StringBuilder errorInfo = new StringBuilder();
-        String line;
-        while((line = reader.readLine()) != null){
-            if(line.startsWith("result:")){
-                String resultJson = line.substring("result:".length()).trim();
-                res = new Result(resultJson);
-            }
-            System.out.println(line);
-        }
-
-        // 读取错误信息
-        BufferedReader errReader = new BufferedReader(new InputStreamReader(process.getErrorStream()));
-        while((line = errReader.readLine()) != null){
-            System.err.println("Error: " + line);
-            errorInfo.append(line).append("\n");
-        }
-
-        // 等待进程结束
-        try {
-            process.waitFor();
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
-
-        if(res == null && !errorInfo.toString().isEmpty()){
-            System.out.println("没有收到TBFV给出的 result");
-            res = new Result(-1,"z3验证器验证过程中报错：\n" + errorInfo, "");
-        }
-        return res;
-    }
-
-    public static Result callTBFV4J(FSFValidationUnit fu) throws IOException {
-        Result res =null;
-        String fuJson = fu.toJson();
-        ProcessBuilder pb = new ProcessBuilder("python3", "resources/z3_validation_runner.py", "--fu",fuJson);
-        Process process = pb.start();
-        BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
-        String line;
-        while((line = reader.readLine()) != null){
-            if(line.startsWith("FSF validation result:")){
-                String resultJson = line.substring("FSF validation result:".length()).trim();
-                res = new Result(resultJson);
-            }
-            System.out.println(line);
-        }
-
-        StringBuilder errorInfo = new StringBuilder();
-        while((line = reader.readLine()) != null){
-            if(line.startsWith("result:")){
-                String resultJson = line.substring("result:".length()).trim();
-                res = new Result(resultJson);
-            }
-            System.out.println(line);
-        }
-        BufferedReader errReader = new BufferedReader(new InputStreamReader(process.getErrorStream()));
-        while((line = errReader.readLine()) != null){
-            System.err.println("Error: " + line);
-            errorInfo.append(line).append("\n");
-        }
-
-        // 等待进程结束
-        try {
-            process.waitFor();
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
-
-        if(res == null && !errorInfo.toString().isEmpty()){
-            System.out.println("没有收到TBFV给出的 result");
-            res = new Result(-1,"z3验证器验证过程中报错：\n" + errorInfo, "");
-        }
-        return res;
     }
 
     //获取到 FSF 的 所有 T 中的未知变量（即，非入参变量）

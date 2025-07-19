@@ -1,6 +1,8 @@
 package org.zed;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.Data;
 import org.zed.log.LogManager;
 
@@ -17,6 +19,8 @@ public class SpecUnit {
     @JsonProperty("pre_constrains")
     private List<String> preConstrains;
 
+    @JsonIgnore
+    ObjectMapper MAPPER = new ObjectMapper();
     public SpecUnit(String program, String T,String D,List<String> preConstrains){
         this.program = program;
         this.T = T;
@@ -30,7 +34,14 @@ public class SpecUnit {
     public SpecUnit(String codePath){
         this.program = LogManager.file2String(codePath);
     }
-
+    public String toJson() {
+        try {
+            return MAPPER.writeValueAsString(this);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
     public SpecUnit(){
     }
 }

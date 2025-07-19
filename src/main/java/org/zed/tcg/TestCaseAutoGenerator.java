@@ -1,22 +1,24 @@
 package org.zed.tcg;
 
-import com.github.javaparser.JavaParser;
-import com.github.javaparser.ast.CompilationUnit;
 import com.github.javaparser.ast.body.MethodDeclaration;
 import com.github.javaparser.ast.body.Parameter;
 import com.github.javaparser.ast.type.Type;
 import org.mvel2.MVEL;
+import org.zed.Result;
+import org.zed.SpecUnit;
 
+import java.io.IOException;
 import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 
 import static org.zed.log.LogManager.file2String;
+import static org.zed.solver.Z3Solver.callZ3Solver2GenerateTestcase;
 import static org.zed.trans.ExecutionPathPrinter.addPrintStmt;
 
 public class TestCaseAutoGenerator {
 
     //为函数生成符合 T 要求的参数赋值，Map<key,value>，key为参数名，value就是具体赋值
-    public static HashMap<String,String> generateParamsDefUnderExpr(String expr, MethodDeclaration md){
+    public static HashMap<String,String> generateTestCaseRandomlyUnderExpr(String expr, MethodDeclaration md){
         HashMap<String,String> testCase = new HashMap<>();
         Object[] values;
         List<Parameter> params = md.getParameters();
@@ -36,6 +38,35 @@ public class TestCaseAutoGenerator {
             testCase.put(params.get(i).getNameAsString(),Objects.toString(values[i]));
         }
         return testCase;
+    }
+    //通过调用z3求解器来直接生成可用的输入
+    public static HashMap<String,String> generateTestCaseByZ3(String constrainExpr, String program){
+        HashMap<String, String> map = new HashMap<>();
+        SpecUnit gu = new SpecUnit(program,constrainExpr,"true",new ArrayList<>());
+        Result r;
+        try {
+            r = callZ3Solver2GenerateTestcase(gu);
+        } catch (IOException e) {
+            System.err.println("生成测试用例时出现未知异常");
+            map.put("ERROR","UNKNOWN ERROR");
+            return map;
+        }
+        if(r.getStatus() == 1){
+            System.err.println(constrainExpr + "约束条件下没有可行的测试用例!");
+            map.put("ERROR","NO USABLE TESTCASE");
+        }
+        else if(r.getStatus() == 0){
+            String varValues = r.getCounterExample();
+            varValues = varValues.substring(varValues.indexOf("[")+1,varValues.lastIndexOf("]"));
+            String[] valueList = varValues.trim().split(",");
+            for(String value : valueList){
+                String[] t = value.split("=");
+                String varName = t[0].trim();
+                String varValue = t[1].trim();
+                map.put(varName,varValue);
+            }
+        }
+        return map;
     }
 
     public static Object[] generateAcceptableValue(String T,
@@ -213,7 +244,7 @@ public class TestCaseAutoGenerator {
             case 4 -> (char) ThreadLocalRandom.current().nextInt('z' + 1, '~');
             case 5 -> (char) ThreadLocalRandom.current().nextInt('9' + 1, 'A' - 1);
             case 6 -> (char) ThreadLocalRandom.current().nextInt('!', '0' - 1);
-            case 7 -> (char) '/';
+            case 7 ->  '/';
             default -> throw new IllegalStateException();
         };
         if(c == '\\'){
@@ -271,6 +302,7 @@ public class TestCaseAutoGenerator {
             System.out.println("param: " + parameters[i].getName() + " , " +"value: " + String.valueOf(values[i]));
         }
     }
+
 
 
     public static void main(String[] args) {
