@@ -42,9 +42,11 @@ public class TestCaseAutoGenerator {
     //通过调用z3求解器来直接生成可用的输入
     public static HashMap<String,String> generateTestCaseByZ3(String constrainExpr, String ssmp){
         HashMap<String, String> map = new HashMap<>();
+        HashMap<String, String> paramTypeMap = new HashMap<>();
         Result r;
         MethodDeclaration md = ExecutionEnabler.getFirstStaticMethod(ssmp);
         List<Parameter> parameters = md.getParameters();
+
         for (Parameter p : parameters) {
             if(p.getType().toString().equals("int")){
                 constrainExpr = constrainExpr + " && " + "( " +p.getName() + " < " + Integer.MAX_VALUE + " )" +
@@ -55,6 +57,7 @@ public class TestCaseAutoGenerator {
                 constrainExpr = constrainExpr + " && " + "( " +p.getName() + " <= " + "126" + " )" +
                         " && " + "( " +p.getName() + " >= " + "32" + " )";
             }
+            paramTypeMap.put(p.getNameAsString(),p.getTypeAsString());
         }
         try {
             SpecUnit gu = new SpecUnit(ssmp,constrainExpr,"true",new ArrayList<>());
@@ -85,6 +88,10 @@ public class TestCaseAutoGenerator {
                 if(varValue.equals("False")){
                     varValue = "false";
                 }
+                if(paramTypeMap.containsKey(varName) && paramTypeMap.get(varName).equals("char")){
+                    varValue = String.valueOf((char) Integer.parseInt(varValue));
+                }
+                System.out.println("varName:" + varName + "\t"+ "varValue:" + varValue);
                 map.put(varName,varValue);
             }
         }

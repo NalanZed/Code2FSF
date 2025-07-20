@@ -191,7 +191,7 @@ def java_expr_to_z3(expr_str, var_types: dict):
         elif vtype == 'int':
             z3_vars[name] = z3.Int(name)
         elif vtype == 'char':
-            z3_vars[name] = z3.BitVec(name, 16)
+            z3_vars[name] = z3.Int(name)
         elif vtype == 'double':
             z3_vars[name] = z3.Real(name)
         else:
@@ -222,6 +222,8 @@ def java_expr_to_z3(expr_str, var_types: dict):
             elif isinstance(node.value, float):
                 return z3.RealVal(node.value)
             elif isinstance(node.value, str):
+                if len(node.value) == 1:#字符常量
+                    return z3.IntVal(ord(node.value))
                 return node.value
             else:
                 raise ValueError(f"不支持的常量类型: {node.value}")
