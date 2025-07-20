@@ -82,7 +82,7 @@ public class AppTest
 
     public void testApp4() throws Exception {
         String resourceDir = "resources/dataset/someBench/";
-//        String resourceDir ="resources/dataset/AllCode2PartLM";
+//        String resourceDir ="resources/dataset/AllCode2PartRSWX";
 //        String resourceDir ="resources/dataset/tmp";
         ModelConfig modelConfig = new ModelConfig();
 //        ModelConfig modelConfig = CreateChatGptModel();
@@ -95,5 +95,9 @@ public class AppTest
         ModelConfig modelConfig = new ModelConfig();
         String SSMPDir = pickSSMPCodes(resourceDir);
         runConversationForDir(1, modelConfig, SSMPDir);
+    }
+
+    public void testMod(){
+            int a = 10 % 0;
     }
 }

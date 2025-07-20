@@ -59,7 +59,6 @@ public class ExecutionEnabler {
         }else{
             return generateMainMdByZ3(conExpr, ssmp);
         }
-
     }
 
     public static String buildMainString(String ssmp,HashMap<String,String> testCaseMap){
@@ -83,6 +82,11 @@ public class ExecutionEnabler {
             for (Parameter parameter : parameters) {
                 System.out.println(parameter.getName().toString());
                 String value = testCaseMap.get(parameter.getName().asString());
+
+                //可能是因为表达式与某个变量无关导致未赋值
+                if(value == null){
+                    value = getDefaultValueOfType(parameter.getTypeAsString());
+                }
                 if("char".equals(parameter.getTypeAsString())){
                     value = "'"+value+"'";
                 }
@@ -109,6 +113,21 @@ public class ExecutionEnabler {
         return builder.toString();
     }
 
+    private static String getDefaultValueOfType(String type) {
+        if(type.equals("int")){
+            return "1";
+        }else if(type.equals("char")){
+            return "a";
+        }else if(type.equals("boolean")){
+            return "false";
+        }else if(type.equals("float") || type.equals("double")){
+            return "1.0";
+        }else{
+            System.err.println("未知类型" + type + ", 无法设置默认值");
+            return "null";
+        }
+    }
+
     public static String generateMainMdRandomly(String expr, String ssmp) {
         MethodDeclaration md = getFirstStaticMethod(ssmp);
         HashMap<String, String> testCaseMap = generateTestCaseRandomlyUnderExpr(expr, md);
@@ -124,7 +143,7 @@ public class ExecutionEnabler {
         HashMap<String, String> testCaseMap = TestCaseAutoGenerator.generateTestCaseByZ3(expr,ssmp);
         if(testCaseMap.get("ERROR") != null){
             System.out.println(testCaseMap.get("ERROR") + "生成main函数失败,因为没有生成正确的testCaseMap");
-            return null;
+            return testCaseMap.get("ERROR");
         }
         return buildMainString(ssmp,testCaseMap);
     }
@@ -163,18 +182,18 @@ public class ExecutionEnabler {
         return parameters;
     }
 
-    public static void main(String[] args) {
-        String filePath = "resources/dataset/someBench/LeapYear_Original.java";
-        String logPath = "resources/log/deepseek-chat/AllCode2PartLM/log-LeapYear_Original.txt";
-        List<String[]> lastestFSFFromLog = LogManager.getLastestFSFFromLog(logPath);
-        for(String[] td : lastestFSFFromLog){
-            String t = td[0];
-            String program = LogManager.file2String(filePath);
-            String ssmp = TransWorker.trans2SSMP(program);
-            String s = generateMainMdByZ3(t, ssmp);
-            System.out.println(s);
-        }
-
-    }
+//    public static void main(String[] args) {
+//        String filePath = "resources/dataset/someBench/LeapYear_Original.java";
+//        String logPath = "resources/log/deepseek-chat/AllCode2PartLM/log-LeapYear_Original.txt";
+//        List<String[]> lastestFSFFromLog = LogManager.getLastestFSFFromLog(logPath);
+//        for(String[] td : lastestFSFFromLog){
+//            String t = td[0];
+//            String program = LogManager.file2String(filePath);
+//            String ssmp = TransWorker.trans2SSMP(program);
+//            String s = generateMainMdByZ3(t, ssmp);
+//            System.out.println(s);
+//        }
+//
+//    }
 
 }

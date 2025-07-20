@@ -4,6 +4,8 @@ import json
 import argparse
 import time
 from typing import List, Any
+
+import z3
 from z3 import *
 import ast
 
@@ -213,7 +215,13 @@ def java_expr_to_z3(expr_str, var_types: dict):
                 raise ValueError(f"未知变量: {node.id}")
 
         def visit_Constant(self, node):
-            if isinstance(node.value, (int, bool, str, float)):
+            if isinstance(node.value, bool):
+                return node.value
+            elif isinstance(node.value, int):
+                return z3.IntVal(node.value)
+            elif isinstance(node.value, float):
+                return z3.RealVal(node.value)
+            elif isinstance(node.value, str):
                 return node.value
             else:
                 raise ValueError(f"不支持的常量类型: {node.value}")
@@ -239,7 +247,10 @@ def java_expr_to_z3(expr_str, var_types: dict):
             left = self.visit(node.left)
             right = self.visit(node.comparators[0])
             op = node.ops[0]
-
+            # # 类型提升：如果有一个是 Real，另一个是 BitVec，则将 BitVec 转为 Real
+            # if z3.is_real(left) or z3.is_real(right):
+            #     right = z3.ToReal()
+            #     left = z3.ToReal(left)
             if isinstance(op, ast.Eq):
                 return left == right
             elif isinstance(op, ast.NotEq):
@@ -270,8 +281,20 @@ def java_expr_to_z3(expr_str, var_types: dict):
                 return left / right
             elif isinstance(op, ast.Mod):
                 return left % right
-            # elif isinstance(op, ast.BitAnd):
-            #     return left & right
+            elif isinstance(op, ast.BitAnd):
+                # 确保操作数都是位向量
+                if not (isinstance(left, z3.BitVecRef) and isinstance(right, z3.BitVecRef)):
+                    left = z3.Int2BV(left,32) if is_int(left) else left
+                    right = z3.Int2BV(right,32) if is_int(right) else right
+                return left & right
+            elif isinstance(op, ast.BitOr):
+                if not (isinstance(left, z3.BitVecRef) and isinstance(right, z3.BitVecRef)):
+                    raise TypeError("按位或运算的操作数必须是位向量")
+                return left | right
+            elif isinstance(op, ast.BitXor):
+                if not (isinstance(left, z3.BitVecRef) and isinstance(right, z3.BitVecRef)):
+                    raise TypeError("按位异或运算的操作数必须是位向量")
+                return left ^ right
             else:
                 raise ValueError(f"不支持的算术操作: {type(op)}")
     try:
@@ -446,6 +469,8 @@ def update_D_with_execution_path(D: str, execution_path: List[str]) -> str:
     # split_d = D.split("&&")
     # update_d = []
     print(f"original D : {D}")
+    if("return_value" in D):
+        D = replace_variables(D,"return_value","(return_value)")
     D = D.replace("(char)", "").replace("(long)","").replace("(int)","").replace("(double)","")
     print(f"now D is {D}")
     newd = D

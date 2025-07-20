@@ -9,12 +9,15 @@ import org.zed.trans.ExecutionPathPrinter;
 import org.zed.trans.TransWorker;
 
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.*;
 
 import static org.zed.solver.Z3Solver.callZ3Solver;
 import static org.zed.tcg.ExecutionEnabler.generateMainMdUnderExpr;
 import static org.zed.tcg.ExecutionEnabler.insertMainMdInSSMP;
 import static org.zed.trans.ExecutionPathPrinter.addPrintStmt;
+import static org.zed.trans.ExecutionPathPrinter.stmtHasLoopStmt;
 
 public class FSFGenerator {
 
@@ -147,11 +150,14 @@ public class FSFGenerator {
 
             String mainMd = generateMainMdUnderExpr(T,prePathConstrains,ssmp);
             historyTestcases.add(mainMd);
-            if(mainMd == null){
+            if(mainMd == null || mainMd.isEmpty() || mainMd.startsWith("ERROR")){
                 System.err.println("参数生成失败！");
-                return "ERROR: 参数生成失败";
+                return "ERROR: " + T  + "约束下参数生成失败";
             }
             r = validate1Path(ssmp,mainMd,prePathConstrains,T,D);
+            if(r == null){
+                return "ERROR: 未知原因";
+            }
             if(r.getStatus() == 0){
                 prePathConstrains.add(r.getPathConstrain());
                 countOfPathValidated++;
@@ -306,7 +312,7 @@ public class FSFGenerator {
 
     private static boolean validateExceptionPath(String ssmp, String t) {
         String mainMd = generateMainMdUnderExpr(t,null,ssmp);
-        if(mainMd == null){
+        if(mainMd == null || mainMd.isEmpty() || mainMd.startsWith("ERROR")){
             System.out.println("输入约束条件[" + t + "]下生成测试用例失败, 默认为异常路径");
             return true;
         }
@@ -355,14 +361,14 @@ public class FSFGenerator {
             System.out.println("Processing file: " + filePath + " (" + (++taskCount) + "/" + totalTaskNum + ")");
             String canNotHandleFilePath = LogManager.codePath2FailedPath(filePath);
             String handledFilePath = LogManager.codePath2SuccPath(filePath);
-//            if(Files.exists(Path.of(canNotHandleFilePath))){
-//                System.out.println("文件已存在于failedDataset目录中，跳过");
-//                continue;
-//            }
-//            if(Files.exists(Path.of(handledFilePath))){
-//                System.out.println("文件已存在于succDataset目录中，跳过");
-//                continue;
-//            }
+            if(Files.exists(Path.of(canNotHandleFilePath))){
+                System.out.println("文件已存在于failedDataset目录中，跳过");
+                continue;
+            }
+            if(Files.exists(Path.of(handledFilePath))){
+                System.out.println("文件已存在于succDataset目录中，跳过");
+                continue;
+            }
             try{
                 boolean succ = runConversations(maxRounds, mc, filePath);
                 if(succ) {
@@ -521,8 +527,8 @@ public class FSFGenerator {
         for(Parameter p : paramList){
             params.add(p.getNameAsString());
         }
-        params.add("return_value");
-        params.add("Exception");
+//        params.add("return_value");
+//        params.add("Exception");
         //遍历FSF中的变量
         Set<String> varsInFSF = new HashSet<>();
         for(String[] td : FSF){

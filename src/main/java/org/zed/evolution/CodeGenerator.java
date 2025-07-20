@@ -103,6 +103,9 @@ public class CodeGenerator {
                     System.err.println(currentTD + "\n" + "========>验证过程出现严重错误，跳过本次任务");
                     return false;
                 }
+                if(validationTDResult.startsWith("Exception")){
+                    //TODO
+                }
                 regenerateFlag = true;
                 ModelMessage msg = new ModelMessage("user", validationTDResult);
                 prompt.addMessage(msg);

@@ -34,6 +34,7 @@ public class ExecutionPathPrinter {
         return c7;
     }
 
+
     public static String removeAllComments(String code){
         CompilationUnit cu = StaticJavaParser.parse(code);
         cu.getAllContainedComments().forEach(Comment::remove);
@@ -205,7 +206,12 @@ public class ExecutionPathPrinter {
                         //要把强制类型转换去掉,避免在validation环节将类型转换误认为一个变量
                         String valueStr = value.toString().replace("(char)","").replace("(long)","")
                                 .replace("(int)","").replace("(double)","").replace("(float)","");
-                        valueStr = "(" + valueStr + ")";
+                        if(valueStr.startsWith("-")){
+                            valueStr = valueStr.substring(1);
+                            valueStr = "-" + "(" + valueStr + ")";
+                        }else{
+                            valueStr = "(" + valueStr + ")";
+                        }
                         EnclosedExpr enclosedExpr = new EnclosedExpr(new NameExpr(varName)); //避免 varName含有&&、||、%等操作符，导致拼接字符串时报错
                         // 生成打印语句（格式：System.out.println("变量名: " + 变量名 + ", 当前值: " + 值);）
                         Statement printStmt = new ExpressionStmt(new MethodCallExpr(
@@ -768,12 +774,12 @@ public class ExecutionPathPrinter {
 
     public static void main(String[] args) throws Exception {
         String dir = "resources/dataset/someBench/";
-        String testFileName = "AddLoop_Original";
+        String testFileName = "Return100_Mutant5";
         String testFileNameJava = testFileName+".java";
         String testFilePath = dir + "/" + testFileNameJava;
         String ssmp = TransWorker.trans2SSMP(LogManager.file2String(testFilePath));
-        System.out.println(ssmpHasLoopStmt(ssmp));
-
+//        System.out.println(ssmpHasLoopStmt(ssmp));
+        System.out.println(addPrintStmtForAssignStmt(ssmp));
 //        String pureCode = TransFileOperator.file2String(testFilePath);
 //        String targetCode = addPrintStmt(pureCode);
 //        String T = "!(a+b < f && e) > b && c < (d ? g : u) && a == return_value";

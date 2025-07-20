@@ -40,11 +40,24 @@ public class TestCaseAutoGenerator {
         return testCase;
     }
     //通过调用z3求解器来直接生成可用的输入
-    public static HashMap<String,String> generateTestCaseByZ3(String constrainExpr, String program){
+    public static HashMap<String,String> generateTestCaseByZ3(String constrainExpr, String ssmp){
         HashMap<String, String> map = new HashMap<>();
-        SpecUnit gu = new SpecUnit(program,constrainExpr,"true",new ArrayList<>());
         Result r;
+        MethodDeclaration md = ExecutionEnabler.getFirstStaticMethod(ssmp);
+        List<Parameter> parameters = md.getParameters();
+        for (Parameter p : parameters) {
+            if(p.getType().toString().equals("int")){
+                constrainExpr = constrainExpr + " && " + "( " +p.getName() + " < " + Integer.MAX_VALUE + " )" +
+                        " && " + "( " +p.getName() + " > " + Integer.MIN_VALUE + " )";
+            }
+            //可显示字符的范围
+            if(p.getType().toString().equals("char")){
+                constrainExpr = constrainExpr + " && " + "( " +p.getName() + " <= " + "126" + " )" +
+                        " && " + "( " +p.getName() + " >= " + "32" + " )";
+            }
+        }
         try {
+            SpecUnit gu = new SpecUnit(ssmp,constrainExpr,"true",new ArrayList<>());
             r = callZ3Solver2GenerateTestcase(gu);
         } catch (IOException e) {
             System.err.println("生成测试用例时出现未知异常");
@@ -53,16 +66,25 @@ public class TestCaseAutoGenerator {
         }
         if(r.getStatus() == 1){
             System.err.println(constrainExpr + "约束条件下没有可行的测试用例!");
-            map.put("ERROR","NO USABLE TESTCASE");
+            map.put("ERROR",constrainExpr + "约束条件下没有可行的测试用例!");
         }
         else if(r.getStatus() == 0){
             String varValues = r.getCounterExample();
             varValues = varValues.substring(varValues.indexOf("[")+1,varValues.lastIndexOf("]"));
             String[] valueList = varValues.trim().split(",");
             for(String value : valueList){
+                if(value.contains("div0") || varValues.contains("mod0")){
+                   continue;
+                }
                 String[] t = value.split("=");
                 String varName = t[0].trim();
                 String varValue = t[1].trim();
+                if(varValue.equals("True")){
+                    varValue = "true";
+                }
+                if(varValue.equals("False")){
+                    varValue = "false";
+                }
                 map.put(varName,varValue);
             }
         }
