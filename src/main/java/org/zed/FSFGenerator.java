@@ -18,6 +18,7 @@ import static org.zed.tcg.ExecutionEnabler.generateMainMdUnderExpr;
 import static org.zed.tcg.ExecutionEnabler.insertMainMdInSSMP;
 import static org.zed.trans.ExecutionPathPrinter.addPrintStmt;
 import static org.zed.trans.ExecutionPathPrinter.stmtHasLoopStmt;
+import static org.zed.trans.TransWorker.pickSSMPCodes;
 
 public class FSFGenerator {
 
@@ -357,16 +358,20 @@ public class FSFGenerator {
         int taskCount = 0;
         String[] filePaths = LogManager.fetchSuffixFilePathInDir(inputDir,".java");
         int totalTaskNum = filePaths.length;
+        int countSucc = 0, countFail = 0,countTotal = 0;
         for (String filePath : filePaths) {
             System.out.println("Processing file: " + filePath + " (" + (++taskCount) + "/" + totalTaskNum + ")");
             String canNotHandleFilePath = LogManager.codePath2FailedPath(filePath);
             String handledFilePath = LogManager.codePath2SuccPath(filePath);
+            countTotal++;
             if(Files.exists(Path.of(canNotHandleFilePath))){
                 System.out.println("文件已存在于failedDataset目录中，跳过");
+                countFail++;
                 continue;
             }
             if(Files.exists(Path.of(handledFilePath))){
                 System.out.println("文件已存在于succDataset目录中，跳过");
+                countSucc++;
                 continue;
             }
             try{
@@ -374,16 +379,19 @@ public class FSFGenerator {
                 if(succ) {
                     System.out.println("将成功的代码保存到 SuccDataset 目录下");
                     LogManager.copyFileToSuccDataset(filePath);
+                    countSucc++;
                 } else {
                     System.err.println("将失败的代码保存到 FailedDataset 目录下");
                     LogManager.copyFileToFailedDataset(filePath);
+                    countFail++;
                 }
-            }catch (IOException e){
+            }catch (Exception e){
                 System.err.println("Error during runConversations for file: " + filePath);
-                System.err.println("将失败的代码保存到 resources/failedDataset 目录下");
+                System.err.println("将失败的代码保存到 resources/exceptionDataset 目录下");
                 LogManager.copyFileToFailedDataset(filePath);
             }
         }
+        System.out.println("共处理程序 " + countTotal + " 个， " + "成功 " + countSucc + " 个 , " + "失败 " + countFail + "个");
     }
 
     public static boolean FSFReview(ModelConfig mc,String inputFilePath) throws IOException {
@@ -563,23 +571,29 @@ public class FSFGenerator {
         String inputFilePath = argsMap.get("input");
         String inputDir = argsMap.get("inputDir");
         String model = argsMap.get("model");
-        String testMode = argsMap.get("testMode");
 
-        //执行测试程序
-        if(testMode != null && testMode.equals("2")){
-//            testMain2();
-        }
+        boolean initLogSucc = LogManager.initLogWorkDirs();
+        if(!initLogSucc) return;
+
         ModelConfig mc = initModel(model);
         //先清理一下旧日志
         LogManager.cleanLogOfModel(model);
+
 
         if(inputDir == null || inputDir.isEmpty()){
             runConversations(maxRounds, mc, inputFilePath);
         }
         else{
-            inputDir = TransWorker.pickSSMPCodes(inputDir);
+            inputDir = pickSSMPCodes(inputDir);
             runConversationForDir(maxRounds, mc, inputDir);
         }
+    }
+
+    public void testApp4() throws Exception {
+        String resourceDir ="resources/dataset/AllCodes0721";
+        ModelConfig modelConfig = new ModelConfig();
+        String SSMPDir = pickSSMPCodes(resourceDir);
+        runConversationForDir(1, modelConfig, SSMPDir);
     }
 
 }

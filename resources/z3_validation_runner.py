@@ -173,6 +173,13 @@ def replace_char_literals(expr):
     # 替换 Java 表达式中的字符字面量，如 'a' -> 97
     return re.sub(r"'(.)'", lambda m: str(ord(m.group(1))), expr)
 
+def to_z3_val(val):
+    if isinstance(val, int):
+        return z3.IntVal(val)
+    if isinstance(val, float):
+        return z3.RealVal(val)
+    return val
+
 def java_expr_to_z3(expr_str, var_types: dict):
     """
     :param expr_str: Java格式逻辑表达式，如 "(b1 == true && x > 5)"
@@ -183,15 +190,16 @@ def java_expr_to_z3(expr_str, var_types: dict):
     expr_str = expr_str.lstrip()  # 进一步去除前导空白
     expr_str = " ".join(expr_str.splitlines())  # 合并为单行，去除多余缩进
     print(f"Java表达式: {repr(expr_str)}")  # 用repr��便调试不可见字符
+    expr_str = remove_type_transfer_stmt_in_expr(expr_str)
     # 构建 Z3 变量
     z3_vars = {}
     for name, vtype in var_types.items():
         if vtype == 'boolean' or vtype == 'bool':
             z3_vars[name] = z3.Bool(name)
         elif vtype == 'int':
-            z3_vars[name] = z3.Int(name)
+            z3_vars[name] = z3.BitVec(name,32)
         elif vtype == 'char':
-            z3_vars[name] = z3.Int(name)
+            z3_vars[name] = z3.BitVec(name,32)
         elif vtype == 'double':
             z3_vars[name] = z3.Real(name)
         else:
@@ -218,12 +226,12 @@ def java_expr_to_z3(expr_str, var_types: dict):
             if isinstance(node.value, bool):
                 return node.value
             elif isinstance(node.value, int):
-                return z3.IntVal(node.value)
+                return z3.BitVecVal(node.value,32)
             elif isinstance(node.value, float):
                 return z3.RealVal(node.value)
             elif isinstance(node.value, str):
                 if len(node.value) == 1:#字符常量
-                    return z3.IntVal(ord(node.value))
+                    return z3.BitVecVal(ord(node.value),16)
                 return node.value
             else:
                 raise ValueError(f"不支持的常量类型: {node.value}")
@@ -249,10 +257,21 @@ def java_expr_to_z3(expr_str, var_types: dict):
             left = self.visit(node.left)
             right = self.visit(node.comparators[0])
             op = node.ops[0]
-            # # 类型提升：如果有一个是 Real，另一个是 BitVec，则将 BitVec 转为 Real
-            # if z3.is_real(left) or z3.is_real(right):
-            #     right = z3.ToReal()
-            #     left = z3.ToReal(left)
+
+
+            left = to_z3_val(left)
+            right = to_z3_val(right)
+            #
+            # Int/Real 混用时提升为 Real
+            if (z3.is_int_value(left) and z3.is_real(right)) or (z3.is_real(left) and z3.is_int_value(right)):
+                left = z3.ToReal(left)
+                right = z3.ToReal(right)
+
+            # BitVec 和 Int 混用时全部转 Int
+            if isinstance(left, z3.BitVecRef) and isinstance(right, z3.IntNumRef):
+                left = z3.BV2Int(left, is_signed=False)
+            if isinstance(right, z3.BitVecRef) and isinstance(left, z3.IntNumRef):
+                right = z3.BV2Int(right, is_signed=False)
             if isinstance(op, ast.Eq):
                 return left == right
             elif isinstance(op, ast.NotEq):
@@ -582,7 +601,9 @@ def z3_generate_testcase(spec_unit_json:str):
         r = Result(0,var_values,"")
     print(f"{TESTCASE_GENERATION_RESULT}: {r.to_json()}")
 
-
+def test_z3_generate_testcase():
+    gu_json = " {\"program\":\"public class PowerOfTwo_Mutant1 {\\n\\n    public static boolean isPowerOfTwo(int n) {\\n        return n >= 0 && (n & (n - 1)) == 0;\\n    }\\n}\\n\",\"preconditions\":[],\"T\":\"n > 0 && (n & (n - 1)) == 0 && ( n < 2147483647 ) && ( n > -2147483648 )\",\"D\":\"true\",\"pre_constrains\":[]}"
+    z3_generate_testcase(gu_json)
 def main():
     #创建解析器
     parser = argparse.ArgumentParser()
@@ -647,6 +668,7 @@ if __name__ == "__main__":
     # test_main_3("{\"allTs\":[\"T1\",\"T2\"],\"vars\":{\"a\":\"int\",\"b\":\"String\"}}")
     # test_main()
     main()
+    # test_z3_generate_testcase()
     # test_main_4()
 
 

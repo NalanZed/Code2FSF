@@ -26,7 +26,37 @@ public class LogManager {
     private static final String TRANS_SOURCE_CODES_DIR = TRANS_WORK_DIR + "/"+ "sourceCodes";
     private static final String SUCC_DATASET_DIR = RESOURCE_DIR + "/" + "succDataset";
     private static final String FAILED_DATASET_DIR = RESOURCE_DIR + "/" + "failedDataset";
+    private static final String Exception_DATASET_DIR = RESOURCE_DIR + "/" + "exceptionDataset";
+    private static final String RUNNABLE_DIR = RESOURCE_DIR + "/" + "runnable";
 
+    private static List<String> needInitDirs = new ArrayList<>();
+
+    public static boolean initLogWorkDirs(){
+        needInitDirs.add(RESOURCE_DIR);
+        needInitDirs.add(LOG_DIR);
+        needInitDirs.add(CODE_GEN_LOG_DIR);
+        needInitDirs.add(FSF_REVIEW_LOG_DIR);
+        needInitDirs.add(TRANS_WORK_DIR);
+        needInitDirs.add(ADDED_PRINT_CODES_DIR);
+        needInitDirs.add(TRANS_SOURCE_CODES_DIR);
+        needInitDirs.add(SUCC_DATASET_DIR);
+        needInitDirs.add(FAILED_DATASET_DIR);
+        needInitDirs.add(Exception_DATASET_DIR);
+        needInitDirs.add(RUNNABLE_DIR);
+        for (String dir : needInitDirs){
+            if(new File(dir).exists()){
+                continue;
+            }
+            //创建该目录
+            try {
+                Files.createDirectories(Path.of(dir));
+            } catch (IOException e) {
+                System.out.println("创建工作目录 " + dir + " 时出现异常");
+                return false;
+            }
+        }
+        return true;
+    }
 
     public static void appendMessage(String codePath, ModelMessage msg, String model) throws IOException {
         String logFilePath = codePath2LogPath(codePath,model);
@@ -304,6 +334,12 @@ public class LogManager {
         String name = file.getName();
         String succFilePath = FAILED_DATASET_DIR + "/" + name;
         Files.copy(Path.of(filePath), Path.of(succFilePath), REPLACE_EXISTING);
+    }
+    public static void copyFileToExceptionDataset(String exceptionFile) throws IOException {
+        File file = new File(exceptionFile);
+        String name = file.getName();
+        String succFilePath = Exception_DATASET_DIR + "/" + name;
+        Files.copy(Path.of(exceptionFile), Path.of(succFilePath), REPLACE_EXISTING);
     }
 
     public static String codePath2SuccPath(String codePath) {

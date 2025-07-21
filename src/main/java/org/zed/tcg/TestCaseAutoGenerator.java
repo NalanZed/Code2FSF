@@ -8,6 +8,7 @@ import org.zed.Result;
 import org.zed.SpecUnit;
 
 import java.io.IOException;
+import java.math.BigInteger;
 import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -90,6 +91,17 @@ public class TestCaseAutoGenerator {
                 }
                 if(paramTypeMap.containsKey(varName) && paramTypeMap.get(varName).equals("char")){
                     varValue = String.valueOf((char) Integer.parseInt(varValue));
+                }
+                if(paramTypeMap.containsKey(varName) && paramTypeMap.get(varName).equals("int")){
+                    // 1. 解析为无符号 BigInteger
+                    BigInteger unsignedValue = new BigInteger(varValue);
+
+                    // 2. 转换为有符号 int（模拟 32 位截断）
+                    int signedValue = unsignedValue.intValue();
+
+                    // 3. 转为有符号字符串
+                    varValue = Integer.toString(signedValue);
+                    System.out.println("varValue 有符号值为：" + varValue);
                 }
                 System.out.println("varName:" + varName + "\t"+ "varValue:" + varValue);
                 map.put(varName,varValue);

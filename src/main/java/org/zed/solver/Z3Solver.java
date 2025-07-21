@@ -94,6 +94,7 @@ public class Z3Solver {
     public static Result callZ3Solver2GenerateTestcase(SpecUnit gu) throws IOException {
         Result res =null;
         String guJson = gu.toJson();
+        System.out.println("guJson: " + guJson);
         ProcessBuilder pb = new ProcessBuilder("python3", "resources/z3_validation_runner.py", "--gu",guJson);
         Process process = pb.start();
         BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));

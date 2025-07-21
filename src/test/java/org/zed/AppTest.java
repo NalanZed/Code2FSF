@@ -52,52 +52,49 @@ public class AppTest
             System.out.println("hello world");
         }
 
-    public void testApp2(){
-        String logDir = "resources/log/deepseek-chat";
-        String[] logFilePaths = LogManager.fetchSuffixFilePathInDir(logDir, ".txt");
-        for(String path : logFilePaths){
-            if(path.contains("summary")) continue;
-            String logName = path.substring(path.lastIndexOf("/"), path.indexOf(".txt"));
-            System.out.println("processing==>" + logName);
-            List<String[]> FSF = LogManager.getLastestFSFFromLog(path);
-            String code = LogManager.getProgramFromLog(path);
-            List<String> vars = fetchUnknownVarInFSF(FSF, code);
-            if(!vars.isEmpty()){
-                vars.stream().forEach(System.out::println);
-                System.err.println(path);
-            }
+//    public void testApp2(){
+//        String logDir = "resources/log/deepseek-chat";
+//        String[] logFilePaths = LogManager.fetchSuffixFilePathInDir(logDir, ".txt");
+//        for(String path : logFilePaths){
+//            if(path.contains("summary")) continue;
+//            String logName = path.substring(path.lastIndexOf("/"), path.indexOf(".txt"));
+//            System.out.println("processing==>" + logName);
+//            List<String[]> FSF = LogManager.getLastestFSFFromLog(path);
+//            String code = LogManager.getProgramFromLog(path);
+//            List<String> vars = fetchUnknownVarInFSF(FSF, code);
+//            if(!vars.isEmpty()){
+//                vars.stream().forEach(System.out::println);
+//                System.err.println(path);
+//            }
+//        }
+//    }
 
-        }
-    }
+//    public void testApp3(){
+//        String path = "resources/log/deepseek-chat/log-MySqrt_Mutant2.txt";
+//        List<String[]> FSF = LogManager.getLastestFSFFromLog(path);
+//        String code = LogManager.getProgramFromLog(path);
+//        List<String> vars = fetchUnknownVarInFSF(FSF, code);
+//        if(!vars.isEmpty()){
+//            System.err.println(path);
+//        }
+//    }
 
-    public void testApp3(){
-        String path = "resources/log/deepseek-chat/log-MySqrt_Mutant2.txt";
-        List<String[]> FSF = LogManager.getLastestFSFFromLog(path);
-        String code = LogManager.getProgramFromLog(path);
-        List<String> vars = fetchUnknownVarInFSF(FSF, code);
-        if(!vars.isEmpty()){
-            System.err.println(path);
-        }
-    }
+//    public void testApp4() throws Exception {
+//        String resourceDir ="resources/dataset/AllCodes0721";
+//        ModelConfig modelConfig = new ModelConfig();
+//        String SSMPDir = pickSSMPCodes(resourceDir);
+//        runConversationForDir(1, modelConfig, SSMPDir);
+//    }
 
-    public void testApp4() throws Exception {
-        String resourceDir = "resources/dataset/someBench/";
-//        String resourceDir ="resources/dataset/AllCode2PartRSWX";
-//        String resourceDir ="resources/dataset/tmp";
-        ModelConfig modelConfig = new ModelConfig();
-//        ModelConfig modelConfig = CreateChatGptModel();
-        String SSMPDir = pickSSMPCodes(resourceDir);
-        runConversationForDir(5, modelConfig, SSMPDir);
-    }
+//    public void testShot() throws Exception {
+//        String resourceDir = "resources/dataset/someBench/";
+//        ModelConfig modelConfig = new ModelConfig();
+//        String SSMPDir = pickSSMPCodes(resourceDir);
+//        runConversationForDir(1, modelConfig, SSMPDir);
+//    }
 
-    public void testShot() throws Exception {
-        String resourceDir = "resources/dataset/someBench/";
-        ModelConfig modelConfig = new ModelConfig();
-        String SSMPDir = pickSSMPCodes(resourceDir);
-        runConversationForDir(1, modelConfig, SSMPDir);
-    }
-
-    public void testMod(){
-            int a = 10 % 0;
-    }
+//    public void testMod(){
+//            int a = -10 % -11;
+//        System.out.println(a);
+//    }
 }
