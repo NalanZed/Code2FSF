@@ -8,9 +8,12 @@ import org.zed.tcg.ExecutionEnabler;
 import org.zed.trans.ExecutionPathPrinter;
 import org.zed.trans.TransWorker;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.*;
 
 import static org.zed.solver.Z3Solver.callZ3Solver;
@@ -587,6 +590,36 @@ public class FSFGenerator {
             inputDir = pickSSMPCodes(inputDir);
             runConversationForDir(maxRounds, mc, inputDir);
         }
+    }
+
+    public static void  countHasLoopNumAndElseNum(String programDir) throws IOException {
+        String[] filePaths = LogManager.fetchSuffixFilePathInDir(programDir, ".java");
+        Path loopDir = Paths.get("resources/dataset/hasLoop");
+        Path noLoopDor = Paths.get("resources/dataset/noLoop");
+        int countLoop = 0,noLoop = 0;
+        if(!Files.exists(loopDir)){
+            Files.createDirectories(loopDir);
+        }
+        if(!Files.exists(noLoopDor)){
+            Files.createDirectories(noLoopDor);
+        }
+        for(String path : filePaths){
+            Path sourceFile = Paths.get(path);
+            String code = LogManager.file2String(path);
+            String ssmp = TransWorker.trans2SSMP(code);
+            boolean hasLoop = ExecutionPathPrinter.ssmpHasLoopStmt(ssmp);
+            if(hasLoop){
+                Path targetFile = loopDir.resolve(sourceFile.getFileName());
+                Files.copy(sourceFile, targetFile, StandardCopyOption.REPLACE_EXISTING);
+                countLoop++;
+            }else{
+                Path targetFile = noLoopDor.resolve(sourceFile.getFileName());
+                Files.copy(sourceFile, targetFile, StandardCopyOption.REPLACE_EXISTING);
+                noLoop++;
+            }
+        }
+        System.out.println("countLoop:" + countLoop);
+        System.out.println("noLoop:" + noLoop);
     }
 
     public void testApp4() throws Exception {

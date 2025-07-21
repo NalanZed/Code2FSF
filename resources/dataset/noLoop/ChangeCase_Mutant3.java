@@ -1,6 +1,6 @@
 public class ChangeCase_Mutant3 {
 
-    public static char changeCase(char c) {
+    public char changeCase(char c) {
         char result = ' ';
         if (c > 'z') {
             result = c;

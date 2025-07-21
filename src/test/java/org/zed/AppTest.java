@@ -1,22 +1,13 @@
 package org.zed;
 
-import com.microsoft.z3.*;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 import org.zed.llm.ModelConfig;
-import org.zed.llm.ModelMessage;
-import org.zed.log.LogManager;
-import org.zed.trans.TransWorker;
 
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.StandardCopyOption;
-import java.util.ArrayList;
-import java.util.List;
+import java.io.IOException;
 
 import static org.zed.FSFGenerator.*;
-import static org.zed.llm.ModelConfig.CreateChatGptModel;
 import static org.zed.trans.TransWorker.pickSSMPCodes;
 
 
@@ -79,12 +70,17 @@ public class AppTest
 //        }
 //    }
 
-//    public void testApp4() throws Exception {
-//        String resourceDir ="resources/dataset/AllCodes0721";
-//        ModelConfig modelConfig = new ModelConfig();
-//        String SSMPDir = pickSSMPCodes(resourceDir);
-//        runConversationForDir(1, modelConfig, SSMPDir);
-//    }
+    public void testApp4() throws Exception {
+        String resourceDir ="resources/dataset/AllCodes0721";
+        ModelConfig modelConfig = new ModelConfig();
+        String SSMPDir = pickSSMPCodes(resourceDir);
+        runConversationForDir(1, modelConfig, SSMPDir);
+    }
+
+    public void testClassifyProgramOnHasLoopStmt() throws IOException {
+            String dir = "resources/dataset/AllCodes0721";
+            countHasLoopNumAndElseNum(dir);
+    }
 
 //    public void testShot() throws Exception {
 //        String resourceDir = "resources/dataset/someBench/";
