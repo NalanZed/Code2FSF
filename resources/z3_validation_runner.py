@@ -535,15 +535,28 @@ def read_java_code_from_file(file_path):
         java_code = file.read()
     return java_code
 
-def fsf_exclusivity_validate(fu_json: str):
+def fsf_validate(fu_json: str):
     fu = FSFValidationUnit.from_json(fu_json)
     print(fu)
     ts = fu.allTs
     ts_size = len(ts)
     and_ts = []
     or_connect_ts = ""
+    #验证每个T的可满足性，即T不可以无解
+    for t in ts:
+        z3_expr = java_expr_to_z3(t, fu.vars)
+        if isinstance(z3_expr, str) and z3_expr.startswith("ERROR"):
+            result = Result(-1, z3_expr, "")
+            print("FSF validation result:" + result.to_json())
+            return
+        r = solver_check_z3(z3_expr)
+        if r == "OK": #z3_expr无解
+            result = Result(-2, t, "")
+            print("FSF validation result:" + result.to_json())
+            return
 
-    #先验证完整性，即!（T1 || T2 || T3 || ...）无解
+
+    #验证完整性，即!（T1 || T2 || T3 || ...）无解
     for t in ts:
         or_connect_ts = f"{or_connect_ts}||({t})"
     or_connect_ts = or_connect_ts.strip().strip("||").strip()
@@ -622,7 +635,7 @@ def main():
     if spec_unit_json is not None:
         deal_with_spec_unit_json(spec_unit_json)
     if fsf_validation_unit_json is not None:
-        fsf_exclusivity_validate(fsf_validation_unit_json)
+        fsf_validate(fsf_validation_unit_json)
     if(generation_unit is not None):
         z3_generate_testcase(generation_unit)
 

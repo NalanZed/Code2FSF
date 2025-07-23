@@ -70,17 +70,17 @@ public class AppTest
 //        }
 //    }
 
-    public void testApp4() throws Exception {
-        String resourceDir ="resources/dataset/AllCodes0721";
-        ModelConfig modelConfig = new ModelConfig();
-        String SSMPDir = pickSSMPCodes(resourceDir);
-        runConversationForDir(1, modelConfig, SSMPDir);
-    }
-
-    public void testClassifyProgramOnHasLoopStmt() throws IOException {
-            String dir = "resources/dataset/AllCodes0721";
-            countHasLoopNumAndElseNum(dir);
-    }
+//    public void testApp4() throws Exception {
+//        String resourceDir ="resources/dataset/someBench/";
+//        ModelConfig modelConfig = new ModelConfig();
+//        String SSMPDir = pickSSMPCodes(resourceDir);
+//        runConversationForDir(5, modelConfig, SSMPDir);
+//    }
+//
+//    public void testClassifyProgramOnHasLoopStmt() throws IOException {
+//            String dir = "resources/dataset/AllCodes0721";
+//            countHasLoopNumAndElseNum(dir);
+//    }
 
 //    public void testShot() throws Exception {
 //        String resourceDir = "resources/dataset/someBench/";

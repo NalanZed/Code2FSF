@@ -42,3 +42,6 @@ resources/trans/*.java
 resources/runnable/*
 resources/log/*
 resources/trans/oneStaticMdCodes/*
+resources/succDataset/*
+resources/failedDataset/*
+resources/dataset/*

@@ -105,6 +105,10 @@ public class FSFGenerator {
             //FSF解析失败，都没到验证完备性和互斥性那一步
             return "检查到FSF中T不满足要求导致无法解析，请严格审视我最初的要求，并重新生成FSF";
         }
+        if(exclusivityAndCompltenessResult.getStatus() == -2){
+            //FSF解析失败，都没到验证完备性和互斥性那一步
+            return "FSF中 " + exclusivityAndCompltenessResult.getCounterExample() + "是一个无解表达式，请重新生成FSF，避免FSF中带有此类 T ";
+        }
         if(exclusivityAndCompltenessResult.getStatus() == 2){
             return "检查到FSF中T不满足互斥性,具体是 Ti && Tj :[" + exclusivityAndCompltenessResult.getCounterExample()+ "] 有解" +
                     exclusivityAndCompltenessResult.getPathConstrain() + "，请重新生成FSF，确保T之间的互斥性";
