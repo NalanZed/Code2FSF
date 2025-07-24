@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.zed.tcg.TestCaseAutoGenerator.generateTestCaseRandomlyUnderExpr;
+import static org.zed.tcg.TestCaseAutoGenerator.getDefaultValueOfType;
 
 public class ExecutionEnabler {
     public static final int Z3_GENERATION = 1;
@@ -113,20 +114,7 @@ public class ExecutionEnabler {
         return builder.toString();
     }
 
-    private static String getDefaultValueOfType(String type) {
-        if(type.equals("int")){
-            return "1";
-        }else if(type.equals("char")){
-            return "a";
-        }else if(type.equals("boolean")){
-            return "false";
-        }else if(type.equals("float") || type.equals("double")){
-            return "1.0";
-        }else{
-            System.err.println("未知类型" + type + ", 无法设置默认值");
-            return "null";
-        }
-    }
+
 
     public static String generateMainMdRandomly(String expr, String ssmp) {
         MethodDeclaration md = getFirstStaticMethod(ssmp);
@@ -143,7 +131,7 @@ public class ExecutionEnabler {
         HashMap<String, String> testCaseMap = TestCaseAutoGenerator.generateTestCaseByZ3(expr,ssmp);
         if(testCaseMap.get("ERROR") != null){
             System.out.println(testCaseMap.get("ERROR") + "生成main函数失败,因为没有生成正确的testCaseMap");
-            return testCaseMap.get("ERROR");
+            return "ERROR:" + testCaseMap.get("ERROR");
         }
         return buildMainString(ssmp,testCaseMap);
     }

@@ -10,7 +10,9 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 
@@ -422,6 +424,166 @@ public class LogManager {
         }
     }
 
+    public static Set<String> getClassNameOfCategory(String anyCategoryDir){
+        Set<String> calssNames = new HashSet<>();
+        java.io.File dir = new java.io.File(anyCategoryDir);
+        if (!dir.exists() || !dir.isDirectory()) {
+            System.err.println("目录不存在或不是一个目录: " + anyCategoryDir);
+            return calssNames;
+        }
+        java.io.File[] files = dir.listFiles((d, name) -> name.endsWith(".java"));
+        if (files != null) {
+            for (java.io.File file : files) {
+                String fileName = file.getName();
+                String className = fileName.substring(0, fileName.lastIndexOf("."));
+                calssNames.add(className);
+            }
+        } else {
+            System.err.println("目录中没有找到任何.java文件: " + anyCategoryDir);
+        }
+
+        return calssNames;
+    }
+
+    public static void classifyHandledCodeFiles(String targetDir){
+        String classifiedDir = "resources/dataset/程序归类_0722";
+        String branchDir = classifiedDir + "/Branched";
+        String singlePathLoopDir = classifiedDir + "/Single-path-Loop";
+        String multiPathLoopDir = classifiedDir + "/Multi-path-Loop";
+        String NestedLoopDir = classifiedDir + "/Nested-Loop";
+        String SequentialDir = classifiedDir + "/Sequential";
+
+        Set<String> branchedSet = getClassNameOfCategory(branchDir);
+        Set<String> singlePathLoopSet =getClassNameOfCategory(singlePathLoopDir);
+        Set<String> multiPathLoopSet = getClassNameOfCategory(multiPathLoopDir);
+        Set<String> nestedLoopSet = getClassNameOfCategory(NestedLoopDir);
+        Set<String> sequentialSet = getClassNameOfCategory(SequentialDir);
+
+        String newBranchedDir = targetDir + "/Branched";
+        String newSinglePathLoopDir = targetDir + "/Single-path-Loop";
+        String newMultiPathLoopDir = targetDir + "/Multi-path-Loop";
+        String newNestedLoopDir = targetDir + "/Nested-Loop";
+        String newSequentialDir = targetDir + "/Sequential";
+
+        //创建新的分类目录
+        try {
+            Files.createDirectories(Path.of(newBranchedDir));
+            Files.createDirectories(Path.of(newSinglePathLoopDir));
+            Files.createDirectories(Path.of(newMultiPathLoopDir));
+            Files.createDirectories(Path.of(newNestedLoopDir));
+            Files.createDirectories(Path.of(newSequentialDir));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        String[] strings = fetchSuffixFilePathInDir(targetDir, ".java");
+        for (String filePath : strings) {
+            String fileName = filePath.substring(filePath.lastIndexOf("/") + 1, filePath.lastIndexOf("."));
+            if(branchedSet.contains(fileName)){
+                System.out.println("Branched: " + fileName);
+                try {
+                    Files.copy(Path.of(filePath), Path.of(newBranchedDir + "/" + fileName + ".java"), REPLACE_EXISTING);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }else if(singlePathLoopSet.contains(fileName)){
+                System.out.println("Single-path Loop: " + fileName);
+                try {
+                    Files.copy(Path.of(filePath), Path.of(newSinglePathLoopDir + "/" + fileName + ".java"), REPLACE_EXISTING);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }else if(multiPathLoopSet.contains(fileName)){
+                System.out.println("Multi-path Loop: " + fileName);
+                try {
+                    Files.copy(Path.of(filePath), Path.of(newMultiPathLoopDir + "/" + fileName + ".java"), REPLACE_EXISTING);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }else if(nestedLoopSet.contains(fileName)){
+                System.out.println("Nested Loop: " + fileName);
+                try {
+                    Files.copy(Path.of(filePath), Path.of(newNestedLoopDir + "/" + fileName + ".java"), REPLACE_EXISTING);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }else if(sequentialSet.contains(fileName)){
+                System.out.println("Sequential: " + fileName);
+                try {
+                    Files.copy(Path.of(filePath), Path.of(newSequentialDir + "/" + fileName + ".java"), REPLACE_EXISTING);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }else{
+                System.out.println("Unknown category: " + fileName);
+            }
+        }
+    }
+
+    public static void moveClassifiedCode() throws IOException {
+        String sourceDir = "resources/dataset/4-shot";
+        String targetDir = "resources/dataset/4-shot-classified";
+        int brsucc = 0, brfailed = 0;
+        int musucc = 0, mufailed = 0;
+        int nlsucc = 0, nlfailed = 0;
+        int sesucc = 0, sefailed = 0;
+        int splsucc = 0, splfailed = 0;
+
+
+
+        String[] strings = fetchSuffixFilePathInDir(sourceDir, ".java");
+        for (String filePath : strings) {
+            String fileName = filePath.substring(filePath.lastIndexOf("/") + 1, filePath.lastIndexOf("."));
+            if(filePath.contains("Branched") && filePath.contains("succDataset")){
+                Files.copy(Path.of(filePath),Path.of(targetDir+ "/Branched/" + "succDataset/" + fileName + ".java"), REPLACE_EXISTING);
+                brsucc++;
+            }
+            else if(filePath.contains("Branched") && filePath.contains("failedDataset")){
+                Files.copy(Path.of(filePath),Path.of(targetDir+ "/Branched/" + "failedDataset/" + fileName + ".java"), REPLACE_EXISTING);
+                brfailed++;
+            }
+            else if(filePath.contains("Multi-path-Loop") && filePath.contains("succDataset")){
+                Files.copy(Path.of(filePath),Path.of(targetDir+ "/Multi-path-Loop/" + "succDataset/" + fileName + ".java"), REPLACE_EXISTING);
+                musucc++;
+            }
+            else if(filePath.contains("Multi-path-Loop") && filePath.contains("failedDataset")){
+                Files.copy(Path.of(filePath),Path.of(targetDir+ "/Multi-path-Loop/" + "failedDataset/" + fileName + ".java"), REPLACE_EXISTING);
+                mufailed++;
+            }
+            else if(filePath.contains("Nested-Loop") && filePath.contains("succDataset")){
+                Files.copy(Path.of(filePath),Path.of(targetDir+ "/Nested-Loop/" + "succDataset/" + fileName + ".java"), REPLACE_EXISTING);
+                nlsucc++;
+            }
+            else if(filePath.contains("Nested-Loop") && filePath.contains("failedDataset")){
+                Files.copy(Path.of(filePath),Path.of(targetDir+ "/Nested-Loop/" + "failedDataset/" + fileName + ".java"), REPLACE_EXISTING);
+                nlfailed++;
+            }
+            else if(filePath.contains("Sequential") && filePath.contains("succDataset")){
+                Files.copy(Path.of(filePath),Path.of(targetDir+ "/Sequential/" + "succDataset/" + fileName + ".java"), REPLACE_EXISTING);
+                sesucc++;
+            }
+            else if(filePath.contains("Sequential") && filePath.contains("failedDataset")){
+                Files.copy(Path.of(filePath),Path.of(targetDir+ "/Sequential/" + "failedDataset/" + fileName + ".java"), REPLACE_EXISTING);
+                sefailed++;
+            }
+            else if(filePath.contains("Single-path-Loop") && filePath.contains("succDataset")){
+                Files.copy(Path.of(filePath),Path.of(targetDir+ "/Single-path-Loop/" + "succDataset/" + fileName + ".java"), REPLACE_EXISTING);
+                splsucc++;
+            }
+            else if(filePath.contains("Single-path-Loop") && filePath.contains("failedDataset")){
+                Files.copy(Path.of(filePath),Path.of(targetDir+ "/Single-path-Loop/" + "failedDataset/" + fileName + ".java"), REPLACE_EXISTING);
+                splfailed++;
+            }
+        }
+
+        System.out.println("total = " + (brsucc + brfailed) + "\t\t" + "brsucc = " + brsucc + "\t\t" + "brfailed = " + brfailed + "\t\t" + "succRate = " + (brsucc * 100.0 / (brsucc + brfailed)) + "%");
+        System.out.println("total = " + (musucc + mufailed) + "\t\t" + "musucc = " + musucc + "\t\t" + "mufailed = " + mufailed + "\t\t" + "succRate = " + (musucc * 100.0 / (musucc + mufailed)) + "%");
+        System.out.println("total = " + (nlsucc + nlfailed) + "\t\t" + "nlsucc = " + nlsucc + "\t\t" + "nlfailed = " + nlfailed + "\t\t" + "succRate = " + (nlsucc * 100.0 / (nlsucc + nlfailed)) + "%");
+        System.out.println("total = " + (sesucc + sefailed) + "\t\t" + "sesucc = " + sesucc + "\t\t" + "sefailed = " + sefailed + "\t\t" + "succRate = " + (sesucc * 100.0 / (sesucc + sefailed)) + "%");
+        System.out.println("total = " + (splsucc + splfailed) + "\t\t" + "splsucc = " + splsucc + "\t\t" + "splfailed = " + splfailed + "\t\t" + "succRate = " + (splsucc * 100.0 / (splsucc + splfailed)) + "%");
+
+    }
+
     public static void printFSF(List<String[]> FSF){
         for (int i = 0; i < FSF.size(); i++) {
             String T = FSF.get(i)[0];
@@ -431,13 +593,10 @@ public class LogManager {
         }
     }
 
-//    public static void main(String[] args) {
-//        String content = getLastestAssistantMsgFromLog(LOG_DIR + "/" + "deepseek-chat/"+"log-Abs.txt");
-//        List<String[]> TDs = parseTD(content);
-//        for (String[] TD : TDs) {
-//            System.out.println("T: " + TD[0]);
-//            System.out.println("D: " + TD[1]);
-//        }
-//    }
+    public static void main(String[] args) throws IOException {
+//        classifyHandledCodeFiles("resources/dataset/4-shot/failedDataset");
+//        classifyHandledCodeFiles("resources/dataset/4-shot/succDataset");
+        moveClassifiedCode();
+    }
 
 }

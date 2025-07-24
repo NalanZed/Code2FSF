@@ -71,10 +71,10 @@ public class AppTest
 //    }
 
 //    public void testApp4() throws Exception {
-//        String resourceDir ="resources/dataset/someBench/";
+//        String resourceDir ="resources/dataset/程序归类_0722/Single-path Loop";
 //        ModelConfig modelConfig = new ModelConfig();
 //        String SSMPDir = pickSSMPCodes(resourceDir);
-//        runConversationForDir(5, modelConfig, SSMPDir);
+//        runConversationForDir(10, modelConfig, SSMPDir);
 //    }
 //
 //    public void testClassifyProgramOnHasLoopStmt() throws IOException {

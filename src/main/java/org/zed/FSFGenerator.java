@@ -142,7 +142,7 @@ public class FSFGenerator {
         String currentTD = "T: " + T + "\n" + "D: " + D;
         List<String> prePathConstrains = new ArrayList<>();
 
-        if("Exception".equals(D)){
+        if(D.contains("Exception")){
             System.out.println("D 为 Exception");
             if(validateExceptionPath(ssmp, T)){
                 finalResultsOfTDs.add(new Result(3,"Exception路径符合预期",""));

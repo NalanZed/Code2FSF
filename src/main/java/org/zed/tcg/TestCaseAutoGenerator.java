@@ -50,8 +50,8 @@ public class TestCaseAutoGenerator {
 
         for (Parameter p : parameters) {
             if(p.getType().toString().equals("int")){
-                constrainExpr = constrainExpr + " && " + "( " +p.getName() + " < " + Integer.MAX_VALUE + " )" +
-                        " && " + "( " +p.getName() + " > " + Integer.MIN_VALUE + " )";
+                constrainExpr = constrainExpr + " && " + "( " +p.getName() + " <= " + Integer.MAX_VALUE + " )" +
+                        " && " + "( " +p.getName() + " >= " + Integer.MIN_VALUE + " )";
             }
             //可显示字符的范围
             if(p.getType().toString().equals("char")){
@@ -75,41 +75,65 @@ public class TestCaseAutoGenerator {
         else if(r.getStatus() == 0){
             String varValues = r.getCounterExample();
             varValues = varValues.substring(varValues.indexOf("[")+1,varValues.lastIndexOf("]"));
-            String[] valueList = varValues.trim().split(",");
-            for(String value : valueList){
-                if(value.contains("div0") || varValues.contains("mod0")){
-                   continue;
-                }
-                String[] t = value.split("=");
-                String varName = t[0].trim();
-                String varValue = t[1].trim();
-                if(varValue.equals("True")){
-                    varValue = "true";
-                }
-                if(varValue.equals("False")){
-                    varValue = "false";
-                }
-                if(paramTypeMap.containsKey(varName) && paramTypeMap.get(varName).equals("char")){
-                    varValue = String.valueOf((char) Integer.parseInt(varValue));
-                }
-                if(paramTypeMap.containsKey(varName) && paramTypeMap.get(varName).equals("int")){
-                    // 1. 解析为无符号 BigInteger
-                    BigInteger unsignedValue = new BigInteger(varValue);
+            if(!varValues.isEmpty()){
+                String[] valueList = varValues.trim().split(",");
+                for(String value : valueList){
+                    if(value.contains("div0") || varValues.contains("mod0")){
+                       continue;
+                    }
+                    String[] t = value.split("=");
+                    String varName = t[0].trim();
+                    String varValue = t[1].trim();
+                    if(varValue.equals("True")){
+                        varValue = "true";
+                    }
+                    if(varValue.equals("False")){
+                        varValue = "false";
+                    }
+                    if(paramTypeMap.containsKey(varName) && paramTypeMap.get(varName).equals("char")){
+                        varValue = String.valueOf((char) Integer.parseInt(varValue));
+                    }
+                    if(paramTypeMap.containsKey(varName) && paramTypeMap.get(varName).equals("int")){
+                        // 1. 解析为无符号 BigInteger
+                        BigInteger unsignedValue = new BigInteger(varValue);
 
-                    // 2. 转换为有符号 int（模拟 32 位截断）
-                    int signedValue = unsignedValue.intValue();
+                        // 2. 转换为有符号 int（模拟 32 位截断）
+                        int signedValue = unsignedValue.intValue();
 
-                    // 3. 转为有符号字符串
-                    varValue = Integer.toString(signedValue);
-                    System.out.println("varValue 有符号值为：" + varValue);
+                        // 3. 转为有符号字符串
+                        varValue = Integer.toString(signedValue);
+                        System.out.println("varValue 有符号值为：" + varValue);
+                    }
+                    System.out.println("varName:" + varName + "\t"+ "varValue:" + varValue);
+                    map.put(varName,varValue);
                 }
-                System.out.println("varName:" + varName + "\t"+ "varValue:" + varValue);
-                map.put(varName,varValue);
             }
         }
+        for(Parameter p : md.getParameters()) {
+            String paramName = p.getNameAsString();
+            if(!map.containsKey(paramName)){
+                //如果没有生成对应的值，则使用默认值
+                String defaultValue = getDefaultValueOfType(p.getTypeAsString());
+                map.put(paramName,defaultValue);
+            }
+        }
+
         return map;
     }
-
+    public static String getDefaultValueOfType(String type) {
+        if(type.equals("int")){
+            return "1";
+        }else if(type.equals("char")){
+            return "a";
+        }else if(type.equals("boolean")){
+            return "false";
+        }else if(type.equals("float") || type.equals("double")){
+            return "1.0";
+        }else{
+            System.err.println("未知类型" + type + ", 无法设置默认值");
+            return "null";
+        }
+    }
     public static Object[] generateAcceptableValue(String T,
                                                    List<Parameter> parameters) {
         // 生成可接受的case
@@ -255,7 +279,7 @@ public class TestCaseAutoGenerator {
     }
 
     public static String randomIntGen(){
-        int n = ThreadLocalRandom.current().nextInt(-90,90);
+        int n = ThreadLocalRandom.current().nextInt(-30,30);
         return String.valueOf(n);
     }
     public static String randomFloatGen(){

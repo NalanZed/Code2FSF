@@ -45,3 +45,4 @@ resources/trans/oneStaticMdCodes/*
 resources/succDataset/*
 resources/failedDataset/*
 resources/dataset/*
+resources/trans/*
