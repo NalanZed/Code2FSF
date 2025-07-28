@@ -1,10 +1,15 @@
 start role system
-你作为program behavior analyst，为以下代码生成FSF表达式：
-1. Ti仅含输入变量，禁止使用函数（如Math.abs()；
-2. Di优先用输入/返回变量，否则用return_value；
-3. 异常情况Di标记为Exception；
-4. 禁止合并相同Di的Ti；
-5. 严格按格式输出，无需解释：
+As a program behavior analyst, generate the FSF (Functional Scenario Form) expression for the code according to the following requirements:
+1. The FSF expression should be in the form of Ti & Di (for i = 1..n), where Ti represents a constraint on the program's input, and under Ti, the program's output satisfies Di. All Ti & Di pairs together describe the overall semantics of the program.
+2. The Ti constraints must be mutually exclusive, i.e., Ti & Tj is unsatisfiable for any i ≠ j.
+3. The FSF must be complete, i.e., !(T1 || T2 || ... || Tn) is unsatisfiable.
+4. Ti must only contain input variables; the use of functions (e.g., Math.abs()) is strictly prohibited.
+5. Di should preferably use input and return variables; otherwise, use return_value.
+6. For exceptional cases, Di should be marked as Exception.
+7. When dealing with integer operations, you need to consider potential integer overflow issues.
+8. Do not perform int → long type conversion in FSF.
+9. Output must strictly follow the format below, with no additional explanation.
+
 ```
 T1:
 D1:
@@ -12,10 +17,40 @@ D1:
 Tn:
 Dn:
 ```
-6. T/D 中出现 (? :) 时，将其拆解为多个TD，消除（? :）运算符
+6. if T/D exists (? :) ，split it as some couples of TD，eliminating（? :）operator.
 *end* role system
 start role user
-为下面的代码生成FSF:
+please generate the FSF for the following code:
+```
+public class Abs {
+
+    public static int Abs(int num) {
+        if (num < 0) {
+            int ans = -num;
+            return ans;
+        } else {
+            int ans = num;
+            return ans;
+        }
+    }
+}
+
+```
+*end* role user
+start role assistant
+```
+T1: Integer.MIN_VALUE < num && num < 0
+D1: ans == -num
+
+T2: num >= 0
+D2: ans == num
+
+T3: num == Integer.MIN_VALUE
+D3: ans == num
+```
+*end* role assistant
+start role user
+please generate the FSF for the following code:
 ```
 class MySqrt {
 
@@ -73,7 +108,6 @@ public class AddLoop {
 }
 ```
 *end* role user
-
 start role assistant
 
 T1: y > 0
@@ -88,35 +122,7 @@ D3: sum == x + y
 *end* role assistant
 
 start role user
-为下面的代码生成FSF:
-```
-public class Abs {
-
-    public static int Abs(int num) {
-        if (num < 0) {
-            int ans = -num;
-            return ans;
-        } else {
-            int ans = num;
-            return ans;
-        }
-    }
-}
-
-```
-*end* role user
-start role assistant
-```
-T1: num < 0
-D1: ans == -num
-
-T2: num >= 0
-D2: ans == num
-```
-*end* role assistant
-
-start role user
-为下面的代码生成FSF:
+please generate the FSF for the following code:
 ```
 public class ChangeCase {
 
@@ -157,16 +163,25 @@ T5: c < 'A'
 D5: result == c
 ```
 *end* role assistant
-
 start role user
-为下面的代码生成FSF:
+Please generate an FSF for the program below:
 ```
-public class ReLU {
-    public static double computeReLU(double x) {
-        if(x >= 0) {
-            return x;
+public class AltitudeController_Mutant4 {
+    public static int altitudeController(int currentHeight,int targetHeight) {
+        int error = targetHeight - currentHeight;
+        int absError = 0;
+        absError = error < 0 ? -error : error;
+        int controlSignal = 0;
+        if (absError >= 30) { //Changed > to >=
+            controlSignal = error > 0 ? 5 : -5;
+        } else if (absError > 20) {
+            controlSignal = error > 0 ? 3 : -3;
+        } else if (absError > 10) {
+            controlSignal = error > 0 ? 2 : -2;
+        } else {
+            controlSignal = error;
         }
-        return 0.0;
+        return controlSignal;
     }
 }
 
@@ -174,10 +189,29 @@ public class ReLU {
 *end* role user
 start role assistant
 ```
-T1: x >= 0
-D1: return_value == x
+T1: targetHeight - currentHeight >= 30
+D1: controlSignal == 5
 
-T2: x < 0
-D2: return_value == 0.0
+T2: targetHeight - currentHeight <= -30 && targetHeight - currentHeight > Integer.MIN_VALUE
+D2: controlSignal == -5
+
+T3: targetHeight - currentHeight == Integer.MIN_VALUE
+D3: controlSignal == Integer.MIN_VALUE
+
+T4: targetHeight - currentHeight > 20 && targetHeight - currentHeight < 30
+D4: controlSignal == 3
+
+T5: targetHeight - currentHeight < -20 && targetHeight - currentHeight > -30
+D5: controlSignal == -3
+
+T6: targetHeight - currentHeight > 10 && targetHeight - currentHeight <= 20
+D6: controlSignal == 2
+
+T7: targetHeight - currentHeight < -10 && targetHeight - currentHeight >= -20
+D7: controlSignal == -2
+
+T8: targetHeight - currentHeight >= -10 && targetHeight - currentHeight <= 10
+D8: controlSignal == targetHeight - currentHeight
 ```
 *end* role assistant
+

@@ -30,15 +30,19 @@ public class ModelClient {
         // 转换为JSON
         ObjectMapper objectMapper = new ObjectMapper();
         String requestBody = objectMapper.writeValueAsString(prompt);
+//        System.out.println("requestBody = " +requestBody);
 
         RequestBody body = RequestBody.create(requestBody, MediaType.parse("application/json"));
-
         Request request = new Request.Builder()
                 .url(url)
                 .post(body)
                 .addHeader("Authorization", "Bearer " + API_KEY)
                 .addHeader("Content-Type", "application/json")
                 .build();
+//        System.out.println("Authorization Header: Bearer " + API_KEY);
+//        System.out.println("Request URL: " + url);
+//        System.out.println("Request Body: " + body.toString());
+
 
         try (Response response = client.newCall(request).execute()) {
             if (!response.isSuccessful()) {

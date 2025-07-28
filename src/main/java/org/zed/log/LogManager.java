@@ -266,6 +266,7 @@ public class LogManager {
             D2:
             这里先将其按行分割，再逐行记录到TD中，再加入到TDs中
          */
+        msgContent = msgContent.substring(msgContent.indexOf("```") + 3, msgContent.lastIndexOf("```")).trim();
         String[] specs = msgContent.split("\n");
         int i = 0;
         while (i < specs.length) {
@@ -289,13 +290,22 @@ public class LogManager {
     }
     public static String getLastestAssistantMsgFromLog(String logFilePath){
         String logString = file2String(logFilePath);
+        if(!logString.contains("start role assistant") || !logString.contains("*end* role assistant")){
+            return "";
+        }
         int lastIndexOfAssisStart = logString.lastIndexOf("start role assistant") + "start role assistant".length();
         int lastIndexOfAssisEnd = logString.lastIndexOf("*end* role assistant");
+        if(lastIndexOfAssisEnd <= lastIndexOfAssisStart){
+            return "";
+        }
         return logString.substring(lastIndexOfAssisStart + 1, lastIndexOfAssisEnd);
     }
 
     public static List<String[]> getLastestFSFFromLog(String logFilePath){
         String content = getLastestAssistantMsgFromLog(logFilePath);
+        if(content.isEmpty()){
+            return new ArrayList<>();
+        }
         return parseTD(content);
     }
     public static File[] fetchAllJavaFilesInDir(String dir) throws IOException {

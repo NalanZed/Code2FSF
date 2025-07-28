@@ -56,8 +56,10 @@ public class ExecutionEnabler {
         String conExpr = constructConstrain(T, preconditions);
         System.out.println("本次生成测试用例的约束条件为：" + conExpr);
         if(ExecutionPathPrinter.ssmpHasLoopStmt(ssmp)){
+            System.out.println("Testcase generating randomly!");
             return generateMainMdRandomly(conExpr, ssmp);
         }else{
+            System.out.println("Testcase generating by Z3!");
             return generateMainMdByZ3(conExpr, ssmp);
         }
     }

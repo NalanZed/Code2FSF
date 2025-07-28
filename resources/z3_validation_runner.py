@@ -148,16 +148,24 @@ class FSFValidationUnit:
         return f"FSFValidationUnit(name={self.allTs}, T={self.vars})"
 
 ############# java_expr_z3_expr ##############
-def solver_check_z3(z3_expr:str)->str:
+def solver_check_z3(z3_expr:str, vars_types:dict = "")->str:
     try:
         solver = Solver()
         solver.add(z3_expr)
 
         if solver.check() == sat:
             print("The expression is satisfiable ❌")
-            model = f"{solver.model()}"
-            print(model)
-            return model
+            model = solver.model()
+            model_str = "["
+            for var in model.decls():
+                var_name = f"{var.name()}"
+                var_value = f"{model[var]}"
+                if(vars_types[var_name] == "int"):
+                    var_value = f"{model[var].as_signed_long()}"
+                model_str = model_str + f"{var_name}={var_value}, "
+            model_str = model_str.rstrip(", ") + "]"
+            print(model_str)
+            return model_str
         else:
             print("The expression is unsatisfiable ✅")
             #创建 Result 对象
@@ -387,6 +395,9 @@ def deal_with_spec_unit_json(spec_unit_json: str):
     if not execution_output:
         print("No output from Java code execution.")
     #分析路径输出，得到本次执行路径相关的Ct
+    var_types = parse_md_def(program)
+    input_vars = list(var_types.keys())
+    # print(f"input_vars: {input_vars}")
     execution_path = parse_execution_path(execution_output)
     print("\nExecution Path:")
     for step in execution_path:
@@ -395,8 +406,8 @@ def deal_with_spec_unit_json(spec_unit_json: str):
     current_ct = get_ct_from_execution_path(execution_path);
     if current_ct == "":
         current_ct = "true"
-    print(f"本次路径对应的_Ct_: {current_ct}")
-    new_d = update_D_with_execution_path(D,execution_path)
+    print(f"current_Ct_: {current_ct}")
+    new_d = update_D_with_execution_path(D,execution_path,input_vars)
     print("new_d:" + new_d)
     # 构建新的逻辑表达式并检查可满足性
     negated_d = f"!({new_d})"
@@ -404,14 +415,14 @@ def deal_with_spec_unit_json(spec_unit_json: str):
     new_logic_expression = simplify_expression(new_logic_expression)
     print(f"\nT && Ct && !D: {new_logic_expression}")
 
-    var_types = parse_md_def(program)
+
     z3_expr = java_expr_to_z3(new_logic_expression, var_types)
     # if z3_expr.startswith("ERROR"):
     #     result = Result(1,z3_expr,"")
     #     print("result:" + result.to_json())
     #     return
     print("T && Ct && !D 转Z3表达式: " + str(z3_expr))
-    solver_result = solver_check_z3(z3_expr)
+    solver_result = solver_check_z3(z3_expr,var_types)
     if solver_result == "OK":
         #组装 combined_expr
         previous_cts.append(current_ct)
@@ -419,7 +430,7 @@ def deal_with_spec_unit_json(spec_unit_json: str):
         print("完成一轮路径验证后，当前(T) && !(previous_cts) && !(current_ct): " + combined_expr)
         z3_expr = java_expr_to_z3(combined_expr, var_types)
         print("(T) && !(previous_cts) && !(current_ct) 转 Z3表达式: " + str(z3_expr))
-        scr = solver_check_z3(z3_expr)
+        scr = solver_check_z3(z3_expr,var_types)
         if scr == "OK":
             result = Result(3,"",current_ct)
         # elif(scr == "ERROR"):
@@ -486,28 +497,30 @@ def get_ct_from_execution_path(execution_path:List[str]):
     #先去掉空格，再去掉多余的 &&
     return ct.strip().strip("&&")
 
-def update_D_with_execution_path(D: str, execution_path: List[str]) -> str:
-    # split_d = D.split("&&")
-    # update_d = []
+def update_D_with_execution_path(D: str, execution_path: List[str], input_vars: List[str]) -> str:
     print(f"original D : {D}")
     if("return_value" in D):
         D = replace_variables(D,"return_value","(return_value)")
     D = D.replace("(char)", "").replace("(long)","").replace("(int)","").replace("(double)","")
+
+    for input_var in input_vars:
+        if input_var in D and "return_value" != input_var:
+            D = replace_variables(D, input_var, f"__{input_var}__")  # 确保输入变量被括号包围
     print(f"now D is {D}")
     newd = D
     for step in reversed(execution_path):
         if "current value" in step or "Function input" in step or "Under condition" in step:
             assignment_match = re.search(r"(.*?) = (.*?), current value of (.*?): (.*?)$", step)
-            input_param_match = re.search(r"Function input (.*)? parameter (.*?) = (.*?)$", step)
+            # input_param_match = re.search(r"Function input (.*)? parameter (.*?) = (.*?)$", step)
             condition_assignment_match = re.search(r"Under condition (.*) = (.*), condition is : (.*)", step)
             type = ""
             if assignment_match:
                 variable = assignment_match.group(1).strip()
                 value = assignment_match.group(2).strip()
-            elif input_param_match:
-                type = input_param_match.group(1).strip()
-                variable = input_param_match.group(2).strip()
-                value = input_param_match.group(3).strip()
+            # elif input_param_match:
+            #     type = input_param_match.group(1).strip()
+            #     variable = input_param_match.group(2).strip()
+            #     value = input_param_match.group(3).strip()
             elif condition_assignment_match:
                 variable = condition_assignment_match.group(1).strip()
                 value = condition_assignment_match.group(2).strip()
@@ -525,6 +538,9 @@ def update_D_with_execution_path(D: str, execution_path: List[str]) -> str:
             # value = f"({value})" # 确保value不会影响newd结构
             newd = replace_variables(newd,variable,value)
 
+    for input_var in input_vars:
+        if f"__{input_var}__" in newd:
+            newd = replace_variables(newd, f"__{input_var}__", input_var)
     return newd.strip().strip("&&")
 
 def read_java_code_from_file(file_path):
@@ -549,7 +565,7 @@ def fsf_validate(fu_json: str):
             result = Result(-1, z3_expr, "")
             print("FSF validation result:" + result.to_json())
             return
-        r = solver_check_z3(z3_expr)
+        r = solver_check_z3(z3_expr,fu.vars)
         if r == "OK": #z3_expr无解
             result = Result(-2, t, "")
             print("FSF validation result:" + result.to_json())
@@ -567,7 +583,7 @@ def fsf_validate(fu_json: str):
         result = Result(-1, z3_expr, "")
         print("FSF validation result:" + result.to_json())
         return
-    r = solver_check_z3(z3_expr)
+    r = solver_check_z3(z3_expr,fu.vars)
     if r == "OK": #unsat，具有完备性
         print("T具有完备性")
     else: #不具有完备性
@@ -585,7 +601,7 @@ def fsf_validate(fu_json: str):
     for and_t in and_ts:
         # print("正在验证: " + and_t)
         z3_expr = java_expr_to_z3(and_t, fu.vars)
-        r = solver_check_z3(z3_expr)
+        r = solver_check_z3(z3_expr,fu.vars)
         if r == "OK":
             continue
         else:
@@ -606,7 +622,7 @@ def z3_generate_testcase(spec_unit_json:str):
     var_types = parse_md_def(program)
     z3_expr = java_expr_to_z3(constrains_expr, var_types)
     print(f"z3 generating testcase under constrains: [{z3_expr}]")
-    var_values = solver_check_z3(z3_expr)
+    var_values = solver_check_z3(z3_expr,var_types)
     if(var_values == "OK"):
         #没有可用解
         r = Result(1,"","")
@@ -671,7 +687,7 @@ def init_files():
 def test_main_4():
     program = read_java_code_from_file("resources/TestCase.java")
     print(program)
-    expr = "num < 0 && num >= -2"
+    expr = "targetHeight - currentHeight >= 30 && targetHeight <= currentHeight"
     su = SpecUnit(program,expr,"",[]).to_json()
     z3_generate_testcase(su)
 

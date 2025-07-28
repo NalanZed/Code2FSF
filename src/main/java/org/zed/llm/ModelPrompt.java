@@ -8,6 +8,8 @@ import org.zed.log.LogManager;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -45,13 +47,16 @@ public class ModelPrompt {
         List<ModelMessage> preMessages = mp.assembleMessages(CODE2FSF_FEW_SHOT_PATH);
         mp.messages.addAll(preMessages);
 
-        String userContent = "为下面的代码生成FSF:\n" + "```" + "\n" + programCode + "\n" + "```";
+        String userContent = "Please generate an FSF for the program below:\n" + "```" + "\n" + programCode + "\n" + "```";
         ModelMessage message = new ModelMessage("user", userContent);
 
         mp.addMessage(message);
 
         //记录日志
         mp.codePath = codeFilePath;
+        if(Files.exists(Path.of(LogManager.codePath2LogPath(codeFilePath,model)))) {
+            Files.delete(Path.of(LogManager.codePath2LogPath(codeFilePath,model)));
+        }
         LogManager.appendMessage(codeFilePath,message,model);
         return mp;
     }

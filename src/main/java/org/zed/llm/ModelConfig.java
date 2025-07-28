@@ -13,7 +13,6 @@ public class ModelConfig {
 
     public ModelConfig(String configPath){
         this.modelName = configPath.substring(configPath.lastIndexOf("/")+1, configPath.lastIndexOf("."));
-        File file = new File(configPath);
         String[] s = LogManager.file2String(configPath).split("\n");
         for(String line : s){
             if(line.contains("[url]") || line.contains("[URL]")){

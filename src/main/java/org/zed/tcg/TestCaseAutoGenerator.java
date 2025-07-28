@@ -40,6 +40,68 @@ public class TestCaseAutoGenerator {
         }
         return testCase;
     }
+
+    public static HashMap<String,String> analyzeModelFromZ3Solver(String model, HashMap<String,String> paramTypeMap){
+        HashMap<String,String> modelInfoMap = new HashMap<>();
+        if(model == null || model.isEmpty()){
+            System.out.println("model值为空");
+            return modelInfoMap;
+        }
+        String varValues = model.substring(model.indexOf("[")+1,model.lastIndexOf("]"));
+        if(!varValues.isEmpty()){
+            String[] valueList = varValues.trim().split(",");
+            for(String value : valueList){
+                if(value.contains("div0") || varValues.contains("mod0")){
+                    continue;
+                }
+                String[] t = value.split("=");
+                String varName = t[0].trim();
+                String varValue = t[1].trim();
+                if(varValue.equals("True")){
+                    varValue = "true";
+                }
+                if(varValue.equals("False")){
+                    varValue = "false";
+                }
+                if(paramTypeMap.containsKey(varName) && paramTypeMap.get(varName).equals("char")){
+                    varValue = String.valueOf((char) Integer.parseInt(varValue));
+                }
+//                if(paramTypeMap.containsKey(varName) && paramTypeMap.get(varName).equals("int")){
+//                    // 1. 解析为无符号 BigInteger
+//                    BigInteger unsignedValue = new BigInteger(varValue);
+//
+//                    // 2. 转换为有符号 int（模拟 32 位截断）
+//                    int signedValue = unsignedValue.intValue();
+//
+//                    // 3. 转为有符号字符串
+//                    varValue = Integer.toString(signedValue);
+////                    System.out.println("varValue 有符号值为：" + varValue);
+//                }
+                System.out.println("varName:" + varName + "\t"+ "varValue:" + varValue);
+                modelInfoMap.put(varName,varValue);
+            }
+        }
+        return modelInfoMap;
+    }
+    public static HashMap<String,String> analyzeModelFromZ3Solver(String model, String ssmp){
+        HashMap<String, String> result;
+        HashMap<String, String> paramTypeMap = new HashMap<>();
+        MethodDeclaration md = ExecutionEnabler.getFirstStaticMethod(ssmp);
+        List<Parameter> parameters = null;
+        if (md != null) {
+            parameters = md.getParameters();
+        }
+        if(parameters == null || parameters.isEmpty()){
+            result = paramTypeMap;
+        } else {
+            for (Parameter p : parameters) {
+                paramTypeMap.put(p.getNameAsString(),p.getTypeAsString());
+            }
+            result = analyzeModelFromZ3Solver(model, paramTypeMap);
+        }
+        return result;
+    }
+
     //通过调用z3求解器来直接生成可用的输入
     public static HashMap<String,String> generateTestCaseByZ3(String constrainExpr, String ssmp){
         HashMap<String, String> map = new HashMap<>();
@@ -73,41 +135,7 @@ public class TestCaseAutoGenerator {
             map.put("ERROR",constrainExpr + "约束条件下没有可行的测试用例!");
         }
         else if(r.getStatus() == 0){
-            String varValues = r.getCounterExample();
-            varValues = varValues.substring(varValues.indexOf("[")+1,varValues.lastIndexOf("]"));
-            if(!varValues.isEmpty()){
-                String[] valueList = varValues.trim().split(",");
-                for(String value : valueList){
-                    if(value.contains("div0") || varValues.contains("mod0")){
-                       continue;
-                    }
-                    String[] t = value.split("=");
-                    String varName = t[0].trim();
-                    String varValue = t[1].trim();
-                    if(varValue.equals("True")){
-                        varValue = "true";
-                    }
-                    if(varValue.equals("False")){
-                        varValue = "false";
-                    }
-                    if(paramTypeMap.containsKey(varName) && paramTypeMap.get(varName).equals("char")){
-                        varValue = String.valueOf((char) Integer.parseInt(varValue));
-                    }
-                    if(paramTypeMap.containsKey(varName) && paramTypeMap.get(varName).equals("int")){
-                        // 1. 解析为无符号 BigInteger
-                        BigInteger unsignedValue = new BigInteger(varValue);
-
-                        // 2. 转换为有符号 int（模拟 32 位截断）
-                        int signedValue = unsignedValue.intValue();
-
-                        // 3. 转为有符号字符串
-                        varValue = Integer.toString(signedValue);
-                        System.out.println("varValue 有符号值为：" + varValue);
-                    }
-                    System.out.println("varName:" + varName + "\t"+ "varValue:" + varValue);
-                    map.put(varName,varValue);
-                }
-            }
+            map = analyzeModelFromZ3Solver(r.getCounterExample(),paramTypeMap);
         }
         for(Parameter p : md.getParameters()) {
             String paramName = p.getNameAsString();
@@ -117,7 +145,6 @@ public class TestCaseAutoGenerator {
                 map.put(paramName,defaultValue);
             }
         }
-
         return map;
     }
     public static String getDefaultValueOfType(String type) {
@@ -144,7 +171,7 @@ public class TestCaseAutoGenerator {
             variableNames.add(paramName);
         }
         //暴力生成测试用例
-        int maxCount = 50000;
+        int maxCount = 1_000_000;
         boolean isOK = false;
         while(--maxCount >= 0) {
             for (Parameter p : parameters) {
@@ -279,7 +306,7 @@ public class TestCaseAutoGenerator {
     }
 
     public static String randomIntGen(){
-        int n = ThreadLocalRandom.current().nextInt(-30,30);
+        int n = ThreadLocalRandom.current().nextInt(-200,200);
         return String.valueOf(n);
     }
     public static String randomFloatGen(){
