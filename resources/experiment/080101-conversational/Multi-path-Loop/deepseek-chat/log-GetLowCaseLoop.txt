@@ -1,0 +1,46 @@
+start role user
+Please generate an FSF for the program below:
+```
+public class GetLowCaseLoop {
+    public static char getLowCase(char c) {
+        if(c < 'A' || c > 'Z') {
+            return 0;
+        }
+        char t = 'z';
+        while(t >= 'a' && t != c - 'A' + 'a') {
+            t--;
+        }
+        return t;
+    }
+}
+
+```
+*end* role user
+start role assistant
+```
+T1: c < 'A' || c > 'Z'
+D1: return_value == 0
+
+T2: c >= 'A' && c <= 'Z' && c - 'A' + 'a' >= 'a' && c - 'A' + 'a' <= 'z'
+D2: return_value == c - 'A' + 'a'
+
+T3: c >= 'A' && c <= 'Z' && (c - 'A' + 'a' < 'a' || c - 'A' + 'a' > 'z')
+D3: return_value == 'a'
+```
+*end* role assistant
+start role user
+There exists c >= 'A' && c <= 'Z' && (c - 'A' + 'a' < 'a' || c - 'A' + 'a' > 'z') in the FSF, and it is a unsatisfiable，please regenerate the FSF，avoiding contains this kind of unsatisfiable T!
+*end* role user
+start role assistant
+```
+T1: c < 'A' || c > 'Z'
+D1: return_value == 0
+
+T2: c >= 'A' && c <= 'Z'
+D2: return_value == c - 'A' + 'a'
+```
+*end* role assistant
+start role remark
+Validation SUCCESS--Iteration_N verified!
+Current conversation round is: [2]
+*end* role remark

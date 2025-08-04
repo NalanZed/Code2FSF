@@ -30,6 +30,7 @@ public class LogManager {
     private static final String FAILED_DATASET_DIR = RESOURCE_DIR + "/" + "failedDataset";
     private static final String Exception_DATASET_DIR = RESOURCE_DIR + "/" + "exceptionDataset";
     private static final String RUNNABLE_DIR = RESOURCE_DIR + "/" + "runnable";
+    private static final String EXPERIMENT_DIR = RESOURCE_DIR + "/" + "experiment";
 
     private static List<String> needInitDirs = new ArrayList<>();
 
@@ -45,6 +46,7 @@ public class LogManager {
         needInitDirs.add(FAILED_DATASET_DIR);
         needInitDirs.add(Exception_DATASET_DIR);
         needInitDirs.add(RUNNABLE_DIR);
+        needInitDirs.add(EXPERIMENT_DIR);
         for (String dir : needInitDirs){
             if(new File(dir).exists()){
                 continue;
@@ -273,15 +275,30 @@ public class LogManager {
             if(specs[i].startsWith("T")){
                 String[] TD = new String[2];
                 TD[0] = specs[i].substring(specs[i].indexOf(":")+1).trim();
-                TD[1] = specs[i+1].substring(specs[i+1].indexOf(":")+1).trim();
                 if(TD[0].contains("//")){
                     TD[0] = TD[0].substring(0, TD[0].indexOf("//"));
                 }
+                while(TD[0].endsWith("||") || TD[0].endsWith("&&") || TD[0].endsWith("+") || TD[0].endsWith("-") || TD[0].endsWith("*") || TD[0].endsWith("/")){
+                    i++;
+                    if(i >= specs.length) break;
+                    TD[0] += " " + specs[i].trim();
+                    if(TD[0].contains("//")){
+                        TD[0] = TD[0].substring(0, TD[0].indexOf("//"));
+                    }
+                }
+                TD[1] = specs[i+1].substring(specs[++i].indexOf(":")+1).trim();
                 if(TD[1].contains("//")){
                     TD[1] = TD[1].substring(0, TD[1].indexOf("//"));
                 }
+                while(TD[1].endsWith("||") || TD[1].endsWith("&&") || TD[1].endsWith("+") || TD[1].endsWith("-") || TD[1].endsWith("*") || TD[1].endsWith("/")){
+                    i++;
+                    if(i >= specs.length) break;
+                    TD[1] += " " + specs[i].trim();
+                    if(TD[1].contains("//")){
+                        TD[1] = TD[1].substring(0, TD[1].indexOf("//"));
+                    }
+                }
                 TDs.add(TD);
-                i += 2;
             }else {
                 i++;
             }
@@ -601,6 +618,117 @@ public class LogManager {
             System.out.println("T"+ i + ": " + T);
             System.out.println("D"+ i + ": " + D + "\n");
         }
+    }
+
+    public static void collectExperimentRecords(String category,String experimentName,String modelName){
+        //创建实验记录目录
+        String experimentDir = EXPERIMENT_DIR + "/" + experimentName + "/" + category ;
+        try {
+            Files.createDirectories(Path.of(experimentDir));
+        } catch (IOException e) {
+            System.out.println("创建实验记录目录失败: " + experimentDir);
+            return;
+        }
+        //将failedDataset、succDataset、exceptionDataset复制过来
+        String experimentSuccDatasetDir = experimentDir + "/succDataset";
+        String experimentFailedDatasetDir = experimentDir + "/failedDataset";
+        String experimentExceptionDatasetDir = experimentDir + "/exceptionDataset";
+        try {
+            Files.createDirectories(Path.of(experimentSuccDatasetDir));
+            Files.createDirectories(Path.of(experimentFailedDatasetDir));
+            Files.createDirectories(Path.of(experimentExceptionDatasetDir));
+        } catch (IOException e) {
+            System.out.println("创建实验记录数据集目录失败");
+            e.printStackTrace();
+            return;
+        }
+        try {
+            File[] files = fetchAllJavaFilesInDir(SUCC_DATASET_DIR);
+            for (File file : files) {
+                Files.copy(file.toPath(), Path.of(experimentSuccDatasetDir + "/" + file.getName()), REPLACE_EXISTING);
+            }
+            files = fetchAllJavaFilesInDir(FAILED_DATASET_DIR);
+            for (File file : files) {
+                Files.copy(file.toPath(), Path.of(experimentFailedDatasetDir + "/" + file.getName()), REPLACE_EXISTING);
+            }
+            files = fetchAllJavaFilesInDir(Exception_DATASET_DIR);
+            for (File file : files) {
+                Files.copy(file.toPath(), Path.of(experimentExceptionDatasetDir + "/" + file.getName()), REPLACE_EXISTING);
+            }
+        } catch (IOException e) {
+            System.out.println("复制实验记录失败");
+            e.printStackTrace();
+        }
+        //把log文件复制过来
+        String logDir = LOG_DIR + "/" + modelName;
+        String experimentLogDir = experimentDir + "/" + modelName;
+        try {
+            Files.createDirectories(Path.of(experimentLogDir));
+        } catch (IOException e) {
+            System.out.println("创建实验记录日志目录失败: " + experimentLogDir);
+            return;
+        }
+        try {
+            File[] logFiles = fetchTxtFileInDir(logDir);
+            if(logFiles != null){
+                for (File logFile : logFiles) {
+                    Files.copy(logFile.toPath(), Path.of(experimentLogDir +"/" + logFile.getName()), REPLACE_EXISTING);
+                }
+            }
+        } catch (IOException e) {
+            System.out.println("复制实验记录失败");
+            e.printStackTrace();
+        }
+        //创建summary.txt文件
+        String summaryFilePath = experimentDir + "/summary.txt";
+        Path summaryPath = Path.of(summaryFilePath);
+        try {
+            if(Files.exists(summaryPath)) {
+                Files.delete(summaryPath); //如果存在则删除
+            }
+            Files.createFile(summaryPath);
+        } catch (IOException e) {
+            System.out.println("创建实验记录summary.txt失败");
+            e.printStackTrace();
+        }
+        int succNum = 0, failedNum = 0, exceptionNum = 0, totalNum = 0;
+        int succRate = 0;
+        try {
+            succNum = fetchAllJavaFilesInDir(experimentSuccDatasetDir).length;
+            failedNum = fetchAllJavaFilesInDir(experimentFailedDatasetDir).length;
+            exceptionNum = fetchAllJavaFilesInDir(experimentExceptionDatasetDir).length;
+            totalNum = succNum + failedNum + exceptionNum;
+            succRate =  (int)((float)succNum / (float)totalNum * 10000);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        //向summary.txt中写入信息
+        try (java.io.BufferedWriter writer = java.nio.file.Files.newBufferedWriter(
+                summaryPath,
+                java.nio.charset.StandardCharsets.UTF_8,
+                java.nio.file.StandardOpenOption.CREATE,
+                java.nio.file.StandardOpenOption.APPEND)) {
+            writer.write("experimentName: " + experimentName);
+            writer.newLine();
+            writer.write("model: " + modelName);
+            writer.newLine();
+            writer.write("category: " + category);
+            writer.newLine();
+            writer.write("total number: " + totalNum);
+            writer.newLine();
+            writer.write("success number: " + succNum);
+            writer.newLine();
+            writer.write("success rate: " + (float)succRate / 100 + "%");
+            writer.newLine();
+            writer.write("failed number: " + failedNum);
+            writer.newLine();
+            writer.write("exception number: " + exceptionNum);
+            writer.newLine();
+        } catch (IOException e) {
+            System.out.println("写入实验记录summary.txt失败");
+            e.printStackTrace();
+        }
+
     }
 
     public static void main(String[] args) throws IOException {

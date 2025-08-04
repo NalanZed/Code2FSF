@@ -1,0 +1,47 @@
+start role user
+Please generate an FSF for the program below:
+```
+public class AddLoopFor_Mutant2 {
+    public static int addLoop(int x, int y) {
+        int sum = y;
+        if (x > 0) {
+            int n = 0;
+            for(n = x; n > 0; ) {
+                sum = sum + 1;
+                n = n - 2;
+            }
+        } else {
+            int n = 0;
+            for(n = -x; n > 0; ) {
+                sum = sum - 1;
+                n = n - 2;
+            }
+        }
+        return sum;
+    }
+}
+
+```
+*end* role user
+start role assistant
+```
+T1: x > 0 && x % 2 == 0
+D1: sum == y + (x / 2)
+
+T2: x > 0 && x % 2 != 0
+D2: sum == y + ((x + 1) / 2)
+
+T3: x < 0 && (-x) % 2 == 0
+D3: sum == y - ((-x) / 2)
+
+T4: x < 0 && (-x) % 2 != 0
+D4: sum == y - ((-x + 1) / 2)
+
+T5: x == 0
+D5: sum == y
+```
+*end* role assistant
+start role remark
+Validation SUCCESS--Iteration_N verified!
+Current conversation round is: [1]
+*end* role remark

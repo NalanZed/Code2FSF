@@ -1,0 +1,38 @@
+start role user
+Please generate an FSF for the program below:
+```
+public class SubLoop_Mutant5 {
+    public static int subLoop(int x, int y) {
+        int sum = x;
+        if (y > 0) {
+            int n = 0;
+            while (n > 0) {
+                sum = sum - 1;
+                n = n - 1;
+            }
+        } else {
+            int n = -y;
+            while (n > 0) {
+                sum = sum + 1;
+                n = n - 1;
+            }
+        }
+        return sum;
+    }
+}
+
+```
+*end* role user
+start role assistant
+```
+T1: y > 0
+D1: sum == x
+
+T2: y <= 0
+D2: sum == x + (-y)
+```
+*end* role assistant
+start role remark
+Validation SUCCESS--Iteration_N verified!
+Current conversation round is: [1]
+*end* role remark

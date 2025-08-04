@@ -46,6 +46,7 @@ public class FSFValidationUnit {
         List<String> allTs = new ArrayList<>();
         for (String[] pair : fsf) {
             String T = pair[0];
+            if(T.isEmpty()) continue;
             allTs.add(T);
         }
         return allTs;

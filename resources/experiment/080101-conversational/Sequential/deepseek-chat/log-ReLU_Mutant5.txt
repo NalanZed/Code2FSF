@@ -1,0 +1,21 @@
+start role user
+Please generate an FSF for the program below:
+```
+public class ReLU_Mutant5 {
+    public static double computeReLU(double x) {
+        return x;
+    }
+}
+
+```
+*end* role user
+start role assistant
+```
+T1: true
+D1: return_value == x
+```
+*end* role assistant
+start role remark
+Validation SUCCESS--totally verified!
+Current conversation round is: [1]
+*end* role remark

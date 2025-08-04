@@ -23,8 +23,8 @@ import java.util.regex.Pattern;
 public class ExecutionPathPrinter {
 
     public static String addPrintStmt(String code){
-//        String c0 = removeAllComments(code);
-        String c1 = addPrintStmtAtMethodBegin(code);
+        String c0 = removeAllComments(code);
+        String c1 = addPrintStmtAtMethodBegin(c0);
         String c2 = addPrintStmtForIfStmt(c1);
         String c3 = addPrintStmtForAssignStmt(c2);
         String c4 = addPrintStmtForVariableDeclarationExpr(c3);
@@ -33,7 +33,6 @@ public class ExecutionPathPrinter {
         String c7 = addPrintForWhileLoopStmt(c6);
         return c7;
     }
-
 
     public static String removeAllComments(String code){
         CompilationUnit cu = StaticJavaParser.parse(code);

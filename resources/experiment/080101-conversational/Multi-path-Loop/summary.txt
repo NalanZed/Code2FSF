@@ -1,0 +1,8 @@
+experimentName: 080101-conversational
+model: deepseek-chat
+category: Multi-path-Loop
+total number: 22
+success number: 12
+success rate: %54.54
+failed number: 8
+exception number: 2

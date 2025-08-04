@@ -1,0 +1,31 @@
+start role user
+Please generate an FSF for the program below:
+```
+public class Geofence_Original {
+    public static int geofence(int x, int y,int limitX, int limitY) {
+        int alarm = 0;
+        if (x < 0 || x > limitX) {
+            alarm = 1;
+        }
+        if (y < 0 || y > limitY) {
+            alarm = 1;
+        }
+        return alarm;
+    }
+}
+
+```
+*end* role user
+start role assistant
+```
+T1: x < 0 || x > limitX || y < 0 || y > limitY
+D1: alarm == 1
+
+T2: x >= 0 && x <= limitX && y >= 0 && y <= limitY
+D2: alarm == 0
+```
+*end* role assistant
+start role remark
+Validation SUCCESS--totally verified!
+Current conversation round is: [1]
+*end* role remark

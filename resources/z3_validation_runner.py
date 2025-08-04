@@ -157,12 +157,26 @@ def solver_check_z3(z3_expr:str, vars_types:dict = "")->str:
             print("The expression is satisfiable ❌")
             model = solver.model()
             model_str = "["
-            for var in model.decls():
-                var_name = f"{var.name()}"
-                var_value = f"{model[var]}"
-                if(vars_types[var_name] == "int"):
-                    var_value = f"{model[var].as_signed_long()}"
-                model_str = model_str + f"{var_name}={var_value}, "
+            # 更完整的流程：遍历所有变量类型字典，主动用 model.eval 获取值
+            for var_name, var_type in vars_types.items():
+                if var_name == "return_value":
+                    continue
+                try:
+                    # model_completion=True 保证即使 model 没有赋值也能返回默认值
+                    z3_val = model.eval(z3.Bool(var_name) if var_type in ["bool", "boolean"] else z3.BitVec(var_name, 32) if var_type in ["int", "char"] else z3.Real(var_name), model_completion=True)
+                    if var_type == "int":
+                        var_value = str(z3_val.as_signed_long())
+                    elif var_type == "char":
+                        var_value = chr(z3_val.as_long() & 0x10FFFF)
+                    elif var_type in ["bool", "boolean"]:
+                        var_value = str(z3_val)
+                    elif var_type == "double":
+                        var_value = str(z3_val)
+                    else:
+                        var_value = str(z3_val)
+                    model_str = model_str + f"{var_name}={var_value}, "
+                except Exception as e:
+                    model_str = model_str + f"{var_name}=ERROR, "
             model_str = model_str.rstrip(", ") + "]"
             print(model_str)
             return model_str
@@ -188,6 +202,27 @@ def to_z3_val(val):
         return z3.RealVal(val)
     return val
 
+def convert_ternary(expr: str) -> str:
+    # 支持嵌套和括号，递归处理三目运算符
+    # 只处理最外层的 cond ? a : b
+    import re
+    def repl(m):
+        cond = m.group(1).strip()
+        a = m.group(2).strip()
+        b = m.group(3).strip()
+        return f"({a} if {cond} else {b})"
+    # 处理括号包裹的三目
+    pattern = re.compile(r'\(([^()]+)\?([^:]+):([^()]+)\)')
+    while True:
+        new_expr = pattern.sub(repl, expr)
+        if new_expr == expr:
+            break
+        expr = new_expr
+    # 处理无括号的三目
+    pattern2 = re.compile(r'([^?\s]+)\?([^:]+):([^\s)]+)')
+    expr = pattern2.sub(repl, expr)
+    return expr
+
 def java_expr_to_z3(expr_str, var_types: dict):
     """
     :param expr_str: Java格式逻辑表达式，如 "(b1 == true && x > 5)"
@@ -199,6 +234,7 @@ def java_expr_to_z3(expr_str, var_types: dict):
     expr_str = " ".join(expr_str.splitlines())  # 合并为单行，去除多余缩进
     print(f"Java表达式: {repr(expr_str)}")  # 用repr��便调试不可见字符
     expr_str = remove_type_transfer_stmt_in_expr(expr_str)
+    # expr_str = convert_ternary(expr_str)  # 新增三目运算符转换
     # 构建 Z3 变量
     z3_vars = {}
     for name, vtype in var_types.items():
@@ -206,8 +242,10 @@ def java_expr_to_z3(expr_str, var_types: dict):
             z3_vars[name] = z3.Bool(name)
         elif vtype == 'int':
             z3_vars[name] = z3.BitVec(name,32)
+            # z3_vars[name] = z3.Int(name)
         elif vtype == 'char':
             z3_vars[name] = z3.BitVec(name,32)
+            # z3_vars[name] = z3.Int(name)
         elif vtype == 'double':
             z3_vars[name] = z3.Real(name)
         else:
@@ -235,11 +273,13 @@ def java_expr_to_z3(expr_str, var_types: dict):
                 return node.value
             elif isinstance(node.value, int):
                 return z3.BitVecVal(node.value,32)
+                # return z3.IntVal(node.value)
             elif isinstance(node.value, float):
                 return z3.RealVal(node.value)
             elif isinstance(node.value, str):
                 if len(node.value) == 1:#字符常量
-                    return z3.BitVecVal(ord(node.value),16)
+                    return z3.BitVecVal(ord(node.value),32)
+                    # return z3.IntVal(node.value)
                 return node.value
             else:
                 raise ValueError(f"不支持的常量类型: {node.value}")
@@ -280,6 +320,12 @@ def java_expr_to_z3(expr_str, var_types: dict):
                 left = z3.BV2Int(left, is_signed=False)
             if isinstance(right, z3.BitVecRef) and isinstance(left, z3.IntNumRef):
                 right = z3.BV2Int(right, is_signed=False)
+            # # 确保 BitVec 的大小一致
+            if is_bv(left) and is_bv(right):
+                if left.size() == 16 and right.size() == 32:
+                    left = SignExt(16, left)  # 扩展为 32 位
+                if right.size() == 16 and left.size() == 32:
+                    right = SignExt(16, right)
             if isinstance(op, ast.Eq):
                 return left == right
             elif isinstance(op, ast.NotEq):
@@ -309,7 +355,14 @@ def java_expr_to_z3(expr_str, var_types: dict):
             elif isinstance(op, ast.Div):
                 return left / right
             elif isinstance(op, ast.Mod):
-                return left % right
+                # return left % right
+                return z3.SRem(left, right)
+            elif isinstance(op, ast.Pow):
+                # 支持幂运算 x ** n
+                if isinstance(left, z3.BitVecRef) and isinstance(right, z3.BitVecRef):
+                    left1 = BV2Int(left, is_signed=True)
+                    right1 = BV2Int(right, is_signed=True)
+                return Int2BV(left1 ** right1,32)
             elif isinstance(op, ast.BitAnd):
                 # 确保操作数都是位向量
                 if not (isinstance(left, z3.BitVecRef) and isinstance(right, z3.BitVecRef)):
@@ -318,11 +371,15 @@ def java_expr_to_z3(expr_str, var_types: dict):
                 return left & right
             elif isinstance(op, ast.BitOr):
                 if not (isinstance(left, z3.BitVecRef) and isinstance(right, z3.BitVecRef)):
-                    raise TypeError("按位或运算的操作数必须是位向量")
+                    left = z3.Int2BV(left,32) if is_int(left) else left
+                    right = z3.Int2BV(right,32) if is_int(right) else right
+                    # raise TypeError("按位或运算的操作数必须是位向量")
                 return left | right
             elif isinstance(op, ast.BitXor):
                 if not (isinstance(left, z3.BitVecRef) and isinstance(right, z3.BitVecRef)):
-                    raise TypeError("按位异或运算的操作数必须是位向量")
+                    left = z3.Int2BV(left,32) if is_int(left) else left
+                    right = z3.Int2BV(right,32) if is_int(right) else right
+                    # raise TypeError("按位异或运算的操作数必须是位向量")
                 return left ^ right
             else:
                 raise ValueError(f"不支持的算术操作: {type(op)}")
@@ -360,6 +417,28 @@ def parse_md_def(java_code: str) -> dict:
     return var_types
 ############# java_expr_z3_expr ##############
 
+def add_value_constraints(logic_expr: str, var_types: dict) -> str:
+    """
+    添加变量值约束到逻辑表达式中
+    :param logic_expr: 原始逻辑表达式
+    :param var_types: 变量类型字典
+    :return: 添加了变量值约束的逻辑表达式
+    """
+    value_constraints_expr = ""
+    for var, vtype in var_types.items():
+        if var == "return_value":
+            continue
+        if vtype == 'int':
+            value_constraints_expr += f" && ({var} >= -32768 && {var} <= 32767)"
+        elif vtype == 'char':
+            value_constraints_expr += f" && ({var} >= 32 && {var} <= 126)"
+        # elif vtype == 'double':
+        #     value_constraints_expr += f" && ({var} >= -1.0 && {var} <= 1.0)"
+    value_constraints_expr = value_constraints_expr.strip().strip("&&").strip()
+    if len(value_constraints_expr) > 0:
+        logic_expr = f"({logic_expr})" + f" && ({value_constraints_expr})"
+    return logic_expr
+
 def deal_with_spec_unit_json(spec_unit_json: str):
     #读取SpecUnit对象
     spec_unit = None
@@ -386,10 +465,14 @@ def deal_with_spec_unit_json(spec_unit_json: str):
             result = Result(0,"","Exception founded!")
             print("result:" + result.to_json())
         else :
-            result = Result(1,"","No exception founded!")
+            result = Result(1,"","Exception founded!")
             print("result:" + result.to_json())
         return
 
+    if output.stderr is not None and "Exception" in output.stderr:
+        result = Result(-2,"Exception founded:" + str(output.stderr),"")
+        print("result:" + result.to_json())
+        return
     if output.stdout is not None:
         execution_output = output.stdout
     if not execution_output:
@@ -413,8 +496,8 @@ def deal_with_spec_unit_json(spec_unit_json: str):
     negated_d = f"!({new_d})"
     new_logic_expression = f"({T}) && ({current_ct}) && ({negated_d})"
     new_logic_expression = simplify_expression(new_logic_expression)
+    new_logic_expression = add_value_constraints(new_logic_expression, var_types)
     print(f"\nT && Ct && !D: {new_logic_expression}")
-
 
     z3_expr = java_expr_to_z3(new_logic_expression, var_types)
     # if z3_expr.startswith("ERROR"):
@@ -428,6 +511,7 @@ def deal_with_spec_unit_json(spec_unit_json: str):
         previous_cts.append(current_ct)
         combined_expr = combind_expr_and_list(f"({T})", previous_cts)
         print("完成一轮路径验证后，当前(T) && !(previous_cts) && !(current_ct): " + combined_expr)
+        combined_expr = add_value_constraints(combined_expr, var_types)
         z3_expr = java_expr_to_z3(combined_expr, var_types)
         print("(T) && !(previous_cts) && !(current_ct) 转 Z3表达式: " + str(z3_expr))
         scr = solver_check_z3(z3_expr,var_types)
@@ -572,7 +656,7 @@ def fsf_validate(fu_json: str):
             return
 
 
-    #验证完整性，即!（T1 || T2 || T3 || ...）无解
+    #验证完备性，即!（T1 || T2 || T3 || ...）无解
     for t in ts:
         or_connect_ts = f"{or_connect_ts}||({t})"
     or_connect_ts = or_connect_ts.strip().strip("||").strip()
@@ -699,5 +783,7 @@ if __name__ == "__main__":
     main()
     # test_z3_generate_testcase()
     # test_main_4()
+
+
 
 

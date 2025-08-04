@@ -4,13 +4,15 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 import org.zed.llm.ModelConfig;
-import org.zed.llm.ModelMessage;
 import org.zed.log.LogManager;
 import org.zed.tcg.ExecutionEnabler;
 import org.zed.tcg.TestCaseAutoGenerator;
 import org.zed.trans.TransWorker;
 
+import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -50,40 +52,37 @@ public class AppTest
             System.out.println("hello world");
         }
 
-//    public void testApp2(){
-//        String logDir = "resources/log/deepseek-chat";
-//        String[] logFilePaths = LogManager.fetchSuffixFilePathInDir(logDir, ".txt");
-//        for(String path : logFilePaths){
-//            if(path.contains("summary")) continue;
-//            String logName = path.substring(path.lastIndexOf("/"), path.indexOf(".txt"));
-//            System.out.println("processing==>" + logName);
-//            List<String[]> FSF = LogManager.getLastestFSFFromLog(path);
-//            String code = LogManager.getProgramFromLog(path);
-//            List<String> vars = fetchUnknownVarInFSF(FSF, code);
-//            if(!vars.isEmpty()){
-//                vars.stream().forEach(System.out::println);
-//                System.err.println(path);
-//            }
-//        }
-//    }
-
-//    public void testApp3(){
-//        String path = "resources/log/deepseek-chat/log-MySqrt_Mutant2.txt";
-//        List<String[]> FSF = LogManager.getLastestFSFFromLog(path);
-//        String code = LogManager.getProgramFromLog(path);
-//        List<String> vars = fetchUnknownVarInFSF(FSF, code);
-//        if(!vars.isEmpty()){
-//            System.err.println(path);
-//        }
-//    }
-
-    public void testApp4() throws Exception {
-//        String resourceDir ="resources/dataset/程序归类_0722/Single-path Loop";
-        String resourceDir = "resources/dataset/someBench";
+    public void testApp2() throws Exception {
+            //进行完整的对5个类别的实验
+        String[] categories = {"Multi-path-Loop", "Single-path-Loop", "Branched", "Sequential", "Nested-Loop"};
+        String resourceDir = "resources/dataset/程序归类_0722/";
         ModelConfig modelConfig = new ModelConfig();
-//        ModelConfig modelConfig = new ModelConfig("resources/config/gpt-4o.txt");
+        for (String category : categories) {
+            String SSMPDir = pickSSMPCodes(resourceDir + category);
+            runConversationForDir(10, modelConfig, SSMPDir);
+            LogManager.collectExperimentRecords(category,"080103-conversational","deepseek-chat");
+        }
+    }
+
+    public void testApp3() throws Exception {
+            String resourceDir = "resources/dataset/someBench";
+        ModelConfig modelConfig = new ModelConfig();
+        //        ModelConfig modelConfig = new ModelConfig("resources/config/gpt-4o.txt");
         String SSMPDir = pickSSMPCodes(resourceDir);
         runConversationForDir(10, modelConfig, SSMPDir);
+    }
+    public void testApp4() throws Exception {
+            String experimentName = "080101-conversational";
+            String category = "Single-path-Loop";
+        String resourceDir = "resources/dataset/程序归类_0722/" + category;
+        ModelConfig modelConfig = new ModelConfig();
+        //        ModelConfig modelConfig = new ModelConfig("resources/config/gpt-4o.txt");
+        String SSMPDir = pickSSMPCodes(resourceDir);
+        runConversationForDir(10, modelConfig, SSMPDir);
+        LogManager.collectExperimentRecords(category,experimentName,"deepseek-chat");
+        LogManager.deleteAllJavaFilesInDir("resources/failedDataset");
+        LogManager.deleteAllJavaFilesInDir("resources/succDataset");
+        Files.delete(Path.of("resources/log/" + modelConfig.getModelName()));
     }
 //
 //    public void testClassifyProgramOnHasLoopStmt() throws IOException {
@@ -98,22 +97,24 @@ public class AppTest
 //        runConversationForDir(1, modelConfig, SSMPDir);
 //    }
 
-//    public void testMod(){
-//            int a = -10 % -11;
-//        System.out.println(a);
-//    }
+    public void testMod(){
+        List<String[]> fsf = LogManager.getLastestFSFFromLog("resources/log/deepseek-chat/log-GyroHealthCheck_Mutant1.txt");
+        for (String[] f : fsf) {
+            String T = f[0];
+            String D = f[1];
+            System.out.println("T: " + T);
+            System.out.println("D: " + D);
+        }
+
+    }
 
     public void testGenerateTc(){
-        int currentHeight = -1342177278;
-        int targetHeight = 805306370;
-        int r = targetHeight - currentHeight ;
-//        int A = -Integer.MIN_VALUE;
-        System.out.println(r);
+        LogManager.collectExperimentRecords("Multi-path-Loop","080101-conversational","deepseek-chat");
     }
     public void testSubstituteConstantInFSF() throws Exception {
             String logPath = "resources/log/deepseek-chat/log-AltitudeController_Mutant4.txt";
             List<String[]> FSF = LogManager.getLastestFSFFromLog(logPath);
-            substituteConstantValueInFSF(FSF);
+            TestCaseAutoGenerator.substituteConstantValueInFSF(FSF);
             String pureProgram = LogManager.file2String("resources/dataset/someBench/AltitudeController_Mutant4.java");
             String ssmp = TransWorker.trans2SSMP(pureProgram);
             List<String> historyTestcases = new ArrayList<>();

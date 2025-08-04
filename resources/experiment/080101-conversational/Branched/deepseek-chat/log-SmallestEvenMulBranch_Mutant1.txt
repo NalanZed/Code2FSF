@@ -1,0 +1,28 @@
+start role user
+Please generate an FSF for the program below:
+```
+public class SmallestEvenMulBranch_Mutant1 {
+
+    public static int smallestEvenMultiple(int n) {
+        if (n % 3 == 0) {
+            return n;
+        }
+        return 2 * n;
+    }
+}
+
+```
+*end* role user
+start role assistant
+```
+T1: n % 3 == 0
+D1: return_value == n
+
+T2: n % 3 != 0
+D2: return_value == 2 * n
+```
+*end* role assistant
+start role remark
+Validation SUCCESS--totally verified!
+Current conversation round is: [1]
+*end* role remark

@@ -17,6 +17,10 @@ import static org.zed.solver.Z3Solver.callZ3Solver2GenerateTestcase;
 import static org.zed.trans.ExecutionPathPrinter.addPrintStmt;
 
 public class TestCaseAutoGenerator {
+    private static final int MAX_INT_VALUE = Short.MAX_VALUE;
+    private static final int MIN_INT_VALUE = Short.MIN_VALUE;
+    private static final int LEGAL_CHAR_MIN = 32; // 可显示字符的最小值
+    private static final int LEGAL_CHAR_MAX = 126; // 可显示字符的最大值
 
     //为函数生成符合 T 要求的参数赋值，Map<key,value>，key为参数名，value就是具体赋值
     public static HashMap<String,String> generateTestCaseRandomlyUnderExpr(String expr, MethodDeclaration md){
@@ -63,9 +67,9 @@ public class TestCaseAutoGenerator {
                 if(varValue.equals("False")){
                     varValue = "false";
                 }
-                if(paramTypeMap.containsKey(varName) && paramTypeMap.get(varName).equals("char")){
-                    varValue = String.valueOf((char) Integer.parseInt(varValue));
-                }
+//                if(paramTypeMap.containsKey(varName) && paramTypeMap.get(varName).equals("char")){
+//                    varValue = String.valueOf((char) Integer.parseInt(varValue));
+//                }
 //                if(paramTypeMap.containsKey(varName) && paramTypeMap.get(varName).equals("int")){
 //                    // 1. 解析为无符号 BigInteger
 //                    BigInteger unsignedValue = new BigInteger(varValue);
@@ -102,6 +106,23 @@ public class TestCaseAutoGenerator {
         return result;
     }
 
+    public static void substituteConstantValueInFSF(List<String[]> FSF){
+        for(String[] td : FSF){
+            if(td[0].contains("Integer.MAX_VALUE")){
+                td[0] = td[0].replace("Integer.MAX_VALUE", Integer.toString(MAX_INT_VALUE));
+            }
+            if(td[1].contains("Integer.MAX_VALUE")){
+                td[1] = td[1].replace("Integer.MAX_VALUE", Integer.toString(MIN_INT_VALUE));
+            }
+            if(td[0].contains("Integer.MIN_VALUE")){
+                td[0] = td[0].replace("Integer.MIN_VALUE", Integer.toString(MAX_INT_VALUE));
+            }
+            if(td[1].contains("Integer.MIN_VALUE")) {
+                td[1] = td[1].replace("Integer.MIN_VALUE", Integer.toString(MIN_INT_VALUE));
+            }
+        }
+        return;
+    }
     //通过调用z3求解器来直接生成可用的输入
     public static HashMap<String,String> generateTestCaseByZ3(String constrainExpr, String ssmp){
         HashMap<String, String> map = new HashMap<>();
@@ -110,15 +131,16 @@ public class TestCaseAutoGenerator {
         MethodDeclaration md = ExecutionEnabler.getFirstStaticMethod(ssmp);
         List<Parameter> parameters = md.getParameters();
 
+        //增加整体约束，对各类型范围进行限制，避免生成错误的测试用例
         for (Parameter p : parameters) {
             if(p.getType().toString().equals("int")){
-                constrainExpr = constrainExpr + " && " + "( " +p.getName() + " <= " + Integer.MAX_VALUE + " )" +
-                        " && " + "( " +p.getName() + " >= " + Integer.MIN_VALUE + " )";
+                constrainExpr = constrainExpr + " && " + "( " +p.getName() + " <= " + MAX_INT_VALUE + " )" +
+                        " && " + "( " +p.getName() + " >= " + MIN_INT_VALUE + " )";
             }
             //可显示字符的范围
             if(p.getType().toString().equals("char")){
-                constrainExpr = constrainExpr + " && " + "( " +p.getName() + " <= " + "126" + " )" +
-                        " && " + "( " +p.getName() + " >= " + "32" + " )";
+                constrainExpr = constrainExpr + " && " + "( " +p.getName() + " <= " + LEGAL_CHAR_MAX + " )" +
+                        " && " + "( " +p.getName() + " >= " + LEGAL_CHAR_MIN + " )";
             }
             paramTypeMap.put(p.getNameAsString(),p.getTypeAsString());
         }
@@ -171,9 +193,10 @@ public class TestCaseAutoGenerator {
             variableNames.add(paramName);
         }
         //暴力生成测试用例
-        int maxCount = 1_000_000;
+        int maxCount = 100000;
         boolean isOK = false;
         while(--maxCount >= 0) {
+            System.out.println("generate testcase count: " + (100000 - maxCount));
             for (Parameter p : parameters) {
                 Type type = p.getType();
                 String o = generateRandomValue(type);
@@ -306,7 +329,7 @@ public class TestCaseAutoGenerator {
     }
 
     public static String randomIntGen(){
-        int n = ThreadLocalRandom.current().nextInt(-200,200);
+        int n = ThreadLocalRandom.current().nextInt(-100,100);
         return String.valueOf(n);
     }
     public static String randomFloatGen(){

@@ -1,0 +1,68 @@
+start role user
+Please generate an FSF for the program below:
+```
+public class GCD_Mutant1 {
+	public static int gcd(int num1, int num2){
+		int result = 1;
+		if(0 > num1){
+			num1 = -num1
+		}
+		if(0 > num2){
+			num2 = -num2;
+		}
+		if (num1 == 0 && num2 == 0) {
+			return -1;
+		}
+		if (num1 == 0 || num2 == 0) {
+			if(num1 > num2) {
+				return num1;
+			} else {
+				return num2;
+			}
+		}
+		for (int i = 1; i <= num1 && i <= num2; i++) {
+            if (num1 % i == 0 && num2 % i == 0) {
+        		result = i;
+			}
+        }
+		return result + 1; //Mutant: Return result + 1 instead of result
+	}
+}
+
+```
+*end* role user
+start role assistant
+```
+T1: num1 == 0 && num2 == 0
+D1: return_value == -1
+
+T2: (num1 == 0 && num2 != 0) || (num1 != 0 && num2 == 0)
+D2: return_value == (num1 > num2 ? num1 : num2)
+
+T3: num1 != 0 && num2 != 0 && num1 % i == 0 && num2 % i == 0
+D3: return_value == result + 1
+
+T4: num1 != 0 && num2 != 0 && (num1 % i != 0 || num2 % i != 0)
+D4: return_value == 1
+```
+*end* role assistant
+start role user
+There exist variables which do not belong to input params of the program:i, please regenerate the FSF, avoiding these variables!
+*end* role user
+start role assistant
+```
+T1: num1 == 0 && num2 == 0
+D1: return_value == -1
+
+T2: num1 == 0 && num2 != 0
+D2: return_value == num2
+
+T3: num1 != 0 && num2 == 0
+D3: return_value == num1
+
+T4: num1 != 0 && num2 != 0
+D4: return_value == gcd_plus_one(num1, num2)
+```
+
+Where `gcd_plus_one(num1, num2)` represents the greatest common divisor of the absolute values of num1 and num2 plus 1 (due to the mutant). This avoids referencing the loop variable `i` while still capturing the essential behavior. The actual GCD computation is abstracted into a function since the FSF format doesn't allow describing iterative computations directly.
+*end* role assistant

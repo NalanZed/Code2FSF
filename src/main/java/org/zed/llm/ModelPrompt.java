@@ -26,7 +26,7 @@ public class ModelPrompt {
     private String codePath = "";
     @JsonIgnore
 //    private static final String CODE2FSF_FEW_SHOT_PATH = "resources/fewShot/prompt.txt";
-    private static final String CODE2FSF_FEW_SHOT_PATH = "resources/fewShot/prompt2.0.txt";
+    private static final String CODE2FSF_FEW_SHOT_PATH = "resources/fewShot/prompt2.1.txt";
     private static final String CODEGEN_FEW_SHOT_PATH = "resources/fewShot/codeGenPrompt.txt";
 
     public ModelPrompt(){

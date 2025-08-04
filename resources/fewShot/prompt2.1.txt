@@ -1,0 +1,168 @@
+start role system
+As a program behavior analyst, generate the FSF (Functional Scenario Form) expression for the code according to the following requirements:
+1. The FSF expression should be in the form of Ti & Di (for i = 1..n), where Ti represents a constraint on the program's input, and under Ti, the program's output satisfies Di. All Ti & Di pairs together describe the overall semantics of the program.
+2. The Ti constraints must be mutually exclusive, i.e., Ti & Tj is unsatisfiable for any i ≠ j.
+3. The FSF must be complete, i.e., !(T1 || T2 || ... || Tn) is unsatisfiable.
+4. Ti must only contain input variables; the use of functions (e.g., Math.abs()) is strictly prohibited.
+5. Di should preferably use input and return variables; otherwise, use return_value; If there is no T at all, use ture as the only T.
+6. Use || to connect all Ts witch has the same D.
+7. For exceptional cases, Di should be marked as Exception.The common statements which cause throwing exceptions that you should care for are like x / 0, x % 0 and so on,list this kind of exceptions separately.
+8. Output must strictly follow the format below, with no additional explanation.
+
+```
+T1:
+D1:
+  ...
+Tn:
+Dn:
+```
+9. if T/D exists (? :) ，split it as 2 T&D，eliminating（? :）operator.
+10. To represent the exponentiation operator with **, such as x to the power of n is expressed as: x ** n
+*end* role system
+start role user
+please generate the FSF for the following code:
+```
+public class Abs {
+
+    public static int Abs(int num) {
+        if (num < 0) {
+            int ans = -num;
+            return ans;
+        } else {
+            int ans = num;
+            return ans;
+        }
+    }
+}
+
+```
+*end* role user
+start role assistant
+```
+T1: num < 0
+D1: ans == -num
+
+T2: num >= 0
+D2: ans == num
+```
+*end* role assistant
+start role user
+please generate the FSF for the following code:
+```
+class MySqrt {
+
+    public static int mySqrt(int x) {
+        int l = 0, r = x, ans = -1;
+        while (l <= r) {
+            int mid = l + (r - l) / 2;
+            if ((long) mid * mid <= x) {
+                ans = mid;
+                l = mid + 1;
+            } else {
+                r = mid - 1;
+            }
+        }
+        return ans;
+    }
+}
+
+```
+*end* role user
+start role assistant
+```
+T1: x == 0
+D1: return_value == 0
+
+T2: x > 0
+D2: return_value * return_value <= x && (return_value + 1) * (return_value + 1) > x
+
+T3: x < 0
+D3: return_value == -1
+```
+*end* role assistant
+
+start role user
+please generate the FSF for the following code:
+```
+public class ChangeCase {
+
+    public static char changeCase(char c) {
+        char result = ' ';
+        if (c > 'z') {
+            result = c;
+        } else if (c >= 'a') {
+            result = (char) (c - 'a' + 'A');
+        } else if (c > 'Z') {
+            result = c;
+        } else if (c >= 'A') {
+            result = (char) (c - 'A' + 'a');
+        } else {
+            result = c;
+        }
+        return result;
+    }
+}
+
+```
+*end* role user
+start role assistant
+```
+T1: c > 'z' || c < 'A' || (c > 'Z' && c < 'a')
+D1: result == c
+
+T2: c >= 'a' && c <= 'z'
+D2: result == c - 'a' + 'A'
+
+T3: c >= 'A' && c <= 'Z'
+D3: result == c - 'A' + 'a'
+```
+*end* role assistant
+start role user
+Please generate an FSF for the program below:
+```
+public class AltitudeController_Mutant4 {
+    public static int altitudeController(int currentHeight,int targetHeight) {
+        int error = targetHeight - currentHeight;
+        int absError = 0;
+        absError = error < 0 ? -error : error;
+        int controlSignal = 0;
+        if (absError >= 30) {
+            controlSignal = error > 0 ? 5 : -5;
+        } else if (absError > 20) {
+            controlSignal = error > 0 ? 3 : -3;
+        } else if (absError > 10) {
+            controlSignal = error > 0 ? 2 : -2;
+        } else {
+            controlSignal = error;
+        }
+        return controlSignal;
+    }
+}
+
+```
+*end* role user
+start role assistant
+```
+T1: targetHeight - currentHeight >= 30
+D1: controlSignal == 5
+
+T2: targetHeight - currentHeight <= -30
+D2: controlSignal == -5
+
+T3: targetHeight - currentHeight > 20 && targetHeight - currentHeight < 30
+D3: controlSignal == 3
+
+T4: targetHeight - currentHeight < -20 && targetHeight - currentHeight > -30
+D4: controlSignal == -3
+
+T5: targetHeight - currentHeight > 10 && targetHeight - currentHeight <= 20
+D5: controlSignal == 2
+
+T6: targetHeight - currentHeight < -10 && targetHeight - currentHeight >= -20
+D6: controlSignal == -2
+
+T7: targetHeight - currentHeight >= -10 && targetHeight - currentHeight <= 10
+D7: controlSignal == targetHeight - currentHeight
+```
+*end* role assistant
+

@@ -1,0 +1,51 @@
+start role user
+Please generate an FSF for the program below:
+```
+public class IsCommonFactorBranch_Mutant3 {
+    public static boolean isCommonFactor (int a, int b, int factor) {
+        if (a % factor != 1) {
+            return false;
+        }
+        if (b % factor != 1) {
+            return false;
+        }
+        return true;
+    }
+}
+
+```
+*end* role user
+start role assistant
+```
+T1: a % factor != 1
+D1: return_value == false
+
+T2: a % factor == 1 && b % factor != 1
+D2: return_value == false
+
+T3: a % factor == 1 && b % factor == 1
+D3: return_value == true
+```
+*end* role assistant
+start role user
+When the variables are assigned as a: 1	b: -32768	factor: 0	，the output of the program violates T: a % factor == 1 && b % factor != 1	D: return_value == false，please regenerate the FSF according this counterexample！
+*end* role user
+start role assistant
+```
+T1: factor == 0
+D1: Exception
+
+T2: factor != 0 && a % factor != 1
+D2: return_value == false
+
+T3: factor != 0 && a % factor == 1 && b % factor != 1
+D3: return_value == false
+
+T4: factor != 0 && a % factor == 1 && b % factor == 1
+D4: return_value == true
+```
+*end* role assistant
+start role remark
+Validation SUCCESS--totally verified!
+Current conversation round is: [2]
+*end* role remark

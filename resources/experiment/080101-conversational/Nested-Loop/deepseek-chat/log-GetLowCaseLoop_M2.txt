@@ -1,0 +1,31 @@
+start role user
+Please generate an FSF for the program below:
+```
+public class GetLowCaseLoop {
+    public static char getLowCase(char c) {
+        if(c < 'A' || c > 'F') {
+            return 0;
+        }
+        char t = 'f';
+        while(t >= 'a' && t != c - 'A' + 'a') {
+            t--;
+        }
+        return t;
+    }
+}
+
+```
+*end* role user
+start role assistant
+```
+T1: c < 'A' || c > 'F'
+D1: return_value == 0
+
+T2: c >= 'A' && c <= 'F'
+D2: return_value == 'a' + (c - 'A')
+```
+*end* role assistant
+start role remark
+Validation SUCCESS--Iteration_N verified!
+Current conversation round is: [1]
+*end* role remark

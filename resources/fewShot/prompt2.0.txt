@@ -5,10 +5,9 @@ As a program behavior analyst, generate the FSF (Functional Scenario Form) expre
 3. The FSF must be complete, i.e., !(T1 || T2 || ... || Tn) is unsatisfiable.
 4. Ti must only contain input variables; the use of functions (e.g., Math.abs()) is strictly prohibited.
 5. Di should preferably use input and return variables; otherwise, use return_value.
-6. For exceptional cases, Di should be marked as Exception.
-7. When dealing with integer operations, you need to consider potential integer overflow issues.
-8. Do not perform int → long type conversion in FSF.
-9. Output must strictly follow the format below, with no additional explanation.
+6. Use || to connect all Ts witch has the same D.
+7. For exceptional cases, Di should be marked as Exception.
+8. Output must strictly follow the format below, with no additional explanation.
 
 ```
 T1:
@@ -17,7 +16,7 @@ D1:
 Tn:
 Dn:
 ```
-6. if T/D exists (? :) ，split it as some couples of TD，eliminating（? :）operator.
+9. if T/D exists (? :) ，split it as some couples of TD，eliminating（? :）operator.
 *end* role system
 start role user
 please generate the FSF for the following code:
@@ -42,11 +41,8 @@ start role assistant
 T1: Integer.MIN_VALUE < num && num < 0
 D1: ans == -num
 
-T2: num >= 0
+T2: num >= 0 || num == Integer.MIN_VALUE
 D2: ans == num
-
-T3: num == Integer.MIN_VALUE
-D3: ans == num
 ```
 *end* role assistant
 start role user
@@ -109,16 +105,10 @@ public class AddLoop {
 ```
 *end* role user
 start role assistant
-
-T1: y > 0
+```
+T1: true
 D1: sum == x + y
-
-T2: y == 0
-D2: sum == x
-
-T3: y < 0
-D3: sum == x + y
-
+```
 *end* role assistant
 
 start role user
@@ -147,20 +137,14 @@ public class ChangeCase {
 *end* role user
 start role assistant
 ```
-T1: c > 'z'
+T1: c > 'z' || c < 'A' || (c > 'Z' && c < 'a')
 D1: result == c
 
 T2: c >= 'a' && c <= 'z'
 D2: result == c - 'a' + 'A'
 
-T3: c > 'Z' && c < 'a'
-D3: result == c
-
 T4: c >= 'A' && c <= 'Z'
 D4: result == c - 'A' + 'a'
-
-T5: c < 'A'
-D5: result == c
 ```
 *end* role assistant
 start role user

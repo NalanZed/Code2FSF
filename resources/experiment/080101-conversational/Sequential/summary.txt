@@ -1,0 +1,131 @@
+一共处理了61个程序
+自带main方法的程序有0个
+只有一个static方法的程序有61个
+有多个static方法的程序有0个
+只有一个非静态方法的程序有0个
+有多个非静态方法的程序有0个
+其它未分类程序有0个
+为0个文件的非静态方法添加了static标志，处理完成！
+Processing file: resources/trans/oneStaticMdCodes/DivisorGame_Mutant1.java (1/61)
+文件已存在于succDataset目录中，跳过
+Processing file: resources/trans/oneStaticMdCodes/ReLUSeq_Mutant1.java (2/61)
+文件已存在于succDataset目录中，跳过
+Processing file: resources/trans/oneStaticMdCodes/PowerOfTwo_Mutant1.java (3/61)
+文件已存在于succDataset目录中，跳过
+Processing file: resources/trans/oneStaticMdCodes/NotCommonFactor_Mutant1.java (4/61)
+文件已存在于succDataset目录中，跳过
+Processing file: resources/trans/oneStaticMdCodes/SmallestEvenMul_Mutant1.java (5/61)
+文件已存在于succDataset目录中，跳过
+Processing file: resources/trans/oneStaticMdCodes/IsCommonMultiple_Mutant1.java (6/61)
+文件已存在于succDataset目录中，跳过
+Processing file: resources/trans/oneStaticMdCodes/DivisionOverflow_Mutant1.java (7/61)
+文件已存在于succDataset目录中，跳过
+Processing file: resources/trans/oneStaticMdCodes/DivisorGame_Original.java (8/61)
+文件已存在于succDataset目录中，跳过
+Processing file: resources/trans/oneStaticMdCodes/CanWinNim_Mutant1.java (9/61)
+文件已存在于succDataset目录中，跳过
+Processing file: resources/trans/oneStaticMdCodes/ConvertToFahrenheit_Mutant1.java (10/61)
+文件已存在于succDataset目录中，跳过
+Processing file: resources/trans/oneStaticMdCodes/DivisionOverflow_Original.java (11/61)
+文件已存在于succDataset目录中，跳过
+Processing file: resources/trans/oneStaticMdCodes/IsCommonMultiple_Original.java (12/61)
+文件已存在于succDataset目录中，跳过
+Processing file: resources/trans/oneStaticMdCodes/CanWinNim_Original.java (13/61)
+文件已存在于succDataset目录中，跳过
+Processing file: resources/trans/oneStaticMdCodes/ConvertToFahrenheit_Original.java (14/61)
+文件已存在于succDataset目录中，跳过
+Processing file: resources/trans/oneStaticMdCodes/IsCommonFactor_Mutant1.java (15/61)
+文件已存在于succDataset目录中，跳过
+Processing file: resources/trans/oneStaticMdCodes/ConvertToKelvin_Mutant1.java (16/61)
+文件已存在于succDataset目录中，跳过
+Processing file: resources/trans/oneStaticMdCodes/Abs_Mutant1.java (17/61)
+文件已存在于succDataset目录中，跳过
+Processing file: resources/trans/oneStaticMdCodes/PowerOfTwo_Original.java (18/61)
+文件已存在于succDataset目录中，跳过
+Processing file: resources/trans/oneStaticMdCodes/IsCommonMultiple_Mutant4.java (19/61)
+文件已存在于succDataset目录中，跳过
+Processing file: resources/trans/oneStaticMdCodes/SmallestEvenMul_Mutant5.java (20/61)
+文件已存在于succDataset目录中，跳过
+Processing file: resources/trans/oneStaticMdCodes/NotCommonFactor_Mutant5.java (21/61)
+文件已存在于succDataset目录中，跳过
+Processing file: resources/trans/oneStaticMdCodes/ConvertToFahrenheit_Mutant3.java (22/61)
+文件已存在于succDataset目录中，跳过
+Processing file: resources/trans/oneStaticMdCodes/CanWinNim_Mutant3.java (23/61)
+文件已存在于succDataset目录中，跳过
+Processing file: resources/trans/oneStaticMdCodes/IsCommonFactor_Mutant3.java (24/61)
+文件已存在于succDataset目录中，跳过
+Processing file: resources/trans/oneStaticMdCodes/ConvertToKelvin_Mutant2.java (25/61)
+文件已存在于succDataset目录中，跳过
+Processing file: resources/trans/oneStaticMdCodes/ReLUSeq_Mutant5.java (26/61)
+文件已存在于succDataset目录中，跳过
+Processing file: resources/trans/oneStaticMdCodes/SmallestEvenMul_Original.java (27/61)
+文件已存在于succDataset目录中，跳过
+Processing file: resources/trans/oneStaticMdCodes/DivisorGame_Mutant5.java (28/61)
+文件已存在于succDataset目录中，跳过
+Processing file: resources/trans/oneStaticMdCodes/DivisorGame_Mutant4.java (29/61)
+文件已存在于succDataset目录中，跳过
+Processing file: resources/trans/oneStaticMdCodes/ReLU_Mutant5.java (30/61)
+文件已存在于succDataset目录中，跳过
+Processing file: resources/trans/oneStaticMdCodes/ReLUSeq_Mutant4.java (31/61)
+文件已存在于succDataset目录中，跳过
+Processing file: resources/trans/oneStaticMdCodes/DivisionOverflow_Mutant5.java (32/61)
+文件已存在于succDataset目录中，跳过
+Processing file: resources/trans/oneStaticMdCodes/ReLUSeq_Original.java (33/61)
+文件已存在于succDataset目录中，跳过
+Processing file: resources/trans/oneStaticMdCodes/IsCommonFactor_Mutant2.java (34/61)
+文件已存在于succDataset目录中，跳过
+Processing file: resources/trans/oneStaticMdCodes/ConvertToKelvin_Original.java (35/61)
+文件已存在于succDataset目录中，跳过
+Processing file: resources/trans/oneStaticMdCodes/CanWinNim_Mutant2.java (36/61)
+文件已存在于succDataset目录中，跳过
+Processing file: resources/trans/oneStaticMdCodes/ConvertToFahrenheit_Mutant2.java (37/61)
+文件已存在于succDataset目录中，跳过
+Processing file: resources/trans/oneStaticMdCodes/NotCommonFactor_Mutant4.java (38/61)
+文件已存在于succDataset目录中，跳过
+Processing file: resources/trans/oneStaticMdCodes/SmallestEvenMul_Mutant4.java (39/61)
+文件已存在于succDataset目录中，跳过
+Processing file: resources/trans/oneStaticMdCodes/IsCommonMultiple_Mutant5.java (40/61)
+文件已存在于succDataset目录中，跳过
+Processing file: resources/trans/oneStaticMdCodes/IsCommonFactor_Mutant5.java (41/61)
+文件已存在于succDataset目录中，跳过
+Processing file: resources/trans/oneStaticMdCodes/ConvertToKelvin_Mutant4.java (42/61)
+文件已存在于succDataset目录中，跳过
+Processing file: resources/trans/oneStaticMdCodes/DivisionOverflow_Mutant2.java (43/61)
+文件已存在于succDataset目录中，跳过
+Processing file: resources/trans/oneStaticMdCodes/ReLUSeq_Mutant3.java (44/61)
+文件已存在于succDataset目录中，跳过
+Processing file: resources/trans/oneStaticMdCodes/PowerOfTwo_Mutant3.java (45/61)
+文件已存在于succDataset目录中，跳过
+Processing file: resources/trans/oneStaticMdCodes/DivisorGame_Mutant3.java (46/61)
+文件已存在于succDataset目录中，跳过
+Processing file: resources/trans/oneStaticMdCodes/IsCommonMultiple_Mutant2.java (47/61)
+文件已存在于succDataset目录中，跳过
+Processing file: resources/trans/oneStaticMdCodes/SmallestEvenMul_Mutant3.java (48/61)
+文件已存在于succDataset目录中，跳过
+Processing file: resources/trans/oneStaticMdCodes/NotCommonFactor_Mutant3.java (49/61)
+文件已存在于succDataset目录中，跳过
+Processing file: resources/trans/oneStaticMdCodes/ConvertToFahrenheit_Mutant5.java (50/61)
+文件已存在于succDataset目录中，跳过
+Processing file: resources/trans/oneStaticMdCodes/CanWinNim_Mutant5.java (51/61)
+文件已存在于succDataset目录中，跳过
+Processing file: resources/trans/oneStaticMdCodes/CanWinNim_Mutant4.java (52/61)
+文件已存在于succDataset目录中，跳过
+Processing file: resources/trans/oneStaticMdCodes/ConvertToFahrenheit_Mutant4.java (53/61)
+文件已存在于succDataset目录中，跳过
+Processing file: resources/trans/oneStaticMdCodes/NotCommonFactor_Mutant2.java (54/61)
+文件已存在于succDataset目录中，跳过
+Processing file: resources/trans/oneStaticMdCodes/SmallestEvenMul_Mutant2.java (55/61)
+文件已存在于succDataset目录中，跳过
+Processing file: resources/trans/oneStaticMdCodes/IsCommonMultiple_Mutant3.java (56/61)
+文件已存在于succDataset目录中，跳过
+Processing file: resources/trans/oneStaticMdCodes/DivisorGame_Mutant2.java (57/61)
+文件已存在于succDataset目录中，跳过
+Processing file: resources/trans/oneStaticMdCodes/IsCommonFactor_Original.java (58/61)
+文件已存在于succDataset目录中，跳过
+Processing file: resources/trans/oneStaticMdCodes/ReLUSeq_Mutant2.java (59/61)
+文件已存在于succDataset目录中，跳过
+Processing file: resources/trans/oneStaticMdCodes/DivisionOverflow_Mutant3.java (60/61)
+文件已存在于succDataset目录中，跳过
+Processing file: resources/trans/oneStaticMdCodes/IsCommonFactor_Mutant4.java (61/61)
+文件已存在于succDataset目录中，跳过
+共处理程序 61 个， 成功 61 个 , 失败 0个，异常 0 个

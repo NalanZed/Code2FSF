@@ -1,0 +1,27 @@
+start role user
+Please generate an FSF for the program below:
+```
+public class Return100Nested_Original {
+    public static int return100 () {
+        int res = 0;
+        for(int i = 0; i < 10; i++) {
+            for(int j = 0; j < 10; j++) {
+                res = res + 1;
+            }
+        }
+        return res;
+    }
+}
+
+```
+*end* role user
+start role assistant
+```
+T1: true
+D1: return_value == 100
+```
+*end* role assistant
+start role remark
+Validation SUCCESS--totally verified!
+Current conversation round is: [1]
+*end* role remark

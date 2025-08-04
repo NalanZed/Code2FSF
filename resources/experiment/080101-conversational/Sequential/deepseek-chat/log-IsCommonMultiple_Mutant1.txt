@@ -1,0 +1,42 @@
+start role user
+Please generate an FSF for the program below:
+```
+public class IsCommonMultiple_Mutant1 {
+    public static boolean isCommonMultiple(int a, int b, int m) {
+        return m % a != 0 && m % b != 0;
+    }
+}
+
+```
+*end* role user
+start role assistant
+```
+T1: m % a != 0 && m % b != 0
+D1: return_value == true
+
+T2: m % a == 0 || m % b == 0
+D2: return_value == false
+```
+*end* role assistant
+start role user
+Unexpected exception thrown by the program under T: m % a != 0 && m % b != 0, please regenerate the FSF according to this exception!Exception founded:Exception in thread "main" java.lang.ArithmeticException: / by zero
+	at IsCommonMultiple_Mutant1.isCommonMultiple(IsCommonMultiple_Mutant1.java:7)
+	at IsCommonMultiple_Mutant1.main(IsCommonMultiple_Mutant1.java:15)
+
+*end* role user
+start role assistant
+```
+T1: a == 0 || b == 0
+D1: Exception
+
+T2: a != 0 && b != 0 && m % a != 0 && m % b != 0
+D2: return_value == true
+
+T3: a != 0 && b != 0 && (m % a == 0 || m % b == 0)
+D3: return_value == false
+```
+*end* role assistant
+start role remark
+Validation SUCCESS--totally verified!
+Current conversation round is: [2]
+*end* role remark

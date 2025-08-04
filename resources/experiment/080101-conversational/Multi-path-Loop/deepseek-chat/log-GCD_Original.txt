@@ -1,0 +1,120 @@
+start role user
+Please generate an FSF for the program below:
+```
+public class GCD_Original {
+
+	public static int gcd(int num1, int num2){
+		int result = 1;
+		if(0 > num1){
+			num1 = -num1
+		}
+		if(0 > num2){
+			num2 = -num2;
+		}
+		if (num1 == 0 && num2 == 0) {
+			return -1;
+		}
+
+		if (num1 == 0 || num2 == 0) {
+			if(num1 > num2) {
+				return num1;
+			} else {
+				return num2;
+			}
+		}
+
+		for (int i = 1; i <= num1 && i <= num2; i++) {
+            if (num1 % i == 0 && num2 % i == 0) {
+        		result = i;
+			}
+        }
+		return result;
+	}
+}
+
+```
+*end* role user
+start role assistant
+```
+T1: num1 == 0 && num2 == 0
+D1: return_value == -1
+
+T2: num1 == 0 && num2 != 0
+D2: return_value == num2
+
+T3: num1 != 0 && num2 == 0
+D3: return_value == num1
+
+T4: num1 != 0 && num2 != 0
+D4: return_value == gcd(|num1|, |num2|)
+
+T5: num1 % 0 == 0 || num2 % 0 == 0
+D5: Exception
+
+T6: num1 < 0
+D6: num1 = -num1
+
+T7: num2 < 0
+D7: num2 = -num2
+```
+*end* role assistant
+start role user
+It was found that T in the FSF does not satisfy the mutual exclusivity requirement,especially, Ti && Tj :[(num1 == 0 && num2 == 0) && (num1 % 0 == 0 || num2 % 0 == 0)] is satisfiable assigned as [num1=0, num2=0]，please regenerate FSF，making sure the mutual exclusivity of FSF
+*end* role user
+start role assistant
+```
+T1: num1 == 0 && num2 == 0
+D1: return_value == -1
+
+T2: num1 == 0 && num2 != 0
+D2: return_value == num2
+
+T3: num1 != 0 && num2 == 0
+D3: return_value == num1
+
+T4: num1 != 0 && num2 != 0 && num1 % i != 0 && num2 % i != 0 for all i in [1, min(|num1|, |num2|)]
+D4: return_value == 1
+
+T5: num1 != 0 && num2 != 0 && exists i in [1, min(|num1|, |num2|)] where num1 % i == 0 && num2 % i == 0
+D5: return_value == max{i | i divides both |num1| and |num2|}
+
+T6: num1 < 0
+D6: num1 = -num1
+
+T7: num2 < 0
+D7: num2 = -num2
+```
+*end* role assistant
+start role user
+It was found that T in the FSF does not meet the requirements and causes a parsing failure. Please carefully review my original instructions and regenerate the FSF accordingly.
+*end* role user
+start role assistant
+```
+T1: num1 == 0 && num2 == 0
+D1: return_value == -1
+
+T2: num1 == 0 && num2 > 0
+D2: return_value == num2
+
+T3: num1 == 0 && num2 < 0
+D3: return_value == -num2
+
+T4: num1 > 0 && num2 == 0
+D4: return_value == num1
+
+T5: num1 < 0 && num2 == 0
+D5: return_value == -num1
+
+T6: num1 > 0 && num2 > 0
+D6: return_value == gcd(num1, num2)
+
+T7: num1 > 0 && num2 < 0
+D7: return_value == gcd(num1, -num2)
+
+T8: num1 < 0 && num2 > 0
+D8: return_value == gcd(-num1, num2)
+
+T9: num1 < 0 && num2 < 0
+D9: return_value == gcd(-num1, -num2)
+```
+*end* role assistant

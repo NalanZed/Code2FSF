@@ -1,0 +1,34 @@
+start role user
+Please generate an FSF for the program below:
+```
+public class PowerOfTwoBranch_Mutant4 {
+
+    public static boolean isPowerOfTwo(int n) {
+        if (n <= 0) {
+            return false;
+        }
+        if ((n & (n - 1)) != 0) {
+            return true;
+        }
+        return true;
+    }
+}
+
+```
+*end* role user
+start role assistant
+```
+T1: n <= 0
+D1: return_value == false
+
+T2: n > 0 && (n & (n - 1)) != 0
+D2: return_value == true
+
+T3: n > 0 && (n & (n - 1)) == 0
+D3: return_value == true
+```
+*end* role assistant
+start role remark
+Validation SUCCESS--totally verified!
+Current conversation round is: [1]
+*end* role remark

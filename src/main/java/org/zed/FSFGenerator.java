@@ -145,12 +145,13 @@ public class FSFGenerator {
 
         if(D.contains("Exception")){
             System.out.println("D 为 Exception");
-            if(validateExceptionPath(ssmp, T)){
+            String vepr = validateExceptionPath(ssmp, T);
+            if(vepr.contains("SUCCESS")){
                 finalResultsOfTDs.add(new Result(3,"Exception路径符合预期",""));
                 return "SUCCESS";
             }
             //需要提示LLM，重新生成该TD组
-            return "经验证，对于" + "T :" + T + "，此时程序没有抛出异常，请思考后重新生成";
+            return "Under T :" + T + "，" + "specifically when the variables are assigned like the main method showing: " + vepr + "No exception was thrown by the program. Think again and regenerate";
         }
 
         while(countOfPathValidated < maxRoundsOf1CoupleOfTD){
@@ -173,6 +174,10 @@ public class FSFGenerator {
                 System.out.println(currentTD + "====>" + "The path [" + countOfPathValidated + "]verified successfully!");
             }
             else break;
+        }
+        if(r.getStatus() == -2){
+            System.out.println(currentTD + "\n" + "verification failed, there is an exception thrown by the program!");
+            return "Unexpected exception thrown by the program under T: " + T + ", please regenerate the FSF according to this exception!" + r.getCounterExample();
         }
         if(r.getStatus() == -1){
             System.out.println(currentTD + "\n" + "verification failed, please check the log for details!");
@@ -227,24 +232,6 @@ public class FSFGenerator {
         return totallyVerified;
     }
 
-    public static void substituteConstantValueInFSF(List<String[]> FSF){
-        for(String[] td : FSF){
-            if(td[0].contains("Integer.MAX_VALUE")){
-                td[0] = td[0].replace("Integer.MAX_VALUE", Integer.toString(Integer.MAX_VALUE));
-            }
-            if(td[1].contains("Integer.MAX_VALUE")){
-                td[1] = td[1].replace("Integer.MAX_VALUE", Integer.toString(Integer.MAX_VALUE));
-            }
-            if(td[0].contains("Integer.MIN_VALUE")){
-                td[0] = td[0].replace("Integer.MIN_VALUE", Integer.toString(Integer.MIN_VALUE));
-            }
-            if(td[1].contains("Integer.MIN_VALUE")) {
-                td[1] = td[1].replace("Integer.MIN_VALUE", Integer.toString(Integer.MIN_VALUE));
-            }
-        }
-        return;
-    }
-
     public static boolean runConversations(int maxRounds, ModelConfig mc, String inputFilePath) throws Exception {
         String modelName = mc.getModelName();
         ModelPrompt fsfPrompt = ModelPrompt.generateCode2FSFPrompt(modelName,inputFilePath);
@@ -282,8 +269,7 @@ public class FSFGenerator {
             }
 
             //对FSF中常量如 Integer.MAX_VALUE 等进行替换
-            substituteConstantValueInFSF(FSF);
-
+            TestCaseAutoGenerator.substituteConstantValueInFSF(FSF);
             //对FSF的形式进行检查
             Result formResult = checkBadFormFSF(FSF,ssmp);
             if(formResult.getStatus() == 1){
@@ -347,28 +333,28 @@ public class FSFGenerator {
         return false;
     }
 
-    private static boolean validateExceptionPath(String ssmp, String t) {
+    private static String validateExceptionPath(String ssmp, String t) {
         String mainMd = generateMainMdUnderExpr(t,null,ssmp);
         if(mainMd == null || mainMd.isEmpty() || mainMd.startsWith("ERROR")){
             System.out.println("输入约束条件[" + t + "]下生成测试用例失败, 默认为异常路径");
-            return true;
+            return "SUCCESS";
         }
         try {
             Result result = validate1Path(ssmp, mainMd, null, t, "Exception");
             if(result == null){
                 System.out.println("验证过程发生错误，没有返回result");
-                return false;
+                return "ERROR: No result returned during validation!";
             }
             if(result.getStatus() == 0){
-                return true;
+                return "SUCCESS";
             }
             if(result.getStatus() == 1){
-                return false;
+                return mainMd;
             }
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-        return false;
+        return "FAILED";
     }
 
     public static void make1RoundConversation(ModelPrompt prompt,ModelConfig mc){

@@ -1,0 +1,37 @@
+start role user
+Please generate an FSF for the program below:
+```
+public class MulLoop_Mutant2 {
+    public static int mulLoop(int a, int b) {
+        int res = 0;
+        if (b > 0) { // changed >= to >
+            for(int i = 0; i < b; i++) {
+                res = res + a;
+            }
+        } else {
+            for(int i = 0; i < -b; i++) {
+                res = res - a;
+            }
+        }
+        return res;
+    }
+}
+
+```
+*end* role user
+start role assistant
+```
+T1: b > 0
+D1: res == a * b
+
+T2: b < 0
+D2: res == a * b
+
+T3: b == 0
+D3: res == 0
+```
+*end* role assistant
+start role remark
+Validation SUCCESS--Iteration_N verified!
+Current conversation round is: [1]
+*end* role remark

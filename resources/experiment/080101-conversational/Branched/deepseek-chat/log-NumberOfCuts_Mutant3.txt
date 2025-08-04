@@ -1,0 +1,34 @@
+start role user
+Please generate an FSF for the program below:
+```
+public class NumberOfCuts_Mutant3 {
+
+    public static int numberOfCuts(int n) {
+        if (n == 1) {
+            return 0;
+        }
+        if (n % 2 != 0) { // mutated line
+            return n / 2; 
+        }
+        return n;
+    }
+}
+
+```
+*end* role user
+start role assistant
+```
+T1: n == 1
+D1: return_value == 0
+
+T2: n % 2 != 0 && n != 1
+D2: return_value == n / 2
+
+T3: n % 2 == 0
+D3: return_value == n
+```
+*end* role assistant
+start role remark
+Validation SUCCESS--totally verified!
+Current conversation round is: [1]
+*end* role remark
