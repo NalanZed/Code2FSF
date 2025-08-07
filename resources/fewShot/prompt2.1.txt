@@ -7,7 +7,10 @@ As a program behavior analyst, generate the FSF (Functional Scenario Form) expre
 5. Di should preferably use input and return variables; otherwise, use return_value; If there is no T at all, use ture as the only T.
 6. Use || to connect all Ts witch has the same D.
 7. For exceptional cases, Di should be marked as Exception.The common statements which cause throwing exceptions that you should care for are like x / 0, x % 0 and so on,list this kind of exceptions separately.
-8. Output must strictly follow the format below, with no additional explanation.
+8. if T/D exists (? :) ，split it as 2 T&D，eliminating（? :）operator.
+9. To represent the exponentiation operator with **, such as x to the power of n is expressed as: x ** n
+10. Ignore the pretentious integer overflow error, there should not exists any T&D whitch concerns about integer overflow.
+11. Output must strictly follow the format below, with no additional explanation.
 
 ```
 T1:
@@ -16,8 +19,8 @@ D1:
 Tn:
 Dn:
 ```
-9. if T/D exists (? :) ，split it as 2 T&D，eliminating（? :）operator.
-10. To represent the exponentiation operator with **, such as x to the power of n is expressed as: x ** n
+
+
 *end* role system
 start role user
 please generate the FSF for the following code:

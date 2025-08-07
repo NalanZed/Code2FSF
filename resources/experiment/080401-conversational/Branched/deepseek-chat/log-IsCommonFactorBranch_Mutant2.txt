@@ -1,0 +1,48 @@
+start role user
+Please generate an FSF for the program below:
+```
+public class IsCommonFactorBranch_Mutant2 {
+    public static boolean isCommonFactor (int a, int b, int factor) {
+        if (a % factor != 0) {
+            return true;
+        }
+        if (b % factor != 0) {
+            return true;
+        }
+        return false;
+    }
+}
+
+```
+*end* role user
+start role assistant
+```
+T1: a % factor != 0 || b % factor != 0
+D1: return_value == true
+
+T2: a % factor == 0 && b % factor == 0
+D2: return_value == false
+```
+*end* role assistant
+start role user
+Unexpected exception thrown by the program under T: a % factor == 0 && b % factor == 0, please regenerate the FSF according to this exception!Exception founded:Exception in thread "main" java.lang.ArithmeticException: / by zero
+	at IsCommonFactorBranch_Mutant2.isCommonFactor(IsCommonFactorBranch_Mutant2.java:7)
+	at IsCommonFactorBranch_Mutant2.main(IsCommonFactorBranch_Mutant2.java:29)
+
+*end* role user
+start role assistant
+```
+T1: factor == 0
+D1: Exception
+
+T2: factor != 0 && (a % factor != 0 || b % factor != 0)
+D2: return_value == true
+
+T3: factor != 0 && a % factor == 0 && b % factor == 0
+D3: return_value == false
+```
+*end* role assistant
+start role remark
+Validation SUCCESS--totally verified!
+Current conversation round is: [2]
+*end* role remark

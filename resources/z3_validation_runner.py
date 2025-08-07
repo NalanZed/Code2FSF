@@ -3,6 +3,7 @@ import re
 import json
 import argparse
 import time
+import concurrent.futures
 from typing import List, Any
 
 import z3
@@ -18,6 +19,14 @@ RUNNABLE_DOR= "resources/runnable"
 UNHANDLED_ERROR = "Unhandled error"
 TESTCASE_GENERATION_RESULT = "Testcase generation result"
 
+
+def print_verification_timeout_result():
+    result = Result(-3, "OVERTIME", "")
+    print(f"result:" + result.to_json())
+def print_verification_unexpected_result():
+    result = Result(-1,"","")
+    print(f"result:" + result.to_json())
+
 def get_class_name(java_code: str):
     match = re.search(r'class\s+(\w+)', java_code)
     if match:
@@ -25,7 +34,7 @@ def get_class_name(java_code: str):
     else:
         return None  # 如果没有匹配到，返回 None
 
-def run_java_code(java_code: str):
+def run_java_code(java_code: str, timeout_seconds=20):
     classname = get_class_name(java_code)
     file_path = RUNNABLE_DOR + "/"  + classname + ".java"
     with open(file_path, "w") as file:
@@ -35,15 +44,18 @@ def run_java_code(java_code: str):
     except subprocess.CalledProcessError:
         print("Error during Java compilation.")
         return ""
-
     try:
         result = subprocess.run(
             ["java", file_path],
             capture_output=True,
             text=True,
+            timeout=timeout_seconds
         )
         # print(" result.stdout:" + result.stdout)
         return result
+    except subprocess.TimeoutExpired:
+        print("Java execution timeout!")
+        raise
     except subprocess.CalledProcessError:
         print("Error during Java execution.")
         raise
@@ -453,7 +465,12 @@ def deal_with_spec_unit_json(spec_unit_json: str):
     previous_cts = spec_unit.pre_constrains
 
     #运行程序,获得输出
-    output = run_java_code(program)
+    try:
+        output = run_java_code(program, timeout_seconds=20)
+    except subprocess.TimeoutExpired:
+        print_verification_timeout_result()
+        return
+
     execution_output = ""
     if output is None:
         print("Java code execution failed.")
@@ -717,6 +734,16 @@ def z3_generate_testcase(spec_unit_json:str):
 def test_z3_generate_testcase():
     gu_json = " {\"program\":\"public class PowerOfTwo_Mutant1 {\\n\\n    public static boolean isPowerOfTwo(int n) {\\n        return n >= 0 && (n & (n - 1)) == 0;\\n    }\\n}\\n\",\"preconditions\":[],\"T\":\"n > 0 && (n & (n - 1)) == 0 && ( n < 2147483647 ) && ( n > -2147483648 )\",\"D\":\"true\",\"pre_constrains\":[]}"
     z3_generate_testcase(gu_json)
+
+def run_with_timeout(func, arg, timeout_seconds, task_name):
+    with concurrent.futures.ThreadPoolExecutor() as executor:
+        future = executor.submit(func, arg)
+        try:
+            future.result(timeout=timeout_seconds)
+        except concurrent.futures.TimeoutError:
+           print_verification_timeout_result()
+        except Exception as e:
+            print_verification_unexpected_result()
 def main():
     #创建解析器
     parser = argparse.ArgumentParser()
@@ -733,11 +760,13 @@ def main():
         print("请提供输入要验证的JSON字符串")
         return
     if spec_unit_json is not None:
-        deal_with_spec_unit_json(spec_unit_json)
+        run_with_timeout(deal_with_spec_unit_json, spec_unit_json, 20, "SpecUnit 验证")
+
     if fsf_validation_unit_json is not None:
-        fsf_validate(fsf_validation_unit_json)
-    if(generation_unit is not None):
-        z3_generate_testcase(generation_unit)
+        run_with_timeout(fsf_validate, fsf_validation_unit_json, 20, "FSF 验证")
+
+    if generation_unit is not None:
+        run_with_timeout(z3_generate_testcase, generation_unit, 20, "测试用例生成")
 
 def init_files():
     import os
@@ -783,7 +812,4 @@ if __name__ == "__main__":
     main()
     # test_z3_generate_testcase()
     # test_main_4()
-
-
-
 

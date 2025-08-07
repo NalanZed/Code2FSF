@@ -1,0 +1,40 @@
+start role user
+Please generate an FSF for the program below:
+```
+public class ChangeCase_Mutant5 {
+
+    public static char changeCase(char c) {
+        char result = ' ';
+        if (c > 'z') {
+            result = c;
+        } else if (c >= 'a') {
+            result = (char) ('a' - 'A' + c);
+        } else if (c > 'Z') {
+            result = c;
+        } else if (c >= 'A') {
+            result = (char) (c - 'A' + 'a');
+        } else {
+            result = c;
+        }
+        return result;
+    }
+}
+
+```
+*end* role user
+start role assistant
+```
+T1: c > 'z' || c < 'A' || (c > 'Z' && c < 'a')
+D1: result == c
+
+T2: c >= 'a' && c <= 'z'
+D2: result == 'a' - 'A' + c
+
+T3: c >= 'A' && c <= 'Z'
+D3: result == c - 'A' + 'a'
+```
+*end* role assistant
+start role remark
+Validation SUCCESS--totally verified!
+Current conversation round is: [1]
+*end* role remark

@@ -1,0 +1,27 @@
+start role user
+Please generate an FSF for the program below:
+```
+public class ConvertToKelvin_Mutant5 {
+    public static double convertTemperature(double celsius) {
+        if(celsius < 0.0) { // Added a conditional statement
+            return 0;
+        }
+        return celsius + 273.15;
+    }
+}
+
+```
+*end* role user
+start role assistant
+```
+T1: celsius < 0.0
+D1: return_value == 0
+
+T2: celsius >= 0.0
+D2: return_value == celsius + 273.15
+```
+*end* role assistant
+start role remark
+Validation SUCCESS--totally verified!
+Current conversation round is: [1]
+*end* role remark

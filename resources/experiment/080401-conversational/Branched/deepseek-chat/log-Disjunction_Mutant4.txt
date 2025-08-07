@@ -1,0 +1,34 @@
+start role user
+Please generate an FSF for the program below:
+```
+public class Disjunction_Mutant4 {
+    public static boolean disjunctOf(boolean b1, boolean b2) {
+        if(b1 == true)
+            return false;
+        if(b2 == true)
+            return true;
+        return false;
+    }
+}
+
+```
+*end* role user
+start role user
+There is no FSF in history conversation, retry the conversation, please regenerate the FSF for given program.
+*end* role user
+start role assistant
+```
+T1: b1 == true
+D1: return_value == false
+
+T2: b1 == false && b2 == true
+D2: return_value == true
+
+T3: b1 == false && b2 == false
+D3: return_value == false
+```
+*end* role assistant
+start role remark
+Validation SUCCESS--totally verified!
+Current conversation round is: [2]
+*end* role remark

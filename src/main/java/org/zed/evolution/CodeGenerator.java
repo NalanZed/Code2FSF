@@ -16,28 +16,40 @@ import static org.zed.log.LogManager.*;
 public class CodeGenerator {
     static final String YELLOW = "\u001B[33m";
     static final String RESET = "\u001B[0m";
-    public ModelPrompt getCodeGenPrompt(List<String[]> FSF, String code, String model){
-        ModelPrompt prompt = ModelPrompt.generateCodeGenBasicPrompt(FSF);
-        prompt.setModel(model);
-        if (prompt == null) {
+    public ModelPrompt initCodeGenPrompt(String originalCode, List<String[]> originalFSF, List<String[]> modifiedFSF, String model){
+        ModelPrompt prompt = ModelPrompt.generateCodeGenBasicPrompt();
+        if(prompt.getMessages().isEmpty()){
+            System.err.println("Read few-shot prompt failed!");
             return null;
         }
+        if(originalFSF.isEmpty() || modifiedFSF.isEmpty()){
+            System.err.println("original FSF or modifiedFSF is empty!");
+            return null;
+        }
+        prompt.setModel(model);
         StringBuilder sb = new StringBuilder();
-        sb.append("根据FSF调整Code使代码能够符合FSF描述的功能:\n");
-
-        sb.append("```FSF\n");
-        for (int i = 0; i < FSF.size(); i++) {
-            sb.append("T").append(i).append(": ").append(FSF.get(i)[0]);
+        sb.append("Please modify the following code according to the modified FSF:\n");
+        //原代码插入
+        sb.append("```Code\n");
+        sb.append(originalCode);
+        sb.append("```\n");
+        //原FSF插入
+        sb.append("```Original FSF\n");
+        for (int i = 0; i < originalFSF.size(); i++) {
+            sb.append("T").append(i).append(": ").append(originalFSF.get(i)[0]);
             sb.append("\n");
-            sb.append("D").append(i).append(": ").append(FSF.get(i)[1]);
+            sb.append("D").append(i).append(": ").append(originalFSF.get(i)[1]);
+            sb.append("\n\n");
+        }
+        //modified FSF插入
+        sb.append("```Modified FSF\n");
+        for (int i = 0; i < modifiedFSF.size(); i++) {
+            sb.append("T").append(i).append(": ").append(modifiedFSF.get(i)[0]);
+            sb.append("\n");
+            sb.append("D").append(i).append(": ").append(modifiedFSF.get(i)[1]);
             sb.append("\n\n");
         }
         sb.append("```\n").append("\n");
-
-        //原代码插入
-        sb.append("```Code\n");
-        sb.append(code);
-        sb.append("```\n");
 
         String userContent = sb.toString();
         ModelMessage message = new ModelMessage("user", userContent);
@@ -70,7 +82,7 @@ public class CodeGenerator {
         List<Result> finalResultsOfEveryCoupleOfTD = new ArrayList<>();
         List<String> historyTestcases = new ArrayList<>();
         boolean regenerateFlag = false;
-        while( n++ < maxRounds){
+        while( ++n <= maxRounds){
             System.out.println("正在进行第[" + n + "/" + maxRounds + "]轮对话...");
             ModelMessage respMsg = codeGenConversation(prompt, mc);
             if(respMsg == null){
@@ -127,17 +139,16 @@ public class CodeGenerator {
 
     public static void main(String[] args) throws Exception {
         CodeGenerator gt = new CodeGenerator();
-        String testLogPath = "resources/log/deepseek-chat/log-DigitRoot.txt";
-        List<String[]> FSF = LogManager.getLastestFSFFromLog(testLogPath);
-        List<String[]> mFSF = exchangeTRandomly(FSF);
+        String taskPath = "resources/dataset/evolutionDataset/Example.txt";
+
         ModelConfig mc = new ModelConfig();
         //准备prompt
-        String code = LogManager.getProgramFromLog(testLogPath);
-        ModelPrompt mp = gt.getCodeGenPrompt(mFSF,code,mc.getModelName());
+
+//        ModelPrompt mp = gt.initCodeGenPrompt(mFSF,code,mc.getModelName());
         //对话，并将对话内容记录在prompt中
-        boolean b = gt.CodeGenerate(mp, mc, mFSF);
+//        boolean b = gt.CodeGenerate(mp, mc, mFSF);
 //        String className = LogManager.getClassNameInCodeGenPrompt(mp);
 //        saveACodeGenMsg(mp.getMessages().get(mp.getMessages().size()-1), mp.getModel(), className);
-        saveACodeGenPrompt(mp);
+//        saveACodeGenPrompt(mp);
     }
 }

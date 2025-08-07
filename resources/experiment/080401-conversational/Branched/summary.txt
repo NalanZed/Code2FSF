@@ -1,0 +1,8 @@
+experimentName: 080401-conversational
+model: deepseek-chat
+category: Branched
+total number: 135
+success number: 131
+success rate: 97.03%
+failed number: 4
+exception number: 0

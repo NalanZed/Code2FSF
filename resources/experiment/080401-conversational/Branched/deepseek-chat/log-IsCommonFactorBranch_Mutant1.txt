@@ -1,0 +1,48 @@
+start role user
+Please generate an FSF for the program below:
+```
+public class IsCommonFactorBranch_Mutant1 {
+    public static boolean isCommonFactor (int a, int b, int factor) {
+        if (a % factor == 0) {
+            return false;
+        }
+        if (b % factor == 0) {
+            return false;
+        }
+        return true;
+    }
+}
+
+```
+*end* role user
+start role assistant
+```
+T1: a % factor != 0 && b % factor != 0
+D1: return_value == true
+
+T2: a % factor == 0 || b % factor == 0
+D2: return_value == false
+
+T3: factor == 0
+D3: Exception
+```
+*end* role assistant
+start role user
+It was found that T in the FSF does not satisfy the mutual exclusivity requirement,especially, Ti && Tj :[(a % factor != 0 && b % factor != 0) && (factor == 0)] is satisfiable assigned as [a=-1, b=-1, factor=0]，please regenerate FSF，making sure the mutual exclusivity of FSF
+*end* role user
+start role assistant
+```
+T1: factor == 0
+D1: Exception
+
+T2: factor != 0 && (a % factor == 0 || b % factor == 0)
+D2: return_value == false
+
+T3: factor != 0 && a % factor != 0 && b % factor != 0
+D3: return_value == true
+```
+*end* role assistant
+start role remark
+Validation SUCCESS--totally verified!
+Current conversation round is: [2]
+*end* role remark

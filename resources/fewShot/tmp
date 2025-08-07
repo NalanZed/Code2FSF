@@ -1,2 +1,0 @@
-8. When dealing with integer operations, you need to consider potential integer overflow issues.
-9. Do not perform int → long type conversion in FSF.

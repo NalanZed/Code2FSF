@@ -1,0 +1,54 @@
+start role user
+Please generate an FSF for the program below:
+```
+public class IsCommonMultipleBranch_Mutant4 {
+    public static boolean isCommonMultiple(int a, int b, int m) {
+        if (m % a != 0) {
+            return false;
+        }
+        if (m % b != 0) {
+            return true;
+        }
+        return true;
+    }
+}
+
+```
+*end* role user
+start role assistant
+```
+T1: m % a != 0
+D1: return_value == false
+
+T2: m % a == 0 && m % b != 0
+D2: return_value == true
+
+T3: m % a == 0 && m % b == 0
+D3: return_value == true
+```
+*end* role assistant
+start role user
+Unexpected exception thrown by the program under T: m % a == 0 && m % b != 0, please regenerate the FSF according to this exception!Exception founded:Exception in thread "main" java.lang.ArithmeticException: / by zero
+	at IsCommonMultipleBranch_Mutant4.isCommonMultiple(IsCommonMultipleBranch_Mutant4.java:14)
+	at IsCommonMultipleBranch_Mutant4.main(IsCommonMultipleBranch_Mutant4.java:29)
+
+*end* role user
+start role assistant
+```
+T1: a == 0 || b == 0
+D1: Exception
+
+T2: m % a != 0 && a != 0 && b != 0
+D2: return_value == false
+
+T3: m % a == 0 && m % b != 0 && a != 0 && b != 0
+D3: return_value == true
+
+T4: m % a == 0 && m % b == 0 && a != 0 && b != 0
+D4: return_value == true
+```
+*end* role assistant
+start role remark
+Validation SUCCESS--totally verified!
+Current conversation round is: [2]
+*end* role remark

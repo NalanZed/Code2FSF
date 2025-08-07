@@ -1,0 +1,37 @@
+start role user
+Please generate an FSF for the program below:
+```
+public class GPSCheck_Original {
+    public static int GPSCheck(int satellites, int signalStrength) {
+        int alarm = 0;
+        if (satellites < 4) {
+            alarm = 1;
+        }
+        if (signalStrength < 20) {
+            alarm = 2;
+        }
+        return alarm;
+    }
+}
+
+```
+*end* role user
+start role assistant
+```
+T1: satellites < 4 && signalStrength >= 20
+D1: alarm == 1
+
+T2: satellites >= 4 && signalStrength < 20
+D2: alarm == 2
+
+T3: satellites < 4 && signalStrength < 20
+D3: alarm == 2
+
+T4: satellites >= 4 && signalStrength >= 20
+D4: alarm == 0
+```
+*end* role assistant
+start role remark
+Validation SUCCESS--totally verified!
+Current conversation round is: [1]
+*end* role remark

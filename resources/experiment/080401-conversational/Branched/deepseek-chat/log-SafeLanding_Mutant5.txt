@@ -1,0 +1,28 @@
+start role user
+Please generate an FSF for the program below:
+```
+public class SafeLanding_Mutant5 {
+    public static int safeLanding(int height, int speed, int tilt) {
+        int safe = 1;
+        if (height > 5 || speed > 3 || tilt > 10) {
+            safe = 0;
+        }
+        return safe;
+    }
+}
+
+```
+*end* role user
+start role assistant
+```
+T1: height > 5 || speed > 3 || tilt > 10
+D1: safe == 0
+
+T2: height <= 5 && speed <= 3 && tilt <= 10
+D2: safe == 1
+```
+*end* role assistant
+start role remark
+Validation SUCCESS--totally verified!
+Current conversation round is: [1]
+*end* role remark

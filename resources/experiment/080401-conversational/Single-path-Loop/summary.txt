@@ -1,0 +1,8 @@
+experimentName: 080401-conversational
+model: deepseek-chat
+category: Single-path-Loop
+total number: 17
+success number: 17
+success rate: 100.0%
+failed number: 0
+exception number: 0

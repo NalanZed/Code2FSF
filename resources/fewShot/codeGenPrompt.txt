@@ -1,28 +1,33 @@
 start role system
-你作为program behavior analyst，现在需要根据现有的FSF(unctional scenario form)表达式，在给定的程序基础之上，修改程序部分内容使得其符合给定的FSF描述的功能：
-1. Ti 和 Di 描述了当程序的输入满足约束条件Ti时，其输出要满足约束Di
-2. 生成的Java程序要求有且仅有一个方法，类名与方法名一致
-3. 当D为 Exception时，程序中抛出一个Exception
-4. 输出结果格式严格满足如下：
+As a program behavior analyst，you are required to modify a given java program so that it conforms to the given modified FSF(functional scenario form) expression.
+1. The definition of FSF(functional scenario form) is:
+    a. The FSF expression should be in the form of Ti & Di (for i = 1..n), where Ti represents a constraint on the program's input, and under Ti, the program's output satisfies Di. All Ti & Di pairs together describe the overall semantics of the program.
+    b. The Ti constraints must be mutually exclusive, i.e., Ti & Tj is unsatisfiable for any i ≠ j.
+    c. The FSF must be complete, i.e., !(T1 || T2 || ... || Tn) is unsatisfiable.
+2. There would be three inputs for you:
+    a.Original code
+    b.Original FSF
+    c.Modified FSF
+3. The relationship of the three inputs is:
+    a. The original FSF expression describes the overall semantics of original code.
+    b. The modified FSF expression is based on the original FSF expression, which undergoes some modifications to express a different semantics.
+4. Your task is to modify the original code so that it conforms to the modified FSF expression.
+5. Do the least modification to the original code, and ensure that the modified code is syntactically correct and can be compiled successfully.
+6. Your output must strictly follow the format below：
+
 ```
-public class xxx {
-    public static int func(int x...){
-        ...(省略)
+public class className {
+    public static int funcName(type v1,...){
+        ...(function body)
     }
 }
 ```
 *end* role system
 
 start role user
-根据FSF调整Code使代码能够符合FSF描述的功能:
-```FSF
-T1: num < 0
-D1: return_value == num
+Please modify the following code according to the modified FSF:
 
-T2: num >= 0
-D2: return_value == -num
-```
-```Code
+```Original code
 public class Abs {
     public static int Abs(int num) {
         if (num < 0)
@@ -32,7 +37,22 @@ public class Abs {
     }
 }
 ```
+```Original FSF
+T1: num < 0
+D1: return_value == -num
+
+T2: num >= 0
+D2: return_value == num
+```
+```Modified FSF
+T1: num < 0
+D1: return_value == num
+
+T2: num >= 0
+D2: return_value == -num
+```
 *end* role user
+
 start role assistant
 ```
 public class Abs {
@@ -47,55 +67,188 @@ public class Abs {
 *end* role assistant
 
 start role user
-根据FSF调整Code使代码能够符合FSF描述的功能:
-```FSF
-T1: height > 5
-D1: safe == 0
+Please modify the following code according to the modified FSF:
 
-T2: speed >= 3
-D2: safe == 0
+``Original Code
+public class CanWinNim {
 
-T3: tilt >= 10
-D3: safe == 0
-
-T4: height <= 5 && speed < 3 && tilt < 10
-D4: safe == 1
-```
-```Code
-public class SafeLanding {
-    public static int safeLanding(int height, int speed, int tilt) {
-        int safe = 1;
-        if (height > 5) {
-            safe = 0;
-        }
-        if (speed > 3) {
-            safe = 0;
-        }
-        if (tilt > 10) {
-            safe = 0;
-        }
-        return safe;
+    public static boolean canWinNim(int n) {
+        return n % 4 != 0;
     }
 }
+```
+```Original FSF
+T1: n % 4 != 0
+D1: return_value == true
+
+T2: n % 4 == 0
+D2: return_value == false
+```
+
+```Modified FSF
+T1: n % 4 == 0
+D1: return_value == true
+
+T2: n % 4 != 0
+D2: return_value == false
 ```
 *end* role user
 start role assistant
 ```
-public class SafeLanding {
-    public static int safeLanding(int height, int speed, int tilt) {
-        int safe = 1;
-        if (height > 5) {
-            safe = 0;
-        }
-        if (speed >= 3) {
-            safe = 0;
-        }
-        if (tilt >= 10) {
-            safe = 0;
-        }
-        return safe;
+public class CanWinNim_Mutant1 {
+    public static boolean canWinNim(int n) {
+        return n % 4 == 0;
     }
 }
 ```
 *end* role assistant
 
+start role user
+Please modify the following code according to the modified FSF:
+
+``Original Code
+public class ChangeCase {
+
+    public static char changeCase(char c) {
+        char result = ' ';
+        if (c > 'z') {
+            result = c;
+        } else if (c >= 'a') {
+            result = (char) (c - 'a' + 'A');
+        } else if (c > 'Z') {
+            result = c;
+        } else if (c >= 'A') {
+            result = (char) (c - 'A' + 'a');
+        } else {
+            result = c;
+        }
+        return result;
+    }
+}
+```
+```Original FSF
+T1: c > 'z'
+D1: return_value == c
+
+T2: c >= 'a' && c <= 'z'
+D2: return_value == (char)(c - 'a' + 'A')
+
+T3: c > 'Z' && c < 'a'
+D3: return_value == c
+
+T4: c >= 'A' && c <= 'Z'
+D4: return_value == (char)(c - 'A' + 'a')
+
+T5: c < 'A'
+D5: return_value == c
+```
+
+```Modified FSF
+T1: c > 'z'
+D1: return_value == c
+
+T2: c >= 'a' && c <= 'z'
+D2: return_value == (char) ('a' - 'A' + c)
+
+T3: c > 'Z' && c < 'a'
+D3: return_value == c
+
+T4: c >= 'A' && c <= 'Z'
+D4: return_value == (char) (c - 'A' + 'a')
+
+T5: c < 'A'
+D5: return_value == c
+```
+*end* role user
+start role assistant
+```
+public class ChangeCase {
+
+    public static char changeCase(char c) {
+        char result = ' ';
+        if (c > 'z') {
+            result = c;
+        } else if (c >= 'a') {
+            result = (char) ('a' - 'A' + c);
+        } else if (c > 'Z') {
+            result = c;
+        } else if (c >= 'A') {
+            result = (char) (c - 'A' + 'a');
+        } else {
+            result = c;
+        }
+        return result;
+    }
+}
+```
+*end* role assistant
+
+start role user
+Please modify the following code according to the modified FSF:
+
+``Original Code
+public class AddLoop {
+    public static int AddLoop(int x, int y) {
+        int sum = x;
+        if (y > 0) {
+            int n = y;
+            while (n > 0) {
+                sum = sum + 1;
+                n = n - 1;
+            }
+        } else {
+            int n = -y;
+            while (n > 0) {
+                sum = sum - 1;
+                n = n - 1;
+            }
+        }
+        return sum;
+    }
+}
+```
+```Original FSF
+T1: x > 0
+D1: return_value == y + x
+
+T2: x < 0
+D2: return_value == y + x
+
+T3: x == 0
+D3: return_value == y
+```
+
+```Modified FSF
+T1: x > 0
+D1: return_value == y + 2 * x
+
+T2: x < 0
+D2: return_value == y - 2 * (-x)
+
+T3: x == 0
+D3: return_value == y
+```
+*end* role user
+start role assistant
+```
+public class AddLoopFor {
+    public static int addLoop(int x, int y) {
+        int sum = y;
+        if (x > 0) {
+            int n = 0;
+            for(n = x; n > 0; ) {
+                sum = sum + 2;
+                n = n - 1;
+            }
+        } else {
+            int n = 0;
+            for(n = -x; n > 0; ) {
+                sum = sum - 2;
+                n = n - 1;
+            }
+        }
+        return sum;
+    }
+}
+```
+*end* role assistant

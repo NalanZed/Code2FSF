@@ -1,0 +1,31 @@
+start role user
+Please generate an FSF for the program below:
+```
+public class MyPower_Mutant2 {
+    public static int power(int x, int n) {
+        int res = 1;
+        for(int i = 1; i <= n; i++){
+            res = res * x;
+        }
+        return res;
+    }
+}
+
+```
+*end* role user
+start role assistant
+```
+T1: n == 0
+D1: return_value == 1
+
+T2: n > 0
+D2: return_value == x ** n
+
+T3: n < 0
+D3: return_value == 1
+```
+*end* role assistant
+start role remark
+Validation SUCCESS--Iteration_N verified!
+Current conversation round is: [1]
+*end* role remark

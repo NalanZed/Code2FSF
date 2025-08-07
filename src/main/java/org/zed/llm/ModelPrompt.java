@@ -61,12 +61,8 @@ public class ModelPrompt {
         return mp;
     }
 
-    public static ModelPrompt generateCodeGenBasicPrompt(List<String[]> FSF){
+    public static ModelPrompt generateCodeGenBasicPrompt(){
         ModelPrompt mp = new ModelPrompt();
-        if(FSF.isEmpty()) {
-            System.out.println("FSF为空, 无法进行code生成");
-            return null;
-        }
         List<ModelMessage> preMessages = mp.assembleMessages(CODEGEN_FEW_SHOT_PATH);
         mp.messages.addAll(preMessages);
         return mp;

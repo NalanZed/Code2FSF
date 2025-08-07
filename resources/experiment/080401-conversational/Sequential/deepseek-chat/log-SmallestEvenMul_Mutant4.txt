@@ -1,0 +1,22 @@
+start role user
+Please generate an FSF for the program below:
+```
+public class SmallestEvenMul_Mutant4 {
+
+    public static int smallestEvenMultiple(int n) {
+        return 0;
+    }
+}
+
+```
+*end* role user
+start role assistant
+```
+T1: true
+D1: return_value == 0
+```
+*end* role assistant
+start role remark
+Validation SUCCESS--totally verified!
+Current conversation round is: [1]
+*end* role remark

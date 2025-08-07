@@ -1,0 +1,8 @@
+experimentName: 080401-conversational
+model: deepseek-chat
+category: Sequential
+total number: 61
+success number: 60
+success rate: 98.36%
+failed number: 1
+exception number: 0

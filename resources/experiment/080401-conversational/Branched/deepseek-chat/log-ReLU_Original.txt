@@ -1,0 +1,27 @@
+start role user
+Please generate an FSF for the program below:
+```
+public class ReLU_Original {
+    public static double computeReLU(double x) {
+        if(x >= 0.0) {
+            return x;
+        }
+        return 0.0;
+    }
+}
+
+```
+*end* role user
+start role assistant
+```
+T1: x >= 0.0
+D1: return_value == x
+
+T2: x < 0.0
+D2: return_value == 0.0
+```
+*end* role assistant
+start role remark
+Validation SUCCESS--totally verified!
+Current conversation round is: [1]
+*end* role remark

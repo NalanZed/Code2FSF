@@ -1,0 +1,28 @@
+start role user
+Please generate an FSF for the program below:
+```
+public class Disjunction_Mutant2 {
+    public static boolean disjunctOf(boolean b1, boolean b2) {
+        if(b1 == true){
+            if(b2 == true)
+                return true;
+        }
+        return false;
+    }
+}
+
+```
+*end* role user
+start role assistant
+```
+T1: b1 == true && b2 == true
+D1: return_value == true
+
+T2: b1 == false || b2 == false
+D2: return_value == false
+```
+*end* role assistant
+start role remark
+Validation SUCCESS--totally verified!
+Current conversation round is: [1]
+*end* role remark

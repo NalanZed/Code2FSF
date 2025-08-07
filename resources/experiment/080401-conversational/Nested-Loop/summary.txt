@@ -1,0 +1,8 @@
+experimentName: 080401-conversational
+model: deepseek-chat
+category: Nested-Loop
+total number: 32
+success number: 27
+success rate: 84.37%
+failed number: 5
+exception number: 0

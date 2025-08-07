@@ -1,0 +1,29 @@
+start role user
+Please generate an FSF for the program below:
+```
+public class DivisionOverflow_Mutant4 {
+    public static int division_test_fail_overflow(int nom, int denom) {
+        //~should_fail
+        if (denom != 0) { //add a check for denominator to be non-zero
+            int tmp = nom / denom;
+            return tmp;
+        }
+        return 0;
+    }
+}
+
+```
+*end* role user
+start role assistant
+```
+T1: denom == 0
+D1: return_value == 0
+
+T2: denom != 0
+D2: return_value == nom / denom
+```
+*end* role assistant
+start role remark
+Validation SUCCESS--totally verified!
+Current conversation round is: [1]
+*end* role remark

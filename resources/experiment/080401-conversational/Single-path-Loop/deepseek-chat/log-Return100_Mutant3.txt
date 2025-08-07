@@ -1,0 +1,25 @@
+start role user
+Please generate an FSF for the program below:
+```
+public class Return100_Mutant3 {
+    public static int return100 () {
+        int res = 0;
+        for(int i = 0; i < 100; i++) { // CHANGED: moved declaration of i inside the loop
+            res = i; // CHANGED: reassigning i to res instead of incrementing res
+        }
+        return res;
+    }
+}
+
+```
+*end* role user
+start role assistant
+```
+T1: true
+D1: return_value == 99
+```
+*end* role assistant
+start role remark
+Validation SUCCESS--totally verified!
+Current conversation round is: [1]
+*end* role remark

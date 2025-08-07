@@ -42,7 +42,7 @@ public class TransFileOperator {
         int numOther = 0;
         File[] allFiles =  fetchAllJavaFilesInDir(SOURCE_CODES_DIR);
         for (File file : allFiles) {
-            System.out.println("正在处理第["+ ++count +"]个程序："+file.getName());
+            System.out.println("Processing the ["+ ++count +"]th program："+file.getName());
             String program = file2String(file.getAbsolutePath());
             String targetPath;
 
@@ -82,13 +82,13 @@ public class TransFileOperator {
             }
             Files.copy(Paths.get(file.getAbsolutePath()), Paths.get(targetPath));
         }
-        System.out.println("一共处理了" + count + "个程序");
-        System.out.println("自带main方法的程序有" + numHasMain + "个");
-        System.out.println("只有一个static方法的程序有" + num1Static + "个");
-        System.out.println("有多个static方法的程序有" + numMulStatic + "个");
-        System.out.println("只有一个非静态方法的程序有" + num1Normal + "个");
-        System.out.println("有多个非静态方法的程序有" + numMulNormal + "个");
-        System.out.println("其它未分类程序有" + numOther + "个");
+//        System.out.println("一共处理了" + count + "个程序");
+//        System.out.println("自带main方法的程序有" + numHasMain + "个");
+//        System.out.println("只有一个static方法的程序有" + num1Static + "个");
+//        System.out.println("有多个static方法的程序有" + numMulStatic + "个");
+//        System.out.println("只有一个非静态方法的程序有" + num1Normal + "个");
+//        System.out.println("有多个非静态方法的程序有" + numMulNormal + "个");
+//        System.out.println("其它未分类程序有" + numOther + "个");
     }
     /*
      * @description 把非static方法，加上 static 修饰符，并转移到 ONE_STATIC_MD_CODES_DIR 目录
@@ -183,6 +183,9 @@ public class TransFileOperator {
         Files.createDirectories(Path.of(ADDED_STATIC_FLAG_DIR));
         Files.createDirectories(Path.of(ADDED_PRINT_CODES_DIR));
         Files.createDirectories(Path.of(TRANS_RUNNABLE_DIR));
+    }
+    public static void deleteTransWorkDir() throws IOException {
+        Files.deleteIfExists(Path.of(TRANS_WORK_DIR));
     }
 
     public static String file2String(String FilePath) {

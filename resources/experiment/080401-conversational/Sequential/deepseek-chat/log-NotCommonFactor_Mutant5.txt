@@ -1,0 +1,49 @@
+start role user
+Please generate an FSF for the program below:
+```
+public class NotCommonFactor_Mutant5 {
+
+    public static boolean notCommonFactor(int a, int b, int factor) {
+        return a % factor != 1 || b % factor != 0; // Changed 0 to 1 in first condition
+    }
+}
+
+```
+*end* role user
+start role assistant
+```
+T1: a % factor != 1
+D1: return_value == true
+
+T2: a % factor == 1 && b % factor != 0
+D2: return_value == true
+
+T3: a % factor == 1 && b % factor == 0
+D3: return_value == false
+```
+*end* role assistant
+start role user
+Unexpected exception thrown by the program under T: a % factor == 1 && b % factor != 0, please regenerate the FSF according to this exception!Exception founded:Exception in thread "main" java.lang.ArithmeticException: / by zero
+	at NotCommonFactor_Mutant5.notCommonFactor(NotCommonFactor_Mutant5.java:7)
+	at NotCommonFactor_Mutant5.main(NotCommonFactor_Mutant5.java:15)
+
+*end* role user
+start role assistant
+```
+T1: factor == 0
+D1: Exception
+
+T2: factor != 0 && a % factor != 1
+D2: return_value == true
+
+T3: factor != 0 && a % factor == 1 && b % factor != 0
+D3: return_value == true
+
+T4: factor != 0 && a % factor == 1 && b % factor == 0
+D4: return_value == false
+```
+*end* role assistant
+start role remark
+Validation SUCCESS--totally verified!
+Current conversation round is: [2]
+*end* role remark

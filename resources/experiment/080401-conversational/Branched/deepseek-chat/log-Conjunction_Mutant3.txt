@@ -1,0 +1,31 @@
+start role user
+Please generate an FSF for the program below:
+```
+public class Conjunction_Mutant3 {
+    public static boolean conjunctOf(boolean b1, boolean b2) {
+        if(b1 == false)
+            return false;
+        if(b2 == false)
+            return true;
+        return true;
+    }
+}
+
+```
+*end* role user
+start role assistant
+```
+T1: b1 == false
+D1: return_value == false
+
+T2: b1 == true && b2 == false
+D2: return_value == true
+
+T3: b1 == true && b2 == true
+D3: return_value == true
+```
+*end* role assistant
+start role remark
+Validation SUCCESS--totally verified!
+Current conversation round is: [1]
+*end* role remark

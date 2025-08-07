@@ -196,7 +196,7 @@ public class TestCaseAutoGenerator {
         int maxCount = 100000;
         boolean isOK = false;
         while(--maxCount >= 0) {
-            System.out.println("generate testcase count: " + (100000 - maxCount));
+//            System.out.println("generate testcase count: " + (100000 - maxCount));
             for (Parameter p : parameters) {
                 Type type = p.getType();
                 String o = generateRandomValue(type);
@@ -280,6 +280,7 @@ public class TestCaseAutoGenerator {
 
         // 执行表达式
         try {
+            System.out.println("MVEL expression: " + expression);
             Object result = MVEL.eval(expression, context);
             if (result instanceof Boolean) {
                 return (boolean) result;

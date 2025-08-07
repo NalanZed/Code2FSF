@@ -18,19 +18,19 @@ import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 
 public class LogManager {
 
-    private static final String RESOURCE_DIR = "resources";
-    private static final String LOG_DIR = RESOURCE_DIR + "/" +"log";
-    private static final String CODE_GEN_LOG_DIR = LOG_DIR + "/" + "codegen";
-    private static final String FSF_REVIEW_LOG_DIR = LOG_DIR + "/" +"FSFReview";
-    private static final String TRANS_WORK_DIR = RESOURCE_DIR + "/" + "trans";
-    private static final String LOG_FILE_SUFFIX = ".txt";
-    private static final String ADDED_PRINT_CODES_DIR = TRANS_WORK_DIR + "/"+ "addedPrintCodes";
-    private static final String TRANS_SOURCE_CODES_DIR = TRANS_WORK_DIR + "/"+ "sourceCodes";
-    private static final String SUCC_DATASET_DIR = RESOURCE_DIR + "/" + "succDataset";
-    private static final String FAILED_DATASET_DIR = RESOURCE_DIR + "/" + "failedDataset";
-    private static final String Exception_DATASET_DIR = RESOURCE_DIR + "/" + "exceptionDataset";
-    private static final String RUNNABLE_DIR = RESOURCE_DIR + "/" + "runnable";
-    private static final String EXPERIMENT_DIR = RESOURCE_DIR + "/" + "experiment";
+    public static final String RESOURCE_DIR = "resources";
+    public static final String LOG_DIR = RESOURCE_DIR + "/" +"log";
+    public static final String CODE_GEN_LOG_DIR = LOG_DIR + "/" + "codegen";
+    public static final String FSF_REVIEW_LOG_DIR = LOG_DIR + "/" +"FSFReview";
+    public static final String TRANS_WORK_DIR = RESOURCE_DIR + "/" + "trans";
+    public static final String LOG_FILE_SUFFIX = ".txt";
+    public static final String ADDED_PRINT_CODES_DIR = TRANS_WORK_DIR + "/"+ "addedPrintCodes";
+    public static final String TRANS_SOURCE_CODES_DIR = TRANS_WORK_DIR + "/"+ "sourceCodes";
+    public static final String SUCC_DATASET_DIR = RESOURCE_DIR + "/" + "succDataset";
+    public static final String FAILED_DATASET_DIR = RESOURCE_DIR + "/" + "failedDataset";
+    public static final String Exception_DATASET_DIR = RESOURCE_DIR + "/" + "exceptionDataset";
+    public static final String RUNNABLE_DIR = RESOURCE_DIR + "/" + "runnable";
+    public static final String EXPERIMENT_DIR = RESOURCE_DIR + "/" + "experiment";
 
     private static List<String> needInitDirs = new ArrayList<>();
 
@@ -556,8 +556,6 @@ public class LogManager {
         int sesucc = 0, sefailed = 0;
         int splsucc = 0, splfailed = 0;
 
-
-
         String[] strings = fetchSuffixFilePathInDir(sourceDir, ".java");
         for (String filePath : strings) {
             String fileName = filePath.substring(filePath.lastIndexOf("/") + 1, filePath.lastIndexOf("."));
@@ -611,6 +609,28 @@ public class LogManager {
 
     }
 
+    public static Set<String> getCategoriesInDatasetDir(String datasetDir){
+        Set<String> categories = new HashSet<>();
+        java.io.File dir = new java.io.File(datasetDir);
+        if (!dir.exists() || !dir.isDirectory()) {
+            System.err.println("目录不存在或不是一个目录: " + datasetDir);
+            return categories;
+        }
+        java.io.File[] files = dir.listFiles();
+        if (files != null) {
+            for (java.io.File file : files) {
+                if(!file.isDirectory()){
+                    continue;
+                }
+                String categoryName = file.getName();
+                categories.add(categoryName);
+            }
+        } else {
+            System.err.println("no categroies dir: " + datasetDir);
+        }
+        return categories;
+    }
+
     public static void printFSF(List<String[]> FSF){
         for (int i = 0; i < FSF.size(); i++) {
             String T = FSF.get(i)[0];
@@ -620,9 +640,31 @@ public class LogManager {
         }
     }
 
+    public static void clearCurrentExperimentTmpFiles(String experimentName,String category,String modelName) throws IOException {
+        System.out.println("Clearing the temporary files of current experiment: " + experimentName + " in category: " + category + " for model: " + modelName);
+        File[] files = fetchAllJavaFilesInDir(SUCC_DATASET_DIR);
+        for (File file : files) {
+            Files.delete(file.toPath());
+        }
+        files = fetchAllJavaFilesInDir(FAILED_DATASET_DIR);
+        for (File file : files) {
+            Files.delete(file.toPath());
+        }
+        files = fetchAllJavaFilesInDir(Exception_DATASET_DIR);
+        for (File file : files) {
+            Files.delete(file.toPath());
+        }
+        files = fetchTxtFileInDir(LOG_DIR + "/" + modelName);
+        if(files != null){
+            for (File file : files) {
+                Files.delete(file.toPath());
+            }
+        }
+    }
+
     public static void collectExperimentRecords(String category,String experimentName,String modelName){
         //创建实验记录目录
-        String experimentDir = EXPERIMENT_DIR + "/" + experimentName + "/" + category ;
+        String experimentDir = getExperimentLogPath(experimentName,category);
         try {
             Files.createDirectories(Path.of(experimentDir));
         } catch (IOException e) {
@@ -734,7 +776,15 @@ public class LogManager {
     public static void main(String[] args) throws IOException {
 //        classifyHandledCodeFiles("resources/dataset/4-shot/failedDataset");
 //        classifyHandledCodeFiles("resources/dataset/4-shot/succDataset");
-        moveClassifiedCode();
+//        moveClassifiedCode();
+//        Set<String> categoriesInDatasetDir = getCategoriesInDatasetDir("resources/dataset/0801-dataset");
+//        for (String category : categoriesInDatasetDir) {
+//            System.out.println(category);
+//        }
+        clearCurrentExperimentTmpFiles("080101-conversational","Single-path-Loop","deepseek-chat");
     }
 
+    public static String getExperimentLogPath(String experimentName,String category) {
+        return  EXPERIMENT_DIR + "/" + experimentName + "/" + category ;
+    }
 }

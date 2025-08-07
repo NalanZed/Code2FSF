@@ -9,7 +9,6 @@ import org.zed.tcg.TestCaseAutoGenerator;
 import org.zed.trans.ExecutionPathPrinter;
 import org.zed.trans.TransWorker;
 
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -21,7 +20,6 @@ import static org.zed.solver.Z3Solver.callZ3Solver;
 import static org.zed.tcg.ExecutionEnabler.generateMainMdUnderExpr;
 import static org.zed.tcg.ExecutionEnabler.insertMainMdInSSMP;
 import static org.zed.trans.ExecutionPathPrinter.addPrintStmt;
-import static org.zed.trans.ExecutionPathPrinter.stmtHasLoopStmt;
 import static org.zed.trans.TransWorker.pickSSMPCodes;
 
 public class FSFGenerator {
@@ -46,11 +44,8 @@ public class FSFGenerator {
         if(!argsMap.containsKey("model")){
             argsMap.put("model", "deepseek-chat");
         }
-        if(!argsMap.containsKey("input")){
-            argsMap.put("input", "resources/dataset/Example.java");
-        }
         if(!argsMap.containsKey("maxRounds")){
-            argsMap.put("maxRounds", "5");
+            argsMap.put("maxRounds", "1");
         }
     }
 
@@ -58,20 +53,19 @@ public class FSFGenerator {
     public static HashMap<String,String> handleArgs(String[] args){
         HashMap<String,String> argsMap = new HashMap<>();
         for (int i = 0; i < args.length - 1; i++) {
-            if ("--input".equals(args[i])) {
+            if ("--input".equals(args[i]) || "-i".equals(args[i])) {
                 argsMap.put("input", args[i + 1]);
             }
-            else if("--model".equals(args[i])){
+            else if("--model".equals(args[i]) || "-m".equals(args[i])){
                 argsMap.put("model", args[i + 1]);
             }
-            else if("--maxRounds".equals(args[i])){
+            else if("--maxRounds".equals(args[i]) || "-r".equals(args[i])){
                 argsMap.put("maxRounds", args[i + 1]);
             }
-            else if("--inputDir".equals(args[i])){
+            else if("--inputDir".equals(args[i]) || "-d".equals(args[i])){
                 argsMap.put("inputDir", args[i + 1]);
-            }
-            else if("-t".equals(args[i])){
-                argsMap.put("testMode", args[i + 1]);
+            }else if("--experimentName".equals(args[i]) || "-en".equals(args[i])) {
+                argsMap.put("experimentName", args[i + 1]);
             }
         }
         //检查输入参数，设置默认值
@@ -175,13 +169,17 @@ public class FSFGenerator {
             }
             else break;
         }
+        if(r.getStatus() == -3){
+            System.out.println("Timeout error occurred during validation of " + currentTD);
+            return "OVERTIME ERROR!";
+        }
         if(r.getStatus() == -2){
             System.out.println(currentTD + "\n" + "verification failed, there is an exception thrown by the program!");
             return "Unexpected exception thrown by the program under T: " + T + ", please regenerate the FSF according to this exception!" + r.getCounterExample();
         }
         if(r.getStatus() == -1){
             System.out.println(currentTD + "\n" + "verification failed, please check the log for details!");
-            return "Some errors merged while verifying" + currentTD +", "  + r.getCounterExample() + ", please regenerate the FSF!";
+            return "Some errors occurred while verifying" + currentTD +", "  + r.getCounterExample() + ", please regenerate the FSF!";
         }
         if(r.getStatus() == 0 && countOfPathValidated == maxRoundsOf1CoupleOfTD){
             System.out.println("The verified paths is over " + maxRoundsOf1CoupleOfTD + ", end of validation for " + currentTD);
@@ -304,6 +302,12 @@ public class FSFGenerator {
                 if(validationTDResult.equals("SUCCESS") || validationTDResult.equals("PARTIALLY SUCCESS")){
                     continue;
                 }
+                if(validationTDResult.equals("OVERTIME ERROR!")){
+                    System.err.println(currentTD + "\n" + "======>overtime error, please check the log for details!");
+                    LogManager.appendCode2FSFRemark(logPath,"Validation FAIL--" + validationTDResult +
+                            "\n" + "Current conversation round is: [" + count + "]");
+                    return false;
+                }
                 if(validationTDResult.equals("ERROR")){
                     String errorInfo = "Some error unhandled happened in validation stage，please check the log!";
                     System.err.println(currentTD + "\t" + errorInfo);
@@ -392,30 +396,51 @@ public class FSFGenerator {
                 continue;
             }
             if(Files.exists(Path.of(handledFilePath))){
-                System.out.println("文件已存在于succDataset目录中，跳过");
+                System.out.println("This file alreadt exists in dir succDataset, skip it.");
                 countSucc++;
                 continue;
             }
             try{
                 boolean succ = runConversations(maxRounds, mc, filePath);
                 if(succ) {
-                    System.out.println("将成功的代码保存到 SuccDataset 目录下");
+                    System.out.println("Generation success! Copy the code to succDataset directory");
                     LogManager.copyFileToSuccDataset(filePath);
                     countSucc++;
                 } else {
-                    System.err.println("将失败的代码保存到 FailedDataset 目录下");
+                    System.err.println("Generation failed! Copy the code to succDataset directory");
                     LogManager.copyFileToFailedDataset(filePath);
                     countFail++;
                 }
             }catch (Exception e){
                 System.err.println("Error during runConversations for file: " + filePath);
-                System.err.println("将失败的代码保存到 resources/exceptionDataset 目录下");
+                System.err.println("Unexpected error ocurred during generation or verification, copy the code to exceptionDataset directory");
                 countException++;
                 LogManager.copyFileToExceptionDataset(filePath);
             }
         }
-        System.out.println("共处理程序 " + countTotal + " 个， " + "成功 " + countSucc + " 个 , " + "失败 " + countFail + "个" +
-                "，异常 " + countException + " 个");
+        System.out.println("Total num: " + countTotal + " , " + "Success num: " + countSucc + " , " + "Failed num: " + countFail + " , " +
+                "Exception num: " + countException);
+    }
+
+    public static void runConversationForDataset(int maxRounds,ModelConfig mc, String datasetDir,String experimentName) throws Exception {
+        Set<String> categories = LogManager.getCategoriesInDatasetDir(datasetDir);
+        //如果没有categories,那当前目录名作为一个类别,处理单独一个类别实验时起作用
+        if(categories.isEmpty()){
+            categories.add(datasetDir.substring(datasetDir.lastIndexOf("/") + 1));
+            datasetDir = datasetDir.substring(0, datasetDir.lastIndexOf("/"));
+        }
+        for (String category : categories) {
+            System.out.println("Start experiment for category: " + category);
+            String experimentDir = LogManager.getExperimentLogPath(experimentName,category);
+            if(Files.exists(Path.of(experimentDir))) {
+                System.out.println("Experiment directory already exists, maybe this task has been done, skip it: " + experimentName + "-" + category);
+                continue;
+            }
+            String SSMPDir = pickSSMPCodes(datasetDir + "/" + category);
+            runConversationForDir(maxRounds, mc, SSMPDir);
+            LogManager.collectExperimentRecords(category,experimentName,mc.getModelName());
+            LogManager.clearCurrentExperimentTmpFiles(experimentName,category, mc.getModelName());
+        }
     }
 
     public static boolean FSFReview(ModelConfig mc,String inputFilePath) throws IOException {
@@ -595,6 +620,7 @@ public class FSFGenerator {
         String inputFilePath = argsMap.get("input");
         String inputDir = argsMap.get("inputDir");
         String model = argsMap.get("model");
+        String experimentName = argsMap.get("experimentName");
 
         boolean initLogSucc = LogManager.initLogWorkDirs();
         if(!initLogSucc) return;
@@ -603,13 +629,15 @@ public class FSFGenerator {
         //先清理一下旧日志
         LogManager.cleanLogOfModel(model);
 
-
         if(inputDir == null || inputDir.isEmpty()){
             runConversations(maxRounds, mc, inputFilePath);
         }
         else{
-            inputDir = pickSSMPCodes(inputDir);
-            runConversationForDir(maxRounds, mc, inputDir);
+            if(experimentName == null || experimentName.isEmpty()){
+                System.out.println("Experiment name is not provided, please provide a name for the experiment.");
+                return;
+            }
+            runConversationForDataset(maxRounds, mc, inputDir,experimentName);
         }
     }
 

@@ -1,0 +1,21 @@
+start role user
+Please generate an FSF for the program below:
+```
+public class DivisorGame_Mutant5 {
+    public static boolean divisorGame(int n) {
+        return true;
+    }
+}
+
+```
+*end* role user
+start role assistant
+```
+T1: true
+D1: return_value == true
+```
+*end* role assistant
+start role remark
+Validation SUCCESS--totally verified!
+Current conversation round is: [1]
+*end* role remark
