@@ -1,0 +1,82 @@
+start role user
+Please modify the following code according to the modified FSF:
+```Code
+
+
+public class SubLoop_Original {
+    public static int subLoop(int x, int y) {
+        int sum = x;
+        if (y > 0) {
+            int n = y;
+            while (n > 0) {
+                sum = sum - 1;
+                n = n - 1;
+            }
+        } else {
+            int n = -y;
+            while (n > 0) {
+                sum = sum + 1;
+                n = n - 1;
+            }
+        }
+        return sum;
+    }
+}
+
+```
+```Original FSF
+T0: y > 0
+D0: sum == x - y
+
+T1: y < 0
+D1: sum == x + (-y)
+
+T2: y == 0
+D2: sum == x
+
+```Modified FSF
+T0: y > 0
+D0: sum == x - y
+
+T1: (y < 0) || (y == 0)
+D1: sum == x + (-y)
+
+```
+
+
+*end* role user
+start role assistant
+```
+public class SubLoop_Modified {
+    public static int subLoop(int x, int y) {
+        int sum = x;
+        if (y > 0) {
+            int n = y;
+            while (n > 0) {
+                sum = sum - 1;
+                n = n - 1;
+            }
+        } else {
+            int n = -y;
+            while (n > 0) {
+                sum = sum + 1;
+                n = n - 1;
+            }
+        }
+        return sum;
+    }
+}
+```
+
+Wait, I see that the modified FSF actually combines T1 and T2 cases into one condition (y ≤ 0), but the behavior remains exactly the same as the original code. The original code already satisfies the modified FSF because:
+
+1. When y > 0, it returns x - y (matches D0)
+2. When y ≤ 0 (either y < 0 or y == 0), it returns x + (-y):
+   - For y < 0: returns x + (-y) (matches D1)
+   - For y == 0: returns x + 0 (which equals x, matches D1)
+
+Therefore, no actual code modification is needed as the original implementation already satisfies the modified FSF. The modified FSF just combines two of the cases into a single condition.
+*end* role assistant
+start role remark
+Validation SUCCESS!
+*end* role remark

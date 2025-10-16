@@ -1,0 +1,53 @@
+start role user
+Please modify the following code according to the modified FSF:
+```Code
+
+
+public class Disjunction_Original {
+    public static boolean disjunctOf(boolean b1, boolean b2) {
+        if(b1 == true)
+            return true;
+        if(b2 == true)
+            return true;
+        return false;
+    }
+}
+
+```
+```Original FSF
+T0: b1 == true
+D0: return_value == true
+
+T1: b1 == false && b2 == true
+D1: return_value == true
+
+T2: b1 == false && b2 == false
+D2: return_value == false
+
+```Modified FSF
+T0: (b1 == true) || (b1 == false && b2 == true)
+D0: return_value == true
+
+T1: b1 == false && b2 == false
+D1: return_value == false
+
+```
+
+
+*end* role user
+start role assistant
+```
+public class Disjunction_Modified {
+    public static boolean disjunctOf(boolean b1, boolean b2) {
+        if(b1 == true)
+            return true;
+        if(b2 == true)
+            return true;
+        return false;
+    }
+}
+```
+*end* role assistant
+start role remark
+Validation SUCCESS!
+*end* role remark

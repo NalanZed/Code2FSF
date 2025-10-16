@@ -1,0 +1,53 @@
+public class PassPillowBranch_Original {
+
+    //@ requires n >= 1;
+    //@ requires time >= 0;
+    //@ ensures \result >= 1 && \result <= n;
+    //@ signals (IllegalArgumentException e) n < 1;
+    public static int passPillow(int n, int time) {
+        if(n - 1 < 0){
+            throw new IllegalArgumentException("n is less than 1");
+        }
+        time = time % ((n - 1) * 2);
+        if (time < n) {
+            //@ assert time >= 0 && time < n;
+            //@ assert \result == time + 1;
+            return time + 1;
+        }
+        //@ assert time >= n && time < (n - 1) * 2;
+        //@ assert \result == n * 2 - time - 1;
+        return n * 2 - time - 1;
+    }
+}
+==============================
+/root/specgen/SpecGen/project/081403-specgen/tmp/PassPillowBranch_Original.java:14: error: A \result expression may not be in a assert clause
+            //@ assert \result == time + 1;
+                        ^
+/root/specgen/SpecGen/project/081403-specgen/tmp/PassPillowBranch_Original.java:18: error: A \result expression may not be in a assert clause
+        //@ assert \result == n * 2 - time - 1;
+                    ^
+2 errors
+
+==============================
+public class PassPillowBranch_Original {
+
+    //@ requires n >= 1;
+    //@ requires time >= 0;
+    //@ ensures \result >= 1 && \result <= n;
+    //@ signals (IllegalArgumentException e) n < 1;
+    public static int passPillow(int n, int time) {
+        if(n - 1 < 0){
+            throw new IllegalArgumentException("n is less than 1");
+        }
+        time = time % ((n - 1) * 2);
+        if (time < n) {
+            //@ assert time >= 0 && time < n;
+            return time + 1;
+        }
+        //@ assert time >= n && time < (n - 1) * 2;
+        return n * 2 - time - 1;
+    }
+}
+==============================
+
+==============================

@@ -1,0 +1,80 @@
+start role user
+Please modify the following code according to the modified FSF:
+```Code
+
+
+public class SubLoop_Original {
+    public static int subLoop(int x, int y) {
+        int sum = x;
+        if (y > 0) {
+            int n = y;
+            while (n > 0) {
+                sum = sum - 1;
+                n = n - 1;
+            }
+        } else {
+            int n = -y;
+            while (n > 0) {
+                sum = sum + 1;
+                n = n - 1;
+            }
+        }
+        return sum;
+    }
+}
+
+```
+```Original FSF
+T0: y > 0
+D0: sum == x - y
+
+T1: y < 0
+D1: sum == x + (-y)
+
+T2: y == 0
+D2: sum == x
+
+```Modified FSF
+T0: y > 0
+D0: sum == x - y
+
+T1: (y < 0) || (y == 0)
+D1: sum == x + (-y)
+
+```
+
+
+*end* role user
+start role assistant
+```
+public class SubLoop_Modified {
+    public static int subLoop(int x, int y) {
+        int sum = x;
+        if (y > 0) {
+            int n = y;
+            while (n > 0) {
+                sum = sum - 1;
+                n = n - 1;
+            }
+        } else {
+            int n = -y;
+            while (n > 0) {
+                sum = sum + 1;
+                n = n - 1;
+            }
+        }
+        return sum;
+    }
+}
+```
+
+The modified code is actually identical to the original code in this case, because:
+1. The original code already handles the case where y == 0 correctly (it falls into the else branch with n = 0, so the while loop is skipped)
+2. The modified FSF combines cases T1 and T2 from the original FSF, but the behavior remains the same since when y == 0, (-y) is also 0, making sum == x + 0 == x
+3. The logic for both positive and negative y values remains unchanged
+
+Therefore, no actual code changes were needed to satisfy the modified FSF requirements. The original implementation already meets the new specification.
+*end* role assistant
+start role remark
+Validation SUCCESS!
+*end* role remark

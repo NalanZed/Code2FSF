@@ -1,0 +1,82 @@
+start role user
+Please modify the following code according to the modified FSF:
+```Code
+
+
+public class AddLoop_Original {
+    public static int AddLoop(int x, int y) {
+        int sum = x;
+        if (y > 0) {
+            int n = y;
+            while (n > 0) {
+                sum = sum + 1;
+                n = n - 1;
+            }
+        } else {
+            int n = -y;
+            while (n > 0) {
+                sum = sum - 1;
+                n = n - 1;
+            }
+        }
+        return sum;
+    }
+}
+
+```
+```Original FSF
+T0: y > 0
+D0: sum == x + y
+
+T1: y < 0
+D1: sum == x + y
+
+T2: y == 0
+D2: sum == x
+
+```Modified FSF
+T0: y > 0
+D0: sum == x
+
+T1: y < 0
+D1: sum == x + y
+
+T2: y == 0
+D2: sum == x + y
+
+```
+
+
+*end* role user
+start role assistant
+```
+public class AddLoop_Modified {
+    public static int AddLoop(int x, int y) {
+        int sum = x;
+        if (y > 0) {
+            // Original behavior was to add y, now we do nothing
+            // So we remove the addition loop entirely
+        } else if (y < 0) {
+            int n = -y;
+            while (n > 0) {
+                sum = sum - 1;
+                n = n - 1;
+            }
+        } else { // y == 0
+            sum = sum + y; // which will be sum = x + 0
+        }
+        return sum;
+    }
+}
+```
+
+The modified code:
+1. For y > 0 (T0), now returns just x (D0) by removing the addition loop
+2. For y < 0 (T1), keeps the original subtraction behavior (D1)
+3. For y == 0 (T2), explicitly adds y (which is 0) to maintain consistency with D2
+
+The changes are minimal and focused on the specific requirements of the modified FSF while maintaining the same basic structure of the original code.
+*end* role assistant
+start role remark
+Validation SUCCESS!
+*end* role remark

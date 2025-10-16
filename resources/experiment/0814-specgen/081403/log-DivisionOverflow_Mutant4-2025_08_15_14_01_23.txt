@@ -1,0 +1,54 @@
+public class DivisionOverflow_Mutant4 {
+    /*@ public normal_behavior
+      @   requires denom != 0;
+      @   ensures \result == nom / denom;
+      @   signals (ArithmeticException) denom == 0;
+      @   signals_only ArithmeticException;
+      @*/
+    public static int division_test_fail_overflow(int nom, int denom) {
+        //~should_fail
+        if (denom != 0) { //add a check for denominator to be non-zero
+            int tmp = nom / denom;
+            return tmp;
+        }
+        return 0;
+    }
+}
+==============================
+/root/specgen/SpecGen/project/081403-specgen/tmp/DivisionOverflow_Mutant4.java:5: error: Signals clauses are not permitted in normal specification cases
+      @   signals (ArithmeticException) denom == 0;
+          ^
+/root/specgen/SpecGen/project/081403-specgen/tmp/DivisionOverflow_Mutant4.java:6: error: Signals_only clauses are not permitted in normal specification cases
+      @   signals_only ArithmeticException;
+          ^
+2 errors
+
+==============================
+public class DivisionOverflow_Mutant4 {
+    /*@ public normal_behavior
+      @   requires denom != 0;
+      @   ensures \result == nom / denom;
+      @   also
+      @   public exceptional_behavior
+      @   requires denom == 0;
+      @   signals (ArithmeticException) true;
+      @*/
+    public static int division_test_fail_overflow(int nom, int denom) {
+        //~should_fail
+        if (denom != 0) { //add a check for denominator to be non-zero
+            int tmp = nom / denom;
+            return tmp;
+        }
+        return 0;
+    }
+}
+==============================
+/root/specgen/SpecGen/project/081403-specgen/tmp/DivisionOverflow_Mutant4.java:16: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081403-specgen/tmp/DivisionOverflow_Mutant4.java:6:) in method division_test_fail_overflow
+        return 0;
+        ^
+/root/specgen/SpecGen/project/081403-specgen/tmp/DivisionOverflow_Mutant4.java:6: verify: Associated declaration: /root/specgen/SpecGen/project/081403-specgen/tmp/DivisionOverflow_Mutant4.java:16:
+      @   public exceptional_behavior
+                 ^
+2 verification failures
+
+==============================

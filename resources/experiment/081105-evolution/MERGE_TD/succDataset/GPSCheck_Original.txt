@@ -1,0 +1,102 @@
+START ORIGINAL CODE
+
+public class GPSCheck_Original {
+    public static int GPSCheck(int satellites, int signalStrength) {
+        int alarm = 0;
+        if (satellites < 4) {
+            alarm = 1;
+        }
+        if (signalStrength < 20) {
+            alarm = 2;
+        }
+        return alarm;
+    }
+}
+
+*END* ORIGINAL CODE
+START ORIGINAL FSF
+T1: satellites < 4 && signalStrength < 20
+D1: alarm == 2
+T2: satellites < 4 && signalStrength >= 20
+D2: alarm == 1
+T3: satellites >= 4 && signalStrength < 20
+D3: alarm == 2
+T4: satellites >= 4 && signalStrength >= 20
+D4: alarm == 0
+*END* ORIGINAL FSF
+START MODIFIED FSF
+T1: satellites < 4 && signalStrength < 20
+D1: alarm == 2
+T2: satellites >= 4 && signalStrength < 20
+D2: alarm == 2
+T3: (satellites >= 4 && signalStrength >= 20) || (satellites < 4 && signalStrength >= 20)
+D3: alarm == 0
+*END* MODIFIED FSF
+START ORIGINAL CODE
+
+public class GPSCheck_Original {
+    public static int GPSCheck(int satellites, int signalStrength) {
+        int alarm = 0;
+        if (satellites < 4) {
+            alarm = 1;
+        }
+        if (signalStrength < 20) {
+            alarm = 2;
+        }
+        return alarm;
+    }
+}
+
+*END* ORIGINAL CODE
+START ORIGINAL FSF
+T1: satellites < 4 && signalStrength < 20
+D1: alarm == 2
+T2: satellites < 4 && signalStrength >= 20
+D2: alarm == 1
+T3: satellites >= 4 && signalStrength < 20
+D3: alarm == 2
+T4: satellites >= 4 && signalStrength >= 20
+D4: alarm == 0
+*END* ORIGINAL FSF
+START MODIFIED FSF
+T1: (satellites < 4 && signalStrength < 20) || (satellites >= 4 && signalStrength < 20)
+D1: alarm == 2
+T2: satellites < 4 && signalStrength >= 20
+D2: alarm == 1
+T3: satellites >= 4 && signalStrength >= 20
+D3: alarm == 0
+*END* MODIFIED FSF
+START ORIGINAL CODE
+
+public class GPSCheck_Original {
+    public static int GPSCheck(int satellites, int signalStrength) {
+        int alarm = 0;
+        if (satellites < 4) {
+            alarm = 1;
+        }
+        if (signalStrength < 20) {
+            alarm = 2;
+        }
+        return alarm;
+    }
+}
+
+*END* ORIGINAL CODE
+START ORIGINAL FSF
+T1: satellites < 4 && signalStrength < 20
+D1: alarm == 2
+T2: satellites < 4 && signalStrength >= 20
+D2: alarm == 1
+T3: satellites >= 4 && signalStrength < 20
+D3: alarm == 2
+T4: satellites >= 4 && signalStrength >= 20
+D4: alarm == 0
+*END* ORIGINAL FSF
+START MODIFIED FSF
+T1: satellites < 4 && signalStrength < 20
+D1: alarm == 2
+T2: (satellites < 4 && signalStrength >= 20) || (satellites >= 4 && signalStrength >= 20)
+D2: alarm == 1
+T3: satellites >= 4 && signalStrength < 20
+D3: alarm == 2
+*END* MODIFIED FSF

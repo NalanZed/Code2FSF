@@ -1,0 +1,34 @@
+public class SafeLanding_Mutant1 {
+    //@ requires Integer.MIN_VALUE <= height <= Integer.MAX_VALUE;
+    //@ requires Integer.MIN_VALUE <= speed <= Integer.MAX_VALUE;
+    //@ requires Integer.MIN_VALUE <= tilt <= Integer.MAX_VALUE;
+    //@ ensures \result == 0 || \result == 1;
+    //@ ensures (height <= 5 || speed > 3 || tilt > 10) ==> \result == 0;
+    //@ ensures (height > 5 && speed <= 3 && tilt <= 10) ==> \result == 1;
+    public static int safeLanding(int height, int speed, int tilt) {
+        int safe = 1;
+        //@ assert safe == 1;
+        if (height <= 5) {
+            safe = 0;
+            //@ assert safe == 0;
+        }
+        //@ assert (height <= 5) ==> (safe == 0);
+        //@ assert (height > 5) ==> (safe == 1);
+        if (speed > 3) {
+            safe = 0;
+            //@ assert safe == 0;
+        }
+        //@ assert (speed > 3) ==> (safe == 0);
+        //@ assert (speed <= 3 && height > 5) ==> (safe == 1);
+        if (tilt > 10) {
+            safe = 0;
+            //@ assert safe == 0;
+        }
+        //@ assert (tilt > 10) ==> (safe == 0);
+        //@ assert (tilt <= 10 && speed <= 3 && height > 5) ==> (safe == 1);
+        return safe;
+    }
+}
+==============================
+
+==============================

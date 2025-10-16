@@ -4,16 +4,15 @@ import com.github.javaparser.ast.body.MethodDeclaration;
 import com.github.javaparser.ast.body.Parameter;
 import com.github.javaparser.ast.type.Type;
 import org.mvel2.MVEL;
-import org.zed.Result;
-import org.zed.SpecUnit;
+import org.zed.TBFV.TBFVResult;
+import org.zed.verification.SpecUnit;
 
 import java.io.IOException;
-import java.math.BigInteger;
 import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 
 import static org.zed.log.LogManager.file2String;
-import static org.zed.solver.Z3Solver.callZ3Solver2GenerateTestcase;
+import static org.zed.TBFV.Z3Solver.callZ3Solver2GenerateTestcase;
 import static org.zed.trans.ExecutionPathPrinter.addPrintStmt;
 
 public class TestCaseAutoGenerator {
@@ -127,7 +126,7 @@ public class TestCaseAutoGenerator {
     public static HashMap<String,String> generateTestCaseByZ3(String constrainExpr, String ssmp){
         HashMap<String, String> map = new HashMap<>();
         HashMap<String, String> paramTypeMap = new HashMap<>();
-        Result r;
+        TBFVResult r;
         MethodDeclaration md = ExecutionEnabler.getFirstStaticMethod(ssmp);
         List<Parameter> parameters = md.getParameters();
 

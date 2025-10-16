@@ -1,0 +1,200 @@
+START ORIGINAL CODE
+
+public class DivisorGame_Original {
+
+    public static boolean divisorGame(int n) {
+        return n % 2 == 0;
+    }
+}
+
+*END* ORIGINAL CODE
+START ORIGINAL FSF
+T1: n % 2 == 0
+D1: return_value == true
+T2: n % 2 != 0
+D2: return_value == false
+*END* ORIGINAL FSF
+START MODIFIED FSF
+T1: (n % 2 == 0) || (n % 2 != 0)
+D1: return_value == true
+*END* MODIFIED FSF
+START ORIGINAL CODE
+
+public class DivisorGame_Original {
+
+    public static boolean divisorGame(int n) {
+        return n % 2 == 0;
+    }
+}
+
+*END* ORIGINAL CODE
+START ORIGINAL FSF
+T1: n % 2 == 0
+D1: return_value == true
+T2: n % 2 != 0
+D2: return_value == false
+*END* ORIGINAL FSF
+START MODIFIED FSF
+T1: (n % 2 != 0) || (n % 2 == 0)
+D1: return_value == false
+*END* MODIFIED FSF
+START ORIGINAL CODE
+
+public class DivisorGame_Original {
+
+    public static boolean divisorGame(int n) {
+        return n % 2 == 0;
+    }
+}
+
+*END* ORIGINAL CODE
+START ORIGINAL FSF
+T1: n % 2 == 0
+D1: return_value == true
+T2: n % 2 != 0
+D2: return_value == false
+*END* ORIGINAL FSF
+START MODIFIED FSF
+T1: (n % 2 == 0) || (n % 2 != 0)
+D1: return_value == true
+*END* MODIFIED FSF
+START ORIGINAL CODE
+
+public class DivisorGame_Original {
+
+    public static boolean divisorGame(int n) {
+        return n % 2 == 0;
+    }
+}
+
+*END* ORIGINAL CODE
+START ORIGINAL FSF
+T1: n % 2 == 0
+D1: return_value == true
+T2: n % 2 != 0
+D2: return_value == false
+*END* ORIGINAL FSF
+START MODIFIED FSF
+T1: (n % 2 == 0) || (n % 2 != 0)
+D1: return_value == true
+*END* MODIFIED FSF
+START ORIGINAL CODE
+
+public class DivisorGame_Original {
+
+    public static boolean divisorGame(int n) {
+        return n % 2 == 0;
+    }
+}
+
+*END* ORIGINAL CODE
+START ORIGINAL FSF
+T1: n % 2 == 0
+D1: return_value == true
+T2: n % 2 != 0
+D2: return_value == false
+*END* ORIGINAL FSF
+START MODIFIED FSF
+T1: (n % 2 == 0) || (n % 2 != 0)
+D1: return_value == true
+*END* MODIFIED FSF
+START ORIGINAL CODE
+
+public class DivisorGame_Original {
+
+    public static boolean divisorGame(int n) {
+        return n % 2 == 0;
+    }
+}
+
+*END* ORIGINAL CODE
+START ORIGINAL FSF
+T1: n % 2 == 0
+D1: return_value == true
+T2: n % 2 != 0
+D2: return_value == false
+*END* ORIGINAL FSF
+START MODIFIED FSF
+T1: (n % 2 != 0) || (n % 2 == 0)
+D1: return_value == false
+*END* MODIFIED FSF
+START ORIGINAL CODE
+
+public class DivisorGame_Original {
+
+    public static boolean divisorGame(int n) {
+        return n % 2 == 0;
+    }
+}
+
+*END* ORIGINAL CODE
+START ORIGINAL FSF
+T1: n % 2 == 0
+D1: return_value == true
+T2: n % 2 != 0
+D2: return_value == false
+*END* ORIGINAL FSF
+START MODIFIED FSF
+T1: (n % 2 == 0) || (n % 2 != 0)
+D1: return_value == true
+*END* MODIFIED FSF
+START ORIGINAL CODE
+
+public class DivisorGame_Original {
+
+    public static boolean divisorGame(int n) {
+        return n % 2 == 0;
+    }
+}
+
+*END* ORIGINAL CODE
+START ORIGINAL FSF
+T1: n % 2 == 0
+D1: return_value == true
+T2: n % 2 != 0
+D2: return_value == false
+*END* ORIGINAL FSF
+START MODIFIED FSF
+T1: (n % 2 == 0) || (n % 2 != 0)
+D1: return_value == true
+*END* MODIFIED FSF
+START ORIGINAL CODE
+
+public class DivisorGame_Original {
+
+    public static boolean divisorGame(int n) {
+        return n % 2 == 0;
+    }
+}
+
+*END* ORIGINAL CODE
+START ORIGINAL FSF
+T1: n % 2 == 0
+D1: return_value == true
+T2: n % 2 != 0
+D2: return_value == false
+*END* ORIGINAL FSF
+START MODIFIED FSF
+T1: (n % 2 == 0) || (n % 2 != 0)
+D1: return_value == true
+*END* MODIFIED FSF
+START ORIGINAL CODE
+
+public class DivisorGame_Original {
+
+    public static boolean divisorGame(int n) {
+        return n % 2 == 0;
+    }
+}
+
+*END* ORIGINAL CODE
+START ORIGINAL FSF
+T1: n % 2 == 0
+D1: return_value == true
+T2: n % 2 != 0
+D2: return_value == false
+*END* ORIGINAL FSF
+START MODIFIED FSF
+T1: (n % 2 != 0) || (n % 2 == 0)
+D1: return_value == false
+*END* MODIFIED FSF

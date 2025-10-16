@@ -1,0 +1,40 @@
+start role user
+Please modify the following code according to the modified FSF:
+```Code
+
+
+public class CanWinNim_Original {
+
+    public static boolean canWinNim(int n) {
+        return n % 4 != 0;
+    }
+}
+
+```
+```Original FSF
+T0: n % 4 != 0
+D0: return_value == true
+
+T1: n % 4 == 0
+D1: return_value == false
+
+```Modified FSF
+T0: (n % 4 == 0) || (n % 4 != 0)
+D0: return_value == false
+
+```
+
+
+*end* role user
+start role assistant
+```
+public class CanWinNim_Modified {
+    public static boolean canWinNim(int n) {
+        return false;
+    }
+}
+```
+*end* role assistant
+start role remark
+Validation SUCCESS!
+*end* role remark

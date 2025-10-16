@@ -105,7 +105,7 @@ This formulation:
    - An alternative formulation that avoids the modulo operation's edge cases
 3. The "||" allows either formula to be valid, ensuring all cases are covered
 
-Both expressions will give the same result for all positive integers, including edge cases like 9, 10, 19, 64, 92, etc.
+Both expressions will give the same TBFVResult for all positive integers, including edge cases like 9, 10, 19, 64, 92, etc.
 *end* role assistant
 start role user
 When the variables are assigned as num: 97	，the output of the program violates T: num >= 10	D: return_value == ((num - 1) % 9) + 1 || return_value == num - 9*((num-1)/9)，please regenerate the FSF according this counterexample！

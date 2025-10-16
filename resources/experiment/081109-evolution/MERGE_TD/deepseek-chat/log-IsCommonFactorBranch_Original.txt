@@ -1,0 +1,68 @@
+start role user
+Please modify the following code according to the modified FSF:
+```Code
+
+
+public class IsCommonFactorBranch_Original {
+    public static boolean isCommonFactor (int a, int b, int factor) {
+        if (a % factor != 0) {
+            return false;
+        }
+        if (b % factor != 0) {
+            return false;
+        }
+        return true;
+    }
+}
+
+```
+```Original FSF
+T0: factor == 0
+D0: Exception
+
+T1: factor != 0 && (a % factor != 0 || b % factor != 0)
+D1: return_value == false
+
+T2: factor != 0 && a % factor == 0 && b % factor == 0
+D2: return_value == true
+
+```Modified FSF
+T0: (factor == 0) || (factor != 0 && a % factor == 0 && b % factor == 0)
+D0: Exception
+
+T1: factor != 0 && (a % factor != 0 || b % factor != 0)
+D1: return_value == false
+
+```
+
+
+*end* role user
+start role assistant
+```
+public class IsCommonFactorBranch_Modified {
+    public static boolean isCommonFactor(int a, int b, int factor) {
+        if (factor == 0 || (factor != 0 && a % factor == 0 && b % factor == 0)) {
+            throw new IllegalArgumentException("Invalid factor");
+        }
+        if (a % factor != 0 || b % factor != 0) {
+            return false;
+        }
+        return true;
+    }
+}
+```
+
+The modified code:
+1. Changes the first condition to match the modified FSF's T0 case where we throw an exception
+2. Simplifies the logic by combining the two original checks into a single condition
+3. Maintains the same behavior for the remaining cases
+4. The return true case is now implicit in the control flow
+
+Note that this implementation will:
+- Throw an exception when factor is 0 OR when it's a valid common factor
+- Return false when factor is not a common factor
+- The original true case is now covered by the exception case in the modified FSF
+*end* role assistant
+start role remark
+Validation SUCCESS!
+*end* role remark

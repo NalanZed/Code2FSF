@@ -4,19 +4,19 @@ Please generate an FSF for the program below:
 public class ChangeCase_Mutant3 {
 
     public static char changeCase(char c) {
-        char result = ' ';
+        char TBFVResult = ' ';
         if (c > 'z') {
-            result = c;
+            TBFVResult = c;
         } else if (c >= 'a') {
-            result = (char) (c - 'a' + 'A');
+            TBFVResult = (char) (c - 'a' + 'A');
         } else if (c > 'Z') {
-            result = c;
+            TBFVResult = c;
         } else if (c >= 'A') {
-            result = (char) (c - 'A' + 'a');
+            TBFVResult = (char) (c - 'A' + 'a');
         } else {
-            result = c;
+            TBFVResult = c;
         }
-        return result;
+        return TBFVResult;
     }
 }
 
@@ -25,13 +25,13 @@ public class ChangeCase_Mutant3 {
 start role assistant
 ```
 T1: c > 'z' || (c > 'Z' && c < 'A') || c < 'A'
-D1: result == c
+D1: TBFVResult == c
 
 T2: c >= 'a' && c <= 'z'
-D2: result == (char)(c - 'a' + 'A')
+D2: TBFVResult == (char)(c - 'a' + 'A')
 
 T3: c >= 'A' && c <= 'Z'
-D3: result == (char)(c - 'A' + 'a')
+D3: TBFVResult == (char)(c - 'A' + 'a')
 ```
 *end* role assistant
 start role user
@@ -40,19 +40,19 @@ The generated FSF lacks completeness，specifically,(!((c > 'z' || (c > 'Z' && c
 start role assistant
 ```
 T1: c > 'z'
-D1: result == c
+D1: TBFVResult == c
 
 T2: c < 'A'
-D2: result == c
+D2: TBFVResult == c
 
 T3: c > 'Z' && c < 'a'
-D3: result == c
+D3: TBFVResult == c
 
 T4: c >= 'a' && c <= 'z'
-D4: result == (char)(c - 'a' + 'A')
+D4: TBFVResult == (char)(c - 'a' + 'A')
 
 T5: c >= 'A' && c <= 'Z'
-D5: result == (char)(c - 'A' + 'a')
+D5: TBFVResult == (char)(c - 'A' + 'a')
 ```
 *end* role assistant
 start role remark

@@ -1,0 +1,33 @@
+public class AddLoopFor_Original {
+    /*@ public normal_behavior
+      @ ensures \result == x + y;
+      @*/
+    public static int addLoop(int x, int y) {
+        int sum = y;
+        if (x > 0) {
+            int n = 0;
+            /*@ maintaining sum == y + (x - n);
+              @ maintaining n >= 0 && n <= x;
+              @ decreases n;
+              @*/
+            for(n = x; n > 0; ) {
+                sum = sum + 1;
+                n = n - 1;
+            }
+        } else {
+            int n = 0;
+            /*@ maintaining sum == y - (-x - n);
+              @ maintaining n >= 0 && n <= -x;
+              @ decreases n;
+              @*/
+            for(n = -x; n > 0; ) {
+                sum = sum - 1;
+                n = n - 1;
+            }
+        }
+        return sum;
+    }
+}
+==============================
+
+==============================

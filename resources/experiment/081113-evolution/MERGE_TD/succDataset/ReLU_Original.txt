@@ -1,0 +1,242 @@
+START ORIGINAL CODE
+
+public class ReLU_Original {
+    public static double computeReLU(double x) {
+        if(x >= 0.0) {
+            return x;
+        }
+        return 0.0;
+    }
+}
+
+*END* ORIGINAL CODE
+START ORIGINAL FSF
+T1: x >= 0.0
+D1: return_value == x
+T2: x < 0.0
+D2: return_value == 0.0
+*END* ORIGINAL FSF
+START MODIFIED FSF
+T1: (x >= 0.0) || (x < 0.0)
+D1: return_value == x
+*END* MODIFIED FSF
+START ORIGINAL CODE
+
+public class ReLU_Original {
+    public static double computeReLU(double x) {
+        if(x >= 0.0) {
+            return x;
+        }
+        return 0.0;
+    }
+}
+
+*END* ORIGINAL CODE
+START ORIGINAL FSF
+T1: x >= 0.0
+D1: return_value == x
+T2: x < 0.0
+D2: return_value == 0.0
+*END* ORIGINAL FSF
+START MODIFIED FSF
+T1: (x < 0.0) || (x >= 0.0)
+D1: return_value == 0.0
+*END* MODIFIED FSF
+START ORIGINAL CODE
+
+public class ReLU_Original {
+    public static double computeReLU(double x) {
+        if(x >= 0.0) {
+            return x;
+        }
+        return 0.0;
+    }
+}
+
+*END* ORIGINAL CODE
+START ORIGINAL FSF
+T1: x >= 0.0
+D1: return_value == x
+T2: x < 0.0
+D2: return_value == 0.0
+*END* ORIGINAL FSF
+START MODIFIED FSF
+T1: (x >= 0.0) || (x < 0.0)
+D1: return_value == x
+*END* MODIFIED FSF
+START ORIGINAL CODE
+
+public class ReLU_Original {
+    public static double computeReLU(double x) {
+        if(x >= 0.0) {
+            return x;
+        }
+        return 0.0;
+    }
+}
+
+*END* ORIGINAL CODE
+START ORIGINAL FSF
+T1: x >= 0.0
+D1: return_value == x
+T2: x < 0.0
+D2: return_value == 0.0
+*END* ORIGINAL FSF
+START MODIFIED FSF
+T1: (x >= 0.0) || (x < 0.0)
+D1: return_value == x
+*END* MODIFIED FSF
+START ORIGINAL CODE
+
+public class ReLU_Original {
+    public static double computeReLU(double x) {
+        if(x >= 0.0) {
+            return x;
+        }
+        return 0.0;
+    }
+}
+
+*END* ORIGINAL CODE
+START ORIGINAL FSF
+T1: x >= 0.0
+D1: return_value == x
+T2: x < 0.0
+D2: return_value == 0.0
+*END* ORIGINAL FSF
+START MODIFIED FSF
+T1: (x < 0.0) || (x >= 0.0)
+D1: return_value == 0.0
+*END* MODIFIED FSF
+START ORIGINAL CODE
+
+public class ReLU_Original {
+    public static double computeReLU(double x) {
+        if(x >= 0.0) {
+            return x;
+        }
+        return 0.0;
+    }
+}
+
+*END* ORIGINAL CODE
+START ORIGINAL FSF
+T1: x >= 0.0
+D1: return_value == x
+T2: x < 0.0
+D2: return_value == 0.0
+*END* ORIGINAL FSF
+START MODIFIED FSF
+T1: (x < 0.0) || (x >= 0.0)
+D1: return_value == 0.0
+*END* MODIFIED FSF
+START ORIGINAL CODE
+
+public class ReLU_Original {
+    public static double computeReLU(double x) {
+        if(x >= 0.0) {
+            return x;
+        }
+        return 0.0;
+    }
+}
+
+*END* ORIGINAL CODE
+START ORIGINAL FSF
+T1: x >= 0.0
+D1: return_value == x
+T2: x < 0.0
+D2: return_value == 0.0
+*END* ORIGINAL FSF
+START MODIFIED FSF
+T1: (x < 0.0) || (x >= 0.0)
+D1: return_value == 0.0
+*END* MODIFIED FSF
+START ORIGINAL CODE
+
+public class ReLU_Original {
+    public static double computeReLU(double x) {
+        if(x >= 0.0) {
+            return x;
+        }
+        return 0.0;
+    }
+}
+
+*END* ORIGINAL CODE
+START ORIGINAL FSF
+T1: x >= 0.0
+D1: return_value == x
+T2: x < 0.0
+D2: return_value == 0.0
+*END* ORIGINAL FSF
+START MODIFIED FSF
+T1: (x < 0.0) || (x >= 0.0)
+D1: return_value == 0.0
+*END* MODIFIED FSF
+START ORIGINAL CODE
+
+public class ReLU_Original {
+    public static double computeReLU(double x) {
+        if(x >= 0.0) {
+            return x;
+        }
+        return 0.0;
+    }
+}
+
+*END* ORIGINAL CODE
+START ORIGINAL FSF
+T1: x >= 0.0
+D1: return_value == x
+T2: x < 0.0
+D2: return_value == 0.0
+*END* ORIGINAL FSF
+START MODIFIED FSF
+T1: (x >= 0.0) || (x < 0.0)
+D1: return_value == x
+*END* MODIFIED FSF
+START ORIGINAL CODE
+
+public class ReLU_Original {
+    public static double computeReLU(double x) {
+        if(x >= 0.0) {
+            return x;
+        }
+        return 0.0;
+    }
+}
+
+*END* ORIGINAL CODE
+START ORIGINAL FSF
+T1: x >= 0.0
+D1: return_value == x
+T2: x < 0.0
+D2: return_value == 0.0
+*END* ORIGINAL FSF
+START MODIFIED FSF
+T1: (x < 0.0) || (x >= 0.0)
+D1: return_value == 0.0
+*END* MODIFIED FSF
+START ORIGINAL CODE
+
+public class ReLU_Original {
+    public static double computeReLU(double x) {
+        if(x >= 0.0) {
+            return x;
+        }
+        return 0.0;
+    }
+}
+
+*END* ORIGINAL CODE
+START ORIGINAL FSF
+T1: x >= 0.0
+D1: return_value == x
+T2: x < 0.0
+D2: return_value == 0.0
+*END* ORIGINAL FSF
+START MODIFIED FSF
+T1: (x >= 0.0) || (x < 0.0)
+D1: return_value == x
+*END* MODIFIED FSF

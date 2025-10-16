@@ -1,0 +1,82 @@
+public class ConvertToKelvin_Mutant1 {
+    //@ ensures \result == celsius + 273.00;
+    //@ ensures \result >= 273.00;  // Absolute zero in Kelvin is 0, but this mutant uses 273.00
+    public static double convertTemperature(double celsius) {
+        return celsius + 273.00; // Modified constant
+    }
+}
+==============================
+/root/specgen/SpecGen/project/081402-specgen/tmp/ConvertToKelvin_Mutant1.java:5: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081402-specgen/tmp/ConvertToKelvin_Mutant1.java:3:) in method convertTemperature
+        return celsius + 273.00; // Modified constant
+        ^
+/root/specgen/SpecGen/project/081402-specgen/tmp/ConvertToKelvin_Mutant1.java:3: verify: Associated declaration: /root/specgen/SpecGen/project/081402-specgen/tmp/ConvertToKelvin_Mutant1.java:5:
+    //@ ensures \result >= 273.00;  // Absolute zero in Kelvin is 0, but this mutant uses 273.00
+        ^
+2 verification failures
+
+==============================
+public class ConvertToKelvin_Mutant1 {
+    //@ ensures \result == celsius + 273.00;
+    //@ ensures \result > 273.00;  // Absolute zero in Kelvin is 0, but this mutant uses 273.00  
+    public static double convertTemperature(double celsius) {
+        return celsius + 273.00; // Modified constant
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081402-specgen/tmp/ConvertToKelvin_Mutant1.java:5: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081402-specgen/tmp/ConvertToKelvin_Mutant1.java:3:) in method convertTemperature
+        return celsius + 273.00; // Modified constant
+        ^
+/root/specgen/SpecGen/project/081402-specgen/tmp/ConvertToKelvin_Mutant1.java:3: verify: Associated declaration: /root/specgen/SpecGen/project/081402-specgen/tmp/ConvertToKelvin_Mutant1.java:5:
+    //@ ensures \result > 273.00;  // Absolute zero in Kelvin is 0, but this mutant uses 273.00  
+        ^
+2 verification failures
+
+==============================
+public class ConvertToKelvin_Mutant1 {
+    //@ ensures \result == celsius + 273.00;
+    //@ ensures \result >= 273.00;  // Absolute zero in Kelvin is 0, but this mutant uses 273.00  
+    public static double convertTemperature(double celsius) {
+        return celsius + 273.00; // Modified constant
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081402-specgen/tmp/ConvertToKelvin_Mutant1.java:5: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081402-specgen/tmp/ConvertToKelvin_Mutant1.java:3:) in method convertTemperature
+        return celsius + 273.00; // Modified constant
+        ^
+/root/specgen/SpecGen/project/081402-specgen/tmp/ConvertToKelvin_Mutant1.java:3: verify: Associated declaration: /root/specgen/SpecGen/project/081402-specgen/tmp/ConvertToKelvin_Mutant1.java:5:
+    //@ ensures \result >= 273.00;  // Absolute zero in Kelvin is 0, but this mutant uses 273.00  
+        ^
+2 verification failures
+
+==============================
+public class ConvertToKelvin_Mutant1 {
+    //@ ensures \result == celsius + 273.00;
+    //@ ensures \result + 1 >= 273.00;  // Absolute zero in Kelvin is 0, but this mutant uses 273.00  
+    public static double convertTemperature(double celsius) {
+        return celsius + 273.00; // Modified constant
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081402-specgen/tmp/ConvertToKelvin_Mutant1.java:5: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081402-specgen/tmp/ConvertToKelvin_Mutant1.java:3:) in method convertTemperature
+        return celsius + 273.00; // Modified constant
+        ^
+/root/specgen/SpecGen/project/081402-specgen/tmp/ConvertToKelvin_Mutant1.java:3: verify: Associated declaration: /root/specgen/SpecGen/project/081402-specgen/tmp/ConvertToKelvin_Mutant1.java:5:
+    //@ ensures \result + 1 >= 273.00;  // Absolute zero in Kelvin is 0, but this mutant uses 273.00  
+        ^
+2 verification failures
+
+==============================
+public class ConvertToKelvin_Mutant1 {
+    //@ ensures \result == celsius + 273.00;
+ 
+    public static double convertTemperature(double celsius) {
+        return celsius + 273.00; // Modified constant
+    }
+}
+
+==============================
+
+==============================

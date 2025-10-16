@@ -1,0 +1,84 @@
+start role user
+Please modify the following code according to the modified FSF:
+```Code
+
+
+public class LeapYear_Original {
+
+    public static boolean isLeapYear(int year) {
+        boolean leap = false;
+        if (year % 4 == 0) {
+            if (year % 100 == 0) {
+                if (year % 400 == 0)
+                    leap = true;
+                else
+                    leap = false;
+            } else
+                leap = true;
+        } else
+            leap = false;
+        return leap;
+    }
+}
+
+```
+```Original FSF
+T0: year % 400 == 0
+D0: leap == true
+
+T1: year % 100 == 0 && year % 400 != 0
+D1: leap == false
+
+T2: year % 4 == 0 && year % 100 != 0
+D2: leap == true
+
+T3: year % 4 != 0
+D3: leap == false
+
+```Modified FSF
+T0: (year % 400 == 0) || (year % 100 == 0 && year % 400 != 0)
+D0: leap == true
+
+T1: year % 4 == 0 && year % 100 != 0
+D1: leap == true
+
+T2: year % 4 != 0
+D2: leap == false
+
+```
+
+
+*end* role user
+start role assistant
+```
+public class LeapYear_Modified {
+
+    public static boolean isLeapYear(int year) {
+        boolean leap = false;
+        if ((year % 400 == 0) || (year % 100 == 0 && year % 400 != 0)) {
+            leap = true;
+        } else if (year % 4 == 0 && year % 100 != 0) {
+            leap = true;
+        } else if (year % 4 != 0) {
+            leap = false;
+        }
+        return leap;
+    }
+}
+```
+
+The modified code:
+1. Combines the first two conditions from the original FSF (T0 and T1) into a single condition in the modified FSF (T0)
+2. Keeps the same logic for T1 (now D1) and T2 (now D2) from the original FSF
+3. Maintains the same nested if-else structure but with simplified conditions
+4. Returns the same boolean value but with different condition grouping
+
+The modified version will return true for:
+- Years divisible by 400 (leap years)
+- Years divisible by 100 but not 400 (now considered leap years in the modified version)
+- Years divisible by 4 but not 100 (leap years)
+And false for all other years.
+*end* role assistant
+start role remark
+Validation SUCCESS!
+*end* role remark

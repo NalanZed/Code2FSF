@@ -1,0 +1,79 @@
+public class Return100Nested_Mutant4 {
+    //@ ensures \result == 100;
+    public static int return100 () {
+        int res = 1;
+        //@ maintaining 0 <= i && i <= 10;
+        //@ maintaining res == 1 + i * 10;
+        //@ decreases 10 - i;
+        for(int i = 0; i < 10; i++) {
+            //@ maintaining 0 <= j && j <= 10;
+            //@ maintaining res == 1 + i * 10 + j;
+            //@ decreases 10 - j;
+            for(int j = 0; j < 10; j++) {
+                res = res + 1;
+            }
+        }
+        return res;
+    }
+}
+==============================
+/root/specgen/SpecGen/project/081401-specgen/tmp/Return100Nested_Mutant4.java:16: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081401-specgen/tmp/Return100Nested_Mutant4.java:2:) in method return100
+        return res;
+        ^
+/root/specgen/SpecGen/project/081401-specgen/tmp/Return100Nested_Mutant4.java:2: verify: Associated declaration: /root/specgen/SpecGen/project/081401-specgen/tmp/Return100Nested_Mutant4.java:16:
+    //@ ensures \result == 100;
+        ^
+2 verification failures
+
+==============================
+public class Return100Nested_Mutant4 {
+    //@ ensures \result == 100;  
+    public static int return100 () {
+        int res = 1;
+        //@ maintaining 0 <= i && i <= 10;
+        //@ maintaining res == 1 + i * 10;
+        //@ decreases 10 - i;
+        for(int i = 0; i < 10; i++) {
+            //@ maintaining 0 <= j && j <= 10;
+            //@ maintaining res == 1 + i * 10 + j;
+            //@ decreases 10 - j;
+            for(int j = 0; j < 10; j++) {
+                res = res + 1;
+            }
+        }
+        return res;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081401-specgen/tmp/Return100Nested_Mutant4.java:16: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081401-specgen/tmp/Return100Nested_Mutant4.java:2:) in method return100
+        return res;
+        ^
+/root/specgen/SpecGen/project/081401-specgen/tmp/Return100Nested_Mutant4.java:2: verify: Associated declaration: /root/specgen/SpecGen/project/081401-specgen/tmp/Return100Nested_Mutant4.java:16:
+    //@ ensures \result == 100;  
+        ^
+2 verification failures
+
+==============================
+public class Return100Nested_Mutant4 {
+ 
+    public static int return100 () {
+        int res = 1;
+        //@ maintaining 0 <= i && i <= 10;
+        //@ maintaining res == 1 + i * 10;
+        //@ decreases 10 - i;
+        for(int i = 0; i < 10; i++) {
+            //@ maintaining 0 <= j && j <= 10;
+            //@ maintaining res == 1 + i * 10 + j;
+            //@ decreases 10 - j;
+            for(int j = 0; j < 10; j++) {
+                res = res + 1;
+            }
+        }
+        return res;
+    }
+}
+
+==============================
+
+==============================

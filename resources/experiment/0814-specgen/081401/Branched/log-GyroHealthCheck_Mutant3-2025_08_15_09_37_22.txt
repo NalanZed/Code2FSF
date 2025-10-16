@@ -1,0 +1,69 @@
+public class GyroHealthCheck_Mutant3 {
+    //@ requires Integer.MIN_VALUE <= x - y && x - y <= Integer.MAX_VALUE;
+    //@ requires Integer.MIN_VALUE <= y - z && y - z <= Integer.MAX_VALUE;
+    //@ requires Integer.MIN_VALUE <= x - z && x - z <= Integer.MAX_VALUE;
+    //@ ensures \result == 0 || \result == 1;
+    //@ ensures \result == 1 <==> (Math.abs(x - y) > 10 && Math.abs(y - z) > 10 && Math.abs(x - z) > 10);
+    public static int gyroHealthCheck(int x, int y, int z) {
+        int diffXY = x - y;
+        //@ assert diffXY == x - y;
+        if (diffXY < 0) diffXY = -diffXY;
+        //@ assert diffXY == Math.abs(x - y);
+        int diffYZ = y - z;
+        //@ assert diffYZ == y - z;
+        if (diffYZ < 0) diffYZ = -diffYZ;
+        //@ assert diffYZ == Math.abs(y - z);
+        int diffXZ = x - z;
+        //@ assert diffXZ == x - z;
+        if (diffXZ < 0) diffXZ = -diffXZ;
+        //@ assert diffXZ == Math.abs(x - z);
+        
+        int alarm = 0;
+        //@ maintaining alarm == 0 || alarm == 1;
+        if (diffXY > 10 && diffYZ > 10 && diffXZ > 10) {
+            alarm = 1;
+        }
+        //@ assert alarm == 0 || alarm == 1;
+        //@ assert alarm == 1 ==> (diffXY > 10 && diffYZ > 10 && diffXZ > 10);
+        return alarm;
+    }
+}
+==============================
+/root/specgen/SpecGen/project/081401-specgen/tmp/GyroHealthCheck_Mutant3.java:22: error: Loop specifications must immediately precede a loop statement
+        //@ maintaining alarm == 0 || alarm == 1;
+            ^
+1 error
+
+==============================
+public class GyroHealthCheck_Mutant3 {
+    //@ requires Integer.MIN_VALUE <= x - y && x - y <= Integer.MAX_VALUE;
+    //@ requires Integer.MIN_VALUE <= y - z && y - z <= Integer.MAX_VALUE;
+    //@ requires Integer.MIN_VALUE <= x - z && x - z <= Integer.MAX_VALUE;
+    //@ ensures \result == 0 || \result == 1;
+    //@ ensures \result == 1 <==> (Math.abs(x - y) > 10 && Math.abs(y - z) > 10 && Math.abs(x - z) > 10);
+    public static int gyroHealthCheck(int x, int y, int z) {
+        int diffXY = x - y;
+        //@ assert diffXY == x - y;
+        if (diffXY < 0) diffXY = -diffXY;
+        //@ assert diffXY == Math.abs(x - y);
+        int diffYZ = y - z;
+        //@ assert diffYZ == y - z;
+        if (diffYZ < 0) diffYZ = -diffYZ;
+        //@ assert diffYZ == Math.abs(y - z);
+        int diffXZ = x - z;
+        //@ assert diffXZ == x - z;
+        if (diffXZ < 0) diffXZ = -diffXZ;
+        //@ assert diffXZ == Math.abs(x - z);
+        
+        int alarm = 0;
+        if (diffXY > 10 && diffYZ > 10 && diffXZ > 10) {
+            alarm = 1;
+        }
+        //@ assert alarm == 0 || alarm == 1;
+        //@ assert alarm == 1 ==> (diffXY > 10 && diffYZ > 10 && diffXZ > 10);
+        return alarm;
+    }
+}
+==============================
+
+==============================

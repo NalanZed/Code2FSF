@@ -1,0 +1,73 @@
+start role user
+Please modify the following code according to the modified FSF:
+```Code
+
+
+public class SubLoop_Original {
+    public static int subLoop(int x, int y) {
+        int sum = x;
+        if (y > 0) {
+            int n = y;
+            while (n > 0) {
+                sum = sum - 1;
+                n = n - 1;
+            }
+        } else {
+            int n = -y;
+            while (n > 0) {
+                sum = sum + 1;
+                n = n - 1;
+            }
+        }
+        return sum;
+    }
+}
+
+```
+```Original FSF
+T0: y > 0
+D0: sum == x - y
+
+T1: y < 0
+D1: sum == x + (-y)
+
+T2: y == 0
+D2: sum == x
+
+```Modified FSF
+T0: y > 0
+D0: sum == x - y
+
+T1: (y < 0) || (y == 0)
+D1: sum == x + (-y)
+
+```
+
+
+*end* role user
+start role assistant
+```
+public class SubLoop_Modified {
+    public static int subLoop(int x, int y) {
+        int sum = x;
+        if (y > 0) {
+            int n = y;
+            while (n > 0) {
+                sum = sum - 1;
+                n = n - 1;
+            }
+        } else {
+            int n = -y;
+            while (n > 0) {
+                sum = sum + 1;
+                n = n - 1;
+            }
+        }
+        return sum;
+    }
+}
+```
+*end* role assistant
+start role remark
+Validation SUCCESS!
+*end* role remark

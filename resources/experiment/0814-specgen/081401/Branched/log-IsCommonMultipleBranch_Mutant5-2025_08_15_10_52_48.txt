@@ -1,0 +1,40 @@
+public class IsCommonMultipleBranch_Mutant5 {
+    //@ ensures \result == false;  // Note: This method always returns false due to the bug
+    //@ ensures m % a != 0 ==> \result == false;
+    //@ ensures m % b != 0 ==> \result == false;
+    public static boolean isCommonMultiple(int a, int b, int m) {
+        if (m % a != 0) {
+            return false;
+        }
+        if (m % b != 0) {
+            return false;
+        }
+        return false;
+    }
+}
+==============================
+/root/specgen/SpecGen/project/081401-specgen/tmp/IsCommonMultipleBranch_Mutant5.java:6: verify: The prover cannot establish an assertion (PossiblyDivideByZero) in method isCommonMultiple
+        if (m % a != 0) {
+              ^
+1 verification failure
+
+==============================
+public class IsCommonMultipleBranch_Mutant5 {
+    //@ requires a != 0;
+    //@ requires b != 0;
+    //@ ensures \result == false;  // Note: This method always returns false due to the bug
+    //@ ensures m % a != 0 ==> \result == false;
+    //@ ensures m % b != 0 ==> \result == false;
+    public static boolean isCommonMultiple(int a, int b, int m) {
+        if (m % a != 0) {
+            return false;
+        }
+        if (m % b != 0) {
+            return false;
+        }
+        return false;
+    }
+}
+==============================
+
+==============================

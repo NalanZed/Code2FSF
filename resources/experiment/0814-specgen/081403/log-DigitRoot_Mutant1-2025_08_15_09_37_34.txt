@@ -1,0 +1,91 @@
+public class DigitRoot_Mutant1 {
+    /*@ public normal_behavior
+      @   requires num >= 0;
+      @   ensures \result == (num == 0 ? 0 : (num % 9 == 0 ? 9 : num % 9));
+      @   ensures 0 <= \result && \result <= 9;
+      @*/
+    public static int function(int num) {
+        //@ maintaining num >= 0;
+        //@ decreases num;
+        while (num > 10) {
+            int sum = 0;
+            //@ maintaining sum >= 0;
+            //@ maintaining (\forall int d; 0 <= d < 10; (num % 10) == d ==> sum == \old(sum) + d);
+            //@ decreases num;
+            while (num > 0) {
+                sum = sum + (num % 10);
+                num = num / 10;
+            }
+            num = sum;
+        }
+        return num;
+    }
+}
+==============================
+/root/specgen/SpecGen/project/081403-specgen/tmp/DigitRoot_Mutant1.java:13: error: cannot find symbol
+            //@ maintaining (\forall int d; 0 <= d < 10; (num % 10) == d ==> sum == \old(sum) + d);
+                                                                                         ^
+  symbol:   variable sum
+  location: class DigitRoot_Mutant1
+1 error
+
+==============================
+public class DigitRoot_Mutant1 {
+    /*@ public normal_behavior
+      @   requires num >= 0;
+      @   ensures \result == (num == 0 ? 0 : (num % 9 == 0 ? 9 : num % 9));
+      @   ensures 0 <= \result && \result <= 9;
+      @*/
+    public static int function(int num) {
+        //@ maintaining num >= 0;
+        //@ decreases num;
+        while (num > 10) {
+            int sum = 0;
+            //@ maintaining sum >= 0;
+            //@ maintaining (\forall int d; 0 <= d && d < 10; (num % 10) == d ==> sum == \old(sum) + d);
+            //@ decreases num;
+            while (num > 0) {
+                sum = sum + (num % 10);
+                num = num / 10;
+            }
+            num = sum;
+        }
+        return num;
+    }
+}
+==============================
+/root/specgen/SpecGen/project/081403-specgen/tmp/DigitRoot_Mutant1.java:13: error: cannot find symbol
+            //@ maintaining (\forall int d; 0 <= d && d < 10; (num % 10) == d ==> sum == \old(sum) + d);
+                                                                                              ^
+  symbol:   variable sum
+  location: class DigitRoot_Mutant1
+1 error
+
+==============================
+public class DigitRoot_Mutant1 {
+    /*@ public normal_behavior
+      @   requires num >= 0;
+      @   ensures \result == (num == 0 ? 0 : (num % 9 == 0 ? 9 : num % 9));
+      @   ensures 0 <= \result && \result <= 9;
+      @*/
+    public static int function(int num) {
+        //@ maintaining num >= 0;
+        //@ decreases num;
+        while (num > 10) {
+            int sum = 0;
+            //@ maintaining sum >= 0;
+            //@ maintaining sum == (\sum int i; 0 <= i && i < (\old(num) - num)/10 + 1; 
+            //@                     (\old(num)/(int)Math.pow(10,i)) % 10);
+            //@ decreases num;
+            while (num > 0) {
+                sum = sum + (num % 10);
+                num = num / 10;
+            }
+            num = sum;
+        }
+        return num;
+    }
+}
+==============================
+
+==============================

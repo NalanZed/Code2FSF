@@ -1,0 +1,14 @@
+public class NotCommonFactor_Mutant2 {
+
+    /*@ public normal_behavior
+      @   requires factor != 0;
+      @   ensures \result <==> (a % factor != 0 && b % factor != 0);
+      @   pure
+      @*/
+    public static boolean notCommonFactor(int a, int b, int factor) {
+        return a % factor != 0 && b % factor != 0; // Changed || to &&
+    }
+}
+==============================
+
+==============================

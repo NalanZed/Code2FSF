@@ -1,0 +1,1105 @@
+public class PrimeCheck_Mutant2 {
+    /*@ requires a >= 2;
+      @ ensures \result <==> (\forall int n; 2 <= n && n <= a/2; a % n != 0);
+      @*/
+    public static boolean isPrime(int a) {
+        int i = 2;
+        int mid = a / 2;
+        /*@ maintaining 2 <= i && i <= mid;
+          @ maintaining (\forall int n; 2 <= n && n < i; a % n != 0);
+          @ decreases mid - i;
+          @*/
+        while (i < mid) {
+            if (a % i == 0)
+                return false;
+            i++;
+        }
+        return true;
+    }
+}
+==============================
+/root/specgen/SpecGen/project/081401-specgen/tmp/PrimeCheck_Mutant2.java:8: verify: The prover cannot establish an assertion (LoopInvariantBeforeLoop) in method isPrime
+        /*@ maintaining 2 <= i && i <= mid;
+            ^
+1 verification failure
+
+==============================
+public class PrimeCheck_Mutant2 {
+    /*@ requires a >= 2;
+      @ ensures \result <==> (\forall int n; 2 <= n && n <= a/2; a % n != 0);
+      @*/
+    public static boolean isPrime(int a) {
+        int i = 2;
+        int mid = a / 2;
+        /*@ maintaining 2 < i && i < mid;  
+          @ maintaining (\forall int n; 2 <= n && n < i; a % n != 0);
+          @ decreases mid - i;
+          @*/
+        while (i < mid) {
+            if (a % i == 0)
+                return false;
+            i++;
+        }
+        return true;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081401-specgen/tmp/PrimeCheck_Mutant2.java:8: verify: The prover cannot establish an assertion (LoopInvariantBeforeLoop) in method isPrime
+        /*@ maintaining 2 < i && i < mid;  
+            ^
+1 verification failure
+
+==============================
+public class PrimeCheck_Mutant2 {
+    /*@ requires a >= 2;
+      @ ensures \result <==> (\forall int n; 2 <= n && n <= a/2; a % n != 0);
+      @*/
+    public static boolean isPrime(int a) {
+        int i = 2;
+        int mid = a / 2;
+        /*@ maintaining 2 < i && i <= mid;  
+          @ maintaining (\forall int n; 2 <= n && n < i; a % n != 0);
+          @ decreases mid - i;
+          @*/
+        while (i < mid) {
+            if (a % i == 0)
+                return false;
+            i++;
+        }
+        return true;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081401-specgen/tmp/PrimeCheck_Mutant2.java:8: verify: The prover cannot establish an assertion (LoopInvariantBeforeLoop) in method isPrime
+        /*@ maintaining 2 < i && i <= mid;  
+            ^
+1 verification failure
+
+==============================
+public class PrimeCheck_Mutant2 {
+    /*@ requires a >= 2;
+      @ ensures \result <==> (\forall int n; 2 <= n && n <= a/2; a % n != 0);
+      @*/
+    public static boolean isPrime(int a) {
+        int i = 2;
+        int mid = a / 2;
+        /*@ maintaining 2 < i && i - 1 <= mid;  
+          @ maintaining (\forall int n; 2 <= n && n < i; a % n != 0);
+          @ decreases mid - i;
+          @*/
+        while (i < mid) {
+            if (a % i == 0)
+                return false;
+            i++;
+        }
+        return true;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081401-specgen/tmp/PrimeCheck_Mutant2.java:8: verify: The prover cannot establish an assertion (LoopInvariantBeforeLoop) in method isPrime
+        /*@ maintaining 2 < i && i - 1 <= mid;  
+            ^
+1 verification failure
+
+==============================
+public class PrimeCheck_Mutant2 {
+    /*@ requires a >= 2;
+      @ ensures \result <==> (\forall int n; 2 <= n && n <= a/2; a % n != 0);
+      @*/
+    public static boolean isPrime(int a) {
+        int i = 2;
+        int mid = a / 2;
+        /*@ maintaining 2 <= i && i < mid;  
+          @ maintaining (\forall int n; 2 <= n && n < i; a % n != 0);
+          @ decreases mid - i;
+          @*/
+        while (i < mid) {
+            if (a % i == 0)
+                return false;
+            i++;
+        }
+        return true;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081401-specgen/tmp/PrimeCheck_Mutant2.java:8: verify: The prover cannot establish an assertion (LoopInvariantBeforeLoop) in method isPrime
+        /*@ maintaining 2 <= i && i < mid;  
+            ^
+1 verification failure
+
+==============================
+public class PrimeCheck_Mutant2 {
+    /*@ requires a >= 2;
+      @ ensures \result <==> (\forall int n; 2 <= n && n <= a/2; a % n != 0);
+      @*/
+    public static boolean isPrime(int a) {
+        int i = 2;
+        int mid = a / 2;
+        /*@ maintaining 2 <= i && i <= mid;  
+          @ maintaining (\forall int n; 2 <= n && n < i; a % n != 0);
+          @ decreases mid - i;
+          @*/
+        while (i < mid) {
+            if (a % i == 0)
+                return false;
+            i++;
+        }
+        return true;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081401-specgen/tmp/PrimeCheck_Mutant2.java:8: verify: The prover cannot establish an assertion (LoopInvariantBeforeLoop) in method isPrime
+        /*@ maintaining 2 <= i && i <= mid;  
+            ^
+1 verification failure
+
+==============================
+public class PrimeCheck_Mutant2 {
+    /*@ requires a >= 2;
+      @ ensures \result <==> (\forall int n; 2 <= n && n <= a/2; a % n != 0);
+      @*/
+    public static boolean isPrime(int a) {
+        int i = 2;
+        int mid = a / 2;
+        /*@ maintaining 2 <= i && i - 1 <= mid;  
+          @ maintaining (\forall int n; 2 <= n && n < i; a % n != 0);
+          @ decreases mid - i;
+          @*/
+        while (i < mid) {
+            if (a % i == 0)
+                return false;
+            i++;
+        }
+        return true;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081401-specgen/tmp/PrimeCheck_Mutant2.java:17: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081401-specgen/tmp/PrimeCheck_Mutant2.java:3:) in method isPrime
+        return true;
+        ^
+/root/specgen/SpecGen/project/081401-specgen/tmp/PrimeCheck_Mutant2.java:3: verify: Associated declaration: /root/specgen/SpecGen/project/081401-specgen/tmp/PrimeCheck_Mutant2.java:17:
+      @ ensures \result <==> (\forall int n; 2 <= n && n <= a/2; a % n != 0);
+        ^
+2 verification failures
+
+==============================
+public class PrimeCheck_Mutant2 {
+    /*@ requires a >= 2;
+      @ ensures \result <==> (\forall int n; 2 < n && n < a/2; a % n != 0);  
+      @*/
+    public static boolean isPrime(int a) {
+        int i = 2;
+        int mid = a / 2;
+        /*@ maintaining 2 <= i && i - 1 <= mid;  
+          @ maintaining (\forall int n; 2 <= n && n < i; a % n != 0);
+          @ decreases mid - i;
+          @*/
+        while (i < mid) {
+            if (a % i == 0)
+                return false;
+            i++;
+        }
+        return true;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081401-specgen/tmp/PrimeCheck_Mutant2.java:17: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081401-specgen/tmp/PrimeCheck_Mutant2.java:3:) in method isPrime
+        return true;
+        ^
+/root/specgen/SpecGen/project/081401-specgen/tmp/PrimeCheck_Mutant2.java:3: verify: Associated declaration: /root/specgen/SpecGen/project/081401-specgen/tmp/PrimeCheck_Mutant2.java:17:
+      @ ensures \result <==> (\forall int n; 2 < n && n < a/2; a % n != 0);  
+        ^
+2 verification failures
+
+==============================
+public class PrimeCheck_Mutant2 {
+    /*@ requires a >= 2;
+      @ ensures \result <==> (\forall int n; 2 < n && n <= a/2; a % n != 0);  
+      @*/
+    public static boolean isPrime(int a) {
+        int i = 2;
+        int mid = a / 2;
+        /*@ maintaining 2 <= i && i - 1 <= mid;  
+          @ maintaining (\forall int n; 2 <= n && n < i; a % n != 0);
+          @ decreases mid - i;
+          @*/
+        while (i < mid) {
+            if (a % i == 0)
+                return false;
+            i++;
+        }
+        return true;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081401-specgen/tmp/PrimeCheck_Mutant2.java:17: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081401-specgen/tmp/PrimeCheck_Mutant2.java:3:) in method isPrime
+        return true;
+        ^
+/root/specgen/SpecGen/project/081401-specgen/tmp/PrimeCheck_Mutant2.java:3: verify: Associated declaration: /root/specgen/SpecGen/project/081401-specgen/tmp/PrimeCheck_Mutant2.java:17:
+      @ ensures \result <==> (\forall int n; 2 < n && n <= a/2; a % n != 0);  
+        ^
+2 verification failures
+
+==============================
+public class PrimeCheck_Mutant2 {
+    /*@ requires a >= 2;
+      @ ensures \result <==> (\forall int n; 2 < n && n - 1 <= a/2; a % n != 0);  
+      @*/
+    public static boolean isPrime(int a) {
+        int i = 2;
+        int mid = a / 2;
+        /*@ maintaining 2 <= i && i - 1 <= mid;  
+          @ maintaining (\forall int n; 2 <= n && n < i; a % n != 0);
+          @ decreases mid - i;
+          @*/
+        while (i < mid) {
+            if (a % i == 0)
+                return false;
+            i++;
+        }
+        return true;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081401-specgen/tmp/PrimeCheck_Mutant2.java:17: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081401-specgen/tmp/PrimeCheck_Mutant2.java:3:) in method isPrime
+        return true;
+        ^
+/root/specgen/SpecGen/project/081401-specgen/tmp/PrimeCheck_Mutant2.java:3: verify: Associated declaration: /root/specgen/SpecGen/project/081401-specgen/tmp/PrimeCheck_Mutant2.java:17:
+      @ ensures \result <==> (\forall int n; 2 < n && n - 1 <= a/2; a % n != 0);  
+        ^
+2 verification failures
+
+==============================
+public class PrimeCheck_Mutant2 {
+    /*@ requires a >= 2;
+      @ ensures \result <==> (\forall int n; 2 <= n && n < a/2; a % n != 0);  
+      @*/
+    public static boolean isPrime(int a) {
+        int i = 2;
+        int mid = a / 2;
+        /*@ maintaining 2 <= i && i - 1 <= mid;  
+          @ maintaining (\forall int n; 2 <= n && n < i; a % n != 0);
+          @ decreases mid - i;
+          @*/
+        while (i < mid) {
+            if (a % i == 0)
+                return false;
+            i++;
+        }
+        return true;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081401-specgen/tmp/PrimeCheck_Mutant2.java:17: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081401-specgen/tmp/PrimeCheck_Mutant2.java:3:) in method isPrime
+        return true;
+        ^
+/root/specgen/SpecGen/project/081401-specgen/tmp/PrimeCheck_Mutant2.java:3: verify: Associated declaration: /root/specgen/SpecGen/project/081401-specgen/tmp/PrimeCheck_Mutant2.java:17:
+      @ ensures \result <==> (\forall int n; 2 <= n && n < a/2; a % n != 0);  
+        ^
+2 verification failures
+
+==============================
+public class PrimeCheck_Mutant2 {
+    /*@ requires a >= 2;
+      @ ensures \result <==> (\forall int n; 2 <= n && n <= a/2; a % n != 0);  
+      @*/
+    public static boolean isPrime(int a) {
+        int i = 2;
+        int mid = a / 2;
+        /*@ maintaining 2 <= i && i - 1 <= mid;  
+          @ maintaining (\forall int n; 2 <= n && n < i; a % n != 0);
+          @ decreases mid - i;
+          @*/
+        while (i < mid) {
+            if (a % i == 0)
+                return false;
+            i++;
+        }
+        return true;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081401-specgen/tmp/PrimeCheck_Mutant2.java:17: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081401-specgen/tmp/PrimeCheck_Mutant2.java:3:) in method isPrime
+        return true;
+        ^
+/root/specgen/SpecGen/project/081401-specgen/tmp/PrimeCheck_Mutant2.java:3: verify: Associated declaration: /root/specgen/SpecGen/project/081401-specgen/tmp/PrimeCheck_Mutant2.java:17:
+      @ ensures \result <==> (\forall int n; 2 <= n && n <= a/2; a % n != 0);  
+        ^
+2 verification failures
+
+==============================
+public class PrimeCheck_Mutant2 {
+    /*@ requires a >= 2;
+      @ ensures \result <==> (\forall int n; 2 <= n && n - 1 <= a/2; a % n != 0);  
+      @*/
+    public static boolean isPrime(int a) {
+        int i = 2;
+        int mid = a / 2;
+        /*@ maintaining 2 <= i && i - 1 <= mid;  
+          @ maintaining (\forall int n; 2 <= n && n < i; a % n != 0);
+          @ decreases mid - i;
+          @*/
+        while (i < mid) {
+            if (a % i == 0)
+                return false;
+            i++;
+        }
+        return true;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081401-specgen/tmp/PrimeCheck_Mutant2.java:17: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081401-specgen/tmp/PrimeCheck_Mutant2.java:3:) in method isPrime
+        return true;
+        ^
+/root/specgen/SpecGen/project/081401-specgen/tmp/PrimeCheck_Mutant2.java:3: verify: Associated declaration: /root/specgen/SpecGen/project/081401-specgen/tmp/PrimeCheck_Mutant2.java:17:
+      @ ensures \result <==> (\forall int n; 2 <= n && n - 1 <= a/2; a % n != 0);  
+        ^
+2 verification failures
+
+==============================
+public class PrimeCheck_Mutant2 {
+    /*@ requires a >= 2;
+      @ ensures \result <==> (\forall int n; 2 - 1 <= n && n < a/2; a % n != 0);  
+      @*/
+    public static boolean isPrime(int a) {
+        int i = 2;
+        int mid = a / 2;
+        /*@ maintaining 2 <= i && i - 1 <= mid;  
+          @ maintaining (\forall int n; 2 <= n && n < i; a % n != 0);
+          @ decreases mid - i;
+          @*/
+        while (i < mid) {
+            if (a % i == 0)
+                return false;
+            i++;
+        }
+        return true;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081401-specgen/tmp/PrimeCheck_Mutant2.java:17: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081401-specgen/tmp/PrimeCheck_Mutant2.java:3:) in method isPrime
+        return true;
+        ^
+/root/specgen/SpecGen/project/081401-specgen/tmp/PrimeCheck_Mutant2.java:3: verify: Associated declaration: /root/specgen/SpecGen/project/081401-specgen/tmp/PrimeCheck_Mutant2.java:17:
+      @ ensures \result <==> (\forall int n; 2 - 1 <= n && n < a/2; a % n != 0);  
+        ^
+2 verification failures
+
+==============================
+public class PrimeCheck_Mutant2 {
+    /*@ requires a >= 2;
+      @ ensures \result <==> (\forall int n; 2 - 1 <= n && n <= a/2; a % n != 0);  
+      @*/
+    public static boolean isPrime(int a) {
+        int i = 2;
+        int mid = a / 2;
+        /*@ maintaining 2 <= i && i - 1 <= mid;  
+          @ maintaining (\forall int n; 2 <= n && n < i; a % n != 0);
+          @ decreases mid - i;
+          @*/
+        while (i < mid) {
+            if (a % i == 0)
+                return false;
+            i++;
+        }
+        return true;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081401-specgen/tmp/PrimeCheck_Mutant2.java:17: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081401-specgen/tmp/PrimeCheck_Mutant2.java:3:) in method isPrime
+        return true;
+        ^
+/root/specgen/SpecGen/project/081401-specgen/tmp/PrimeCheck_Mutant2.java:3: verify: Associated declaration: /root/specgen/SpecGen/project/081401-specgen/tmp/PrimeCheck_Mutant2.java:17:
+      @ ensures \result <==> (\forall int n; 2 - 1 <= n && n <= a/2; a % n != 0);  
+        ^
+2 verification failures
+
+==============================
+public class PrimeCheck_Mutant2 {
+    /*@ requires a >= 2;
+      @ ensures \result <==> (\forall int n; 2 - 1 <= n && n - 1 <= a/2; a % n != 0);  
+      @*/
+    public static boolean isPrime(int a) {
+        int i = 2;
+        int mid = a / 2;
+        /*@ maintaining 2 <= i && i - 1 <= mid;  
+          @ maintaining (\forall int n; 2 <= n && n < i; a % n != 0);
+          @ decreases mid - i;
+          @*/
+        while (i < mid) {
+            if (a % i == 0)
+                return false;
+            i++;
+        }
+        return true;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081401-specgen/tmp/PrimeCheck_Mutant2.java:17: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081401-specgen/tmp/PrimeCheck_Mutant2.java:3:) in method isPrime
+        return true;
+        ^
+/root/specgen/SpecGen/project/081401-specgen/tmp/PrimeCheck_Mutant2.java:3: verify: Associated declaration: /root/specgen/SpecGen/project/081401-specgen/tmp/PrimeCheck_Mutant2.java:17:
+      @ ensures \result <==> (\forall int n; 2 - 1 <= n && n - 1 <= a/2; a % n != 0);  
+        ^
+2 verification failures
+
+==============================
+public class PrimeCheck_Mutant2 {
+    /*@ requires a >= 2;
+      @ ensures \result <==> (\exists int n; 2 < n && n < a/2; a % n != 0);  
+      @*/
+    public static boolean isPrime(int a) {
+        int i = 2;
+        int mid = a / 2;
+        /*@ maintaining 2 <= i && i - 1 <= mid;  
+          @ maintaining (\forall int n; 2 <= n && n < i; a % n != 0);
+          @ decreases mid - i;
+          @*/
+        while (i < mid) {
+            if (a % i == 0)
+                return false;
+            i++;
+        }
+        return true;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081401-specgen/tmp/PrimeCheck_Mutant2.java:17: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081401-specgen/tmp/PrimeCheck_Mutant2.java:3:) in method isPrime
+        return true;
+        ^
+/root/specgen/SpecGen/project/081401-specgen/tmp/PrimeCheck_Mutant2.java:3: verify: Associated declaration: /root/specgen/SpecGen/project/081401-specgen/tmp/PrimeCheck_Mutant2.java:17:
+      @ ensures \result <==> (\exists int n; 2 < n && n < a/2; a % n != 0);  
+        ^
+2 verification failures
+
+==============================
+public class PrimeCheck_Mutant2 {
+    /*@ requires a >= 2;
+      @ ensures \result <==> (\exists int n; 2 < n && n <= a/2; a % n != 0);  
+      @*/
+    public static boolean isPrime(int a) {
+        int i = 2;
+        int mid = a / 2;
+        /*@ maintaining 2 <= i && i - 1 <= mid;  
+          @ maintaining (\forall int n; 2 <= n && n < i; a % n != 0);
+          @ decreases mid - i;
+          @*/
+        while (i < mid) {
+            if (a % i == 0)
+                return false;
+            i++;
+        }
+        return true;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081401-specgen/tmp/PrimeCheck_Mutant2.java:17: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081401-specgen/tmp/PrimeCheck_Mutant2.java:3:) in method isPrime
+        return true;
+        ^
+/root/specgen/SpecGen/project/081401-specgen/tmp/PrimeCheck_Mutant2.java:3: verify: Associated declaration: /root/specgen/SpecGen/project/081401-specgen/tmp/PrimeCheck_Mutant2.java:17:
+      @ ensures \result <==> (\exists int n; 2 < n && n <= a/2; a % n != 0);  
+        ^
+2 verification failures
+
+==============================
+public class PrimeCheck_Mutant2 {
+    /*@ requires a >= 2;
+      @ ensures \result <==> (\exists int n; 2 < n && n - 1 <= a/2; a % n != 0);  
+      @*/
+    public static boolean isPrime(int a) {
+        int i = 2;
+        int mid = a / 2;
+        /*@ maintaining 2 <= i && i - 1 <= mid;  
+          @ maintaining (\forall int n; 2 <= n && n < i; a % n != 0);
+          @ decreases mid - i;
+          @*/
+        while (i < mid) {
+            if (a % i == 0)
+                return false;
+            i++;
+        }
+        return true;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081401-specgen/tmp/PrimeCheck_Mutant2.java:17: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081401-specgen/tmp/PrimeCheck_Mutant2.java:3:) in method isPrime
+        return true;
+        ^
+/root/specgen/SpecGen/project/081401-specgen/tmp/PrimeCheck_Mutant2.java:3: verify: Associated declaration: /root/specgen/SpecGen/project/081401-specgen/tmp/PrimeCheck_Mutant2.java:17:
+      @ ensures \result <==> (\exists int n; 2 < n && n - 1 <= a/2; a % n != 0);  
+        ^
+2 verification failures
+
+==============================
+public class PrimeCheck_Mutant2 {
+    /*@ requires a >= 2;
+      @ ensures \result <==> (\exists int n; 2 <= n && n < a/2; a % n != 0);  
+      @*/
+    public static boolean isPrime(int a) {
+        int i = 2;
+        int mid = a / 2;
+        /*@ maintaining 2 <= i && i - 1 <= mid;  
+          @ maintaining (\forall int n; 2 <= n && n < i; a % n != 0);
+          @ decreases mid - i;
+          @*/
+        while (i < mid) {
+            if (a % i == 0)
+                return false;
+            i++;
+        }
+        return true;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081401-specgen/tmp/PrimeCheck_Mutant2.java:17: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081401-specgen/tmp/PrimeCheck_Mutant2.java:3:) in method isPrime
+        return true;
+        ^
+/root/specgen/SpecGen/project/081401-specgen/tmp/PrimeCheck_Mutant2.java:3: verify: Associated declaration: /root/specgen/SpecGen/project/081401-specgen/tmp/PrimeCheck_Mutant2.java:17:
+      @ ensures \result <==> (\exists int n; 2 <= n && n < a/2; a % n != 0);  
+        ^
+2 verification failures
+
+==============================
+public class PrimeCheck_Mutant2 {
+    /*@ requires a >= 2;
+      @ ensures \result <==> (\exists int n; 2 <= n && n <= a/2; a % n != 0);  
+      @*/
+    public static boolean isPrime(int a) {
+        int i = 2;
+        int mid = a / 2;
+        /*@ maintaining 2 <= i && i - 1 <= mid;  
+          @ maintaining (\forall int n; 2 <= n && n < i; a % n != 0);
+          @ decreases mid - i;
+          @*/
+        while (i < mid) {
+            if (a % i == 0)
+                return false;
+            i++;
+        }
+        return true;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081401-specgen/tmp/PrimeCheck_Mutant2.java:17: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081401-specgen/tmp/PrimeCheck_Mutant2.java:3:) in method isPrime
+        return true;
+        ^
+/root/specgen/SpecGen/project/081401-specgen/tmp/PrimeCheck_Mutant2.java:3: verify: Associated declaration: /root/specgen/SpecGen/project/081401-specgen/tmp/PrimeCheck_Mutant2.java:17:
+      @ ensures \result <==> (\exists int n; 2 <= n && n <= a/2; a % n != 0);  
+        ^
+2 verification failures
+
+==============================
+public class PrimeCheck_Mutant2 {
+    /*@ requires a >= 2;
+      @ ensures \result <==> (\exists int n; 2 <= n && n - 1 <= a/2; a % n != 0);  
+      @*/
+    public static boolean isPrime(int a) {
+        int i = 2;
+        int mid = a / 2;
+        /*@ maintaining 2 <= i && i - 1 <= mid;  
+          @ maintaining (\forall int n; 2 <= n && n < i; a % n != 0);
+          @ decreases mid - i;
+          @*/
+        while (i < mid) {
+            if (a % i == 0)
+                return false;
+            i++;
+        }
+        return true;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081401-specgen/tmp/PrimeCheck_Mutant2.java:17: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081401-specgen/tmp/PrimeCheck_Mutant2.java:3:) in method isPrime
+        return true;
+        ^
+/root/specgen/SpecGen/project/081401-specgen/tmp/PrimeCheck_Mutant2.java:3: verify: Associated declaration: /root/specgen/SpecGen/project/081401-specgen/tmp/PrimeCheck_Mutant2.java:17:
+      @ ensures \result <==> (\exists int n; 2 <= n && n - 1 <= a/2; a % n != 0);  
+        ^
+2 verification failures
+
+==============================
+public class PrimeCheck_Mutant2 {
+    /*@ requires a >= 2;
+      @ ensures \result <==> (\exists int n; 2 - 1 <= n && n < a/2; a % n != 0);  
+      @*/
+    public static boolean isPrime(int a) {
+        int i = 2;
+        int mid = a / 2;
+        /*@ maintaining 2 <= i && i - 1 <= mid;  
+          @ maintaining (\forall int n; 2 <= n && n < i; a % n != 0);
+          @ decreases mid - i;
+          @*/
+        while (i < mid) {
+            if (a % i == 0)
+                return false;
+            i++;
+        }
+        return true;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081401-specgen/tmp/PrimeCheck_Mutant2.java:17: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081401-specgen/tmp/PrimeCheck_Mutant2.java:3:) in method isPrime
+        return true;
+        ^
+/root/specgen/SpecGen/project/081401-specgen/tmp/PrimeCheck_Mutant2.java:3: verify: Associated declaration: /root/specgen/SpecGen/project/081401-specgen/tmp/PrimeCheck_Mutant2.java:17:
+      @ ensures \result <==> (\exists int n; 2 - 1 <= n && n < a/2; a % n != 0);  
+        ^
+2 verification failures
+
+==============================
+public class PrimeCheck_Mutant2 {
+    /*@ requires a >= 2;
+      @ ensures \result <==> (\exists int n; 2 - 1 <= n && n <= a/2; a % n != 0);  
+      @*/
+    public static boolean isPrime(int a) {
+        int i = 2;
+        int mid = a / 2;
+        /*@ maintaining 2 <= i && i - 1 <= mid;  
+          @ maintaining (\forall int n; 2 <= n && n < i; a % n != 0);
+          @ decreases mid - i;
+          @*/
+        while (i < mid) {
+            if (a % i == 0)
+                return false;
+            i++;
+        }
+        return true;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081401-specgen/tmp/PrimeCheck_Mutant2.java:17: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081401-specgen/tmp/PrimeCheck_Mutant2.java:3:) in method isPrime
+        return true;
+        ^
+/root/specgen/SpecGen/project/081401-specgen/tmp/PrimeCheck_Mutant2.java:3: verify: Associated declaration: /root/specgen/SpecGen/project/081401-specgen/tmp/PrimeCheck_Mutant2.java:17:
+      @ ensures \result <==> (\exists int n; 2 - 1 <= n && n <= a/2; a % n != 0);  
+        ^
+2 verification failures
+
+==============================
+public class PrimeCheck_Mutant2 {
+    /*@ requires a >= 2;
+      @ ensures \result <==> (\exists int n; 2 - 1 <= n && n - 1 <= a/2; a % n != 0);  
+      @*/
+    public static boolean isPrime(int a) {
+        int i = 2;
+        int mid = a / 2;
+        /*@ maintaining 2 <= i && i - 1 <= mid;  
+          @ maintaining (\forall int n; 2 <= n && n < i; a % n != 0);
+          @ decreases mid - i;
+          @*/
+        while (i < mid) {
+            if (a % i == 0)
+                return false;
+            i++;
+        }
+        return true;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081401-specgen/tmp/PrimeCheck_Mutant2.java:17: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081401-specgen/tmp/PrimeCheck_Mutant2.java:3:) in method isPrime
+        return true;
+        ^
+/root/specgen/SpecGen/project/081401-specgen/tmp/PrimeCheck_Mutant2.java:3: verify: Associated declaration: /root/specgen/SpecGen/project/081401-specgen/tmp/PrimeCheck_Mutant2.java:17:
+      @ ensures \result <==> (\exists int n; 2 - 1 <= n && n - 1 <= a/2; a % n != 0);  
+        ^
+2 verification failures
+
+==============================
+public class PrimeCheck_Mutant2 {
+    /*@ requires a >= 2;
+ 
+      @*/
+    public static boolean isPrime(int a) {
+        int i = 2;
+        int mid = a / 2;
+        /*@ maintaining 2 <= i && i - 1 <= mid;  
+          @ maintaining (\forall int n; 2 <= n && n < i; a % n != 0);
+          @ decreases mid - i;
+          @*/
+        while (i < mid) {
+            if (a % i == 0)
+                return false;
+            i++;
+        }
+        return true;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081401-specgen/tmp/PrimeCheck_Mutant2.java:9: verify: The prover cannot establish an assertion (LoopInvariant) in method isPrime
+          @ maintaining (\forall int n; 2 <= n && n < i; a % n != 0);
+            ^
+1 verification failure
+
+==============================
+public class PrimeCheck_Mutant2 {
+    /*@ requires a >= 2;
+ 
+      @*/
+    public static boolean isPrime(int a) {
+        int i = 2;
+        int mid = a / 2;
+        /*@ maintaining 2 <= i && i - 1 <= mid;  
+          @ maintaining (\forall int n; 2 < n && n < i; a % n != 0);  
+          @ decreases mid - i;
+          @*/
+        while (i < mid) {
+            if (a % i == 0)
+                return false;
+            i++;
+        }
+        return true;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081401-specgen/tmp/PrimeCheck_Mutant2.java:9: verify: The prover cannot establish an assertion (LoopInvariant) in method isPrime
+          @ maintaining (\forall int n; 2 < n && n < i; a % n != 0);  
+            ^
+1 verification failure
+
+==============================
+public class PrimeCheck_Mutant2 {
+    /*@ requires a >= 2;
+ 
+      @*/
+    public static boolean isPrime(int a) {
+        int i = 2;
+        int mid = a / 2;
+        /*@ maintaining 2 <= i && i - 1 <= mid;  
+          @ maintaining (\forall int n; 2 < n && n <= i; a % n != 0);  
+          @ decreases mid - i;
+          @*/
+        while (i < mid) {
+            if (a % i == 0)
+                return false;
+            i++;
+        }
+        return true;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081401-specgen/tmp/PrimeCheck_Mutant2.java:9: verify: The prover cannot establish an assertion (LoopInvariant) in method isPrime
+          @ maintaining (\forall int n; 2 < n && n <= i; a % n != 0);  
+            ^
+1 verification failure
+
+==============================
+public class PrimeCheck_Mutant2 {
+    /*@ requires a >= 2;
+ 
+      @*/
+    public static boolean isPrime(int a) {
+        int i = 2;
+        int mid = a / 2;
+        /*@ maintaining 2 <= i && i - 1 <= mid;  
+          @ maintaining (\forall int n; 2 <= n && n < i; a % n != 0);  
+          @ decreases mid - i;
+          @*/
+        while (i < mid) {
+            if (a % i == 0)
+                return false;
+            i++;
+        }
+        return true;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081401-specgen/tmp/PrimeCheck_Mutant2.java:9: verify: The prover cannot establish an assertion (LoopInvariant) in method isPrime
+          @ maintaining (\forall int n; 2 <= n && n < i; a % n != 0);  
+            ^
+1 verification failure
+
+==============================
+public class PrimeCheck_Mutant2 {
+    /*@ requires a >= 2;
+ 
+      @*/
+    public static boolean isPrime(int a) {
+        int i = 2;
+        int mid = a / 2;
+        /*@ maintaining 2 <= i && i - 1 <= mid;  
+          @ maintaining (\forall int n; 2 <= n && n <= i; a % n != 0);  
+          @ decreases mid - i;
+          @*/
+        while (i < mid) {
+            if (a % i == 0)
+                return false;
+            i++;
+        }
+        return true;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081401-specgen/tmp/PrimeCheck_Mutant2.java:9: verify: The prover cannot establish an assertion (LoopInvariantBeforeLoop) in method isPrime
+          @ maintaining (\forall int n; 2 <= n && n <= i; a % n != 0);  
+            ^
+1 verification failure
+
+==============================
+public class PrimeCheck_Mutant2 {
+    /*@ requires a >= 2;
+ 
+      @*/
+    public static boolean isPrime(int a) {
+        int i = 2;
+        int mid = a / 2;
+        /*@ maintaining 2 <= i && i - 1 <= mid;  
+          @ maintaining (\forall int n; 2 - 1 <= n && n < i; a % n != 0);  
+          @ decreases mid - i;
+          @*/
+        while (i < mid) {
+            if (a % i == 0)
+                return false;
+            i++;
+        }
+        return true;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081401-specgen/tmp/PrimeCheck_Mutant2.java:9: verify: The prover cannot establish an assertion (LoopInvariantBeforeLoop) in method isPrime
+          @ maintaining (\forall int n; 2 - 1 <= n && n < i; a % n != 0);  
+            ^
+1 verification failure
+
+==============================
+public class PrimeCheck_Mutant2 {
+    /*@ requires a >= 2;
+ 
+      @*/
+    public static boolean isPrime(int a) {
+        int i = 2;
+        int mid = a / 2;
+        /*@ maintaining 2 <= i && i - 1 <= mid;  
+          @ maintaining (\forall int n; 2 - 1 <= n && n <= i; a % n != 0);  
+          @ decreases mid - i;
+          @*/
+        while (i < mid) {
+            if (a % i == 0)
+                return false;
+            i++;
+        }
+        return true;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081401-specgen/tmp/PrimeCheck_Mutant2.java:9: verify: The prover cannot establish an assertion (LoopInvariantBeforeLoop) in method isPrime
+          @ maintaining (\forall int n; 2 - 1 <= n && n <= i; a % n != 0);  
+            ^
+1 verification failure
+
+==============================
+public class PrimeCheck_Mutant2 {
+    /*@ requires a >= 2;
+ 
+      @*/
+    public static boolean isPrime(int a) {
+        int i = 2;
+        int mid = a / 2;
+        /*@ maintaining 2 <= i && i - 1 <= mid;  
+          @ maintaining (\exists int n; 2 < n && n < i; a % n != 0);  
+          @ decreases mid - i;
+          @*/
+        while (i < mid) {
+            if (a % i == 0)
+                return false;
+            i++;
+        }
+        return true;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081401-specgen/tmp/PrimeCheck_Mutant2.java:9: verify: The prover cannot establish an assertion (LoopInvariantBeforeLoop) in method isPrime
+          @ maintaining (\exists int n; 2 < n && n < i; a % n != 0);  
+            ^
+1 verification failure
+
+==============================
+public class PrimeCheck_Mutant2 {
+    /*@ requires a >= 2;
+ 
+      @*/
+    public static boolean isPrime(int a) {
+        int i = 2;
+        int mid = a / 2;
+        /*@ maintaining 2 <= i && i - 1 <= mid;  
+          @ maintaining (\exists int n; 2 < n && n <= i; a % n != 0);  
+          @ decreases mid - i;
+          @*/
+        while (i < mid) {
+            if (a % i == 0)
+                return false;
+            i++;
+        }
+        return true;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081401-specgen/tmp/PrimeCheck_Mutant2.java:9: verify: The prover cannot establish an assertion (LoopInvariantBeforeLoop) in method isPrime
+          @ maintaining (\exists int n; 2 < n && n <= i; a % n != 0);  
+            ^
+1 verification failure
+
+==============================
+public class PrimeCheck_Mutant2 {
+    /*@ requires a >= 2;
+ 
+      @*/
+    public static boolean isPrime(int a) {
+        int i = 2;
+        int mid = a / 2;
+        /*@ maintaining 2 <= i && i - 1 <= mid;  
+          @ maintaining (\exists int n; 2 <= n && n < i; a % n != 0);  
+          @ decreases mid - i;
+          @*/
+        while (i < mid) {
+            if (a % i == 0)
+                return false;
+            i++;
+        }
+        return true;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081401-specgen/tmp/PrimeCheck_Mutant2.java:9: verify: The prover cannot establish an assertion (LoopInvariantBeforeLoop) in method isPrime
+          @ maintaining (\exists int n; 2 <= n && n < i; a % n != 0);  
+            ^
+1 verification failure
+
+==============================
+public class PrimeCheck_Mutant2 {
+    /*@ requires a >= 2;
+ 
+      @*/
+    public static boolean isPrime(int a) {
+        int i = 2;
+        int mid = a / 2;
+        /*@ maintaining 2 <= i && i - 1 <= mid;  
+          @ maintaining (\exists int n; 2 <= n && n <= i; a % n != 0);  
+          @ decreases mid - i;
+          @*/
+        while (i < mid) {
+            if (a % i == 0)
+                return false;
+            i++;
+        }
+        return true;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081401-specgen/tmp/PrimeCheck_Mutant2.java:9: verify: The prover cannot establish an assertion (LoopInvariantBeforeLoop) in method isPrime
+          @ maintaining (\exists int n; 2 <= n && n <= i; a % n != 0);  
+            ^
+1 verification failure
+
+==============================
+public class PrimeCheck_Mutant2 {
+    /*@ requires a >= 2;
+ 
+      @*/
+    public static boolean isPrime(int a) {
+        int i = 2;
+        int mid = a / 2;
+        /*@ maintaining 2 <= i && i - 1 <= mid;  
+          @ maintaining (\exists int n; 2 - 1 <= n && n < i; a % n != 0);  
+          @ decreases mid - i;
+          @*/
+        while (i < mid) {
+            if (a % i == 0)
+                return false;
+            i++;
+        }
+        return true;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081401-specgen/tmp/PrimeCheck_Mutant2.java:9: verify: The prover cannot establish an assertion (LoopInvariantBeforeLoop) in method isPrime
+          @ maintaining (\exists int n; 2 - 1 <= n && n < i; a % n != 0);  
+            ^
+1 verification failure
+
+==============================
+public class PrimeCheck_Mutant2 {
+    /*@ requires a >= 2;
+ 
+      @*/
+    public static boolean isPrime(int a) {
+        int i = 2;
+        int mid = a / 2;
+        /*@ maintaining 2 <= i && i - 1 <= mid;  
+          @ maintaining (\exists int n; 2 - 1 <= n && n <= i; a % n != 0);  
+          @ decreases mid - i;
+          @*/
+        while (i < mid) {
+            if (a % i == 0)
+                return false;
+            i++;
+        }
+        return true;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081401-specgen/tmp/PrimeCheck_Mutant2.java:9: verify: The prover cannot establish an assertion (LoopInvariantBeforeLoop) in method isPrime
+          @ maintaining (\exists int n; 2 - 1 <= n && n <= i; a % n != 0);  
+            ^
+1 verification failure
+
+==============================
+public class PrimeCheck_Mutant2 {
+    /*@ requires a >= 2;
+ 
+      @*/
+    public static boolean isPrime(int a) {
+        int i = 2;
+        int mid = a / 2;
+        /*@ maintaining 2 <= i && i - 1 <= mid;  
+ 
+          @ decreases mid - i;
+          @*/
+        while (i < mid) {
+            if (a % i == 0)
+                return false;
+            i++;
+        }
+        return true;
+    }
+}
+
+==============================
+
+==============================

@@ -1,0 +1,17 @@
+public class PassPillowBranch_Mutant3 {
+    /*@ requires n > 1 && time >= 0;
+      @ ensures \result >= 1 && \result <= n;
+      @ ensures time % ((n - 1) * 2) < n ==> \result == (time % ((n - 1) * 2)) + 1;
+      @ ensures time % ((n - 1) * 2) >= n ==> \result == n * 2 - (time % ((n - 1) * 2)) - 2;
+      @*/
+    public static int passPillow(int n, int time) {
+        time = time % ((n - 1) * 2);
+        if (time < n) {
+            return time + 1;
+        }
+        return n * 2 - time - 2;
+    }
+}
+==============================
+
+==============================

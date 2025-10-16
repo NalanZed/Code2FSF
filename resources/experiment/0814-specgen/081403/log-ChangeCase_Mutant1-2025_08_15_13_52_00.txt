@@ -1,0 +1,20 @@
+public class ChangeCase_Mutant1 {
+
+    //@ requires Character.isLetter(c);
+    //@ ensures \result == (c < 'a' ? c : (c >= 'z' ? (char)(c - 'a' + 'A') : 'c'));
+    //@ ensures Character.isLetter(\result);
+    public static char changeCase(char c) {
+        char result = ' ';
+        if (c < 'a') {
+            result = c;
+        } else if (c >= 'z') {
+            result = (char) (c - 'a' + 'A');
+        } else {
+            result = 'c';
+        }
+        return result;
+    }
+}
+==============================
+
+==============================

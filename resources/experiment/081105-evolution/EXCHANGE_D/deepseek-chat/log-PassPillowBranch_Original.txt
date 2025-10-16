@@ -1,0 +1,66 @@
+start role user
+Please modify the following code according to the modified FSF:
+```Code
+
+
+public class PassPillowBranch_Original {
+
+    public static int passPillow(int n, int time) {
+        if(n - 1 < 0){
+            throw new IllegalArgumentException("n is less than 1");
+        }
+        time = time % ((n - 1) * 2);
+        if (time < n) {
+            return time + 1;
+        }
+        return n * 2 - time - 1;
+    }
+}
+
+```
+```Original FSF
+T0: n - 1 < 0
+D0: Exception
+
+T1: n - 1 >= 0 && time % ((n - 1) * 2) < n
+D1: return_value == time % ((n - 1) * 2) + 1
+
+T2: n - 1 >= 0 && time % ((n - 1) * 2) >= n
+D2: return_value == n * 2 - (time % ((n - 1) * 2)) - 1
+
+```Modified FSF
+T0: (n - 1 < 0) || (n - 1 >= 0 && time % ((n - 1) * 2) < n)
+D0: Exception
+
+T1: n - 1 >= 0 && time % ((n - 1) * 2) >= n
+D1: return_value == n * 2 - (time % ((n - 1) * 2)) - 1
+
+```
+
+
+*end* role user
+start role assistant
+```
+public class PassPillowBranch_Modified {
+
+    public static int passPillow(int n, int time) {
+        if((n - 1 < 0) || (n - 1 >= 0 && time % ((n - 1) * 2) < n)) {
+            throw new IllegalArgumentException("n is less than 1 or time condition not met");
+        }
+        return n * 2 - (time % ((n - 1) * 2)) - 1;
+    }
+}
+```
+
+The modified code:
+1. Combines the original T0 and T1 conditions into a single exception case in the modified T0
+2. Only keeps the T2 case (now T1) as the normal return path
+3. Simplifies the logic by removing the if-else structure since there's only one valid return path now
+4. Maintains the same calculation for the return value when the conditions are met
+5. Updates the exception message to reflect both possible error conditions
+
+Note that this modification changes the behavior significantly - now the function will throw exceptions in cases where it previously returned values. This matches the modified FSF specification where all cases that were previously T0 or T1 now throw exceptions, and only the original T2 case remains as a valid return path.
+*end* role assistant
+start role remark
+Validation SUCCESS!
+*end* role remark

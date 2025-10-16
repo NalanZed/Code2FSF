@@ -1,0 +1,79 @@
+start role user
+Please modify the following code according to the modified FSF:
+```Code
+
+
+public class SubLoop_Original {
+    public static int subLoop(int x, int y) {
+        int sum = x;
+        if (y > 0) {
+            int n = y;
+            while (n > 0) {
+                sum = sum - 1;
+                n = n - 1;
+            }
+        } else {
+            int n = -y;
+            while (n > 0) {
+                sum = sum + 1;
+                n = n - 1;
+            }
+        }
+        return sum;
+    }
+}
+
+```
+```Original FSF
+T0: y > 0
+D0: sum == x - y
+
+T1: y < 0
+D1: sum == x + (-y)
+
+T2: y == 0
+D2: sum == x
+
+```Modified FSF
+T0: y > 0
+D0: sum == x
+
+T1: y < 0
+D1: sum == x + (-y)
+
+T2: y == 0
+D2: sum == x - y
+
+```
+
+
+*end* role user
+start role assistant
+```
+public class SubLoop_Modified {
+    public static int subLoop(int x, int y) {
+        int sum = x;
+        if (y > 0) {
+            // Do nothing when y > 0 to satisfy D0: sum == x
+        } else if (y < 0) {
+            int n = -y;
+            while (n > 0) {
+                sum = sum + 1;
+                n = n - 1;
+            }
+        } else { // y == 0
+            // Do nothing to satisfy D2: sum == x - y (which is x when y=0)
+        }
+        return sum;
+    }
+}
+```
+
+The modified version:
+1. Removes the subtraction loop when y > 0 to satisfy D0 (sum == x)
+2. Keeps the addition logic for y < 0 to satisfy D1 (sum == x + (-y))
+3. Handles y == 0 case where sum remains x (which equals x - y when y=0)
+*end* role assistant
+start role remark
+Validation SUCCESS!
+*end* role remark

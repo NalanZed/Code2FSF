@@ -1,0 +1,58 @@
+start role user
+Please modify the following code according to the modified FSF:
+```Code
+
+
+public class GyroHealthCheck_Original {
+    public static int gyroHealthCheck(int x, int y, int z) {
+        int diffXY = x - y;
+        if (diffXY < 0) diffXY = -diffXY;
+        int diffYZ = y - z;
+        if (diffYZ < 0) diffYZ = -diffYZ;
+        int diffXZ = x - z;
+        if (diffXZ < 0) diffXZ = -diffXZ;
+        int alarm = 0;
+        if (diffXY > 10 || diffYZ > 10 || diffXZ > 10) {
+            alarm = 1;
+        }
+        return alarm;
+    }
+}
+
+```
+```Original FSF
+T0: (x - y > 10 || y - x > 10) || (y - z > 10 || z - y > 10) || (x - z > 10 || z - x > 10)
+D0: alarm == 1
+
+T1: !((x - y > 10 || y - x > 10) || (y - z > 10 || z - y > 10) || (x - z > 10 || z - x > 10))
+D1: alarm == 0
+
+```Modified FSF
+T0: (!((x - y > 10 || y - x > 10) || (y - z > 10 || z - y > 10) || (x - z > 10 || z - x > 10))) || ((x - y > 10 || y - x > 10) || (y - z > 10 || z - y > 10) || (x - z > 10 || z - x > 10))
+D0: alarm == 0
+
+```
+
+
+*end* role user
+start role assistant
+```
+public class GyroHealthCheck_Modified {
+    public static int gyroHealthCheck(int x, int y, int z) {
+        int diffXY = x - y;
+        if (diffXY < 0) diffXY = -diffXY;
+        int diffYZ = y - z;
+        if (diffYZ < 0) diffYZ = -diffYZ;
+        int diffXZ = x - z;
+        if (diffXZ < 0) diffXZ = -diffXZ;
+        int alarm = 0;
+        return alarm;
+    }
+}
+```
+
+The modified code always returns 0 (alarm == 0) regardless of the input values, which satisfies the modified FSF where the alarm should always be 0 in all cases (T0 covers all possible inputs). I removed the conditional check since it's no longer needed - the modified specification requires the alarm to always be 0.
+*end* role assistant
+start role remark
+Validation SUCCESS!
+*end* role remark

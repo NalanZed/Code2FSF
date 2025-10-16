@@ -1,0 +1,349 @@
+public class DigitRoot_Mutant1 {
+    /*@ requires num >= 0;
+      @ ensures \result >= 0 && \result <= 9;
+      @ ensures \result == (num == 0 ? 0 : (num % 9 == 0 ? 9 : num % 9));
+      @*/
+    public static int function(int num) {
+        //@ maintaining num >= 0;
+        //@ decreases num;
+        while (num > 10) {
+            int sum = 0;
+            //@ maintaining sum >= 0;
+            //@ maintaining \old(num) >= 0;
+            //@ decreases num;
+            while (num > 0) {
+                sum = sum + (num % 10);
+                num = num / 10;
+            }
+            num = sum;
+        }
+        return num;
+    }
+}
+==============================
+/root/specgen/SpecGen/project/081401-specgen/tmp/DigitRoot_Mutant1.java:20: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081401-specgen/tmp/DigitRoot_Mutant1.java:3:) in method function
+        return num;
+        ^
+/root/specgen/SpecGen/project/081401-specgen/tmp/DigitRoot_Mutant1.java:3: verify: Associated declaration: /root/specgen/SpecGen/project/081401-specgen/tmp/DigitRoot_Mutant1.java:20:
+      @ ensures \result >= 0 && \result <= 9;
+        ^
+2 verification failures
+
+==============================
+public class DigitRoot_Mutant1 {
+    /*@ requires num >= 0;
+      @ ensures \result > 0 && \result < 9;  
+      @ ensures \result == (num == 0 ? 0 : (num % 9 == 0 ? 9 : num % 9));
+      @*/
+    public static int function(int num) {
+        //@ maintaining num >= 0;
+        //@ decreases num;
+        while (num > 10) {
+            int sum = 0;
+            //@ maintaining sum >= 0;
+            //@ maintaining \old(num) >= 0;
+            //@ decreases num;
+            while (num > 0) {
+                sum = sum + (num % 10);
+                num = num / 10;
+            }
+            num = sum;
+        }
+        return num;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081401-specgen/tmp/DigitRoot_Mutant1.java:20: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081401-specgen/tmp/DigitRoot_Mutant1.java:3:) in method function
+        return num;
+        ^
+/root/specgen/SpecGen/project/081401-specgen/tmp/DigitRoot_Mutant1.java:3: verify: Associated declaration: /root/specgen/SpecGen/project/081401-specgen/tmp/DigitRoot_Mutant1.java:20:
+      @ ensures \result > 0 && \result < 9;  
+        ^
+2 verification failures
+
+==============================
+public class DigitRoot_Mutant1 {
+    /*@ requires num >= 0;
+      @ ensures \result > 0 && \result <= 9;  
+      @ ensures \result == (num == 0 ? 0 : (num % 9 == 0 ? 9 : num % 9));
+      @*/
+    public static int function(int num) {
+        //@ maintaining num >= 0;
+        //@ decreases num;
+        while (num > 10) {
+            int sum = 0;
+            //@ maintaining sum >= 0;
+            //@ maintaining \old(num) >= 0;
+            //@ decreases num;
+            while (num > 0) {
+                sum = sum + (num % 10);
+                num = num / 10;
+            }
+            num = sum;
+        }
+        return num;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081401-specgen/tmp/DigitRoot_Mutant1.java:20: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081401-specgen/tmp/DigitRoot_Mutant1.java:3:) in method function
+        return num;
+        ^
+/root/specgen/SpecGen/project/081401-specgen/tmp/DigitRoot_Mutant1.java:3: verify: Associated declaration: /root/specgen/SpecGen/project/081401-specgen/tmp/DigitRoot_Mutant1.java:20:
+      @ ensures \result > 0 && \result <= 9;  
+        ^
+2 verification failures
+
+==============================
+public class DigitRoot_Mutant1 {
+    /*@ requires num >= 0;
+      @ ensures \result > 0 && \result - 1 <= 9;  
+      @ ensures \result == (num == 0 ? 0 : (num % 9 == 0 ? 9 : num % 9));
+      @*/
+    public static int function(int num) {
+        //@ maintaining num >= 0;
+        //@ decreases num;
+        while (num > 10) {
+            int sum = 0;
+            //@ maintaining sum >= 0;
+            //@ maintaining \old(num) >= 0;
+            //@ decreases num;
+            while (num > 0) {
+                sum = sum + (num % 10);
+                num = num / 10;
+            }
+            num = sum;
+        }
+        return num;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081401-specgen/tmp/DigitRoot_Mutant1.java:20: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081401-specgen/tmp/DigitRoot_Mutant1.java:4:) in method function
+        return num;
+        ^
+/root/specgen/SpecGen/project/081401-specgen/tmp/DigitRoot_Mutant1.java:4: verify: Associated declaration: /root/specgen/SpecGen/project/081401-specgen/tmp/DigitRoot_Mutant1.java:20:
+      @ ensures \result == (num == 0 ? 0 : (num % 9 == 0 ? 9 : num % 9));
+        ^
+2 verification failures
+
+==============================
+public class DigitRoot_Mutant1 {
+    /*@ requires num >= 0;
+      @ ensures \result > 0 && \result - 1 <= 9;  
+      @ ensures \result == (num == 0 ? 0 : (num % 9 == 0 ? 9 : num % 9));  
+      @*/
+    public static int function(int num) {
+        //@ maintaining num >= 0;
+        //@ decreases num;
+        while (num > 10) {
+            int sum = 0;
+            //@ maintaining sum >= 0;
+            //@ maintaining \old(num) >= 0;
+            //@ decreases num;
+            while (num > 0) {
+                sum = sum + (num % 10);
+                num = num / 10;
+            }
+            num = sum;
+        }
+        return num;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081401-specgen/tmp/DigitRoot_Mutant1.java:20: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081401-specgen/tmp/DigitRoot_Mutant1.java:4:) in method function
+        return num;
+        ^
+/root/specgen/SpecGen/project/081401-specgen/tmp/DigitRoot_Mutant1.java:4: verify: Associated declaration: /root/specgen/SpecGen/project/081401-specgen/tmp/DigitRoot_Mutant1.java:20:
+      @ ensures \result == (num == 0 ? 0 : (num % 9 == 0 ? 9 : num % 9));  
+        ^
+2 verification failures
+
+==============================
+public class DigitRoot_Mutant1 {
+    /*@ requires num >= 0;
+      @ ensures \result > 0 && \result - 1 <= 9;  
+ 
+      @*/
+    public static int function(int num) {
+        //@ maintaining num >= 0;
+        //@ decreases num;
+        while (num > 10) {
+            int sum = 0;
+            //@ maintaining sum >= 0;
+            //@ maintaining \old(num) >= 0;
+            //@ decreases num;
+            while (num > 0) {
+                sum = sum + (num % 10);
+                num = num / 10;
+            }
+            num = sum;
+        }
+        return num;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081401-specgen/tmp/DigitRoot_Mutant1.java:20: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081401-specgen/tmp/DigitRoot_Mutant1.java:3:) in method function
+        return num;
+        ^
+/root/specgen/SpecGen/project/081401-specgen/tmp/DigitRoot_Mutant1.java:3: verify: Associated declaration: /root/specgen/SpecGen/project/081401-specgen/tmp/DigitRoot_Mutant1.java:20:
+      @ ensures \result > 0 && \result - 1 <= 9;  
+        ^
+2 verification failures
+
+==============================
+public class DigitRoot_Mutant1 {
+    /*@ requires num >= 0;
+      @ ensures \result >= 0 && \result < 9;  
+ 
+      @*/
+    public static int function(int num) {
+        //@ maintaining num >= 0;
+        //@ decreases num;
+        while (num > 10) {
+            int sum = 0;
+            //@ maintaining sum >= 0;
+            //@ maintaining \old(num) >= 0;
+            //@ decreases num;
+            while (num > 0) {
+                sum = sum + (num % 10);
+                num = num / 10;
+            }
+            num = sum;
+        }
+        return num;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081401-specgen/tmp/DigitRoot_Mutant1.java:20: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081401-specgen/tmp/DigitRoot_Mutant1.java:3:) in method function
+        return num;
+        ^
+/root/specgen/SpecGen/project/081401-specgen/tmp/DigitRoot_Mutant1.java:3: verify: Associated declaration: /root/specgen/SpecGen/project/081401-specgen/tmp/DigitRoot_Mutant1.java:20:
+      @ ensures \result >= 0 && \result < 9;  
+        ^
+2 verification failures
+
+==============================
+public class DigitRoot_Mutant1 {
+    /*@ requires num >= 0;
+      @ ensures \result >= 0 && \result <= 9;  
+ 
+      @*/
+    public static int function(int num) {
+        //@ maintaining num >= 0;
+        //@ decreases num;
+        while (num > 10) {
+            int sum = 0;
+            //@ maintaining sum >= 0;
+            //@ maintaining \old(num) >= 0;
+            //@ decreases num;
+            while (num > 0) {
+                sum = sum + (num % 10);
+                num = num / 10;
+            }
+            num = sum;
+        }
+        return num;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081401-specgen/tmp/DigitRoot_Mutant1.java:20: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081401-specgen/tmp/DigitRoot_Mutant1.java:3:) in method function
+        return num;
+        ^
+/root/specgen/SpecGen/project/081401-specgen/tmp/DigitRoot_Mutant1.java:3: verify: Associated declaration: /root/specgen/SpecGen/project/081401-specgen/tmp/DigitRoot_Mutant1.java:20:
+      @ ensures \result >= 0 && \result <= 9;  
+        ^
+2 verification failures
+
+==============================
+public class DigitRoot_Mutant1 {
+    /*@ requires num >= 0;
+      @ ensures \result >= 0 && \result - 1 <= 9;  
+ 
+      @*/
+    public static int function(int num) {
+        //@ maintaining num >= 0;
+        //@ decreases num;
+        while (num > 10) {
+            int sum = 0;
+            //@ maintaining sum >= 0;
+            //@ maintaining \old(num) >= 0;
+            //@ decreases num;
+            while (num > 0) {
+                sum = sum + (num % 10);
+                num = num / 10;
+            }
+            num = sum;
+        }
+        return num;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081401-specgen/tmp/DigitRoot_Mutant1.java:8: verify: The prover cannot establish an assertion (LoopDecreases) in method function
+        //@ decreases num;
+            ^
+1 verification failure
+
+==============================
+public class DigitRoot_Mutant1 {
+    /*@ requires num >= 0;
+      @ ensures \result >= 0 && \result - 1 <= 9;  
+ 
+      @*/
+    public static int function(int num) {
+        //@ maintaining num >= 0;
+        //@ decreases num;  
+        while (num > 10) {
+            int sum = 0;
+            //@ maintaining sum >= 0;
+            //@ maintaining \old(num) >= 0;
+            //@ decreases num;
+            while (num > 0) {
+                sum = sum + (num % 10);
+                num = num / 10;
+            }
+            num = sum;
+        }
+        return num;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081401-specgen/tmp/DigitRoot_Mutant1.java:8: verify: The prover cannot establish an assertion (LoopDecreases) in method function
+        //@ decreases num;  
+            ^
+1 verification failure
+
+==============================
+public class DigitRoot_Mutant1 {
+    /*@ requires num >= 0;
+      @ ensures \result >= 0 && \result - 1 <= 9;  
+ 
+      @*/
+    public static int function(int num) {
+        //@ maintaining num >= 0;
+ 
+        while (num > 10) {
+            int sum = 0;
+            //@ maintaining sum >= 0;
+            //@ maintaining \old(num) >= 0;
+            //@ decreases num;
+            while (num > 0) {
+                sum = sum + (num % 10);
+                num = num / 10;
+            }
+            num = sum;
+        }
+        return num;
+    }
+}
+
+==============================
+
+==============================

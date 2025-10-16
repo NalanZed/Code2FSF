@@ -1,0 +1,10 @@
+public class ConvertToFahrenheit_Original {
+
+    //@ ensures \result == celsius * 1.80 + 32.00;
+    public static /*@ pure @*/ double convertTemperature(double celsius) {
+        return celsius * 1.80 + 32.00;
+    }
+}
+==============================
+
+==============================

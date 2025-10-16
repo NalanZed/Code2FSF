@@ -1,0 +1,31 @@
+public class IsCommonFactorBranch_Mutant4 {
+    //@ ensures \result <==> (a % factor == 0);
+    //@ ensures !\result <==> (a % factor != 0);
+    public static boolean isCommonFactor (int a, int b, int factor) {
+        if (a % factor != 0) {
+            return false;
+        }
+        return true;
+    }
+}
+==============================
+/root/specgen/SpecGen/project/081403-specgen/tmp/IsCommonFactorBranch_Mutant4.java:5: verify: The prover cannot establish an assertion (PossiblyDivideByZero) in method isCommonFactor
+        if (a % factor != 0) {
+              ^
+1 verification failure
+
+==============================
+public class IsCommonFactorBranch_Mutant4 {
+    //@ requires factor != 0;
+    //@ ensures \result <==> (a % factor == 0);
+    //@ ensures !\result <==> (a % factor != 0);
+    public static boolean isCommonFactor (int a, int b, int factor) {
+        if (a % factor != 0) {
+            return false;
+        }
+        return true;
+    }
+}
+==============================
+
+==============================

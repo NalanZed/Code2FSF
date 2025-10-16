@@ -1,0 +1,586 @@
+public class MySqrt_Mutant5 {
+    //@ requires x >= 0;
+    //@ ensures \result >= 0;
+    //@ ensures (\result * \result) <= x;
+    //@ ensures x < ((\result + 1) * (\result + 1)) || x == Integer.MAX_VALUE;
+    public static int mySqrt(int x) {
+        int l = 0, r = x, ans = -1;
+        //@ maintaining 0 <= l && l <= r + 1;
+        //@ maintaining r <= x;
+        //@ maintaining ans >= -1;
+        //@ maintaining (\forall int k; 0 <= k && k < l; (long)k * k <= x);
+        //@ maintaining (\forall int k; r < k && k <= x; (long)k * k > x);
+        //@ maintaining (ans == -1) || ((long)ans * ans <= x);
+        //@ decreases r - l;
+        while (l <= r) {
+            int mid = l + (r - l) / 3;
+            if ((long) mid * mid <= x) {
+                ans = mid;
+                l = mid + 1;
+            } else {
+                r = mid - 1;
+            }
+        }
+        return ans;
+    }
+}
+==============================
+/root/specgen/SpecGen/project/081401-specgen/tmp/MySqrt_Mutant5.java:24: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081401-specgen/tmp/MySqrt_Mutant5.java:3:) in method mySqrt
+        return ans;
+        ^
+/root/specgen/SpecGen/project/081401-specgen/tmp/MySqrt_Mutant5.java:3: verify: Associated declaration: /root/specgen/SpecGen/project/081401-specgen/tmp/MySqrt_Mutant5.java:24:
+    //@ ensures \result >= 0;
+        ^
+2 verification failures
+
+==============================
+public class MySqrt_Mutant5 {
+    //@ requires x >= 0;
+    //@ ensures \result > 0;  
+    //@ ensures (\result * \result) <= x;
+    //@ ensures x < ((\result + 1) * (\result + 1)) || x == Integer.MAX_VALUE;
+    public static int mySqrt(int x) {
+        int l = 0, r = x, ans = -1;
+        //@ maintaining 0 <= l && l <= r + 1;
+        //@ maintaining r <= x;
+        //@ maintaining ans >= -1;
+        //@ maintaining (\forall int k; 0 <= k && k < l; (long)k * k <= x);
+        //@ maintaining (\forall int k; r < k && k <= x; (long)k * k > x);
+        //@ maintaining (ans == -1) || ((long)ans * ans <= x);
+        //@ decreases r - l;
+        while (l <= r) {
+            int mid = l + (r - l) / 3;
+            if ((long) mid * mid <= x) {
+                ans = mid;
+                l = mid + 1;
+            } else {
+                r = mid - 1;
+            }
+        }
+        return ans;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081401-specgen/tmp/MySqrt_Mutant5.java:24: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081401-specgen/tmp/MySqrt_Mutant5.java:3:) in method mySqrt
+        return ans;
+        ^
+/root/specgen/SpecGen/project/081401-specgen/tmp/MySqrt_Mutant5.java:3: verify: Associated declaration: /root/specgen/SpecGen/project/081401-specgen/tmp/MySqrt_Mutant5.java:24:
+    //@ ensures \result > 0;  
+        ^
+2 verification failures
+
+==============================
+public class MySqrt_Mutant5 {
+    //@ requires x >= 0;
+    //@ ensures \result >= 0;  
+    //@ ensures (\result * \result) <= x;
+    //@ ensures x < ((\result + 1) * (\result + 1)) || x == Integer.MAX_VALUE;
+    public static int mySqrt(int x) {
+        int l = 0, r = x, ans = -1;
+        //@ maintaining 0 <= l && l <= r + 1;
+        //@ maintaining r <= x;
+        //@ maintaining ans >= -1;
+        //@ maintaining (\forall int k; 0 <= k && k < l; (long)k * k <= x);
+        //@ maintaining (\forall int k; r < k && k <= x; (long)k * k > x);
+        //@ maintaining (ans == -1) || ((long)ans * ans <= x);
+        //@ decreases r - l;
+        while (l <= r) {
+            int mid = l + (r - l) / 3;
+            if ((long) mid * mid <= x) {
+                ans = mid;
+                l = mid + 1;
+            } else {
+                r = mid - 1;
+            }
+        }
+        return ans;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081401-specgen/tmp/MySqrt_Mutant5.java:24: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081401-specgen/tmp/MySqrt_Mutant5.java:3:) in method mySqrt
+        return ans;
+        ^
+/root/specgen/SpecGen/project/081401-specgen/tmp/MySqrt_Mutant5.java:3: verify: Associated declaration: /root/specgen/SpecGen/project/081401-specgen/tmp/MySqrt_Mutant5.java:24:
+    //@ ensures \result >= 0;  
+        ^
+2 verification failures
+
+==============================
+public class MySqrt_Mutant5 {
+    //@ requires x >= 0;
+    //@ ensures \result + 1 >= 0;  
+    //@ ensures (\result * \result) <= x;
+    //@ ensures x < ((\result + 1) * (\result + 1)) || x == Integer.MAX_VALUE;
+    public static int mySqrt(int x) {
+        int l = 0, r = x, ans = -1;
+        //@ maintaining 0 <= l && l <= r + 1;
+        //@ maintaining r <= x;
+        //@ maintaining ans >= -1;
+        //@ maintaining (\forall int k; 0 <= k && k < l; (long)k * k <= x);
+        //@ maintaining (\forall int k; r < k && k <= x; (long)k * k > x);
+        //@ maintaining (ans == -1) || ((long)ans * ans <= x);
+        //@ decreases r - l;
+        while (l <= r) {
+            int mid = l + (r - l) / 3;
+            if ((long) mid * mid <= x) {
+                ans = mid;
+                l = mid + 1;
+            } else {
+                r = mid - 1;
+            }
+        }
+        return ans;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081401-specgen/tmp/MySqrt_Mutant5.java:24: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081401-specgen/tmp/MySqrt_Mutant5.java:4:) in method mySqrt
+        return ans;
+        ^
+/root/specgen/SpecGen/project/081401-specgen/tmp/MySqrt_Mutant5.java:4: verify: Associated declaration: /root/specgen/SpecGen/project/081401-specgen/tmp/MySqrt_Mutant5.java:24:
+    //@ ensures (\result * \result) <= x;
+        ^
+2 verification failures
+
+==============================
+public class MySqrt_Mutant5 {
+    //@ requires x >= 0;
+    //@ ensures \result + 1 >= 0;  
+    //@ ensures (\result * \result) < x;  
+    //@ ensures x < ((\result + 1) * (\result + 1)) || x == Integer.MAX_VALUE;
+    public static int mySqrt(int x) {
+        int l = 0, r = x, ans = -1;
+        //@ maintaining 0 <= l && l <= r + 1;
+        //@ maintaining r <= x;
+        //@ maintaining ans >= -1;
+        //@ maintaining (\forall int k; 0 <= k && k < l; (long)k * k <= x);
+        //@ maintaining (\forall int k; r < k && k <= x; (long)k * k > x);
+        //@ maintaining (ans == -1) || ((long)ans * ans <= x);
+        //@ decreases r - l;
+        while (l <= r) {
+            int mid = l + (r - l) / 3;
+            if ((long) mid * mid <= x) {
+                ans = mid;
+                l = mid + 1;
+            } else {
+                r = mid - 1;
+            }
+        }
+        return ans;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081401-specgen/tmp/MySqrt_Mutant5.java:24: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081401-specgen/tmp/MySqrt_Mutant5.java:4:) in method mySqrt
+        return ans;
+        ^
+/root/specgen/SpecGen/project/081401-specgen/tmp/MySqrt_Mutant5.java:4: verify: Associated declaration: /root/specgen/SpecGen/project/081401-specgen/tmp/MySqrt_Mutant5.java:24:
+    //@ ensures (\result * \result) < x;  
+        ^
+2 verification failures
+
+==============================
+public class MySqrt_Mutant5 {
+    //@ requires x >= 0;
+    //@ ensures \result + 1 >= 0;  
+    //@ ensures (\result * \result) <= x;  
+    //@ ensures x < ((\result + 1) * (\result + 1)) || x == Integer.MAX_VALUE;
+    public static int mySqrt(int x) {
+        int l = 0, r = x, ans = -1;
+        //@ maintaining 0 <= l && l <= r + 1;
+        //@ maintaining r <= x;
+        //@ maintaining ans >= -1;
+        //@ maintaining (\forall int k; 0 <= k && k < l; (long)k * k <= x);
+        //@ maintaining (\forall int k; r < k && k <= x; (long)k * k > x);
+        //@ maintaining (ans == -1) || ((long)ans * ans <= x);
+        //@ decreases r - l;
+        while (l <= r) {
+            int mid = l + (r - l) / 3;
+            if ((long) mid * mid <= x) {
+                ans = mid;
+                l = mid + 1;
+            } else {
+                r = mid - 1;
+            }
+        }
+        return ans;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081401-specgen/tmp/MySqrt_Mutant5.java:24: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081401-specgen/tmp/MySqrt_Mutant5.java:4:) in method mySqrt
+        return ans;
+        ^
+/root/specgen/SpecGen/project/081401-specgen/tmp/MySqrt_Mutant5.java:4: verify: Associated declaration: /root/specgen/SpecGen/project/081401-specgen/tmp/MySqrt_Mutant5.java:24:
+    //@ ensures (\result * \result) <= x;  
+        ^
+2 verification failures
+
+==============================
+public class MySqrt_Mutant5 {
+    //@ requires x >= 0;
+    //@ ensures \result + 1 >= 0;  
+    //@ ensures (\result * \result) - 1 <= x;  
+    //@ ensures x < ((\result + 1) * (\result + 1)) || x == Integer.MAX_VALUE;
+    public static int mySqrt(int x) {
+        int l = 0, r = x, ans = -1;
+        //@ maintaining 0 <= l && l <= r + 1;
+        //@ maintaining r <= x;
+        //@ maintaining ans >= -1;
+        //@ maintaining (\forall int k; 0 <= k && k < l; (long)k * k <= x);
+        //@ maintaining (\forall int k; r < k && k <= x; (long)k * k > x);
+        //@ maintaining (ans == -1) || ((long)ans * ans <= x);
+        //@ decreases r - l;
+        while (l <= r) {
+            int mid = l + (r - l) / 3;
+            if ((long) mid * mid <= x) {
+                ans = mid;
+                l = mid + 1;
+            } else {
+                r = mid - 1;
+            }
+        }
+        return ans;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081401-specgen/tmp/MySqrt_Mutant5.java:24: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081401-specgen/tmp/MySqrt_Mutant5.java:5:) in method mySqrt
+        return ans;
+        ^
+/root/specgen/SpecGen/project/081401-specgen/tmp/MySqrt_Mutant5.java:5: verify: Associated declaration: /root/specgen/SpecGen/project/081401-specgen/tmp/MySqrt_Mutant5.java:24:
+    //@ ensures x < ((\result + 1) * (\result + 1)) || x == Integer.MAX_VALUE;
+        ^
+2 verification failures
+
+==============================
+public class MySqrt_Mutant5 {
+    //@ requires x >= 0;
+    //@ ensures \result + 1 >= 0;  
+    //@ ensures (\result * \result) - 1 <= x;  
+    //@ ensures x < ((\result + 1) * (\result + 1)) || x == Integer.MAX_VALUE;  
+    public static int mySqrt(int x) {
+        int l = 0, r = x, ans = -1;
+        //@ maintaining 0 <= l && l <= r + 1;
+        //@ maintaining r <= x;
+        //@ maintaining ans >= -1;
+        //@ maintaining (\forall int k; 0 <= k && k < l; (long)k * k <= x);
+        //@ maintaining (\forall int k; r < k && k <= x; (long)k * k > x);
+        //@ maintaining (ans == -1) || ((long)ans * ans <= x);
+        //@ decreases r - l;
+        while (l <= r) {
+            int mid = l + (r - l) / 3;
+            if ((long) mid * mid <= x) {
+                ans = mid;
+                l = mid + 1;
+            } else {
+                r = mid - 1;
+            }
+        }
+        return ans;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081401-specgen/tmp/MySqrt_Mutant5.java:24: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081401-specgen/tmp/MySqrt_Mutant5.java:5:) in method mySqrt
+        return ans;
+        ^
+/root/specgen/SpecGen/project/081401-specgen/tmp/MySqrt_Mutant5.java:5: verify: Associated declaration: /root/specgen/SpecGen/project/081401-specgen/tmp/MySqrt_Mutant5.java:24:
+    //@ ensures x < ((\result + 1) * (\result + 1)) || x == Integer.MAX_VALUE;  
+        ^
+2 verification failures
+
+==============================
+public class MySqrt_Mutant5 {
+    //@ requires x >= 0;
+    //@ ensures \result + 1 >= 0;  
+    //@ ensures (\result * \result) - 1 <= x;  
+    //@ ensures x <= ((\result + 1) * (\result + 1)) || x == Integer.MAX_VALUE;  
+    public static int mySqrt(int x) {
+        int l = 0, r = x, ans = -1;
+        //@ maintaining 0 <= l && l <= r + 1;
+        //@ maintaining r <= x;
+        //@ maintaining ans >= -1;
+        //@ maintaining (\forall int k; 0 <= k && k < l; (long)k * k <= x);
+        //@ maintaining (\forall int k; r < k && k <= x; (long)k * k > x);
+        //@ maintaining (ans == -1) || ((long)ans * ans <= x);
+        //@ decreases r - l;
+        while (l <= r) {
+            int mid = l + (r - l) / 3;
+            if ((long) mid * mid <= x) {
+                ans = mid;
+                l = mid + 1;
+            } else {
+                r = mid - 1;
+            }
+        }
+        return ans;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081401-specgen/tmp/MySqrt_Mutant5.java:24: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081401-specgen/tmp/MySqrt_Mutant5.java:5:) in method mySqrt
+        return ans;
+        ^
+/root/specgen/SpecGen/project/081401-specgen/tmp/MySqrt_Mutant5.java:5: verify: Associated declaration: /root/specgen/SpecGen/project/081401-specgen/tmp/MySqrt_Mutant5.java:24:
+    //@ ensures x <= ((\result + 1) * (\result + 1)) || x == Integer.MAX_VALUE;  
+        ^
+2 verification failures
+
+==============================
+public class MySqrt_Mutant5 {
+    //@ requires x >= 0;
+    //@ ensures \result + 1 >= 0;  
+    //@ ensures (\result * \result) - 1 <= x;  
+    //@ ensures x < ((\result + 1) * (\result - 1)) || x == Integer.MAX_VALUE;  
+    public static int mySqrt(int x) {
+        int l = 0, r = x, ans = -1;
+        //@ maintaining 0 <= l && l <= r + 1;
+        //@ maintaining r <= x;
+        //@ maintaining ans >= -1;
+        //@ maintaining (\forall int k; 0 <= k && k < l; (long)k * k <= x);
+        //@ maintaining (\forall int k; r < k && k <= x; (long)k * k > x);
+        //@ maintaining (ans == -1) || ((long)ans * ans <= x);
+        //@ decreases r - l;
+        while (l <= r) {
+            int mid = l + (r - l) / 3;
+            if ((long) mid * mid <= x) {
+                ans = mid;
+                l = mid + 1;
+            } else {
+                r = mid - 1;
+            }
+        }
+        return ans;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081401-specgen/tmp/MySqrt_Mutant5.java:24: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081401-specgen/tmp/MySqrt_Mutant5.java:5:) in method mySqrt
+        return ans;
+        ^
+/root/specgen/SpecGen/project/081401-specgen/tmp/MySqrt_Mutant5.java:5: verify: Associated declaration: /root/specgen/SpecGen/project/081401-specgen/tmp/MySqrt_Mutant5.java:24:
+    //@ ensures x < ((\result + 1) * (\result - 1)) || x == Integer.MAX_VALUE;  
+        ^
+2 verification failures
+
+==============================
+public class MySqrt_Mutant5 {
+    //@ requires x >= 0;
+    //@ ensures \result + 1 >= 0;  
+    //@ ensures (\result * \result) - 1 <= x;  
+    //@ ensures x < ((\result - 1) * (\result + 1)) || x == Integer.MAX_VALUE;  
+    public static int mySqrt(int x) {
+        int l = 0, r = x, ans = -1;
+        //@ maintaining 0 <= l && l <= r + 1;
+        //@ maintaining r <= x;
+        //@ maintaining ans >= -1;
+        //@ maintaining (\forall int k; 0 <= k && k < l; (long)k * k <= x);
+        //@ maintaining (\forall int k; r < k && k <= x; (long)k * k > x);
+        //@ maintaining (ans == -1) || ((long)ans * ans <= x);
+        //@ decreases r - l;
+        while (l <= r) {
+            int mid = l + (r - l) / 3;
+            if ((long) mid * mid <= x) {
+                ans = mid;
+                l = mid + 1;
+            } else {
+                r = mid - 1;
+            }
+        }
+        return ans;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081401-specgen/tmp/MySqrt_Mutant5.java:24: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081401-specgen/tmp/MySqrt_Mutant5.java:5:) in method mySqrt
+        return ans;
+        ^
+/root/specgen/SpecGen/project/081401-specgen/tmp/MySqrt_Mutant5.java:5: verify: Associated declaration: /root/specgen/SpecGen/project/081401-specgen/tmp/MySqrt_Mutant5.java:24:
+    //@ ensures x < ((\result - 1) * (\result + 1)) || x == Integer.MAX_VALUE;  
+        ^
+2 verification failures
+
+==============================
+public class MySqrt_Mutant5 {
+    //@ requires x >= 0;
+    //@ ensures \result + 1 >= 0;  
+    //@ ensures (\result * \result) - 1 <= x;  
+    //@ ensures x < ((\result - 1) * (\result - 1)) || x == Integer.MAX_VALUE;  
+    public static int mySqrt(int x) {
+        int l = 0, r = x, ans = -1;
+        //@ maintaining 0 <= l && l <= r + 1;
+        //@ maintaining r <= x;
+        //@ maintaining ans >= -1;
+        //@ maintaining (\forall int k; 0 <= k && k < l; (long)k * k <= x);
+        //@ maintaining (\forall int k; r < k && k <= x; (long)k * k > x);
+        //@ maintaining (ans == -1) || ((long)ans * ans <= x);
+        //@ decreases r - l;
+        while (l <= r) {
+            int mid = l + (r - l) / 3;
+            if ((long) mid * mid <= x) {
+                ans = mid;
+                l = mid + 1;
+            } else {
+                r = mid - 1;
+            }
+        }
+        return ans;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081401-specgen/tmp/MySqrt_Mutant5.java:24: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081401-specgen/tmp/MySqrt_Mutant5.java:5:) in method mySqrt
+        return ans;
+        ^
+/root/specgen/SpecGen/project/081401-specgen/tmp/MySqrt_Mutant5.java:5: verify: Associated declaration: /root/specgen/SpecGen/project/081401-specgen/tmp/MySqrt_Mutant5.java:24:
+    //@ ensures x < ((\result - 1) * (\result - 1)) || x == Integer.MAX_VALUE;  
+        ^
+2 verification failures
+
+==============================
+public class MySqrt_Mutant5 {
+    //@ requires x >= 0;
+    //@ ensures \result + 1 >= 0;  
+    //@ ensures (\result * \result) - 1 <= x;  
+    //@ ensures x <= ((\result + 1) * (\result - 1)) || x == Integer.MAX_VALUE;  
+    public static int mySqrt(int x) {
+        int l = 0, r = x, ans = -1;
+        //@ maintaining 0 <= l && l <= r + 1;
+        //@ maintaining r <= x;
+        //@ maintaining ans >= -1;
+        //@ maintaining (\forall int k; 0 <= k && k < l; (long)k * k <= x);
+        //@ maintaining (\forall int k; r < k && k <= x; (long)k * k > x);
+        //@ maintaining (ans == -1) || ((long)ans * ans <= x);
+        //@ decreases r - l;
+        while (l <= r) {
+            int mid = l + (r - l) / 3;
+            if ((long) mid * mid <= x) {
+                ans = mid;
+                l = mid + 1;
+            } else {
+                r = mid - 1;
+            }
+        }
+        return ans;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081401-specgen/tmp/MySqrt_Mutant5.java:24: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081401-specgen/tmp/MySqrt_Mutant5.java:5:) in method mySqrt
+        return ans;
+        ^
+/root/specgen/SpecGen/project/081401-specgen/tmp/MySqrt_Mutant5.java:5: verify: Associated declaration: /root/specgen/SpecGen/project/081401-specgen/tmp/MySqrt_Mutant5.java:24:
+    //@ ensures x <= ((\result + 1) * (\result - 1)) || x == Integer.MAX_VALUE;  
+        ^
+2 verification failures
+
+==============================
+public class MySqrt_Mutant5 {
+    //@ requires x >= 0;
+    //@ ensures \result + 1 >= 0;  
+    //@ ensures (\result * \result) - 1 <= x;  
+    //@ ensures x <= ((\result - 1) * (\result + 1)) || x == Integer.MAX_VALUE;  
+    public static int mySqrt(int x) {
+        int l = 0, r = x, ans = -1;
+        //@ maintaining 0 <= l && l <= r + 1;
+        //@ maintaining r <= x;
+        //@ maintaining ans >= -1;
+        //@ maintaining (\forall int k; 0 <= k && k < l; (long)k * k <= x);
+        //@ maintaining (\forall int k; r < k && k <= x; (long)k * k > x);
+        //@ maintaining (ans == -1) || ((long)ans * ans <= x);
+        //@ decreases r - l;
+        while (l <= r) {
+            int mid = l + (r - l) / 3;
+            if ((long) mid * mid <= x) {
+                ans = mid;
+                l = mid + 1;
+            } else {
+                r = mid - 1;
+            }
+        }
+        return ans;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081401-specgen/tmp/MySqrt_Mutant5.java:24: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081401-specgen/tmp/MySqrt_Mutant5.java:5:) in method mySqrt
+        return ans;
+        ^
+/root/specgen/SpecGen/project/081401-specgen/tmp/MySqrt_Mutant5.java:5: verify: Associated declaration: /root/specgen/SpecGen/project/081401-specgen/tmp/MySqrt_Mutant5.java:24:
+    //@ ensures x <= ((\result - 1) * (\result + 1)) || x == Integer.MAX_VALUE;  
+        ^
+2 verification failures
+
+==============================
+public class MySqrt_Mutant5 {
+    //@ requires x >= 0;
+    //@ ensures \result + 1 >= 0;  
+    //@ ensures (\result * \result) - 1 <= x;  
+    //@ ensures x <= ((\result - 1) * (\result - 1)) || x == Integer.MAX_VALUE;  
+    public static int mySqrt(int x) {
+        int l = 0, r = x, ans = -1;
+        //@ maintaining 0 <= l && l <= r + 1;
+        //@ maintaining r <= x;
+        //@ maintaining ans >= -1;
+        //@ maintaining (\forall int k; 0 <= k && k < l; (long)k * k <= x);
+        //@ maintaining (\forall int k; r < k && k <= x; (long)k * k > x);
+        //@ maintaining (ans == -1) || ((long)ans * ans <= x);
+        //@ decreases r - l;
+        while (l <= r) {
+            int mid = l + (r - l) / 3;
+            if ((long) mid * mid <= x) {
+                ans = mid;
+                l = mid + 1;
+            } else {
+                r = mid - 1;
+            }
+        }
+        return ans;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081401-specgen/tmp/MySqrt_Mutant5.java:24: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081401-specgen/tmp/MySqrt_Mutant5.java:5:) in method mySqrt
+        return ans;
+        ^
+/root/specgen/SpecGen/project/081401-specgen/tmp/MySqrt_Mutant5.java:5: verify: Associated declaration: /root/specgen/SpecGen/project/081401-specgen/tmp/MySqrt_Mutant5.java:24:
+    //@ ensures x <= ((\result - 1) * (\result - 1)) || x == Integer.MAX_VALUE;  
+        ^
+2 verification failures
+
+==============================
+public class MySqrt_Mutant5 {
+    //@ requires x >= 0;
+    //@ ensures \result + 1 >= 0;  
+    //@ ensures (\result * \result) - 1 <= x;  
+ 
+    public static int mySqrt(int x) {
+        int l = 0, r = x, ans = -1;
+        //@ maintaining 0 <= l && l <= r + 1;
+        //@ maintaining r <= x;
+        //@ maintaining ans >= -1;
+        //@ maintaining (\forall int k; 0 <= k && k < l; (long)k * k <= x);
+        //@ maintaining (\forall int k; r < k && k <= x; (long)k * k > x);
+        //@ maintaining (ans == -1) || ((long)ans * ans <= x);
+        //@ decreases r - l;
+        while (l <= r) {
+            int mid = l + (r - l) / 3;
+            if ((long) mid * mid <= x) {
+                ans = mid;
+                l = mid + 1;
+            } else {
+                r = mid - 1;
+            }
+        }
+        return ans;
+    }
+}
+
+==============================
+error: An error while executing a proof script for mySqrt: (error "Solver has unexpectedly terminated")
+1 error
+
+==============================

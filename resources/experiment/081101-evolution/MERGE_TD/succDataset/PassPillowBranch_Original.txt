@@ -1,0 +1,310 @@
+START ORIGINAL CODE
+
+public class PassPillowBranch_Original {
+
+    public static int passPillow(int n, int time) {
+        if(n - 1 < 0){
+            throw new IllegalArgumentException("n is less than 1");
+        }
+        time = time % ((n - 1) * 2);
+        if (time < n) {
+            return time + 1;
+        }
+        return n * 2 - time - 1;
+    }
+}
+
+*END* ORIGINAL CODE
+START ORIGINAL FSF
+T1: n - 1 < 0
+D1: Exception
+T2: n - 1 >= 0 && time % ((n - 1) * 2) < n
+D2: return_value == time % ((n - 1) * 2) + 1
+T3: n - 1 >= 0 && time % ((n - 1) * 2) >= n
+D3: return_value == n * 2 - (time % ((n - 1) * 2)) - 1
+*END* ORIGINAL FSF
+START MODIFIED FSF
+T1: (n - 1 < 0) || (n - 1 >= 0 && time % ((n - 1) * 2) < n)
+D1: Exception
+T2: n - 1 >= 0 && time % ((n - 1) * 2) >= n
+D2: return_value == n * 2 - (time % ((n - 1) * 2)) - 1
+*END* MODIFIED FSF
+START ORIGINAL CODE
+
+public class PassPillowBranch_Original {
+
+    public static int passPillow(int n, int time) {
+        if(n - 1 < 0){
+            throw new IllegalArgumentException("n is less than 1");
+        }
+        time = time % ((n - 1) * 2);
+        if (time < n) {
+            return time + 1;
+        }
+        return n * 2 - time - 1;
+    }
+}
+
+*END* ORIGINAL CODE
+START ORIGINAL FSF
+T1: n - 1 < 0
+D1: Exception
+T2: n - 1 >= 0 && time % ((n - 1) * 2) < n
+D2: return_value == time % ((n - 1) * 2) + 1
+T3: n - 1 >= 0 && time % ((n - 1) * 2) >= n
+D3: return_value == n * 2 - (time % ((n - 1) * 2)) - 1
+*END* ORIGINAL FSF
+START MODIFIED FSF
+T1: n - 1 < 0
+D1: Exception
+T2: (n - 1 >= 0 && time % ((n - 1) * 2) >= n) || (n - 1 >= 0 && time % ((n - 1) * 2) < n)
+D2: return_value == n * 2 - (time % ((n - 1) * 2)) - 1
+*END* MODIFIED FSF
+START ORIGINAL CODE
+
+public class PassPillowBranch_Original {
+
+    public static int passPillow(int n, int time) {
+        if(n - 1 < 0){
+            throw new IllegalArgumentException("n is less than 1");
+        }
+        time = time % ((n - 1) * 2);
+        if (time < n) {
+            return time + 1;
+        }
+        return n * 2 - time - 1;
+    }
+}
+
+*END* ORIGINAL CODE
+START ORIGINAL FSF
+T1: n - 1 < 0
+D1: Exception
+T2: n - 1 >= 0 && time % ((n - 1) * 2) < n
+D2: return_value == time % ((n - 1) * 2) + 1
+T3: n - 1 >= 0 && time % ((n - 1) * 2) >= n
+D3: return_value == n * 2 - (time % ((n - 1) * 2)) - 1
+*END* ORIGINAL FSF
+START MODIFIED FSF
+T1: (n - 1 < 0) || (n - 1 >= 0 && time % ((n - 1) * 2) >= n)
+D1: Exception
+T2: n - 1 >= 0 && time % ((n - 1) * 2) < n
+D2: return_value == time % ((n - 1) * 2) + 1
+*END* MODIFIED FSF
+START ORIGINAL CODE
+
+public class PassPillowBranch_Original {
+
+    public static int passPillow(int n, int time) {
+        if(n - 1 < 0){
+            throw new IllegalArgumentException("n is less than 1");
+        }
+        time = time % ((n - 1) * 2);
+        if (time < n) {
+            return time + 1;
+        }
+        return n * 2 - time - 1;
+    }
+}
+
+*END* ORIGINAL CODE
+START ORIGINAL FSF
+T1: n - 1 < 0
+D1: Exception
+T2: n - 1 >= 0 && time % ((n - 1) * 2) < n
+D2: return_value == time % ((n - 1) * 2) + 1
+T3: n - 1 >= 0 && time % ((n - 1) * 2) >= n
+D3: return_value == n * 2 - (time % ((n - 1) * 2)) - 1
+*END* ORIGINAL FSF
+START MODIFIED FSF
+T1: n - 1 < 0
+D1: Exception
+T2: (n - 1 >= 0 && time % ((n - 1) * 2) < n) || (n - 1 >= 0 && time % ((n - 1) * 2) >= n)
+D2: return_value == time % ((n - 1) * 2) + 1
+*END* MODIFIED FSF
+START ORIGINAL CODE
+
+public class PassPillowBranch_Original {
+
+    public static int passPillow(int n, int time) {
+        if(n - 1 < 0){
+            throw new IllegalArgumentException("n is less than 1");
+        }
+        time = time % ((n - 1) * 2);
+        if (time < n) {
+            return time + 1;
+        }
+        return n * 2 - time - 1;
+    }
+}
+
+*END* ORIGINAL CODE
+START ORIGINAL FSF
+T1: n - 1 < 0
+D1: Exception
+T2: n - 1 >= 0 && time % ((n - 1) * 2) < n
+D2: return_value == time % ((n - 1) * 2) + 1
+T3: n - 1 >= 0 && time % ((n - 1) * 2) >= n
+D3: return_value == n * 2 - (time % ((n - 1) * 2)) - 1
+*END* ORIGINAL FSF
+START MODIFIED FSF
+T1: n - 1 < 0
+D1: Exception
+T2: (n - 1 >= 0 && time % ((n - 1) * 2) < n) || (n - 1 >= 0 && time % ((n - 1) * 2) >= n)
+D2: return_value == time % ((n - 1) * 2) + 1
+*END* MODIFIED FSF
+START ORIGINAL CODE
+
+public class PassPillowBranch_Original {
+
+    public static int passPillow(int n, int time) {
+        if(n - 1 < 0){
+            throw new IllegalArgumentException("n is less than 1");
+        }
+        time = time % ((n - 1) * 2);
+        if (time < n) {
+            return time + 1;
+        }
+        return n * 2 - time - 1;
+    }
+}
+
+*END* ORIGINAL CODE
+START ORIGINAL FSF
+T1: n - 1 < 0
+D1: Exception
+T2: n - 1 >= 0 && time % ((n - 1) * 2) < n
+D2: return_value == time % ((n - 1) * 2) + 1
+T3: n - 1 >= 0 && time % ((n - 1) * 2) >= n
+D3: return_value == n * 2 - (time % ((n - 1) * 2)) - 1
+*END* ORIGINAL FSF
+START MODIFIED FSF
+T1: (n - 1 >= 0 && time % ((n - 1) * 2) < n) || (n - 1 < 0)
+D1: return_value == time % ((n - 1) * 2) + 1
+T2: n - 1 >= 0 && time % ((n - 1) * 2) >= n
+D2: return_value == n * 2 - (time % ((n - 1) * 2)) - 1
+*END* MODIFIED FSF
+START ORIGINAL CODE
+
+public class PassPillowBranch_Original {
+
+    public static int passPillow(int n, int time) {
+        if(n - 1 < 0){
+            throw new IllegalArgumentException("n is less than 1");
+        }
+        time = time % ((n - 1) * 2);
+        if (time < n) {
+            return time + 1;
+        }
+        return n * 2 - time - 1;
+    }
+}
+
+*END* ORIGINAL CODE
+START ORIGINAL FSF
+T1: n - 1 < 0
+D1: Exception
+T2: n - 1 >= 0 && time % ((n - 1) * 2) < n
+D2: return_value == time % ((n - 1) * 2) + 1
+T3: n - 1 >= 0 && time % ((n - 1) * 2) >= n
+D3: return_value == n * 2 - (time % ((n - 1) * 2)) - 1
+*END* ORIGINAL FSF
+START MODIFIED FSF
+T1: n - 1 >= 0 && time % ((n - 1) * 2) < n
+D1: return_value == time % ((n - 1) * 2) + 1
+T2: (n - 1 >= 0 && time % ((n - 1) * 2) >= n) || (n - 1 < 0)
+D2: return_value == n * 2 - (time % ((n - 1) * 2)) - 1
+*END* MODIFIED FSF
+START ORIGINAL CODE
+
+public class PassPillowBranch_Original {
+
+    public static int passPillow(int n, int time) {
+        if(n - 1 < 0){
+            throw new IllegalArgumentException("n is less than 1");
+        }
+        time = time % ((n - 1) * 2);
+        if (time < n) {
+            return time + 1;
+        }
+        return n * 2 - time - 1;
+    }
+}
+
+*END* ORIGINAL CODE
+START ORIGINAL FSF
+T1: n - 1 < 0
+D1: Exception
+T2: n - 1 >= 0 && time % ((n - 1) * 2) < n
+D2: return_value == time % ((n - 1) * 2) + 1
+T3: n - 1 >= 0 && time % ((n - 1) * 2) >= n
+D3: return_value == n * 2 - (time % ((n - 1) * 2)) - 1
+*END* ORIGINAL FSF
+START MODIFIED FSF
+T1: (n - 1 < 0) || (n - 1 >= 0 && time % ((n - 1) * 2) >= n)
+D1: Exception
+T2: n - 1 >= 0 && time % ((n - 1) * 2) < n
+D2: return_value == time % ((n - 1) * 2) + 1
+*END* MODIFIED FSF
+START ORIGINAL CODE
+
+public class PassPillowBranch_Original {
+
+    public static int passPillow(int n, int time) {
+        if(n - 1 < 0){
+            throw new IllegalArgumentException("n is less than 1");
+        }
+        time = time % ((n - 1) * 2);
+        if (time < n) {
+            return time + 1;
+        }
+        return n * 2 - time - 1;
+    }
+}
+
+*END* ORIGINAL CODE
+START ORIGINAL FSF
+T1: n - 1 < 0
+D1: Exception
+T2: n - 1 >= 0 && time % ((n - 1) * 2) < n
+D2: return_value == time % ((n - 1) * 2) + 1
+T3: n - 1 >= 0 && time % ((n - 1) * 2) >= n
+D3: return_value == n * 2 - (time % ((n - 1) * 2)) - 1
+*END* ORIGINAL FSF
+START MODIFIED FSF
+T1: n - 1 < 0
+D1: Exception
+T2: (n - 1 >= 0 && time % ((n - 1) * 2) >= n) || (n - 1 >= 0 && time % ((n - 1) * 2) < n)
+D2: return_value == n * 2 - (time % ((n - 1) * 2)) - 1
+*END* MODIFIED FSF
+START ORIGINAL CODE
+
+public class PassPillowBranch_Original {
+
+    public static int passPillow(int n, int time) {
+        if(n - 1 < 0){
+            throw new IllegalArgumentException("n is less than 1");
+        }
+        time = time % ((n - 1) * 2);
+        if (time < n) {
+            return time + 1;
+        }
+        return n * 2 - time - 1;
+    }
+}
+
+*END* ORIGINAL CODE
+START ORIGINAL FSF
+T1: n - 1 < 0
+D1: Exception
+T2: n - 1 >= 0 && time % ((n - 1) * 2) < n
+D2: return_value == time % ((n - 1) * 2) + 1
+T3: n - 1 >= 0 && time % ((n - 1) * 2) >= n
+D3: return_value == n * 2 - (time % ((n - 1) * 2)) - 1
+*END* ORIGINAL FSF
+START MODIFIED FSF
+T1: n - 1 < 0
+D1: Exception
+T2: (n - 1 >= 0 && time % ((n - 1) * 2) >= n) || (n - 1 >= 0 && time % ((n - 1) * 2) < n)
+D2: return_value == n * 2 - (time % ((n - 1) * 2)) - 1
+*END* MODIFIED FSF

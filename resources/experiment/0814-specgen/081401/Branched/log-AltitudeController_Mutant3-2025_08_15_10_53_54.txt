@@ -1,0 +1,78 @@
+public class AltitudeController_Mutant3 {
+    /*@ public normal_behavior
+      @   requires Integer.MIN_VALUE <= targetHeight - currentHeight <= Integer.MAX_VALUE;
+      @   ensures \result == (
+      @       (Math.abs(targetHeight - currentHeight) + 10 > 30) ? 
+      @           (targetHeight > currentHeight ? 5 : -5) :
+      @       (Math.abs(targetHeight - currentHeight) + 10 > 20) ? 
+      @           (targetHeight > currentHeight ? 3 : -3) :
+      @       (Math.abs(targetHeight - currentHeight) + 10 > 10) ? 
+      @           (targetHeight > currentHeight ? 2 : -2) :
+      @           (targetHeight - currentHeight));
+      @*/
+    public static int altitudeController(int currentHeight, int targetHeight) {
+        int error = targetHeight - currentHeight;
+        int absError = 0;
+        //@ maintaining absError == (error < 0 ? -error : error + 10);
+        absError = error < 0 ? -error : error + 10; //Added 10 to error
+        int controlSignal = 0;
+        //@ maintaining controlSignal == (
+        //@    absError > 30 ? (error > 0 ? 5 : -5) :
+        //@    absError > 20 ? (error > 0 ? 3 : -3) :
+        //@    absError > 10 ? (error > 0 ? 2 : -2) :
+        //@    error);
+        if (absError > 30) {
+            controlSignal = error > 0 ? 5 : -5;
+        } else if (absError > 20) {
+            controlSignal = error > 0 ? 3 : -3;
+        } else if (absError > 10) {
+            controlSignal = error > 0 ? 2 : -2;
+        } else {
+            controlSignal = error;
+        }
+        return controlSignal;
+    }
+}
+==============================
+/root/specgen/SpecGen/project/081401-specgen/tmp/AltitudeController_Mutant3.java:16: error: Loop specifications must immediately precede a loop statement
+        //@ maintaining absError == (error < 0 ? -error : error + 10);
+            ^
+/root/specgen/SpecGen/project/081401-specgen/tmp/AltitudeController_Mutant3.java:19: error: Loop specifications must immediately precede a loop statement
+        //@ maintaining controlSignal == (
+            ^
+2 errors
+
+==============================
+public class AltitudeController_Mutant3 {
+    /*@ public normal_behavior
+      @   requires Integer.MIN_VALUE <= targetHeight - currentHeight <= Integer.MAX_VALUE;
+      @   ensures \result == (
+      @       (Math.abs(targetHeight - currentHeight) + 10 > 30) ? 
+      @           (targetHeight > currentHeight ? 5 : -5) :
+      @       (Math.abs(targetHeight - currentHeight) + 10 > 20) ? 
+      @           (targetHeight > currentHeight ? 3 : -3) :
+      @       (Math.abs(targetHeight - currentHeight) + 10 > 10) ? 
+      @           (targetHeight > currentHeight ? 2 : -2) :
+      @           (targetHeight - currentHeight));
+      @*/
+    public static int altitudeController(int currentHeight, int targetHeight) {
+        int error = targetHeight - currentHeight;
+        int absError = 0;
+        absError = error < 0 ? -error : error + 10; //Added 10 to error
+        int controlSignal = 0;
+        
+        if (absError > 30) {
+            controlSignal = error > 0 ? 5 : -5;
+        } else if (absError > 20) {
+            controlSignal = error > 0 ? 3 : -3;
+        } else if (absError > 10) {
+            controlSignal = error > 0 ? 2 : -2;
+        } else {
+            controlSignal = error;
+        }
+        return controlSignal;
+    }
+}
+==============================
+
+==============================

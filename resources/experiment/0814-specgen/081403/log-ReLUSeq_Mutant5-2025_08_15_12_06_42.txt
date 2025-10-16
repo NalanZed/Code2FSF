@@ -1,0 +1,11 @@
+public class ReLUSeq_Mutant5 {
+    //@ requires !Double.isNaN(x);
+    //@ ensures x >= 0.0 ==> \result == x;
+    //@ ensures x < 0.0 ==> \result == 1;
+    /*@ pure @*/ public static double computeReLU(double x) {
+        return ((x >= 0.0) ? x : 1);
+    }
+}
+==============================
+
+==============================

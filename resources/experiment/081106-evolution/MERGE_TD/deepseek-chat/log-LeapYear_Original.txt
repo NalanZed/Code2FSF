@@ -1,0 +1,79 @@
+start role user
+Please modify the following code according to the modified FSF:
+```Code
+
+
+public class LeapYear_Original {
+
+    public static boolean isLeapYear(int year) {
+        boolean leap = false;
+        if (year % 4 == 0) {
+            if (year % 100 == 0) {
+                if (year % 400 == 0)
+                    leap = true;
+                else
+                    leap = false;
+            } else
+                leap = true;
+        } else
+            leap = false;
+        return leap;
+    }
+}
+
+```
+```Original FSF
+T0: year % 400 == 0
+D0: leap == true
+
+T1: year % 100 == 0 && year % 400 != 0
+D1: leap == false
+
+T2: year % 4 == 0 && year % 100 != 0
+D2: leap == true
+
+T3: year % 4 != 0
+D3: leap == false
+
+```Modified FSF
+T0: (year % 400 == 0) || (year % 100 == 0 && year % 400 != 0)
+D0: leap == true
+
+T1: year % 4 == 0 && year % 100 != 0
+D1: leap == true
+
+T2: year % 4 != 0
+D2: leap == false
+
+```
+
+
+*end* role user
+start role assistant
+```
+public class LeapYear_Modified {
+
+    public static boolean isLeapYear(int year) {
+        boolean leap = false;
+        if ((year % 400 == 0) || (year % 100 == 0 && year % 400 != 0)) {
+            leap = true;
+        } else if (year % 4 == 0 && year % 100 != 0) {
+            leap = true;
+        } else {
+            leap = false;
+        }
+        return leap;
+    }
+}
+```
+
+The modified code:
+1. Combines the first two conditions (T0 and T1 from original FSF) into a single condition that matches the new T0
+2. Keeps the same logic for T1 (now checking just year % 4 == 0 && year % 100 != 0)
+3. Maintains the same else case for T2 (year % 4 != 0)
+4. Simplifies the nested if-else structure while preserving the exact same behavior as specified in the modified FSF
+5. Returns the correct boolean value for all cases as per the new requirements
+*end* role assistant
+start role remark
+Validation SUCCESS!
+*end* role remark

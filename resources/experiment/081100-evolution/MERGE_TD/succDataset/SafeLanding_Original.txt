@@ -1,0 +1,290 @@
+START ORIGINAL CODE
+
+public class SafeLanding_Original {
+    public static int safeLanding(int height, int speed, int tilt) {
+        int safe = 1;
+        if (height > 5) {
+            safe = 0;
+        }
+        if (speed > 3) {
+            safe = 0;
+        }
+        if (tilt > 10) {
+            safe = 0;
+        }
+        return safe;
+    }
+}
+
+*END* ORIGINAL CODE
+START ORIGINAL FSF
+T1: height <= 5 && speed <= 3 && tilt <= 10
+D1: safe == 1
+T2: height > 5 || speed > 3 || tilt > 10
+D2: safe == 0
+*END* ORIGINAL FSF
+START MODIFIED FSF
+T1: (height > 5 || speed > 3 || tilt > 10) || (height <= 5 && speed <= 3 && tilt <= 10)
+D1: safe == 0
+*END* MODIFIED FSF
+START ORIGINAL CODE
+
+public class SafeLanding_Original {
+    public static int safeLanding(int height, int speed, int tilt) {
+        int safe = 1;
+        if (height > 5) {
+            safe = 0;
+        }
+        if (speed > 3) {
+            safe = 0;
+        }
+        if (tilt > 10) {
+            safe = 0;
+        }
+        return safe;
+    }
+}
+
+*END* ORIGINAL CODE
+START ORIGINAL FSF
+T1: height <= 5 && speed <= 3 && tilt <= 10
+D1: safe == 1
+T2: height > 5 || speed > 3 || tilt > 10
+D2: safe == 0
+*END* ORIGINAL FSF
+START MODIFIED FSF
+T1: (height > 5 || speed > 3 || tilt > 10) || (height <= 5 && speed <= 3 && tilt <= 10)
+D1: safe == 0
+*END* MODIFIED FSF
+START ORIGINAL CODE
+
+public class SafeLanding_Original {
+    public static int safeLanding(int height, int speed, int tilt) {
+        int safe = 1;
+        if (height > 5) {
+            safe = 0;
+        }
+        if (speed > 3) {
+            safe = 0;
+        }
+        if (tilt > 10) {
+            safe = 0;
+        }
+        return safe;
+    }
+}
+
+*END* ORIGINAL CODE
+START ORIGINAL FSF
+T1: height <= 5 && speed <= 3 && tilt <= 10
+D1: safe == 1
+T2: height > 5 || speed > 3 || tilt > 10
+D2: safe == 0
+*END* ORIGINAL FSF
+START MODIFIED FSF
+T1: (height <= 5 && speed <= 3 && tilt <= 10) || (height > 5 || speed > 3 || tilt > 10)
+D1: safe == 1
+*END* MODIFIED FSF
+START ORIGINAL CODE
+
+public class SafeLanding_Original {
+    public static int safeLanding(int height, int speed, int tilt) {
+        int safe = 1;
+        if (height > 5) {
+            safe = 0;
+        }
+        if (speed > 3) {
+            safe = 0;
+        }
+        if (tilt > 10) {
+            safe = 0;
+        }
+        return safe;
+    }
+}
+
+*END* ORIGINAL CODE
+START ORIGINAL FSF
+T1: height <= 5 && speed <= 3 && tilt <= 10
+D1: safe == 1
+T2: height > 5 || speed > 3 || tilt > 10
+D2: safe == 0
+*END* ORIGINAL FSF
+START MODIFIED FSF
+T1: (height > 5 || speed > 3 || tilt > 10) || (height <= 5 && speed <= 3 && tilt <= 10)
+D1: safe == 0
+*END* MODIFIED FSF
+START ORIGINAL CODE
+
+public class SafeLanding_Original {
+    public static int safeLanding(int height, int speed, int tilt) {
+        int safe = 1;
+        if (height > 5) {
+            safe = 0;
+        }
+        if (speed > 3) {
+            safe = 0;
+        }
+        if (tilt > 10) {
+            safe = 0;
+        }
+        return safe;
+    }
+}
+
+*END* ORIGINAL CODE
+START ORIGINAL FSF
+T1: height <= 5 && speed <= 3 && tilt <= 10
+D1: safe == 1
+T2: height > 5 || speed > 3 || tilt > 10
+D2: safe == 0
+*END* ORIGINAL FSF
+START MODIFIED FSF
+T1: (height <= 5 && speed <= 3 && tilt <= 10) || (height > 5 || speed > 3 || tilt > 10)
+D1: safe == 1
+*END* MODIFIED FSF
+START ORIGINAL CODE
+
+public class SafeLanding_Original {
+    public static int safeLanding(int height, int speed, int tilt) {
+        int safe = 1;
+        if (height > 5) {
+            safe = 0;
+        }
+        if (speed > 3) {
+            safe = 0;
+        }
+        if (tilt > 10) {
+            safe = 0;
+        }
+        return safe;
+    }
+}
+
+*END* ORIGINAL CODE
+START ORIGINAL FSF
+T1: height <= 5 && speed <= 3 && tilt <= 10
+D1: safe == 1
+T2: height > 5 || speed > 3 || tilt > 10
+D2: safe == 0
+*END* ORIGINAL FSF
+START MODIFIED FSF
+T1: (height > 5 || speed > 3 || tilt > 10) || (height <= 5 && speed <= 3 && tilt <= 10)
+D1: safe == 0
+*END* MODIFIED FSF
+START ORIGINAL CODE
+
+public class SafeLanding_Original {
+    public static int safeLanding(int height, int speed, int tilt) {
+        int safe = 1;
+        if (height > 5) {
+            safe = 0;
+        }
+        if (speed > 3) {
+            safe = 0;
+        }
+        if (tilt > 10) {
+            safe = 0;
+        }
+        return safe;
+    }
+}
+
+*END* ORIGINAL CODE
+START ORIGINAL FSF
+T1: height <= 5 && speed <= 3 && tilt <= 10
+D1: safe == 1
+T2: height > 5 || speed > 3 || tilt > 10
+D2: safe == 0
+*END* ORIGINAL FSF
+START MODIFIED FSF
+T1: (height <= 5 && speed <= 3 && tilt <= 10) || (height > 5 || speed > 3 || tilt > 10)
+D1: safe == 1
+*END* MODIFIED FSF
+START ORIGINAL CODE
+
+public class SafeLanding_Original {
+    public static int safeLanding(int height, int speed, int tilt) {
+        int safe = 1;
+        if (height > 5) {
+            safe = 0;
+        }
+        if (speed > 3) {
+            safe = 0;
+        }
+        if (tilt > 10) {
+            safe = 0;
+        }
+        return safe;
+    }
+}
+
+*END* ORIGINAL CODE
+START ORIGINAL FSF
+T1: height <= 5 && speed <= 3 && tilt <= 10
+D1: safe == 1
+T2: height > 5 || speed > 3 || tilt > 10
+D2: safe == 0
+*END* ORIGINAL FSF
+START MODIFIED FSF
+T1: (height <= 5 && speed <= 3 && tilt <= 10) || (height > 5 || speed > 3 || tilt > 10)
+D1: safe == 1
+*END* MODIFIED FSF
+START ORIGINAL CODE
+
+public class SafeLanding_Original {
+    public static int safeLanding(int height, int speed, int tilt) {
+        int safe = 1;
+        if (height > 5) {
+            safe = 0;
+        }
+        if (speed > 3) {
+            safe = 0;
+        }
+        if (tilt > 10) {
+            safe = 0;
+        }
+        return safe;
+    }
+}
+
+*END* ORIGINAL CODE
+START ORIGINAL FSF
+T1: height <= 5 && speed <= 3 && tilt <= 10
+D1: safe == 1
+T2: height > 5 || speed > 3 || tilt > 10
+D2: safe == 0
+*END* ORIGINAL FSF
+START MODIFIED FSF
+T1: (height > 5 || speed > 3 || tilt > 10) || (height <= 5 && speed <= 3 && tilt <= 10)
+D1: safe == 0
+*END* MODIFIED FSF
+START ORIGINAL CODE
+
+public class SafeLanding_Original {
+    public static int safeLanding(int height, int speed, int tilt) {
+        int safe = 1;
+        if (height > 5) {
+            safe = 0;
+        }
+        if (speed > 3) {
+            safe = 0;
+        }
+        if (tilt > 10) {
+            safe = 0;
+        }
+        return safe;
+    }
+}
+
+*END* ORIGINAL CODE
+START ORIGINAL FSF
+T1: height <= 5 && speed <= 3 && tilt <= 10
+D1: safe == 1
+T2: height > 5 || speed > 3 || tilt > 10
+D2: safe == 0
+*END* ORIGINAL FSF
+START MODIFIED FSF
+T1: (height > 5 || speed > 3 || tilt > 10) || (height <= 5 && speed <= 3 && tilt <= 10)
+D1: safe == 0
+*END* MODIFIED FSF

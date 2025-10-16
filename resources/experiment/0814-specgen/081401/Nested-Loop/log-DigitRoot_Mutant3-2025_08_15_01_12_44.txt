@@ -1,0 +1,215 @@
+public class DigitRoot_Mutant3 {
+    /*@ public normal_behavior
+      @ requires num >= 0;
+      @ ensures \result >= 0 && \result < 10;
+      @ ensures \result == (num == 0 ? 0 : (num % 9 == 0 ? 9 : num % 9));
+      @ diverges false;
+      @*/
+    public static int function(int num) {
+        //@ ghost int original_num = num;
+        //@ maintaining num >= 0;
+        //@ maintaining original_num >= 0;
+        //@ decreases num;
+        while (num >= 10) {
+            int sum = 0;
+            //@ maintaining sum <= 0;
+            //@ maintaining num >= 0;
+            //@ decreases num;
+            while (num > 0) {
+                sum = sum - (num % 10);
+                num = num / 10;
+            }
+            num = sum;
+        }
+        //@ assert num >= 0 && num < 10;
+        return num;
+    }
+}
+==============================
+/root/specgen/SpecGen/project/081401-specgen/tmp/DigitRoot_Mutant3.java:25: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081401-specgen/tmp/DigitRoot_Mutant3.java:5:) in method function
+        return num;
+        ^
+/root/specgen/SpecGen/project/081401-specgen/tmp/DigitRoot_Mutant3.java:5: verify: Associated declaration: /root/specgen/SpecGen/project/081401-specgen/tmp/DigitRoot_Mutant3.java:25:
+      @ ensures \result == (num == 0 ? 0 : (num % 9 == 0 ? 9 : num % 9));
+        ^
+2 verification failures
+
+==============================
+public class DigitRoot_Mutant3 {
+    /*@ public normal_behavior
+      @ requires num >= 0;
+      @ ensures \result >= 0 && \result < 10;
+      @ ensures \result == (num == 0 ? 0 : (num % 9 == 0 ? 9 : num % 9));  
+      @ diverges false;
+      @*/
+    public static int function(int num) {
+        //@ ghost int original_num = num;
+        //@ maintaining num >= 0;
+        //@ maintaining original_num >= 0;
+        //@ decreases num;
+        while (num >= 10) {
+            int sum = 0;
+            //@ maintaining sum <= 0;
+            //@ maintaining num >= 0;
+            //@ decreases num;
+            while (num > 0) {
+                sum = sum - (num % 10);
+                num = num / 10;
+            }
+            num = sum;
+        }
+        //@ assert num >= 0 && num < 10;
+        return num;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081401-specgen/tmp/DigitRoot_Mutant3.java:25: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081401-specgen/tmp/DigitRoot_Mutant3.java:5:) in method function
+        return num;
+        ^
+/root/specgen/SpecGen/project/081401-specgen/tmp/DigitRoot_Mutant3.java:5: verify: Associated declaration: /root/specgen/SpecGen/project/081401-specgen/tmp/DigitRoot_Mutant3.java:25:
+      @ ensures \result == (num == 0 ? 0 : (num % 9 == 0 ? 9 : num % 9));  
+        ^
+2 verification failures
+
+==============================
+public class DigitRoot_Mutant3 {
+    /*@ public normal_behavior
+      @ requires num >= 0;
+      @ ensures \result >= 0 && \result < 10;
+ 
+      @ diverges false;
+      @*/
+    public static int function(int num) {
+        //@ ghost int original_num = num;
+        //@ maintaining num >= 0;
+        //@ maintaining original_num >= 0;
+        //@ decreases num;
+        while (num >= 10) {
+            int sum = 0;
+            //@ maintaining sum <= 0;
+            //@ maintaining num >= 0;
+            //@ decreases num;
+            while (num > 0) {
+                sum = sum - (num % 10);
+                num = num / 10;
+            }
+            num = sum;
+        }
+        //@ assert num >= 0 && num < 10;
+        return num;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081401-specgen/tmp/DigitRoot_Mutant3.java:10: verify: The prover cannot establish an assertion (LoopInvariant) in method function
+        //@ maintaining num >= 0;
+            ^
+1 verification failure
+
+==============================
+public class DigitRoot_Mutant3 {
+    /*@ public normal_behavior
+      @ requires num >= 0;
+      @ ensures \result >= 0 && \result < 10;
+ 
+      @ diverges false;
+      @*/
+    public static int function(int num) {
+        //@ ghost int original_num = num;
+        //@ maintaining num > 0;  
+        //@ maintaining original_num >= 0;
+        //@ decreases num;
+        while (num >= 10) {
+            int sum = 0;
+            //@ maintaining sum <= 0;
+            //@ maintaining num >= 0;
+            //@ decreases num;
+            while (num > 0) {
+                sum = sum - (num % 10);
+                num = num / 10;
+            }
+            num = sum;
+        }
+        //@ assert num >= 0 && num < 10;
+        return num;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081401-specgen/tmp/DigitRoot_Mutant3.java:10: verify: The prover cannot establish an assertion (LoopInvariantBeforeLoop) in method function
+        //@ maintaining num > 0;  
+            ^
+1 verification failure
+
+==============================
+public class DigitRoot_Mutant3 {
+    /*@ public normal_behavior
+      @ requires num >= 0;
+      @ ensures \result >= 0 && \result < 10;
+ 
+      @ diverges false;
+      @*/
+    public static int function(int num) {
+        //@ ghost int original_num = num;
+        //@ maintaining num >= 0;  
+        //@ maintaining original_num >= 0;
+        //@ decreases num;
+        while (num >= 10) {
+            int sum = 0;
+            //@ maintaining sum <= 0;
+            //@ maintaining num >= 0;
+            //@ decreases num;
+            while (num > 0) {
+                sum = sum - (num % 10);
+                num = num / 10;
+            }
+            num = sum;
+        }
+        //@ assert num >= 0 && num < 10;
+        return num;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081401-specgen/tmp/DigitRoot_Mutant3.java:10: verify: The prover cannot establish an assertion (LoopInvariant) in method function
+        //@ maintaining num >= 0;  
+            ^
+1 verification failure
+
+==============================
+public class DigitRoot_Mutant3 {
+    /*@ public normal_behavior
+      @ requires num >= 0;
+      @ ensures \result >= 0 && \result < 10;
+ 
+      @ diverges false;
+      @*/
+    public static int function(int num) {
+        //@ ghost int original_num = num;
+        //@ maintaining num + 1 >= 0;  
+        //@ maintaining original_num >= 0;
+        //@ decreases num;
+        while (num >= 10) {
+            int sum = 0;
+            //@ maintaining sum <= 0;
+            //@ maintaining num >= 0;
+            //@ decreases num;
+            while (num > 0) {
+                sum = sum - (num % 10);
+                num = num / 10;
+            }
+            num = sum;
+        }
+        //@ assert num >= 0 && num < 10;
+        return num;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081401-specgen/tmp/DigitRoot_Mutant3.java:24: verify: The prover cannot establish an assertion (Assert) in method function
+        //@ assert num >= 0 && num < 10;
+            ^
+1 verification failure
+
+==============================

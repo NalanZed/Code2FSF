@@ -1,0 +1,10 @@
+public class DivisorGame_Mutant4 {
+    //@ requires n >= 1;
+    //@ ensures \result == n % 2;
+    public static int divisorGame(int n) {
+        return n % 2;
+    }
+}
+==============================
+
+==============================

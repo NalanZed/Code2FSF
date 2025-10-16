@@ -1,0 +1,36 @@
+public class PowerOfTwo_Mutant3 {
+
+    /*@ public normal_behavior
+      @   requires n > 0;
+      @   ensures \result == (\exists int k; k >= 0; n == (1 << k));
+      @   ensures \result <==> (n > 1 && (n & (n - 1)) == 0);
+      @*/
+    public static boolean isPowerOfTwo(int n) {
+        return n > 1 && (n & (n - 1)) == 0;
+    }
+}
+==============================
+/root/specgen/SpecGen/project/081401-specgen/tmp/PowerOfTwo_Mutant3.java:9: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081401-specgen/tmp/PowerOfTwo_Mutant3.java:5:) in method isPowerOfTwo
+        return n > 1 && (n & (n - 1)) == 0;
+        ^
+/root/specgen/SpecGen/project/081401-specgen/tmp/PowerOfTwo_Mutant3.java:5: verify: Associated declaration: /root/specgen/SpecGen/project/081401-specgen/tmp/PowerOfTwo_Mutant3.java:9:
+      @   ensures \result == (\exists int k; k >= 0; n == (1 << k));
+          ^
+2 verification failures
+
+==============================
+public class PowerOfTwo_Mutant3 {
+
+    /*@ public normal_behavior
+      @   requires n > 0;
+      @   ensures \result == (\exists int k; k > 0; n == (1 << k));  
+      @   ensures \result <==> (n > 1 && (n & (n - 1)) == 0);
+      @*/
+    public static boolean isPowerOfTwo(int n) {
+        return n > 1 && (n & (n - 1)) == 0;
+    }
+}
+
+==============================
+
+==============================

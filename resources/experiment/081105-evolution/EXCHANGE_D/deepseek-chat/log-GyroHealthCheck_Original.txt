@@ -1,0 +1,71 @@
+start role user
+Please modify the following code according to the modified FSF:
+```Code
+
+
+public class GyroHealthCheck_Original {
+    public static int gyroHealthCheck(int x, int y, int z) {
+        int diffXY = x - y;
+        if (diffXY < 0) diffXY = -diffXY;
+        int diffYZ = y - z;
+        if (diffYZ < 0) diffYZ = -diffYZ;
+        int diffXZ = x - z;
+        if (diffXZ < 0) diffXZ = -diffXZ;
+        int alarm = 0;
+        if (diffXY > 10 || diffYZ > 10 || diffXZ > 10) {
+            alarm = 1;
+        }
+        return alarm;
+    }
+}
+
+```
+```Original FSF
+T0: (x - y > 10 || y - x > 10) || (y - z > 10 || z - y > 10) || (x - z > 10 || z - x > 10)
+D0: alarm == 1
+
+T1: !((x - y > 10 || y - x > 10) || (y - z > 10 || z - y > 10) || (x - z > 10 || z - x > 10))
+D1: alarm == 0
+
+```Modified FSF
+T0: (x - y > 10 || y - x > 10) || (y - z > 10 || z - y > 10) || (x - z > 10 || z - x > 10)
+D0: alarm == 0
+
+T1: !((x - y > 10 || y - x > 10) || (y - z > 10 || z - y > 10) || (x - z > 10 || z - x > 10))
+D1: alarm == 1
+
+```
+
+
+*end* role user
+start role assistant
+```
+public class GyroHealthCheck_Modified {
+    public static int gyroHealthCheck(int x, int y, int z) {
+        int diffXY = x - y;
+        if (diffXY < 0) diffXY = -diffXY;
+        int diffYZ = y - z;
+        if (diffYZ < 0) diffYZ = -diffYZ;
+        int diffXZ = x - z;
+        if (diffXZ < 0) diffXZ = -diffXZ;
+        int alarm = 1;
+        if (diffXY > 10 || diffYZ > 10 || diffXZ > 10) {
+            alarm = 0;
+        }
+        return alarm;
+    }
+}
+```
+
+The modified version simply inverts the alarm logic:
+1. Initializes alarm to 1 (healthy state)
+2. Sets alarm to 0 (unhealthy state) only if any difference exceeds 10
+3. This matches the modified FSF where:
+   - T0 (differences > 10) now returns 0
+   - T1 (all differences ≤ 10) now returns 1
+
+The code maintains all the same absolute difference calculations but just reverses the alarm condition logic to match the new requirements.
+*end* role assistant
+start role remark
+Validation SUCCESS!
+*end* role remark

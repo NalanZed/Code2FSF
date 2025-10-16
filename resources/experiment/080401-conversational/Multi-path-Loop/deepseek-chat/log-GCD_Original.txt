@@ -4,7 +4,7 @@ Please generate an FSF for the program below:
 public class GCD_Original {
 
 	public static int gcd(int num1, int num2){
-		int result = 1;
+		int TBFVResult = 1;
 		if(0 > num1){
 			num1 = -num1
 		}
@@ -25,10 +25,10 @@ public class GCD_Original {
 
 		for (int i = 1; i <= num1 && i <= num2; i++) {
             if (num1 % i == 0 && num2 % i == 0) {
-        		result = i;
+        		TBFVResult = i;
 			}
         }
-		return result;
+		return TBFVResult;
 	}
 }
 

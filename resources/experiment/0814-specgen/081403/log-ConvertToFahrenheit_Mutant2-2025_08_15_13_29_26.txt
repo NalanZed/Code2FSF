@@ -1,0 +1,14 @@
+public class ConvertToFahrenheit_Mutant2 {
+    /*@ public normal_behavior
+      @   requires !Double.isNaN(celsius) && !Double.isInfinite(celsius);
+      @   ensures \result == celsius * 1.50 + 32.00;
+      @   ensures \result >= 32.00 ==> celsius >= 0.0;
+      @   ensures \result < 32.00 ==> celsius < 0.0;
+      @*/
+    public static double convertTemperature(double celsius) {
+        return celsius * 1.50 + 32.00;
+    }
+}
+==============================
+
+==============================

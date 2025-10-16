@@ -1,0 +1,52 @@
+public class ConvertToFahrenheit_Original {
+
+    //@ requires Double.isFinite(celsius);
+    //@ ensures \result == celsius * 1.80 + 32.00;
+    //@ ensures Double.isFinite(\result);
+    public static double convertTemperature(double celsius) {
+        return celsius * 1.80 + 32.00;
+    }
+}
+==============================
+/root/specgen/SpecGen/project/081403-specgen/tmp/ConvertToFahrenheit_Original.java:7: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081403-specgen/tmp/ConvertToFahrenheit_Original.java:5:) in method convertTemperature
+        return celsius * 1.80 + 32.00;
+        ^
+/root/specgen/SpecGen/project/081403-specgen/tmp/ConvertToFahrenheit_Original.java:5: verify: Associated declaration: /root/specgen/SpecGen/project/081403-specgen/tmp/ConvertToFahrenheit_Original.java:7:
+    //@ ensures Double.isFinite(\result);
+        ^
+2 verification failures
+
+==============================
+public class ConvertToFahrenheit_Original {
+
+    //@ requires Double.isFinite(celsius);
+    //@ ensures \result == celsius * 1.80 + 32.00;
+    //@ ensures Double.isFinite(\result);  
+    public static double convertTemperature(double celsius) {
+        return celsius * 1.80 + 32.00;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081403-specgen/tmp/ConvertToFahrenheit_Original.java:7: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081403-specgen/tmp/ConvertToFahrenheit_Original.java:5:) in method convertTemperature
+        return celsius * 1.80 + 32.00;
+        ^
+/root/specgen/SpecGen/project/081403-specgen/tmp/ConvertToFahrenheit_Original.java:5: verify: Associated declaration: /root/specgen/SpecGen/project/081403-specgen/tmp/ConvertToFahrenheit_Original.java:7:
+    //@ ensures Double.isFinite(\result);  
+        ^
+2 verification failures
+
+==============================
+public class ConvertToFahrenheit_Original {
+
+    //@ requires Double.isFinite(celsius);
+    //@ ensures \result == celsius * 1.80 + 32.00;
+ 
+    public static double convertTemperature(double celsius) {
+        return celsius * 1.80 + 32.00;
+    }
+}
+
+==============================
+
+==============================

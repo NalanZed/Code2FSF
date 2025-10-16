@@ -181,7 +181,7 @@ T1: y < 0 && x - (-y) == x + (-y)  // No overflow case
 D1: sum == x - (-y)
 
 T2: y < 0 && x - (-y) != x + (-y)  // Overflow case (x - (-y) would overflow)
-D2: sum == (x + (-y))  // Java's wrapped-around result
+D2: sum == (x + (-y))  // Java's wrapped-around TBFVResult
 
 T3: y >= 0 && x + y == x + y  // Always true, catches all y >= 0 cases
 D3: sum == x + y
@@ -215,7 +215,7 @@ T1: y < 0 && x + y == x - (-y)  // No overflow case
 D1: sum == x - (-y)
 
 T2: y < 0 && x + y != x - (-y)  // Overflow case
-D2: sum == x + y  // Java's wrapped-around result
+D2: sum == x + y  // Java's wrapped-around TBFVResult
 
 T3: y >= 0
 D3: sum == x + y
@@ -232,7 +232,7 @@ This version:
 For the counterexample:
 - x=0, y=-32768
 - x-(-y) = 32768 (would overflow)
-- x+y = -32768 (actual Java result)
+- x+y = -32768 (actual Java TBFVResult)
 - Correctly falls under T2/D2 with sum == -32768
 
 The FSF now accurately describes all possible behaviors of the program.
@@ -263,7 +263,7 @@ Key points:
 - Java's integer arithmetic will automatically wrap around on overflow
 - The expression `x + y` correctly captures both:
   - The intended `x - (-y)` behavior when no overflow occurs
-  - The wrapped-around result when overflow does occur
+  - The wrapped-around TBFVResult when overflow does occur
 - This matches the actual behavior observed in the counterexample case
 
 This is the most accurate and complete FSF representation of the program's behavior.

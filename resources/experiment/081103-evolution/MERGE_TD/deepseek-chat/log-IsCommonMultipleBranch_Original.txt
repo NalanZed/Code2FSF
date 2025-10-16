@@ -1,0 +1,68 @@
+start role user
+Please modify the following code according to the modified FSF:
+```Code
+
+
+public class IsCommonMultipleBranch_Original {
+
+    public static boolean isCommonMultiple(int a, int b, int m) {
+        if (m % a != 0) {
+            return false;
+        }
+        if (m % b != 0) {
+            return false;
+        }
+        return true;
+    }
+}
+
+```
+```Original FSF
+T0: a == 0 || b == 0
+D0: Exception
+
+T1: (a != 0 && b != 0) && (m % a != 0 || m % b != 0)
+D1: return_value == false
+
+T2: (a != 0 && b != 0) && (m % a == 0 && m % b == 0)
+D2: return_value == true
+
+```Modified FSF
+T0: (a == 0 || b == 0) || ((a != 0 && b != 0) && (m % a == 0 && m % b == 0))
+D0: Exception
+
+T1: (a != 0 && b != 0) && (m % a != 0 || m % b != 0)
+D1: return_value == false
+
+```
+
+
+*end* role user
+start role assistant
+```
+public class IsCommonMultipleBranch_Modified {
+    public static boolean isCommonMultiple(int a, int b, int m) {
+        if (a == 0 || b == 0 || (m % a == 0 && m % b == 0)) {
+            throw new IllegalArgumentException();
+        }
+        if (m % a != 0 || m % b != 0) {
+            return false;
+        }
+        return true;
+    }
+}
+```
+
+The modified code:
+1. Throws an exception when either a or b is zero, or when m is a common multiple of a and b (changed condition from original)
+2. Returns false when m is not a common multiple of a and b
+3. The original true return case is now covered by the exception case
+
+Note that this modification follows the modified FSF where:
+- T0 now includes both the zero-divisor case AND the successful common multiple case
+- T1 remains the same but now becomes the only non-exceptional path
+- The original T2 case is now part of T0 (exception case)
+*end* role assistant
+start role remark
+Validation SUCCESS!
+*end* role remark

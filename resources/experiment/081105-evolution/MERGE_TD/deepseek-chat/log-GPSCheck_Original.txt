@@ -1,0 +1,73 @@
+start role user
+Please modify the following code according to the modified FSF:
+```Code
+
+
+public class GPSCheck_Original {
+    public static int GPSCheck(int satellites, int signalStrength) {
+        int alarm = 0;
+        if (satellites < 4) {
+            alarm = 1;
+        }
+        if (signalStrength < 20) {
+            alarm = 2;
+        }
+        return alarm;
+    }
+}
+
+```
+```Original FSF
+T0: satellites < 4 && signalStrength < 20
+D0: alarm == 2
+
+T1: satellites < 4 && signalStrength >= 20
+D1: alarm == 1
+
+T2: satellites >= 4 && signalStrength < 20
+D2: alarm == 2
+
+T3: satellites >= 4 && signalStrength >= 20
+D3: alarm == 0
+
+```Modified FSF
+T0: satellites < 4 && signalStrength < 20
+D0: alarm == 2
+
+T1: satellites >= 4 && signalStrength < 20
+D1: alarm == 2
+
+T2: (satellites >= 4 && signalStrength >= 20) || (satellites < 4 && signalStrength >= 20)
+D2: alarm == 0
+
+```
+
+
+*end* role user
+start role assistant
+```
+public class GPSCheck_Modified {
+    public static int GPSCheck(int satellites, int signalStrength) {
+        int alarm = 0;
+        if (signalStrength < 20) {
+            alarm = 2;
+        } else if (satellites < 4) {
+            alarm = 0;
+        }
+        return alarm;
+    }
+}
+```
+
+The modified code:
+1. First checks signal strength (primary condition)
+2. Only returns alarm=2 when signal strength is low (<20)
+3. Otherwise returns alarm=0 regardless of satellite count
+4. Maintains the same behavior as specified in the modified FSF:
+   - T0 and T1 cases both result in alarm=2 (signal strength low)
+   - All other cases result in alarm=0
+5. The logic is simplified while maintaining the specified behavior
+*end* role assistant
+start role remark
+Validation SUCCESS!
+*end* role remark

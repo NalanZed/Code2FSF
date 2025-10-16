@@ -1,0 +1,80 @@
+start role user
+Please modify the following code according to the modified FSF:
+```Code
+
+
+public class AddLoopFor_Original {
+    public static int addLoop(int x, int y) {
+        int sum = y;
+        if (x > 0) {
+            int n = 0;
+            for(n = x; n > 0; ) {
+                sum = sum + 1;
+                n = n - 1;
+            }
+        } else {
+            int n = 0;
+            for(n = -x; n > 0; ) {
+                sum = sum - 1;
+                n = n - 1;
+            }
+        }
+        return sum;
+    }
+}
+
+```
+```Original FSF
+T0: x > 0
+D0: sum == y + x
+
+T1: x < 0
+D1: sum == y + x
+
+T2: x == 0
+D2: sum == y
+
+```Modified FSF
+T0: x > 0
+D0: sum == y + x
+
+T1: x < 0
+D1: sum == y
+
+T2: x == 0
+D2: sum == y + x
+
+```
+
+
+*end* role user
+start role assistant
+```
+public class AddLoopFor_Modified {
+    public static int addLoop(int x, int y) {
+        int sum = y;
+        if (x > 0) {
+            int n = 0;
+            for(n = x; n > 0; ) {
+                sum = sum + 1;
+                n = n - 1;
+            }
+        } else if (x == 0) {
+            sum = sum + x;  // This will just return y since x is 0
+        }
+        // For x < 0, we don't modify sum (keep it as y)
+        return sum;
+    }
+}
+```
+
+The modified code:
+1. Keeps the original behavior for x > 0 (adds x to y)
+2. For x < 0, just returns y without any modification (by not entering any loop)
+3. For x == 0, explicitly returns y + x (which equals y) to match the FSF
+
+Note that the original code had a loop for negative x values that would subtract, but the modified FSF requires that we don't modify y when x is negative, so I removed that logic. The case for x == 0 was made explicit for clarity, though it behaves the same as the original.
+*end* role assistant
+start role remark
+Validation SUCCESS!
+*end* role remark

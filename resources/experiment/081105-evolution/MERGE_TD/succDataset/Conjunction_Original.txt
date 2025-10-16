@@ -1,0 +1,69 @@
+START ORIGINAL CODE
+
+public class Conjunction_Original {
+    public static boolean conjunctOf(boolean b1, boolean b2) {
+        if(b1 == false)
+            return false;
+        if(b2 == false)
+            return false;
+        return true;
+    }
+}
+
+*END* ORIGINAL CODE
+START ORIGINAL FSF
+T1: b1 == false || b2 == false
+D1: return_value == false
+T2: b1 == true && b2 == true
+D2: return_value == true
+*END* ORIGINAL FSF
+START MODIFIED FSF
+T1: (b1 == true && b2 == true) || (b1 == false || b2 == false)
+D1: return_value == true
+*END* MODIFIED FSF
+START ORIGINAL CODE
+
+public class Conjunction_Original {
+    public static boolean conjunctOf(boolean b1, boolean b2) {
+        if(b1 == false)
+            return false;
+        if(b2 == false)
+            return false;
+        return true;
+    }
+}
+
+*END* ORIGINAL CODE
+START ORIGINAL FSF
+T1: b1 == false || b2 == false
+D1: return_value == false
+T2: b1 == true && b2 == true
+D2: return_value == true
+*END* ORIGINAL FSF
+START MODIFIED FSF
+T1: (b1 == true && b2 == true) || (b1 == false || b2 == false)
+D1: return_value == true
+*END* MODIFIED FSF
+START ORIGINAL CODE
+
+public class Conjunction_Original {
+    public static boolean conjunctOf(boolean b1, boolean b2) {
+        if(b1 == false)
+            return false;
+        if(b2 == false)
+            return false;
+        return true;
+    }
+}
+
+*END* ORIGINAL CODE
+START ORIGINAL FSF
+T1: b1 == false || b2 == false
+D1: return_value == false
+T2: b1 == true && b2 == true
+D2: return_value == true
+*END* ORIGINAL FSF
+START MODIFIED FSF
+T1: (b1 == false || b2 == false) || (b1 == true && b2 == true)
+D1: return_value == false
+*END* MODIFIED FSF

@@ -1,0 +1,55 @@
+public class Disjunction_Mutant1 {
+    //@ ensures \result <==> (b1 || b2);
+    public static boolean disjunctOf(boolean b1, boolean b2) {
+        if(b1 == false)
+            return true;
+        if(b2 == true)
+            return true;
+        return false;
+    }
+}
+==============================
+/root/specgen/SpecGen/project/081401-specgen/tmp/Disjunction_Mutant1.java:5: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081401-specgen/tmp/Disjunction_Mutant1.java:2:) in method disjunctOf
+            return true;
+            ^
+/root/specgen/SpecGen/project/081401-specgen/tmp/Disjunction_Mutant1.java:2: verify: Associated declaration: /root/specgen/SpecGen/project/081401-specgen/tmp/Disjunction_Mutant1.java:5:
+    //@ ensures \result <==> (b1 || b2);
+        ^
+2 verification failures
+
+==============================
+public class Disjunction_Mutant1 {
+    //@ ensures \result <==> (b1 || b2);  
+    public static boolean disjunctOf(boolean b1, boolean b2) {
+        if(b1 == false)
+            return true;
+        if(b2 == true)
+            return true;
+        return false;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081401-specgen/tmp/Disjunction_Mutant1.java:5: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081401-specgen/tmp/Disjunction_Mutant1.java:2:) in method disjunctOf
+            return true;
+            ^
+/root/specgen/SpecGen/project/081401-specgen/tmp/Disjunction_Mutant1.java:2: verify: Associated declaration: /root/specgen/SpecGen/project/081401-specgen/tmp/Disjunction_Mutant1.java:5:
+    //@ ensures \result <==> (b1 || b2);  
+        ^
+2 verification failures
+
+==============================
+public class Disjunction_Mutant1 {
+ 
+    public static boolean disjunctOf(boolean b1, boolean b2) {
+        if(b1 == false)
+            return true;
+        if(b2 == true)
+            return true;
+        return false;
+    }
+}
+
+==============================
+
+==============================

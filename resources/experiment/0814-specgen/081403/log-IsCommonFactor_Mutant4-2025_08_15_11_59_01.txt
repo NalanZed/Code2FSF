@@ -1,0 +1,52 @@
+public class IsCommonFactor_Mutant4 {
+
+    //@ requires factor != 0;
+    //@ ensures \result == (a / factor == 0 && b % factor == 0);
+    //@ ensures \result == false; // This is a mutant version with incorrect logic
+    public static boolean isCommonFactor(int a, int b, int factor) {
+        return a / factor == 0 && b % factor == 0; // changed '%' to '/' at a % factor
+    }
+}
+==============================
+/root/specgen/SpecGen/project/081403-specgen/tmp/IsCommonFactor_Mutant4.java:7: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081403-specgen/tmp/IsCommonFactor_Mutant4.java:5:) in method isCommonFactor
+        return a / factor == 0 && b % factor == 0; // changed '%' to '/' at a % factor
+        ^
+/root/specgen/SpecGen/project/081403-specgen/tmp/IsCommonFactor_Mutant4.java:5: verify: Associated declaration: /root/specgen/SpecGen/project/081403-specgen/tmp/IsCommonFactor_Mutant4.java:7:
+    //@ ensures \result == false; // This is a mutant version with incorrect logic
+        ^
+2 verification failures
+
+==============================
+public class IsCommonFactor_Mutant4 {
+
+    //@ requires factor != 0;
+    //@ ensures \result == (a / factor == 0 && b % factor == 0);
+    //@ ensures \result == false; // This is a mutant version with incorrect logic  
+    public static boolean isCommonFactor(int a, int b, int factor) {
+        return a / factor == 0 && b % factor == 0; // changed '%' to '/' at a % factor
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081403-specgen/tmp/IsCommonFactor_Mutant4.java:7: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081403-specgen/tmp/IsCommonFactor_Mutant4.java:5:) in method isCommonFactor
+        return a / factor == 0 && b % factor == 0; // changed '%' to '/' at a % factor
+        ^
+/root/specgen/SpecGen/project/081403-specgen/tmp/IsCommonFactor_Mutant4.java:5: verify: Associated declaration: /root/specgen/SpecGen/project/081403-specgen/tmp/IsCommonFactor_Mutant4.java:7:
+    //@ ensures \result == false; // This is a mutant version with incorrect logic  
+        ^
+2 verification failures
+
+==============================
+public class IsCommonFactor_Mutant4 {
+
+    //@ requires factor != 0;
+    //@ ensures \result == (a / factor == 0 && b % factor == 0);
+ 
+    public static boolean isCommonFactor(int a, int b, int factor) {
+        return a / factor == 0 && b % factor == 0; // changed '%' to '/' at a % factor
+    }
+}
+
+==============================
+
+==============================

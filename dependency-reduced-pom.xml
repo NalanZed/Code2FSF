@@ -20,7 +20,7 @@
             <configuration>
               <transformers>
                 <transformer>
-                  <mainClass>org.zed.FSFGenerator</mainClass>
+                  <mainClass>org.zed.verification.FSFGenerator</mainClass>
                 </transformer>
               </transformers>
             </configuration>

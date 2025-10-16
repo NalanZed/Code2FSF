@@ -1,0 +1,64 @@
+public class AltitudeController_Mutant5 {
+    /*@ public normal_behavior
+      @ ensures \result == (targetHeight - currentHeight > 30 ? 5 : 
+      @                   (targetHeight - currentHeight < -30 ? -4 :
+      @                   (targetHeight - currentHeight > 20 ? 3 :
+      @                   (targetHeight - currentHeight < -20 ? -3 :
+      @                   (targetHeight - currentHeight > 10 ? 2 :
+      @                   (targetHeight - currentHeight < -10 ? -2 :
+      @                   (targetHeight - currentHeight))))));
+      @*/
+    public static int altitudeController(int currentHeight, int targetHeight) {
+        int error = targetHeight - currentHeight;
+        int absError = 0;
+        absError = error < 0 ? -error : error;
+        int controlSignal = 0;
+        if (absError > 30) {
+            controlSignal = error > 0 ? 5 : -4; //Changed -5 to -4
+        } else if (absError > 20) {
+            controlSignal = error > 0 ? 3 : -3;
+        } else if (absError > 10) {
+            controlSignal = error > 0 ? 2 : -2;
+        } else {
+            controlSignal = error;
+        }
+        return controlSignal;
+    }
+}
+==============================
+/root/specgen/SpecGen/project/081402-specgen/tmp/AltitudeController_Mutant5.java:9: error: ')' expected
+      @                   (targetHeight - currentHeight))))));
+                                                             ^
+1 error
+
+==============================
+public class AltitudeController_Mutant5 {
+    /*@ public normal_behavior
+      @ ensures \result == (targetHeight - currentHeight > 30 ? 5 : 
+      @                   (targetHeight - currentHeight < -30 ? -4 :
+      @                   (targetHeight - currentHeight > 20 ? 3 :
+      @                   (targetHeight - currentHeight < -20 ? -3 :
+      @                   (targetHeight - currentHeight > 10 ? 2 :
+      @                   (targetHeight - currentHeight < -10 ? -2 :
+      @                   targetHeight - currentHeight))))));
+      @*/
+    public static int altitudeController(int currentHeight, int targetHeight) {
+        int error = targetHeight - currentHeight;
+        int absError = 0;
+        absError = error < 0 ? -error : error;
+        int controlSignal = 0;
+        if (absError > 30) {
+            controlSignal = error > 0 ? 5 : -4; //Changed -5 to -4
+        } else if (absError > 20) {
+            controlSignal = error > 0 ? 3 : -3;
+        } else if (absError > 10) {
+            controlSignal = error > 0 ? 2 : -2;
+        } else {
+            controlSignal = error;
+        }
+        return controlSignal;
+    }
+}
+==============================
+
+==============================

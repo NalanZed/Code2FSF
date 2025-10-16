@@ -1,0 +1,65 @@
+start role user
+Please modify the following code according to the modified FSF:
+```Code
+
+
+public class IsCommonMultiple_Original {
+
+    public static boolean isCommonMultiple(int a, int b, int m) {
+        return m % a == 0 && m % b == 0;
+    }
+}
+
+```
+```Original FSF
+T0: a != 0 && b != 0 && m % a == 0 && m % b == 0
+D0: return_value == true
+
+T1: a != 0 && b != 0 && (m % a != 0 || m % b != 0)
+D1: return_value == false
+
+T2: a == 0 || b == 0
+D2: Exception
+
+```Modified FSF
+T0: a != 0 && b != 0 && m % a == 0 && m % b == 0
+D0: Exception
+
+T1: a != 0 && b != 0 && (m % a != 0 || m % b != 0)
+D1: return_value == false
+
+T2: a == 0 || b == 0
+D2: return_value == true
+
+```
+
+
+*end* role user
+start role assistant
+```
+public class IsCommonMultiple_Modified {
+    public static boolean isCommonMultiple(int a, int b, int m) {
+        if (a == 0 || b == 0) {
+            return true;
+        }
+        if (m % a == 0 && m % b == 0) {
+            throw new RuntimeException("Common multiple found");
+        }
+        return false;
+    }
+}
+```
+
+The modified code:
+1. First checks if either a or b is zero (T2 condition) and returns true (D2)
+2. Then checks if m is a common multiple (T0 condition) and throws an exception (D0)
+3. Otherwise returns false (T1/D1 condition)
+
+The modification maintains the same basic structure but changes the behavior according to the new FSF requirements:
+- Now throws exception when a common multiple is found
+- Returns true when either input is zero
+- Returns false in all other valid cases
+*end* role assistant
+start role remark
+Validation SUCCESS!
+*end* role remark

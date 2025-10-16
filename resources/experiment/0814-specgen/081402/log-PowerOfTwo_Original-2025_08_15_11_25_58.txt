@@ -1,0 +1,14 @@
+public class PowerOfTwo_Original {
+
+    /*@ public normal_behavior
+      @   requires true;
+      @   ensures \result == (n > 0 && (\exists int k; 0 <= k; (1 << k) == n));
+      @   ensures \result <==> (n > 0 && (n & (n - 1)) == 0);
+      @*/
+    public static boolean isPowerOfTwo(int n) {
+        return n > 0 && (n & (n - 1)) == 0;
+    }
+}
+==============================
+
+==============================

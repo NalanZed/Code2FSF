@@ -1,0 +1,460 @@
+public class WindCompensation_Mutant5 {
+    //@ requires windSpeed >= 0;
+    //@ ensures windSpeed <= 10 ==> \result == 5;
+    //@ ensures windSpeed > 10 && windSpeed <= 20 ==> \result == 5 + (windSpeed - 10);
+    //@ ensures windSpeed > 20 ==> \result == 5 + (windSpeed - 20) * 2 + 10;
+    public static int windCompensation(int windSpeed) {
+        int compensation = 5;
+        if (windSpeed > 20) {
+            compensation += (windSpeed - 20) * 2;
+        } else if (windSpeed > 10) {
+            compensation += windSpeed - 10;
+        }
+        return compensation;
+    }
+}
+==============================
+/root/specgen/SpecGen/project/081403-specgen/tmp/WindCompensation_Mutant5.java:13: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081403-specgen/tmp/WindCompensation_Mutant5.java:5:) in method windCompensation
+        return compensation;
+        ^
+/root/specgen/SpecGen/project/081403-specgen/tmp/WindCompensation_Mutant5.java:5: verify: Associated declaration: /root/specgen/SpecGen/project/081403-specgen/tmp/WindCompensation_Mutant5.java:13:
+    //@ ensures windSpeed > 20 ==> \result == 5 + (windSpeed - 20) * 2 + 10;
+        ^
+2 verification failures
+
+==============================
+public class WindCompensation_Mutant5 {
+    //@ requires windSpeed >= 0;
+    //@ ensures windSpeed <= 10 ==> \result == 5;
+    //@ ensures windSpeed > 10 && windSpeed <= 20 ==> \result == 5 + (windSpeed - 10);
+    //@ ensures windSpeed > 20 ==> \result == 5 + (windSpeed - 20) * 2 + 10;  
+    public static int windCompensation(int windSpeed) {
+        int compensation = 5;
+        if (windSpeed > 20) {
+            compensation += (windSpeed - 20) * 2;
+        } else if (windSpeed > 10) {
+            compensation += windSpeed - 10;
+        }
+        return compensation;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081403-specgen/tmp/WindCompensation_Mutant5.java:13: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081403-specgen/tmp/WindCompensation_Mutant5.java:5:) in method windCompensation
+        return compensation;
+        ^
+/root/specgen/SpecGen/project/081403-specgen/tmp/WindCompensation_Mutant5.java:5: verify: Associated declaration: /root/specgen/SpecGen/project/081403-specgen/tmp/WindCompensation_Mutant5.java:13:
+    //@ ensures windSpeed > 20 ==> \result == 5 + (windSpeed - 20) * 2 + 10;  
+        ^
+2 verification failures
+
+==============================
+public class WindCompensation_Mutant5 {
+    //@ requires windSpeed >= 0;
+    //@ ensures windSpeed <= 10 ==> \result == 5;
+    //@ ensures windSpeed > 10 && windSpeed <= 20 ==> \result == 5 + (windSpeed - 10);
+    //@ ensures windSpeed >= 20 ==> \result == 5 + (windSpeed - 20) * 2 + 10;  
+    public static int windCompensation(int windSpeed) {
+        int compensation = 5;
+        if (windSpeed > 20) {
+            compensation += (windSpeed - 20) * 2;
+        } else if (windSpeed > 10) {
+            compensation += windSpeed - 10;
+        }
+        return compensation;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081403-specgen/tmp/WindCompensation_Mutant5.java:13: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081403-specgen/tmp/WindCompensation_Mutant5.java:5:) in method windCompensation
+        return compensation;
+        ^
+/root/specgen/SpecGen/project/081403-specgen/tmp/WindCompensation_Mutant5.java:5: verify: Associated declaration: /root/specgen/SpecGen/project/081403-specgen/tmp/WindCompensation_Mutant5.java:13:
+    //@ ensures windSpeed >= 20 ==> \result == 5 + (windSpeed - 20) * 2 + 10;  
+        ^
+2 verification failures
+
+==============================
+public class WindCompensation_Mutant5 {
+    //@ requires windSpeed >= 0;
+    //@ ensures windSpeed <= 10 ==> \result == 5;
+    //@ ensures windSpeed > 10 && windSpeed <= 20 ==> \result == 5 + (windSpeed - 10);
+    //@ ensures windSpeed > 20 ==> \result == 5 + (windSpeed + 20) * 2 + 10;  
+    public static int windCompensation(int windSpeed) {
+        int compensation = 5;
+        if (windSpeed > 20) {
+            compensation += (windSpeed - 20) * 2;
+        } else if (windSpeed > 10) {
+            compensation += windSpeed - 10;
+        }
+        return compensation;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081403-specgen/tmp/WindCompensation_Mutant5.java:13: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081403-specgen/tmp/WindCompensation_Mutant5.java:5:) in method windCompensation
+        return compensation;
+        ^
+/root/specgen/SpecGen/project/081403-specgen/tmp/WindCompensation_Mutant5.java:5: verify: Associated declaration: /root/specgen/SpecGen/project/081403-specgen/tmp/WindCompensation_Mutant5.java:13:
+    //@ ensures windSpeed > 20 ==> \result == 5 + (windSpeed + 20) * 2 + 10;  
+        ^
+2 verification failures
+
+==============================
+public class WindCompensation_Mutant5 {
+    //@ requires windSpeed >= 0;
+    //@ ensures windSpeed <= 10 ==> \result == 5;
+    //@ ensures windSpeed > 10 && windSpeed <= 20 ==> \result == 5 + (windSpeed - 10);
+    //@ ensures windSpeed > 20 ==> \result == 5 + (windSpeed + 20) * 2 - 10;  
+    public static int windCompensation(int windSpeed) {
+        int compensation = 5;
+        if (windSpeed > 20) {
+            compensation += (windSpeed - 20) * 2;
+        } else if (windSpeed > 10) {
+            compensation += windSpeed - 10;
+        }
+        return compensation;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081403-specgen/tmp/WindCompensation_Mutant5.java:13: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081403-specgen/tmp/WindCompensation_Mutant5.java:5:) in method windCompensation
+        return compensation;
+        ^
+/root/specgen/SpecGen/project/081403-specgen/tmp/WindCompensation_Mutant5.java:5: verify: Associated declaration: /root/specgen/SpecGen/project/081403-specgen/tmp/WindCompensation_Mutant5.java:13:
+    //@ ensures windSpeed > 20 ==> \result == 5 + (windSpeed + 20) * 2 - 10;  
+        ^
+2 verification failures
+
+==============================
+public class WindCompensation_Mutant5 {
+    //@ requires windSpeed >= 0;
+    //@ ensures windSpeed <= 10 ==> \result == 5;
+    //@ ensures windSpeed > 10 && windSpeed <= 20 ==> \result == 5 + (windSpeed - 10);
+    //@ ensures windSpeed > 20 ==> \result == 5 + (windSpeed - 20) * 2 - 10;  
+    public static int windCompensation(int windSpeed) {
+        int compensation = 5;
+        if (windSpeed > 20) {
+            compensation += (windSpeed - 20) * 2;
+        } else if (windSpeed > 10) {
+            compensation += windSpeed - 10;
+        }
+        return compensation;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081403-specgen/tmp/WindCompensation_Mutant5.java:13: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081403-specgen/tmp/WindCompensation_Mutant5.java:5:) in method windCompensation
+        return compensation;
+        ^
+/root/specgen/SpecGen/project/081403-specgen/tmp/WindCompensation_Mutant5.java:5: verify: Associated declaration: /root/specgen/SpecGen/project/081403-specgen/tmp/WindCompensation_Mutant5.java:13:
+    //@ ensures windSpeed > 20 ==> \result == 5 + (windSpeed - 20) * 2 - 10;  
+        ^
+2 verification failures
+
+==============================
+public class WindCompensation_Mutant5 {
+    //@ requires windSpeed >= 0;
+    //@ ensures windSpeed <= 10 ==> \result == 5;
+    //@ ensures windSpeed > 10 && windSpeed <= 20 ==> \result == 5 + (windSpeed - 10);
+    //@ ensures windSpeed > 20 ==> \result == 5 - (windSpeed + 20) * 2 + 10;  
+    public static int windCompensation(int windSpeed) {
+        int compensation = 5;
+        if (windSpeed > 20) {
+            compensation += (windSpeed - 20) * 2;
+        } else if (windSpeed > 10) {
+            compensation += windSpeed - 10;
+        }
+        return compensation;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081403-specgen/tmp/WindCompensation_Mutant5.java:13: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081403-specgen/tmp/WindCompensation_Mutant5.java:5:) in method windCompensation
+        return compensation;
+        ^
+/root/specgen/SpecGen/project/081403-specgen/tmp/WindCompensation_Mutant5.java:5: verify: Associated declaration: /root/specgen/SpecGen/project/081403-specgen/tmp/WindCompensation_Mutant5.java:13:
+    //@ ensures windSpeed > 20 ==> \result == 5 - (windSpeed + 20) * 2 + 10;  
+        ^
+2 verification failures
+
+==============================
+public class WindCompensation_Mutant5 {
+    //@ requires windSpeed >= 0;
+    //@ ensures windSpeed <= 10 ==> \result == 5;
+    //@ ensures windSpeed > 10 && windSpeed <= 20 ==> \result == 5 + (windSpeed - 10);
+    //@ ensures windSpeed > 20 ==> \result == 5 - (windSpeed + 20) * 2 - 10;  
+    public static int windCompensation(int windSpeed) {
+        int compensation = 5;
+        if (windSpeed > 20) {
+            compensation += (windSpeed - 20) * 2;
+        } else if (windSpeed > 10) {
+            compensation += windSpeed - 10;
+        }
+        return compensation;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081403-specgen/tmp/WindCompensation_Mutant5.java:13: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081403-specgen/tmp/WindCompensation_Mutant5.java:5:) in method windCompensation
+        return compensation;
+        ^
+/root/specgen/SpecGen/project/081403-specgen/tmp/WindCompensation_Mutant5.java:5: verify: Associated declaration: /root/specgen/SpecGen/project/081403-specgen/tmp/WindCompensation_Mutant5.java:13:
+    //@ ensures windSpeed > 20 ==> \result == 5 - (windSpeed + 20) * 2 - 10;  
+        ^
+2 verification failures
+
+==============================
+public class WindCompensation_Mutant5 {
+    //@ requires windSpeed >= 0;
+    //@ ensures windSpeed <= 10 ==> \result == 5;
+    //@ ensures windSpeed > 10 && windSpeed <= 20 ==> \result == 5 + (windSpeed - 10);
+    //@ ensures windSpeed > 20 ==> \result == 5 - (windSpeed - 20) * 2 + 10;  
+    public static int windCompensation(int windSpeed) {
+        int compensation = 5;
+        if (windSpeed > 20) {
+            compensation += (windSpeed - 20) * 2;
+        } else if (windSpeed > 10) {
+            compensation += windSpeed - 10;
+        }
+        return compensation;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081403-specgen/tmp/WindCompensation_Mutant5.java:13: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081403-specgen/tmp/WindCompensation_Mutant5.java:5:) in method windCompensation
+        return compensation;
+        ^
+/root/specgen/SpecGen/project/081403-specgen/tmp/WindCompensation_Mutant5.java:5: verify: Associated declaration: /root/specgen/SpecGen/project/081403-specgen/tmp/WindCompensation_Mutant5.java:13:
+    //@ ensures windSpeed > 20 ==> \result == 5 - (windSpeed - 20) * 2 + 10;  
+        ^
+2 verification failures
+
+==============================
+public class WindCompensation_Mutant5 {
+    //@ requires windSpeed >= 0;
+    //@ ensures windSpeed <= 10 ==> \result == 5;
+    //@ ensures windSpeed > 10 && windSpeed <= 20 ==> \result == 5 + (windSpeed - 10);
+    //@ ensures windSpeed > 20 ==> \result == 5 - (windSpeed - 20) * 2 - 10;  
+    public static int windCompensation(int windSpeed) {
+        int compensation = 5;
+        if (windSpeed > 20) {
+            compensation += (windSpeed - 20) * 2;
+        } else if (windSpeed > 10) {
+            compensation += windSpeed - 10;
+        }
+        return compensation;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081403-specgen/tmp/WindCompensation_Mutant5.java:13: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081403-specgen/tmp/WindCompensation_Mutant5.java:5:) in method windCompensation
+        return compensation;
+        ^
+/root/specgen/SpecGen/project/081403-specgen/tmp/WindCompensation_Mutant5.java:5: verify: Associated declaration: /root/specgen/SpecGen/project/081403-specgen/tmp/WindCompensation_Mutant5.java:13:
+    //@ ensures windSpeed > 20 ==> \result == 5 - (windSpeed - 20) * 2 - 10;  
+        ^
+2 verification failures
+
+==============================
+public class WindCompensation_Mutant5 {
+    //@ requires windSpeed >= 0;
+    //@ ensures windSpeed <= 10 ==> \result == 5;
+    //@ ensures windSpeed > 10 && windSpeed <= 20 ==> \result == 5 + (windSpeed - 10);
+    //@ ensures windSpeed >= 20 ==> \result == 5 + (windSpeed + 20) * 2 + 10;  
+    public static int windCompensation(int windSpeed) {
+        int compensation = 5;
+        if (windSpeed > 20) {
+            compensation += (windSpeed - 20) * 2;
+        } else if (windSpeed > 10) {
+            compensation += windSpeed - 10;
+        }
+        return compensation;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081403-specgen/tmp/WindCompensation_Mutant5.java:13: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081403-specgen/tmp/WindCompensation_Mutant5.java:5:) in method windCompensation
+        return compensation;
+        ^
+/root/specgen/SpecGen/project/081403-specgen/tmp/WindCompensation_Mutant5.java:5: verify: Associated declaration: /root/specgen/SpecGen/project/081403-specgen/tmp/WindCompensation_Mutant5.java:13:
+    //@ ensures windSpeed >= 20 ==> \result == 5 + (windSpeed + 20) * 2 + 10;  
+        ^
+2 verification failures
+
+==============================
+public class WindCompensation_Mutant5 {
+    //@ requires windSpeed >= 0;
+    //@ ensures windSpeed <= 10 ==> \result == 5;
+    //@ ensures windSpeed > 10 && windSpeed <= 20 ==> \result == 5 + (windSpeed - 10);
+    //@ ensures windSpeed >= 20 ==> \result == 5 + (windSpeed + 20) * 2 - 10;  
+    public static int windCompensation(int windSpeed) {
+        int compensation = 5;
+        if (windSpeed > 20) {
+            compensation += (windSpeed - 20) * 2;
+        } else if (windSpeed > 10) {
+            compensation += windSpeed - 10;
+        }
+        return compensation;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081403-specgen/tmp/WindCompensation_Mutant5.java:13: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081403-specgen/tmp/WindCompensation_Mutant5.java:5:) in method windCompensation
+        return compensation;
+        ^
+/root/specgen/SpecGen/project/081403-specgen/tmp/WindCompensation_Mutant5.java:5: verify: Associated declaration: /root/specgen/SpecGen/project/081403-specgen/tmp/WindCompensation_Mutant5.java:13:
+    //@ ensures windSpeed >= 20 ==> \result == 5 + (windSpeed + 20) * 2 - 10;  
+        ^
+2 verification failures
+
+==============================
+public class WindCompensation_Mutant5 {
+    //@ requires windSpeed >= 0;
+    //@ ensures windSpeed <= 10 ==> \result == 5;
+    //@ ensures windSpeed > 10 && windSpeed <= 20 ==> \result == 5 + (windSpeed - 10);
+    //@ ensures windSpeed >= 20 ==> \result == 5 + (windSpeed - 20) * 2 - 10;  
+    public static int windCompensation(int windSpeed) {
+        int compensation = 5;
+        if (windSpeed > 20) {
+            compensation += (windSpeed - 20) * 2;
+        } else if (windSpeed > 10) {
+            compensation += windSpeed - 10;
+        }
+        return compensation;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081403-specgen/tmp/WindCompensation_Mutant5.java:13: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081403-specgen/tmp/WindCompensation_Mutant5.java:5:) in method windCompensation
+        return compensation;
+        ^
+/root/specgen/SpecGen/project/081403-specgen/tmp/WindCompensation_Mutant5.java:5: verify: Associated declaration: /root/specgen/SpecGen/project/081403-specgen/tmp/WindCompensation_Mutant5.java:13:
+    //@ ensures windSpeed >= 20 ==> \result == 5 + (windSpeed - 20) * 2 - 10;  
+        ^
+2 verification failures
+
+==============================
+public class WindCompensation_Mutant5 {
+    //@ requires windSpeed >= 0;
+    //@ ensures windSpeed <= 10 ==> \result == 5;
+    //@ ensures windSpeed > 10 && windSpeed <= 20 ==> \result == 5 + (windSpeed - 10);
+    //@ ensures windSpeed >= 20 ==> \result == 5 - (windSpeed + 20) * 2 + 10;  
+    public static int windCompensation(int windSpeed) {
+        int compensation = 5;
+        if (windSpeed > 20) {
+            compensation += (windSpeed - 20) * 2;
+        } else if (windSpeed > 10) {
+            compensation += windSpeed - 10;
+        }
+        return compensation;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081403-specgen/tmp/WindCompensation_Mutant5.java:13: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081403-specgen/tmp/WindCompensation_Mutant5.java:5:) in method windCompensation
+        return compensation;
+        ^
+/root/specgen/SpecGen/project/081403-specgen/tmp/WindCompensation_Mutant5.java:5: verify: Associated declaration: /root/specgen/SpecGen/project/081403-specgen/tmp/WindCompensation_Mutant5.java:13:
+    //@ ensures windSpeed >= 20 ==> \result == 5 - (windSpeed + 20) * 2 + 10;  
+        ^
+2 verification failures
+
+==============================
+public class WindCompensation_Mutant5 {
+    //@ requires windSpeed >= 0;
+    //@ ensures windSpeed <= 10 ==> \result == 5;
+    //@ ensures windSpeed > 10 && windSpeed <= 20 ==> \result == 5 + (windSpeed - 10);
+    //@ ensures windSpeed >= 20 ==> \result == 5 - (windSpeed + 20) * 2 - 10;  
+    public static int windCompensation(int windSpeed) {
+        int compensation = 5;
+        if (windSpeed > 20) {
+            compensation += (windSpeed - 20) * 2;
+        } else if (windSpeed > 10) {
+            compensation += windSpeed - 10;
+        }
+        return compensation;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081403-specgen/tmp/WindCompensation_Mutant5.java:13: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081403-specgen/tmp/WindCompensation_Mutant5.java:5:) in method windCompensation
+        return compensation;
+        ^
+/root/specgen/SpecGen/project/081403-specgen/tmp/WindCompensation_Mutant5.java:5: verify: Associated declaration: /root/specgen/SpecGen/project/081403-specgen/tmp/WindCompensation_Mutant5.java:13:
+    //@ ensures windSpeed >= 20 ==> \result == 5 - (windSpeed + 20) * 2 - 10;  
+        ^
+2 verification failures
+
+==============================
+public class WindCompensation_Mutant5 {
+    //@ requires windSpeed >= 0;
+    //@ ensures windSpeed <= 10 ==> \result == 5;
+    //@ ensures windSpeed > 10 && windSpeed <= 20 ==> \result == 5 + (windSpeed - 10);
+    //@ ensures windSpeed >= 20 ==> \result == 5 - (windSpeed - 20) * 2 + 10;  
+    public static int windCompensation(int windSpeed) {
+        int compensation = 5;
+        if (windSpeed > 20) {
+            compensation += (windSpeed - 20) * 2;
+        } else if (windSpeed > 10) {
+            compensation += windSpeed - 10;
+        }
+        return compensation;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081403-specgen/tmp/WindCompensation_Mutant5.java:13: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081403-specgen/tmp/WindCompensation_Mutant5.java:5:) in method windCompensation
+        return compensation;
+        ^
+/root/specgen/SpecGen/project/081403-specgen/tmp/WindCompensation_Mutant5.java:5: verify: Associated declaration: /root/specgen/SpecGen/project/081403-specgen/tmp/WindCompensation_Mutant5.java:13:
+    //@ ensures windSpeed >= 20 ==> \result == 5 - (windSpeed - 20) * 2 + 10;  
+        ^
+2 verification failures
+
+==============================
+public class WindCompensation_Mutant5 {
+    //@ requires windSpeed >= 0;
+    //@ ensures windSpeed <= 10 ==> \result == 5;
+    //@ ensures windSpeed > 10 && windSpeed <= 20 ==> \result == 5 + (windSpeed - 10);
+    //@ ensures windSpeed >= 20 ==> \result == 5 - (windSpeed - 20) * 2 - 10;  
+    public static int windCompensation(int windSpeed) {
+        int compensation = 5;
+        if (windSpeed > 20) {
+            compensation += (windSpeed - 20) * 2;
+        } else if (windSpeed > 10) {
+            compensation += windSpeed - 10;
+        }
+        return compensation;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081403-specgen/tmp/WindCompensation_Mutant5.java:13: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081403-specgen/tmp/WindCompensation_Mutant5.java:5:) in method windCompensation
+        return compensation;
+        ^
+/root/specgen/SpecGen/project/081403-specgen/tmp/WindCompensation_Mutant5.java:5: verify: Associated declaration: /root/specgen/SpecGen/project/081403-specgen/tmp/WindCompensation_Mutant5.java:13:
+    //@ ensures windSpeed >= 20 ==> \result == 5 - (windSpeed - 20) * 2 - 10;  
+        ^
+2 verification failures
+
+==============================
+public class WindCompensation_Mutant5 {
+    //@ requires windSpeed >= 0;
+    //@ ensures windSpeed <= 10 ==> \result == 5;
+    //@ ensures windSpeed > 10 && windSpeed <= 20 ==> \result == 5 + (windSpeed - 10);
+ 
+    public static int windCompensation(int windSpeed) {
+        int compensation = 5;
+        if (windSpeed > 20) {
+            compensation += (windSpeed - 20) * 2;
+        } else if (windSpeed > 10) {
+            compensation += windSpeed - 10;
+        }
+        return compensation;
+    }
+}
+
+==============================
+
+==============================

@@ -1,0 +1,81 @@
+start role user
+Please modify the following code according to the modified FSF:
+```Code
+
+
+public class SubLoop_Original {
+    public static int subLoop(int x, int y) {
+        int sum = x;
+        if (y > 0) {
+            int n = y;
+            while (n > 0) {
+                sum = sum - 1;
+                n = n - 1;
+            }
+        } else {
+            int n = -y;
+            while (n > 0) {
+                sum = sum + 1;
+                n = n - 1;
+            }
+        }
+        return sum;
+    }
+}
+
+```
+```Original FSF
+T0: y > 0
+D0: sum == x - y
+
+T1: y < 0
+D1: sum == x + (-y)
+
+T2: y == 0
+D2: sum == x
+
+```Modified FSF
+T0: y > 0
+D0: sum == x
+
+T1: y < 0
+D1: sum == x + (-y)
+
+T2: y == 0
+D2: sum == x - y
+
+```
+
+
+*end* role user
+start role assistant
+```
+public class SubLoop_Modified {
+    public static int subLoop(int x, int y) {
+        int sum = x;
+        if (y > 0) {
+            // Do nothing when y > 0 (sum remains x)
+        } else if (y < 0) {
+            int n = -y;
+            while (n > 0) {
+                sum = sum + 1;
+                n = n - 1;
+            }
+        } else {
+            // y == 0 case (sum remains x - 0)
+        }
+        return sum;
+    }
+}
+```
+
+The modified version:
+1. For T0 (y > 0), we simply keep sum as x (removed the subtraction loop)
+2. For T1 (y < 0), we keep the original addition behavior
+3. For T2 (y == 0), we return x (which equals x - y when y is 0)
+
+The changes are minimal and focused only on the y > 0 case to match the modified FSF requirements.
+*end* role assistant
+start role remark
+Validation SUCCESS!
+*end* role remark

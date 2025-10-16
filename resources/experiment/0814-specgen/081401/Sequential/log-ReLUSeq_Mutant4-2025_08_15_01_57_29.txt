@@ -1,0 +1,11 @@
+public class ReLUSeq_Mutant4 {
+    //@ ensures \result == 0.0;  // Note: This specification matches the actual (mutated) behavior
+    //@ ensures x >= 0.0 ==> \result == 0.0;
+    //@ ensures x < 0.0 ==> \result == 0.0;
+    public static double computeReLU(double x) {
+        return ((x >= 0.0) ? 0 : 0);
+    }
+}
+==============================
+
+==============================

@@ -1,0 +1,64 @@
+public class PowerOfTwoBranch_Mutant1 {
+
+    //@ ensures \result == (n > 0 && (n & (n - 1)) == 0);
+    public static boolean isPowerOfTwo(int n) {
+        if (n < 0) {
+            return false;
+        }
+        if ((n & (n - 1)) != 0) {
+            return false;
+        }
+        return true;
+    }
+}
+==============================
+/root/specgen/SpecGen/project/081403-specgen/tmp/PowerOfTwoBranch_Mutant1.java:11: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081403-specgen/tmp/PowerOfTwoBranch_Mutant1.java:3:) in method isPowerOfTwo
+        return true;
+        ^
+/root/specgen/SpecGen/project/081403-specgen/tmp/PowerOfTwoBranch_Mutant1.java:3: verify: Associated declaration: /root/specgen/SpecGen/project/081403-specgen/tmp/PowerOfTwoBranch_Mutant1.java:11:
+    //@ ensures \result == (n > 0 && (n & (n - 1)) == 0);
+        ^
+2 verification failures
+
+==============================
+public class PowerOfTwoBranch_Mutant1 {
+
+    //@ ensures \result == (n > 0 && (n & (n - 1)) == 0);  
+    public static boolean isPowerOfTwo(int n) {
+        if (n < 0) {
+            return false;
+        }
+        if ((n & (n - 1)) != 0) {
+            return false;
+        }
+        return true;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081403-specgen/tmp/PowerOfTwoBranch_Mutant1.java:11: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081403-specgen/tmp/PowerOfTwoBranch_Mutant1.java:3:) in method isPowerOfTwo
+        return true;
+        ^
+/root/specgen/SpecGen/project/081403-specgen/tmp/PowerOfTwoBranch_Mutant1.java:3: verify: Associated declaration: /root/specgen/SpecGen/project/081403-specgen/tmp/PowerOfTwoBranch_Mutant1.java:11:
+    //@ ensures \result == (n > 0 && (n & (n - 1)) == 0);  
+        ^
+2 verification failures
+
+==============================
+public class PowerOfTwoBranch_Mutant1 {
+
+    //@ ensures \result == (n >= 0 && (n & (n - 1)) == 0);  
+    public static boolean isPowerOfTwo(int n) {
+        if (n < 0) {
+            return false;
+        }
+        if ((n & (n - 1)) != 0) {
+            return false;
+        }
+        return true;
+    }
+}
+
+==============================
+
+==============================

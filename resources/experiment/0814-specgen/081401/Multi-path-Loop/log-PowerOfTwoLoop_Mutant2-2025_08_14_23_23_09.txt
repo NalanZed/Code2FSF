@@ -1,0 +1,412 @@
+public class PowerOfTwoLoop_Mutant2 {
+
+    /*@ public normal_behavior
+      @   requires n > Integer.MIN_VALUE;
+      @   ensures \result == (n > 0 && (\exists int k; k >= 0; n == (1 << k)));
+      @*/
+    public static boolean isPowerOfTwo(int n) {
+        if (n <= 0) {
+            return true;
+        }
+        //@ maintaining n > 0;
+        //@ maintaining (\exists int k; k >= 0; \old(n) == (n * (1 << \count)));
+        //@ decreases n;
+        while (n % 2 == 0) {
+            n /= 2;
+        }
+        return n == 1;
+    }
+}
+==============================
+/root/specgen/SpecGen/project/081401-specgen/tmp/PowerOfTwoLoop_Mutant2.java:9: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081401-specgen/tmp/PowerOfTwoLoop_Mutant2.java:5:) in method isPowerOfTwo
+            return true;
+            ^
+/root/specgen/SpecGen/project/081401-specgen/tmp/PowerOfTwoLoop_Mutant2.java:5: verify: Associated declaration: /root/specgen/SpecGen/project/081401-specgen/tmp/PowerOfTwoLoop_Mutant2.java:9:
+      @   ensures \result == (n > 0 && (\exists int k; k >= 0; n == (1 << k)));
+          ^
+2 verification failures
+
+==============================
+public class PowerOfTwoLoop_Mutant2 {
+
+    /*@ public normal_behavior
+      @   requires n > Integer.MIN_VALUE;
+      @   ensures \result == (n > 0 && (\exists int k; k > 0; n == (1 << k)));  
+      @*/
+    public static boolean isPowerOfTwo(int n) {
+        if (n <= 0) {
+            return true;
+        }
+        //@ maintaining n > 0;
+        //@ maintaining (\exists int k; k >= 0; \old(n) == (n * (1 << \count)));
+        //@ decreases n;
+        while (n % 2 == 0) {
+            n /= 2;
+        }
+        return n == 1;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081401-specgen/tmp/PowerOfTwoLoop_Mutant2.java:9: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081401-specgen/tmp/PowerOfTwoLoop_Mutant2.java:5:) in method isPowerOfTwo
+            return true;
+            ^
+/root/specgen/SpecGen/project/081401-specgen/tmp/PowerOfTwoLoop_Mutant2.java:5: verify: Associated declaration: /root/specgen/SpecGen/project/081401-specgen/tmp/PowerOfTwoLoop_Mutant2.java:9:
+      @   ensures \result == (n > 0 && (\exists int k; k > 0; n == (1 << k)));  
+          ^
+2 verification failures
+
+==============================
+public class PowerOfTwoLoop_Mutant2 {
+
+    /*@ public normal_behavior
+      @   requires n > Integer.MIN_VALUE;
+      @   ensures \result == (n > 0 && (\exists int k; k >= 0; n == (1 << k)));  
+      @*/
+    public static boolean isPowerOfTwo(int n) {
+        if (n <= 0) {
+            return true;
+        }
+        //@ maintaining n > 0;
+        //@ maintaining (\exists int k; k >= 0; \old(n) == (n * (1 << \count)));
+        //@ decreases n;
+        while (n % 2 == 0) {
+            n /= 2;
+        }
+        return n == 1;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081401-specgen/tmp/PowerOfTwoLoop_Mutant2.java:9: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081401-specgen/tmp/PowerOfTwoLoop_Mutant2.java:5:) in method isPowerOfTwo
+            return true;
+            ^
+/root/specgen/SpecGen/project/081401-specgen/tmp/PowerOfTwoLoop_Mutant2.java:5: verify: Associated declaration: /root/specgen/SpecGen/project/081401-specgen/tmp/PowerOfTwoLoop_Mutant2.java:9:
+      @   ensures \result == (n > 0 && (\exists int k; k >= 0; n == (1 << k)));  
+          ^
+2 verification failures
+
+==============================
+public class PowerOfTwoLoop_Mutant2 {
+
+    /*@ public normal_behavior
+      @   requires n > Integer.MIN_VALUE;
+      @   ensures \result == (n > 0 && (\exists int k; k + 1 >= 0; n == (1 << k)));  
+      @*/
+    public static boolean isPowerOfTwo(int n) {
+        if (n <= 0) {
+            return true;
+        }
+        //@ maintaining n > 0;
+        //@ maintaining (\exists int k; k >= 0; \old(n) == (n * (1 << \count)));
+        //@ decreases n;
+        while (n % 2 == 0) {
+            n /= 2;
+        }
+        return n == 1;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081401-specgen/tmp/PowerOfTwoLoop_Mutant2.java:9: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081401-specgen/tmp/PowerOfTwoLoop_Mutant2.java:5:) in method isPowerOfTwo
+            return true;
+            ^
+/root/specgen/SpecGen/project/081401-specgen/tmp/PowerOfTwoLoop_Mutant2.java:5: verify: Associated declaration: /root/specgen/SpecGen/project/081401-specgen/tmp/PowerOfTwoLoop_Mutant2.java:9:
+      @   ensures \result == (n > 0 && (\exists int k; k + 1 >= 0; n == (1 << k)));  
+          ^
+2 verification failures
+
+==============================
+public class PowerOfTwoLoop_Mutant2 {
+
+    /*@ public normal_behavior
+      @   requires n > Integer.MIN_VALUE;
+      @   ensures \result == (n >= 0 && (\exists int k; k > 0; n == (1 << k)));  
+      @*/
+    public static boolean isPowerOfTwo(int n) {
+        if (n <= 0) {
+            return true;
+        }
+        //@ maintaining n > 0;
+        //@ maintaining (\exists int k; k >= 0; \old(n) == (n * (1 << \count)));
+        //@ decreases n;
+        while (n % 2 == 0) {
+            n /= 2;
+        }
+        return n == 1;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081401-specgen/tmp/PowerOfTwoLoop_Mutant2.java:9: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081401-specgen/tmp/PowerOfTwoLoop_Mutant2.java:5:) in method isPowerOfTwo
+            return true;
+            ^
+/root/specgen/SpecGen/project/081401-specgen/tmp/PowerOfTwoLoop_Mutant2.java:5: verify: Associated declaration: /root/specgen/SpecGen/project/081401-specgen/tmp/PowerOfTwoLoop_Mutant2.java:9:
+      @   ensures \result == (n >= 0 && (\exists int k; k > 0; n == (1 << k)));  
+          ^
+2 verification failures
+
+==============================
+public class PowerOfTwoLoop_Mutant2 {
+
+    /*@ public normal_behavior
+      @   requires n > Integer.MIN_VALUE;
+      @   ensures \result == (n >= 0 && (\exists int k; k >= 0; n == (1 << k)));  
+      @*/
+    public static boolean isPowerOfTwo(int n) {
+        if (n <= 0) {
+            return true;
+        }
+        //@ maintaining n > 0;
+        //@ maintaining (\exists int k; k >= 0; \old(n) == (n * (1 << \count)));
+        //@ decreases n;
+        while (n % 2 == 0) {
+            n /= 2;
+        }
+        return n == 1;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081401-specgen/tmp/PowerOfTwoLoop_Mutant2.java:9: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081401-specgen/tmp/PowerOfTwoLoop_Mutant2.java:5:) in method isPowerOfTwo
+            return true;
+            ^
+/root/specgen/SpecGen/project/081401-specgen/tmp/PowerOfTwoLoop_Mutant2.java:5: verify: Associated declaration: /root/specgen/SpecGen/project/081401-specgen/tmp/PowerOfTwoLoop_Mutant2.java:9:
+      @   ensures \result == (n >= 0 && (\exists int k; k >= 0; n == (1 << k)));  
+          ^
+2 verification failures
+
+==============================
+public class PowerOfTwoLoop_Mutant2 {
+
+    /*@ public normal_behavior
+      @   requires n > Integer.MIN_VALUE;
+      @   ensures \result == (n >= 0 && (\exists int k; k + 1 >= 0; n == (1 << k)));  
+      @*/
+    public static boolean isPowerOfTwo(int n) {
+        if (n <= 0) {
+            return true;
+        }
+        //@ maintaining n > 0;
+        //@ maintaining (\exists int k; k >= 0; \old(n) == (n * (1 << \count)));
+        //@ decreases n;
+        while (n % 2 == 0) {
+            n /= 2;
+        }
+        return n == 1;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081401-specgen/tmp/PowerOfTwoLoop_Mutant2.java:9: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081401-specgen/tmp/PowerOfTwoLoop_Mutant2.java:5:) in method isPowerOfTwo
+            return true;
+            ^
+/root/specgen/SpecGen/project/081401-specgen/tmp/PowerOfTwoLoop_Mutant2.java:5: verify: Associated declaration: /root/specgen/SpecGen/project/081401-specgen/tmp/PowerOfTwoLoop_Mutant2.java:9:
+      @   ensures \result == (n >= 0 && (\exists int k; k + 1 >= 0; n == (1 << k)));  
+          ^
+2 verification failures
+
+==============================
+public class PowerOfTwoLoop_Mutant2 {
+
+    /*@ public normal_behavior
+      @   requires n > Integer.MIN_VALUE;
+      @   ensures \result == (n > 0 && (\forall int k; k > 0; n == (1 << k)));  
+      @*/
+    public static boolean isPowerOfTwo(int n) {
+        if (n <= 0) {
+            return true;
+        }
+        //@ maintaining n > 0;
+        //@ maintaining (\exists int k; k >= 0; \old(n) == (n * (1 << \count)));
+        //@ decreases n;
+        while (n % 2 == 0) {
+            n /= 2;
+        }
+        return n == 1;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081401-specgen/tmp/PowerOfTwoLoop_Mutant2.java:9: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081401-specgen/tmp/PowerOfTwoLoop_Mutant2.java:5:) in method isPowerOfTwo
+            return true;
+            ^
+/root/specgen/SpecGen/project/081401-specgen/tmp/PowerOfTwoLoop_Mutant2.java:5: verify: Associated declaration: /root/specgen/SpecGen/project/081401-specgen/tmp/PowerOfTwoLoop_Mutant2.java:9:
+      @   ensures \result == (n > 0 && (\forall int k; k > 0; n == (1 << k)));  
+          ^
+2 verification failures
+
+==============================
+public class PowerOfTwoLoop_Mutant2 {
+
+    /*@ public normal_behavior
+      @   requires n > Integer.MIN_VALUE;
+      @   ensures \result == (n > 0 && (\forall int k; k >= 0; n == (1 << k)));  
+      @*/
+    public static boolean isPowerOfTwo(int n) {
+        if (n <= 0) {
+            return true;
+        }
+        //@ maintaining n > 0;
+        //@ maintaining (\exists int k; k >= 0; \old(n) == (n * (1 << \count)));
+        //@ decreases n;
+        while (n % 2 == 0) {
+            n /= 2;
+        }
+        return n == 1;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081401-specgen/tmp/PowerOfTwoLoop_Mutant2.java:9: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081401-specgen/tmp/PowerOfTwoLoop_Mutant2.java:5:) in method isPowerOfTwo
+            return true;
+            ^
+/root/specgen/SpecGen/project/081401-specgen/tmp/PowerOfTwoLoop_Mutant2.java:5: verify: Associated declaration: /root/specgen/SpecGen/project/081401-specgen/tmp/PowerOfTwoLoop_Mutant2.java:9:
+      @   ensures \result == (n > 0 && (\forall int k; k >= 0; n == (1 << k)));  
+          ^
+2 verification failures
+
+==============================
+public class PowerOfTwoLoop_Mutant2 {
+
+    /*@ public normal_behavior
+      @   requires n > Integer.MIN_VALUE;
+      @   ensures \result == (n > 0 && (\forall int k; k + 1 >= 0; n == (1 << k)));  
+      @*/
+    public static boolean isPowerOfTwo(int n) {
+        if (n <= 0) {
+            return true;
+        }
+        //@ maintaining n > 0;
+        //@ maintaining (\exists int k; k >= 0; \old(n) == (n * (1 << \count)));
+        //@ decreases n;
+        while (n % 2 == 0) {
+            n /= 2;
+        }
+        return n == 1;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081401-specgen/tmp/PowerOfTwoLoop_Mutant2.java:9: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081401-specgen/tmp/PowerOfTwoLoop_Mutant2.java:5:) in method isPowerOfTwo
+            return true;
+            ^
+/root/specgen/SpecGen/project/081401-specgen/tmp/PowerOfTwoLoop_Mutant2.java:5: verify: Associated declaration: /root/specgen/SpecGen/project/081401-specgen/tmp/PowerOfTwoLoop_Mutant2.java:9:
+      @   ensures \result == (n > 0 && (\forall int k; k + 1 >= 0; n == (1 << k)));  
+          ^
+2 verification failures
+
+==============================
+public class PowerOfTwoLoop_Mutant2 {
+
+    /*@ public normal_behavior
+      @   requires n > Integer.MIN_VALUE;
+      @   ensures \result == (n >= 0 && (\forall int k; k > 0; n == (1 << k)));  
+      @*/
+    public static boolean isPowerOfTwo(int n) {
+        if (n <= 0) {
+            return true;
+        }
+        //@ maintaining n > 0;
+        //@ maintaining (\exists int k; k >= 0; \old(n) == (n * (1 << \count)));
+        //@ decreases n;
+        while (n % 2 == 0) {
+            n /= 2;
+        }
+        return n == 1;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081401-specgen/tmp/PowerOfTwoLoop_Mutant2.java:9: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081401-specgen/tmp/PowerOfTwoLoop_Mutant2.java:5:) in method isPowerOfTwo
+            return true;
+            ^
+/root/specgen/SpecGen/project/081401-specgen/tmp/PowerOfTwoLoop_Mutant2.java:5: verify: Associated declaration: /root/specgen/SpecGen/project/081401-specgen/tmp/PowerOfTwoLoop_Mutant2.java:9:
+      @   ensures \result == (n >= 0 && (\forall int k; k > 0; n == (1 << k)));  
+          ^
+2 verification failures
+
+==============================
+public class PowerOfTwoLoop_Mutant2 {
+
+    /*@ public normal_behavior
+      @   requires n > Integer.MIN_VALUE;
+      @   ensures \result == (n >= 0 && (\forall int k; k >= 0; n == (1 << k)));  
+      @*/
+    public static boolean isPowerOfTwo(int n) {
+        if (n <= 0) {
+            return true;
+        }
+        //@ maintaining n > 0;
+        //@ maintaining (\exists int k; k >= 0; \old(n) == (n * (1 << \count)));
+        //@ decreases n;
+        while (n % 2 == 0) {
+            n /= 2;
+        }
+        return n == 1;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081401-specgen/tmp/PowerOfTwoLoop_Mutant2.java:9: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081401-specgen/tmp/PowerOfTwoLoop_Mutant2.java:5:) in method isPowerOfTwo
+            return true;
+            ^
+/root/specgen/SpecGen/project/081401-specgen/tmp/PowerOfTwoLoop_Mutant2.java:5: verify: Associated declaration: /root/specgen/SpecGen/project/081401-specgen/tmp/PowerOfTwoLoop_Mutant2.java:9:
+      @   ensures \result == (n >= 0 && (\forall int k; k >= 0; n == (1 << k)));  
+          ^
+2 verification failures
+
+==============================
+public class PowerOfTwoLoop_Mutant2 {
+
+    /*@ public normal_behavior
+      @   requires n > Integer.MIN_VALUE;
+      @   ensures \result == (n >= 0 && (\forall int k; k + 1 >= 0; n == (1 << k)));  
+      @*/
+    public static boolean isPowerOfTwo(int n) {
+        if (n <= 0) {
+            return true;
+        }
+        //@ maintaining n > 0;
+        //@ maintaining (\exists int k; k >= 0; \old(n) == (n * (1 << \count)));
+        //@ decreases n;
+        while (n % 2 == 0) {
+            n /= 2;
+        }
+        return n == 1;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081401-specgen/tmp/PowerOfTwoLoop_Mutant2.java:9: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081401-specgen/tmp/PowerOfTwoLoop_Mutant2.java:5:) in method isPowerOfTwo
+            return true;
+            ^
+/root/specgen/SpecGen/project/081401-specgen/tmp/PowerOfTwoLoop_Mutant2.java:5: verify: Associated declaration: /root/specgen/SpecGen/project/081401-specgen/tmp/PowerOfTwoLoop_Mutant2.java:9:
+      @   ensures \result == (n >= 0 && (\forall int k; k + 1 >= 0; n == (1 << k)));  
+          ^
+2 verification failures
+
+==============================
+public class PowerOfTwoLoop_Mutant2 {
+
+    /*@ public normal_behavior
+      @   requires n > Integer.MIN_VALUE;
+ 
+      @*/
+    public static boolean isPowerOfTwo(int n) {
+        if (n <= 0) {
+            return true;
+        }
+        //@ maintaining n > 0;
+        //@ maintaining (\exists int k; k >= 0; \old(n) == (n * (1 << \count)));
+        //@ decreases n;
+        while (n % 2 == 0) {
+            n /= 2;
+        }
+        return n == 1;
+    }
+}
+
+==============================
+
+==============================

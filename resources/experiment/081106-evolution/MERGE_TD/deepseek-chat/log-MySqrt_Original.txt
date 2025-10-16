@@ -1,0 +1,77 @@
+start role user
+Please modify the following code according to the modified FSF:
+```Code
+
+
+public class MySqrt_Original {
+
+    public static int mySqrt(int x) {
+        int l = 0, r = x, ans = -1;
+        while (l <= r) {
+            int mid = l + (r - l) / 2;
+            if ((long) mid * mid <= x) {
+                ans = mid;
+                l = mid + 1;
+            } else {
+                r = mid - 1;
+            }
+        }
+        return ans;
+    }
+}
+
+```
+```Original FSF
+T0: x == 0
+D0: return_value == 0
+
+T1: x > 0
+D1: return_value ** 2 <= x && (return_value + 1) ** 2 > x
+
+T2: x < 0
+D2: return_value == -1
+
+```Modified FSF
+T0: (x == 0) || (x < 0)
+D0: return_value == 0
+
+T1: x > 0
+D1: return_value ** 2 <= x && (return_value + 1) ** 2 > x
+
+```
+
+
+*end* role user
+start role assistant
+```
+public class MySqrt_Modified {
+
+    public static int mySqrt(int x) {
+        if (x <= 0) {
+            return 0;
+        }
+        int l = 0, r = x, ans = -1;
+        while (l <= r) {
+            int mid = l + (r - l) / 2;
+            if ((long) mid * mid <= x) {
+                ans = mid;
+                l = mid + 1;
+            } else {
+                r = mid - 1;
+            }
+        }
+        return ans;
+    }
+}
+```
+
+The modifications made:
+1. Added an early return condition for x <= 0 (combining T0 and T2 from original FSF into new T0)
+2. The binary search logic remains the same for x > 0 cases (T1 remains unchanged)
+3. The modified code now returns 0 for both x == 0 and x < 0 cases, satisfying the modified FSF requirements
+
+The changes are minimal and maintain the original functionality for positive inputs while modifying the behavior for non-positive inputs as specified in the modified FSF.
+*end* role assistant
+start role remark
+Validation SUCCESS!
+*end* role remark

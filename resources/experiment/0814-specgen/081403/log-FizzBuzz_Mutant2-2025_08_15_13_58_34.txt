@@ -1,0 +1,17 @@
+public class FizzBuzz_Mutant2 {
+    //@ requires n >= 0;
+    //@ ensures \result == 1 + (n % 3 == 0 ? 3 : 0) + (n % 5 == 0 ? 5 : 0);
+    public static int fizzBuzz(int n) {
+        int res = 1; // changed from 0 to 1
+        if (n % 3 == 0) {
+            res += 3;
+        }
+        if (n % 5 == 0) {
+            res += 5;
+        }
+        return res;
+    }
+}
+==============================
+
+==============================

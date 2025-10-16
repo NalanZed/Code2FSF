@@ -44,7 +44,7 @@ start role user
 Under T :n <= 1，specifically when the variables are assigned like the main method showing: public static void main(String[] args) {
 int n = 0;
 int time = 0;
-    int result = PassPillowBranch_Mutant3.passPillow(n, time);
+    int TBFVResult = PassPillowBranch_Mutant3.passPillow(n, time);
 }No exception was thrown by the program. Think again and regenerate
 *end* role user
 start role assistant
@@ -87,7 +87,7 @@ start role user
 Under T :n <= 0，specifically when the variables are assigned like the main method showing: public static void main(String[] args) {
 int n = 0;
 int time = 0;
-    int result = PassPillowBranch_Mutant3.passPillow(n, time);
+    int TBFVResult = PassPillowBranch_Mutant3.passPillow(n, time);
 }No exception was thrown by the program. Think again and regenerate
 *end* role user
 start role assistant
@@ -111,7 +111,7 @@ The key insights for this correction:
    - The modulo operation time % ((n - 1) * 2) actually works (e.g., when n=0 it's time % -2)
    - The program returns 0 in these cases (verified by test case)
 3. The conditions are now mutually exclusive and cover all cases:
-   - n > 1 with two subcases based on the modulo result
+   - n > 1 with two subcases based on the modulo TBFVResult
    - n == 1 (exception)
    - n <= 0 (returns 0)
 *end* role assistant

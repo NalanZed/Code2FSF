@@ -1,0 +1,48 @@
+public class GetLowCaseLoop_Original {
+    //@ requires true;
+    //@ ensures (c >= 'A' && c <= 'Z') ==> (\result == (char)(c - 'A' + 'a'));
+    //@ ensures (c < 'A' || c > 'Z') ==> \result == 0;
+    public static char getLowCase(char c) {
+        char t = 'z';
+        //@ maintaining t >= 'a' - 1 && t <= 'z';
+        //@ maintaining (c < 'A' || c > 'Z') ==> \result == 0;
+        //@ maintaining (c >= 'A' && c <= 'Z') ==> (t >= (char)(c - 'A' + 'a'));
+        //@ decreases t - 'a' + 1;
+        while(t >= 'a' && t != c - 'A' + 'a') {
+            if(c < 'A' || c > 'Z') {
+                return 0;
+            }
+            t--;
+        }
+        return t;
+    }
+}
+==============================
+/root/specgen/SpecGen/project/082102-specgen/tmp/GetLowCaseLoop_Original.java:8: error: A \result expression may not be in a loop_invariant clause
+        //@ maintaining (c < 'A' || c > 'Z') ==> \result == 0;
+                                                  ^
+1 error
+
+==============================
+public class GetLowCaseLoop_Original {
+    //@ requires true;
+    //@ ensures (c >= 'A' && c <= 'Z') ==> (\result == (char)(c - 'A' + 'a'));
+    //@ ensures (c < 'A' || c > 'Z') ==> \result == 0;
+    public static char getLowCase(char c) {
+        char t = 'z';
+        //@ maintaining t >= 'a' - 1 && t <= 'z';
+        //@ maintaining (c < 'A' || c > 'Z') ==> t == 'z';
+        //@ maintaining (c >= 'A' && c <= 'Z') ==> (t >= (char)(c - 'A' + 'a'));
+        //@ decreases t - 'a' + 1;
+        while(t >= 'a' && t != c - 'A' + 'a') {
+            if(c < 'A' || c > 'Z') {
+                return 0;
+            }
+            t--;
+        }
+        return t;
+    }
+}
+==============================
+
+==============================

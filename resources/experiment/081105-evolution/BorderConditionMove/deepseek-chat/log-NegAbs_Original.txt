@@ -1,0 +1,47 @@
+start role user
+Please modify the following code according to the modified FSF:
+```Code
+
+public class NegAbs_Original {
+
+    public static int negAbs(int num) {
+        if (num < 0)
+            return num;
+        else
+            return -num;
+    }
+}
+```
+```Original FSF
+T0: num < 0
+D0: return_value == num
+
+T1: num >= 0
+D1: return_value == -num
+
+```Modified FSF
+T0: num <= 0
+D0: return_value == num
+
+T1: num > 0
+D1: return_value == -num
+
+```
+
+
+*end* role user
+start role assistant
+```
+public class NegAbs_Modified {
+    public static int negAbs(int num) {
+        if (num <= 0)
+            return num;
+        else
+            return -num;
+    }
+}
+```
+*end* role assistant
+start role remark
+Validation SUCCESS!
+*end* role remark

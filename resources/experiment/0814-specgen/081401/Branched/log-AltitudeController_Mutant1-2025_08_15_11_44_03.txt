@@ -1,0 +1,135 @@
+public class AltitudeController_Mutant1 {
+    /*@ public normal_behavior
+      @ requires true;
+      @ ensures \result == (error > 30 ? (error > 0 ? 5 : -5) : 
+      @                  (error > 20 ? (error > 0 ? 3 : -3) : 
+      @                  (error > 10 ? (error > 0 ? 2 : -2) : error));
+      @ ensures \result == controlSignal;
+      @ ensures error == targetHeight + currentHeight;
+      @ ensures absError == (error < 0 ? -error : error);
+      @*/
+    public static int altitudeController(int currentHeight, int targetHeight) {
+        int error = targetHeight + currentHeight; //Changed subtraction to addition
+        int absError = 0;
+        absError = error < 0 ? -error : error;
+        int controlSignal = 0;
+        if (absError > 30) {
+            controlSignal = error > 0 ? 5 : -5;
+        } else if (absError > 20) {
+            controlSignal = error > 0 ? 3 : -3;
+        } else if (absError > 10) {
+            controlSignal = error > 0 ? 2 : -2;
+        } else {
+            controlSignal = error;
+        }
+        return controlSignal;
+    }
+}
+==============================
+/root/specgen/SpecGen/project/081401-specgen/tmp/AltitudeController_Mutant1.java:6: error: ')' expected
+      @                  (error > 10 ? (error > 0 ? 2 : -2) : error));
+                                                                     ^
+1 error
+
+==============================
+public class AltitudeController_Mutant1 {
+    /*@ public normal_behavior
+      @ requires true;
+      @ ensures \result == (Math.abs(targetHeight + currentHeight) > 30 ? 
+      @                     ((targetHeight + currentHeight) > 0 ? 5 : -5) :
+      @                    (Math.abs(targetHeight + currentHeight) > 20 ? 
+      @                     ((targetHeight + currentHeight) > 0 ? 3 : -3) :
+      @                    (Math.abs(targetHeight + currentHeight) > 10 ? 
+      @                     ((targetHeight + currentHeight) > 0 ? 2 : -2) : 
+      @                     (targetHeight + currentHeight));
+      @*/
+    public static int altitudeController(int currentHeight, int targetHeight) {
+        int error = targetHeight + currentHeight; //Changed subtraction to addition
+        int absError = 0;
+        absError = error < 0 ? -error : error;
+        int controlSignal = 0;
+        if (absError > 30) {
+            controlSignal = error > 0 ? 5 : -5;
+        } else if (absError > 20) {
+            controlSignal = error > 0 ? 3 : -3;
+        } else if (absError > 10) {
+            controlSignal = error > 0 ? 2 : -2;
+        } else {
+            controlSignal = error;
+        }
+        return controlSignal;
+    }
+}
+==============================
+/root/specgen/SpecGen/project/081401-specgen/tmp/AltitudeController_Mutant1.java:10: error: ')' expected
+      @                     (targetHeight + currentHeight));
+                                                           ^
+1 error
+
+==============================
+public class AltitudeController_Mutant1 {
+    /*@ public normal_behavior
+      @ requires true;
+      @ ensures \result == (Math.abs(targetHeight + currentHeight) > 30 ? 
+      @                     ((targetHeight + currentHeight) > 0 ? 5 : -5) :
+      @                    (Math.abs(targetHeight + currentHeight) > 20 ? 
+      @                     ((targetHeight + currentHeight) > 0 ? 3 : -3) :
+      @                    (Math.abs(targetHeight + currentHeight) > 10 ? 
+      @                     ((targetHeight + currentHeight) > 0 ? 2 : -2) : 
+      @                     (targetHeight + currentHeight));
+      @*/
+    public static int altitudeController(int currentHeight, int targetHeight) {
+        int error = targetHeight + currentHeight; //Changed subtraction to addition
+        int absError = 0;
+        absError = error < 0 ? -error : error;
+        int controlSignal = 0;
+        if (absError > 30) {
+            controlSignal = error > 0 ? 5 : -5;
+        } else if (absError > 20) {
+            controlSignal = error > 0 ? 3 : -3;
+        } else if (absError > 10) {
+            controlSignal = error > 0 ? 2 : -2;
+        } else {
+            controlSignal = error;
+        }
+        return controlSignal;
+    }
+}
+==============================
+/root/specgen/SpecGen/project/081401-specgen/tmp/AltitudeController_Mutant1.java:10: error: ')' expected
+      @                     (targetHeight + currentHeight));
+                                                           ^
+1 error
+
+==============================
+public class AltitudeController_Mutant1 {
+    /*@ public normal_behavior
+      @ requires true;
+      @ ensures \result == (Math.abs(targetHeight + currentHeight) > 30 ? 
+      @                     ((targetHeight + currentHeight) > 0 ? 5 : -5) :
+      @                    (Math.abs(targetHeight + currentHeight) > 20 ? 
+      @                     ((targetHeight + currentHeight) > 0 ? 3 : -3) :
+      @                    (Math.abs(targetHeight + currentHeight) > 10 ? 
+      @                     ((targetHeight + currentHeight) > 0 ? 2 : -2) : 
+      @                     (targetHeight + currentHeight))));
+      @*/
+    public static int altitudeController(int currentHeight, int targetHeight) {
+        int error = targetHeight + currentHeight; //Changed subtraction to addition
+        int absError = 0;
+        absError = error < 0 ? -error : error;
+        int controlSignal = 0;
+        if (absError > 30) {
+            controlSignal = error > 0 ? 5 : -5;
+        } else if (absError > 20) {
+            controlSignal = error > 0 ? 3 : -3;
+        } else if (absError > 10) {
+            controlSignal = error > 0 ? 2 : -2;
+        } else {
+            controlSignal = error;
+        }
+        return controlSignal;
+    }
+}
+==============================
+
+==============================

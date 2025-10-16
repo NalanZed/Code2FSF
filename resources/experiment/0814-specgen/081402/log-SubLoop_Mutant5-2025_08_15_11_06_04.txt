@@ -1,0 +1,391 @@
+public class SubLoop_Mutant5 {
+    //@ requires Integer.MIN_VALUE <= x - y && x - y <= Integer.MAX_VALUE && y != Integer.MIN_VALUE;
+    //@ ensures \result == (y > 0 ? x : x - y);
+    public static int subLoop(int x, int y) {
+        int sum = x;
+        if (y > 0) {
+            int n = 0;
+            //@ maintaining sum == x && n == 0;
+            //@ decreases n;
+            while (n > 0) {
+                sum = sum - 1;
+                n = n - 1;
+            }
+        } else {
+            int n = -y;
+            //@ maintaining sum == x - y + n && 0 <= n;
+            //@ decreases n;
+            while (n > 0) {
+                sum = sum + 1;
+                n = n - 1;
+            }
+        }
+        return sum;
+    }
+}
+==============================
+/root/specgen/SpecGen/project/081402-specgen/tmp/SubLoop_Mutant5.java:16: verify: The prover cannot establish an assertion (LoopInvariantBeforeLoop) in method subLoop
+            //@ maintaining sum == x - y + n && 0 <= n;
+                ^
+1 verification failure
+
+==============================
+public class SubLoop_Mutant5 {
+    //@ requires Integer.MIN_VALUE <= x - y && x - y <= Integer.MAX_VALUE && y != Integer.MIN_VALUE;
+    //@ ensures \result == (y > 0 ? x : x - y);
+    public static int subLoop(int x, int y) {
+        int sum = x;
+        if (y > 0) {
+            int n = 0;
+            //@ maintaining sum == x && n == 0;
+            //@ decreases n;
+            while (n > 0) {
+                sum = sum - 1;
+                n = n - 1;
+            }
+        } else {
+            int n = -y;
+            //@ maintaining sum == x - y + n && 0 < n;  
+            //@ decreases n;
+            while (n > 0) {
+                sum = sum + 1;
+                n = n - 1;
+            }
+        }
+        return sum;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081402-specgen/tmp/SubLoop_Mutant5.java:16: verify: The prover cannot establish an assertion (LoopInvariantBeforeLoop) in method subLoop
+            //@ maintaining sum == x - y + n && 0 < n;  
+                ^
+1 verification failure
+
+==============================
+public class SubLoop_Mutant5 {
+    //@ requires Integer.MIN_VALUE <= x - y && x - y <= Integer.MAX_VALUE && y != Integer.MIN_VALUE;
+    //@ ensures \result == (y > 0 ? x : x - y);
+    public static int subLoop(int x, int y) {
+        int sum = x;
+        if (y > 0) {
+            int n = 0;
+            //@ maintaining sum == x && n == 0;
+            //@ decreases n;
+            while (n > 0) {
+                sum = sum - 1;
+                n = n - 1;
+            }
+        } else {
+            int n = -y;
+            //@ maintaining sum == x - y + n && 0 <= n;  
+            //@ decreases n;
+            while (n > 0) {
+                sum = sum + 1;
+                n = n - 1;
+            }
+        }
+        return sum;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081402-specgen/tmp/SubLoop_Mutant5.java:16: verify: The prover cannot establish an assertion (LoopInvariantBeforeLoop) in method subLoop
+            //@ maintaining sum == x - y + n && 0 <= n;  
+                ^
+1 verification failure
+
+==============================
+public class SubLoop_Mutant5 {
+    //@ requires Integer.MIN_VALUE <= x - y && x - y <= Integer.MAX_VALUE && y != Integer.MIN_VALUE;
+    //@ ensures \result == (y > 0 ? x : x - y);
+    public static int subLoop(int x, int y) {
+        int sum = x;
+        if (y > 0) {
+            int n = 0;
+            //@ maintaining sum == x && n == 0;
+            //@ decreases n;
+            while (n > 0) {
+                sum = sum - 1;
+                n = n - 1;
+            }
+        } else {
+            int n = -y;
+            //@ maintaining sum == x - y + n && 0 - 1 <= n;  
+            //@ decreases n;
+            while (n > 0) {
+                sum = sum + 1;
+                n = n - 1;
+            }
+        }
+        return sum;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081402-specgen/tmp/SubLoop_Mutant5.java:16: verify: The prover cannot establish an assertion (LoopInvariantBeforeLoop) in method subLoop
+            //@ maintaining sum == x - y + n && 0 - 1 <= n;  
+                ^
+1 verification failure
+
+==============================
+public class SubLoop_Mutant5 {
+    //@ requires Integer.MIN_VALUE <= x - y && x - y <= Integer.MAX_VALUE && y != Integer.MIN_VALUE;
+    //@ ensures \result == (y > 0 ? x : x - y);
+    public static int subLoop(int x, int y) {
+        int sum = x;
+        if (y > 0) {
+            int n = 0;
+            //@ maintaining sum == x && n == 0;
+            //@ decreases n;
+            while (n > 0) {
+                sum = sum - 1;
+                n = n - 1;
+            }
+        } else {
+            int n = -y;
+            //@ maintaining sum == x + y + n && 0 < n;  
+            //@ decreases n;
+            while (n > 0) {
+                sum = sum + 1;
+                n = n - 1;
+            }
+        }
+        return sum;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081402-specgen/tmp/SubLoop_Mutant5.java:16: verify: The prover cannot establish an assertion (LoopInvariant) in method subLoop
+            //@ maintaining sum == x + y + n && 0 < n;  
+                ^
+1 verification failure
+
+==============================
+public class SubLoop_Mutant5 {
+    //@ requires Integer.MIN_VALUE <= x - y && x - y <= Integer.MAX_VALUE && y != Integer.MIN_VALUE;
+    //@ ensures \result == (y > 0 ? x : x - y);
+    public static int subLoop(int x, int y) {
+        int sum = x;
+        if (y > 0) {
+            int n = 0;
+            //@ maintaining sum == x && n == 0;
+            //@ decreases n;
+            while (n > 0) {
+                sum = sum - 1;
+                n = n - 1;
+            }
+        } else {
+            int n = -y;
+            //@ maintaining sum == x + y + n && 0 <= n;  
+            //@ decreases n;
+            while (n > 0) {
+                sum = sum + 1;
+                n = n - 1;
+            }
+        }
+        return sum;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081402-specgen/tmp/SubLoop_Mutant5.java:16: verify: The prover cannot establish an assertion (LoopInvariant) in method subLoop
+            //@ maintaining sum == x + y + n && 0 <= n;  
+                ^
+1 verification failure
+
+==============================
+public class SubLoop_Mutant5 {
+    //@ requires Integer.MIN_VALUE <= x - y && x - y <= Integer.MAX_VALUE && y != Integer.MIN_VALUE;
+    //@ ensures \result == (y > 0 ? x : x - y);
+    public static int subLoop(int x, int y) {
+        int sum = x;
+        if (y > 0) {
+            int n = 0;
+            //@ maintaining sum == x && n == 0;
+            //@ decreases n;
+            while (n > 0) {
+                sum = sum - 1;
+                n = n - 1;
+            }
+        } else {
+            int n = -y;
+            //@ maintaining sum == x + y + n && 0 - 1 <= n;  
+            //@ decreases n;
+            while (n > 0) {
+                sum = sum + 1;
+                n = n - 1;
+            }
+        }
+        return sum;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081402-specgen/tmp/SubLoop_Mutant5.java:16: verify: The prover cannot establish an assertion (LoopInvariant) in method subLoop
+            //@ maintaining sum == x + y + n && 0 - 1 <= n;  
+                ^
+1 verification failure
+
+==============================
+public class SubLoop_Mutant5 {
+    //@ requires Integer.MIN_VALUE <= x - y && x - y <= Integer.MAX_VALUE && y != Integer.MIN_VALUE;
+    //@ ensures \result == (y > 0 ? x : x - y);
+    public static int subLoop(int x, int y) {
+        int sum = x;
+        if (y > 0) {
+            int n = 0;
+            //@ maintaining sum == x && n == 0;
+            //@ decreases n;
+            while (n > 0) {
+                sum = sum - 1;
+                n = n - 1;
+            }
+        } else {
+            int n = -y;
+            //@ maintaining sum == x + y - n && 0 < n;  
+            //@ decreases n;
+            while (n > 0) {
+                sum = sum + 1;
+                n = n - 1;
+            }
+        }
+        return sum;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081402-specgen/tmp/SubLoop_Mutant5.java:16: verify: The prover cannot establish an assertion (LoopInvariantBeforeLoop) in method subLoop
+            //@ maintaining sum == x + y - n && 0 < n;  
+                ^
+1 verification failure
+
+==============================
+public class SubLoop_Mutant5 {
+    //@ requires Integer.MIN_VALUE <= x - y && x - y <= Integer.MAX_VALUE && y != Integer.MIN_VALUE;
+    //@ ensures \result == (y > 0 ? x : x - y);
+    public static int subLoop(int x, int y) {
+        int sum = x;
+        if (y > 0) {
+            int n = 0;
+            //@ maintaining sum == x && n == 0;
+            //@ decreases n;
+            while (n > 0) {
+                sum = sum - 1;
+                n = n - 1;
+            }
+        } else {
+            int n = -y;
+            //@ maintaining sum == x + y - n && 0 <= n;  
+            //@ decreases n;
+            while (n > 0) {
+                sum = sum + 1;
+                n = n - 1;
+            }
+        }
+        return sum;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081402-specgen/tmp/SubLoop_Mutant5.java:16: verify: The prover cannot establish an assertion (LoopInvariantBeforeLoop) in method subLoop
+            //@ maintaining sum == x + y - n && 0 <= n;  
+                ^
+1 verification failure
+
+==============================
+public class SubLoop_Mutant5 {
+    //@ requires Integer.MIN_VALUE <= x - y && x - y <= Integer.MAX_VALUE && y != Integer.MIN_VALUE;
+    //@ ensures \result == (y > 0 ? x : x - y);
+    public static int subLoop(int x, int y) {
+        int sum = x;
+        if (y > 0) {
+            int n = 0;
+            //@ maintaining sum == x && n == 0;
+            //@ decreases n;
+            while (n > 0) {
+                sum = sum - 1;
+                n = n - 1;
+            }
+        } else {
+            int n = -y;
+            //@ maintaining sum == x + y - n && 0 - 1 <= n;  
+            //@ decreases n;
+            while (n > 0) {
+                sum = sum + 1;
+                n = n - 1;
+            }
+        }
+        return sum;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081402-specgen/tmp/SubLoop_Mutant5.java:16: verify: The prover cannot establish an assertion (LoopInvariantBeforeLoop) in method subLoop
+            //@ maintaining sum == x + y - n && 0 - 1 <= n;  
+                ^
+1 verification failure
+
+==============================
+public class SubLoop_Mutant5 {
+    //@ requires Integer.MIN_VALUE <= x - y && x - y <= Integer.MAX_VALUE && y != Integer.MIN_VALUE;
+    //@ ensures \result == (y > 0 ? x : x - y);
+    public static int subLoop(int x, int y) {
+        int sum = x;
+        if (y > 0) {
+            int n = 0;
+            //@ maintaining sum == x && n == 0;
+            //@ decreases n;
+            while (n > 0) {
+                sum = sum - 1;
+                n = n - 1;
+            }
+        } else {
+            int n = -y;
+            //@ maintaining sum == x - y - n && 0 < n;  
+            //@ decreases n;
+            while (n > 0) {
+                sum = sum + 1;
+                n = n - 1;
+            }
+        }
+        return sum;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081402-specgen/tmp/SubLoop_Mutant5.java:16: verify: The prover cannot establish an assertion (LoopInvariant) in method subLoop
+            //@ maintaining sum == x - y - n && 0 < n;  
+                ^
+1 verification failure
+
+==============================
+public class SubLoop_Mutant5 {
+    //@ requires Integer.MIN_VALUE <= x - y && x - y <= Integer.MAX_VALUE && y != Integer.MIN_VALUE;
+    //@ ensures \result == (y > 0 ? x : x - y);
+    public static int subLoop(int x, int y) {
+        int sum = x;
+        if (y > 0) {
+            int n = 0;
+            //@ maintaining sum == x && n == 0;
+            //@ decreases n;
+            while (n > 0) {
+                sum = sum - 1;
+                n = n - 1;
+            }
+        } else {
+            int n = -y;
+            //@ maintaining sum == x - y - n && 0 <= n;  
+            //@ decreases n;
+            while (n > 0) {
+                sum = sum + 1;
+                n = n - 1;
+            }
+        }
+        return sum;
+    }
+}
+
+==============================
+
+==============================

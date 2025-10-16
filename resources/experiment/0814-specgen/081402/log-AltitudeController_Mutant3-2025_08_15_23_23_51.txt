@@ -1,0 +1,185 @@
+public class AltitudeController_Mutant3 {
+    //@ requires Integer.MIN_VALUE < targetHeight - currentHeight && targetHeight - currentHeight < Integer.MAX_VALUE;
+    //@ ensures \result == (absError > 30 ? (error > 0 ? 5 : -5) : 
+    //@                   (absError > 20 ? (error > 0 ? 3 : -3) :
+    //@                   (absError > 10 ? (error > 0 ? 2 : -2) : error)));
+    //@ ensures absError == (error < 0 ? -error : error + 10);
+    public static int altitudeController(int currentHeight, int targetHeight) {
+        int error = targetHeight - currentHeight;
+        int absError = 0;
+        //@ maintaining absError == (error < 0 ? -error : error + 10);
+        absError = error < 0 ? -error : error + 10; //Added 10 to error
+        int controlSignal = 0;
+        //@ maintaining controlSignal == (absError > 30 ? (error > 0 ? 5 : -5) : 
+        //@                              (absError > 20 ? (error > 0 ? 3 : -3) :
+        //@                              (absError > 10 ? (error > 0 ? 2 : -2) : error))));
+        if (absError > 30) {
+            controlSignal = error > 0 ? 5 : -5;
+        } else if (absError > 20) {
+            controlSignal = error > 0 ? 3 : -3;
+        } else if (absError > 10) {
+            controlSignal = error > 0 ? 2 : -2;
+        } else {
+            controlSignal = error;
+        }
+        return controlSignal;
+    }
+}
+==============================
+/root/specgen/SpecGen/project/081402-specgen/tmp/AltitudeController_Mutant3.java:10: error: Loop specifications must immediately precede a loop statement
+        //@ maintaining absError == (error < 0 ? -error : error + 10);
+            ^
+/root/specgen/SpecGen/project/081402-specgen/tmp/AltitudeController_Mutant3.java:15: error: Incorrectly formed or terminated loop_invariant statement near here
+        //@                              (absError > 10 ? (error > 0 ? 2 : -2) : error))));
+                                                                                         ^
+/root/specgen/SpecGen/project/081402-specgen/tmp/AltitudeController_Mutant3.java:13: error: Loop specifications must immediately precede a loop statement
+        //@ maintaining controlSignal == (absError > 30 ? (error > 0 ? 5 : -5) : 
+            ^
+3 errors
+
+==============================
+public class AltitudeController_Mutant3 {
+    //@ requires Integer.MIN_VALUE < targetHeight - currentHeight && targetHeight - currentHeight < Integer.MAX_VALUE;
+    //@ ensures \result == (Math.abs(error) > 30 ? (error > 0 ? 5 : -5) : 
+    //@                    (Math.abs(error) > 20 ? (error > 0 ? 3 : -3) :
+    //@                    (Math.abs(error) > 10 ? (error > 0 ? 2 : -2) : error)));
+    //@ ensures absError == (error < 0 ? -error : error + 10);
+    public static int altitudeController(int currentHeight, int targetHeight) {
+        int error = targetHeight - currentHeight;
+        int absError = 0;
+        absError = error < 0 ? -error : error + 10; //Added 10 to error
+        int controlSignal = 0;
+        if (absError > 30) {
+            controlSignal = error > 0 ? 5 : -5;
+        } else if (absError > 20) {
+            controlSignal = error > 0 ? 3 : -3;
+        } else if (absError > 10) {
+            controlSignal = error > 0 ? 2 : -2;
+        } else {
+            controlSignal = error;
+        }
+        return controlSignal;
+    }
+}
+==============================
+/root/specgen/SpecGen/project/081402-specgen/tmp/AltitudeController_Mutant3.java:3: error: cannot find symbol
+    //@ ensures \result == (Math.abs(error) > 30 ? (error > 0 ? 5 : -5) : 
+                                     ^
+  symbol:   variable error
+  location: class AltitudeController_Mutant3
+/root/specgen/SpecGen/project/081402-specgen/tmp/AltitudeController_Mutant3.java:3: error: cannot find symbol
+    //@ ensures \result == (Math.abs(error) > 30 ? (error > 0 ? 5 : -5) : 
+                                                    ^
+  symbol:   variable error
+  location: class AltitudeController_Mutant3
+/root/specgen/SpecGen/project/081402-specgen/tmp/AltitudeController_Mutant3.java:4: error: cannot find symbol
+    //@                    (Math.abs(error) > 20 ? (error > 0 ? 3 : -3) :
+                                     ^
+  symbol:   variable error
+  location: class AltitudeController_Mutant3
+/root/specgen/SpecGen/project/081402-specgen/tmp/AltitudeController_Mutant3.java:4: error: cannot find symbol
+    //@                    (Math.abs(error) > 20 ? (error > 0 ? 3 : -3) :
+                                                    ^
+  symbol:   variable error
+  location: class AltitudeController_Mutant3
+/root/specgen/SpecGen/project/081402-specgen/tmp/AltitudeController_Mutant3.java:5: error: cannot find symbol
+    //@                    (Math.abs(error) > 10 ? (error > 0 ? 2 : -2) : error)));
+                                     ^
+  symbol:   variable error
+  location: class AltitudeController_Mutant3
+/root/specgen/SpecGen/project/081402-specgen/tmp/AltitudeController_Mutant3.java:5: error: cannot find symbol
+    //@                    (Math.abs(error) > 10 ? (error > 0 ? 2 : -2) : error)));
+                                                    ^
+  symbol:   variable error
+  location: class AltitudeController_Mutant3
+/root/specgen/SpecGen/project/081402-specgen/tmp/AltitudeController_Mutant3.java:5: error: cannot find symbol
+    //@                    (Math.abs(error) > 10 ? (error > 0 ? 2 : -2) : error)));
+                                                                          ^
+  symbol:   variable error
+  location: class AltitudeController_Mutant3
+/root/specgen/SpecGen/project/081402-specgen/tmp/AltitudeController_Mutant3.java:6: error: cannot find symbol
+    //@ ensures absError == (error < 0 ? -error : error + 10);
+                ^
+  symbol:   variable absError
+  location: class AltitudeController_Mutant3
+/root/specgen/SpecGen/project/081402-specgen/tmp/AltitudeController_Mutant3.java:6: error: cannot find symbol
+    //@ ensures absError == (error < 0 ? -error : error + 10);
+                             ^
+  symbol:   variable error
+  location: class AltitudeController_Mutant3
+/root/specgen/SpecGen/project/081402-specgen/tmp/AltitudeController_Mutant3.java:6: error: cannot find symbol
+    //@ ensures absError == (error < 0 ? -error : error + 10);
+                                          ^
+  symbol:   variable error
+  location: class AltitudeController_Mutant3
+/root/specgen/SpecGen/project/081402-specgen/tmp/AltitudeController_Mutant3.java:6: error: cannot find symbol
+    //@ ensures absError == (error < 0 ? -error : error + 10);
+                                                  ^
+  symbol:   variable error
+  location: class AltitudeController_Mutant3
+11 errors
+
+==============================
+public class AltitudeController_Mutant3 {
+    //@ requires Integer.MIN_VALUE < targetHeight - currentHeight && targetHeight - currentHeight < Integer.MAX_VALUE;
+    //@ ensures \result == (Math.abs(targetHeight - currentHeight) > 30 ? 
+    //@                        (targetHeight > currentHeight ? 5 : -5) :
+    //@                     (Math.abs(targetHeight - currentHeight) > 20 ? 
+    //@                        (targetHeight > currentHeight ? 3 : -3) :
+    //@                     (Math.abs(targetHeight - currentHeight) > 10 ? 
+    //@                        (targetHeight > currentHeight ? 2 : -2) : 
+    //@                        (targetHeight - currentHeight)));
+    public static int altitudeController(int currentHeight, int targetHeight) {
+        int error = targetHeight - currentHeight;
+        int absError = 0;
+        absError = error < 0 ? -error : error + 10; //Added 10 to error
+        int controlSignal = 0;
+        if (absError > 30) {
+            controlSignal = error > 0 ? 5 : -5;
+        } else if (absError > 20) {
+            controlSignal = error > 0 ? 3 : -3;
+        } else if (absError > 10) {
+            controlSignal = error > 0 ? 2 : -2;
+        } else {
+            controlSignal = error;
+        }
+        return controlSignal;
+    }
+}
+==============================
+/root/specgen/SpecGen/project/081402-specgen/tmp/AltitudeController_Mutant3.java:9: error: ')' expected
+    //@                        (targetHeight - currentHeight)));
+                                                               ^
+1 error
+
+==============================
+public class AltitudeController_Mutant3 {
+    //@ requires Integer.MIN_VALUE < targetHeight - currentHeight && targetHeight - currentHeight < Integer.MAX_VALUE;
+    //@ ensures \result == (
+    //@     (targetHeight - currentHeight < 0 ? -(targetHeight - currentHeight) : (targetHeight - currentHeight) + 10) > 30 ? 
+    //@         (targetHeight > currentHeight ? 5 : -5) :
+    //@     (targetHeight - currentHeight < 0 ? -(targetHeight - currentHeight) : (targetHeight - currentHeight) + 10) > 20 ? 
+    //@         (targetHeight > currentHeight ? 3 : -3) :
+    //@     (targetHeight - currentHeight < 0 ? -(targetHeight - currentHeight) : (targetHeight - currentHeight) + 10) > 10 ? 
+    //@         (targetHeight > currentHeight ? 2 : -2) : 
+    //@         (targetHeight - currentHeight));
+    public static int altitudeController(int currentHeight, int targetHeight) {
+        int error = targetHeight - currentHeight;
+        int absError = 0;
+        absError = error < 0 ? -error : error + 10; //Added 10 to error
+        int controlSignal = 0;
+        if (absError > 30) {
+            controlSignal = error > 0 ? 5 : -5;
+        } else if (absError > 20) {
+            controlSignal = error > 0 ? 3 : -3;
+        } else if (absError > 10) {
+            controlSignal = error > 0 ? 2 : -2;
+        } else {
+            controlSignal = error;
+        }
+        return controlSignal;
+    }
+}
+==============================
+
+==============================

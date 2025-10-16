@@ -1,0 +1,41 @@
+public class FizzBuzz_Mutant1 {
+    //@ requires n >= 0;
+    //@ ensures \result == (\n % 3 == 0 ? 5 : 0) + (\n % 5 == 0 ? 5 : 0);
+    public static int fizzBuzz(int n) {
+        int res = 0;
+        if (n % 3 == 0) {
+            res += 5; // change from 3 to 5
+        }
+        if (n % 5 == 0) {
+            res += 5;
+        }
+        return res;
+    }
+}
+==============================
+/root/specgen/SpecGen/project/081402-specgen/tmp/FizzBuzz_Mutant1.java:3: error: This backslash token is unknown: \n
+    //@ ensures \result == (\n % 3 == 0 ? 5 : 0) + (\n % 5 == 0 ? 5 : 0);
+                            ^
+/root/specgen/SpecGen/project/081402-specgen/tmp/FizzBuzz_Mutant1.java:3: error: This backslash token is unknown: \n
+    //@ ensures \result == (\n % 3 == 0 ? 5 : 0) + (\n % 5 == 0 ? 5 : 0);
+                                                    ^
+2 errors
+
+==============================
+public class FizzBuzz_Mutant1 {
+    //@ requires n >= 0;
+    //@ ensures \result == (n % 3 == 0 ? 5 : 0) + (n % 5 == 0 ? 5 : 0);
+    public static int fizzBuzz(int n) {
+        int res = 0;
+        if (n % 3 == 0) {
+            res += 5; // change from 3 to 5
+        }
+        if (n % 5 == 0) {
+            res += 5;
+        }
+        return res;
+    }
+}
+==============================
+
+==============================

@@ -1,0 +1,9 @@
+public class DivisorGame_Mutant5 {
+    //@ ensures \result == true;
+    public static boolean divisorGame(int n) {
+        return true;
+    }
+}
+==============================
+
+==============================

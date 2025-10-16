@@ -1,0 +1,21 @@
+public class GetLowCaseLoop {
+    //@ requires true;
+    //@ ensures ('A' <= c && c <= 'Z') ==> (\result == (char)(c - 'A' + 'a'));
+    //@ ensures (c < 'A' || c > 'Z') ==> \result == 0;
+    public static char getLowCase(char c) {
+        if(c < 'A' || c > 'Z') {
+            return 0;
+        }
+        char t = 'z';
+        //@ maintaining 'a' <= t && t <= 'z';
+        //@ maintaining (\forall char ch; t < ch && ch <= 'z'; ch != (char)(c - 'A' + 'a'));
+        //@ decreases t - 'a';
+        while(t >= 'a' && t != c - 'A' + 'a') {
+            t--;
+        }
+        return t;
+    }
+}
+==============================
+
+==============================

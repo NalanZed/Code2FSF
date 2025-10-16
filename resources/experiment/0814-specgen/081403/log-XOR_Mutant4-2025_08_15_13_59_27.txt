@@ -1,0 +1,28 @@
+public class XOR_Mutant4 {
+    /*@ public normal_behavior
+      @   ensures \result == (b1 != b2);
+      @   ensures \result <==> (b1 && !b2) || (!b1 && b2);
+      @   ensures !\result <==> (b1 && b2) || (!b1 && !b2);
+      @*/
+    public static boolean xor(boolean b1, boolean b2) {
+        if(b1) {
+            if(b2) {
+                return false;
+            }
+            else {
+                return true;
+            }
+        }
+        else {
+            if(b2) {
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
+    }
+}
+==============================
+
+==============================

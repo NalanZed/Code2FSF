@@ -1,0 +1,6 @@
+Category,Total,Success,Failed,successProb
+Sequential,61,58,3,95.08196721311475%
+Branched,136,125,11,91.91176470588235%
+Single-path-Loop,17,17,0,100.0%
+Multi-path-Loop,22,13,9,59.09090909090909%
+Nested-Loop,32,30,2,93.75%

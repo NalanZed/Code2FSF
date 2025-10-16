@@ -4,15 +4,13 @@ package org.zed.log;
 import org.zed.llm.ModelMessage;
 import org.zed.llm.ModelPrompt;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.nio.file.StandardOpenOption;
+import java.util.*;
 
 import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 
@@ -20,33 +18,40 @@ public class LogManager {
 
     public static final String RESOURCE_DIR = "resources";
     public static final String LOG_DIR = RESOURCE_DIR + "/" +"log";
-    public static final String CODE_GEN_LOG_DIR = LOG_DIR + "/" + "codegen";
-    public static final String FSF_REVIEW_LOG_DIR = LOG_DIR + "/" +"FSFReview";
     public static final String TRANS_WORK_DIR = RESOURCE_DIR + "/" + "trans";
     public static final String LOG_FILE_SUFFIX = ".txt";
     public static final String ADDED_PRINT_CODES_DIR = TRANS_WORK_DIR + "/"+ "addedPrintCodes";
     public static final String TRANS_SOURCE_CODES_DIR = TRANS_WORK_DIR + "/"+ "sourceCodes";
     public static final String SUCC_DATASET_DIR = RESOURCE_DIR + "/" + "succDataset";
     public static final String FAILED_DATASET_DIR = RESOURCE_DIR + "/" + "failedDataset";
-    public static final String Exception_DATASET_DIR = RESOURCE_DIR + "/" + "exceptionDataset";
+    public static final String EXCEPTION_DATASET_DIR = RESOURCE_DIR + "/" + "exceptionDataset";
     public static final String RUNNABLE_DIR = RESOURCE_DIR + "/" + "runnable";
     public static final String EXPERIMENT_DIR = RESOURCE_DIR + "/" + "experiment";
+    public static final String EVOLUTION_LOG_DIR = LOG_DIR + "/" + "evolution";
+    public static final String DATASET_DIR = RESOURCE_DIR + "/" + "dataset";
+    public static final String EVOLUTION_DATASET_DIR = DATASET_DIR + "/" + "evolutionDataset";
+
+    public static final String START_ORIGINAL_CODE = "START ORIGINAL CODE";
+    public static final String END_ORIGINAL_CODE = "*END* ORIGINAL CODE";
+    public static final String START_ORIGINAL_FSF = "START ORIGINAL FSF";
+    public static final String END_ORIGINAL_FSF = "*END* ORIGINAL FSF";
+    public static final String START_MODIFIED_FSF = "START MODIFIED FSF";
+    public static final String END_MODIFIED_FSF = "*END* MODIFIED FSF";
 
     private static List<String> needInitDirs = new ArrayList<>();
 
     public static boolean initLogWorkDirs(){
         needInitDirs.add(RESOURCE_DIR);
         needInitDirs.add(LOG_DIR);
-        needInitDirs.add(CODE_GEN_LOG_DIR);
-        needInitDirs.add(FSF_REVIEW_LOG_DIR);
         needInitDirs.add(TRANS_WORK_DIR);
         needInitDirs.add(ADDED_PRINT_CODES_DIR);
         needInitDirs.add(TRANS_SOURCE_CODES_DIR);
         needInitDirs.add(SUCC_DATASET_DIR);
         needInitDirs.add(FAILED_DATASET_DIR);
-        needInitDirs.add(Exception_DATASET_DIR);
+        needInitDirs.add(EXCEPTION_DATASET_DIR);
         needInitDirs.add(RUNNABLE_DIR);
         needInitDirs.add(EXPERIMENT_DIR);
+        needInitDirs.add(EVOLUTION_LOG_DIR);
         for (String dir : needInitDirs){
             if(new File(dir).exists()){
                 continue;
@@ -62,15 +67,14 @@ public class LogManager {
         return true;
     }
 
-    public static void appendMessage(String codePath, ModelMessage msg, String model) throws IOException {
-        String logFilePath = codePath2LogPath(codePath,model);
-        java.nio.file.Path outputPath = java.nio.file.Paths.get(logFilePath);
-        java.nio.file.Files.createDirectories(outputPath.getParent());
-        try (java.io.BufferedWriter writer = java.nio.file.Files.newBufferedWriter(
+    public static void appendMessage(String logFilePath, ModelMessage msg) throws IOException {
+        Path outputPath = Paths.get(logFilePath);
+        Files.createDirectories(outputPath.getParent());
+        try (BufferedWriter writer = Files.newBufferedWriter(
                 outputPath,
-                java.nio.charset.StandardCharsets.UTF_8,
-                java.nio.file.StandardOpenOption.CREATE,
-                java.nio.file.StandardOpenOption.APPEND)) {
+                StandardCharsets.UTF_8,
+                StandardOpenOption.CREATE,
+                StandardOpenOption.APPEND)) {
             writer.write("start role " + msg.getRole());
             writer.newLine();
             writer.write(msg.getContent());
@@ -84,13 +88,13 @@ public class LogManager {
     //自由指定log目录位置
     public static void appendMessageInDiyDir(String codePath, ModelMessage msg, String model,String diy) throws IOException {
         String logFilePath = codePath2DiyLogPath(codePath,model,diy);
-        java.nio.file.Path outputPath = java.nio.file.Paths.get(logFilePath);
-        java.nio.file.Files.createDirectories(outputPath.getParent());
-        try (java.io.BufferedWriter writer = java.nio.file.Files.newBufferedWriter(
+        Path outputPath = Paths.get(logFilePath);
+        Files.createDirectories(outputPath.getParent());
+        try (BufferedWriter writer = Files.newBufferedWriter(
                 outputPath,
-                java.nio.charset.StandardCharsets.UTF_8,
-                java.nio.file.StandardOpenOption.CREATE,
-                java.nio.file.StandardOpenOption.APPEND)) {
+                StandardCharsets.UTF_8,
+                StandardOpenOption.CREATE,
+                StandardOpenOption.APPEND)) {
             writer.write("start role " + msg.getRole());
             writer.newLine();
             writer.write(msg.getContent());
@@ -102,22 +106,15 @@ public class LogManager {
         }
     }
 
-    public static String codePath2CodeReviewLogPath(String codePath, String model) {
-        //从文件路径中提取文件名（在Java程序中，即类名）
-        String logTitle = codePath.substring(codePath.lastIndexOf("/") + 1, codePath.lastIndexOf("."));
-        logTitle = "log" + "-" + logTitle;
-        return FSF_REVIEW_LOG_DIR  + "/" +model + "/" + logTitle + LOG_FILE_SUFFIX;
-    }
-
     public static void appendFSFReviewSummary(String codePath, String summary, String model, String diy) throws IOException {
         String logFilePath = codePath2DiyLogPath(codePath,model,diy);
-        java.nio.file.Path outputPath = java.nio.file.Paths.get(logFilePath);
-        java.nio.file.Files.createDirectories(outputPath.getParent());
-        try (java.io.BufferedWriter writer = java.nio.file.Files.newBufferedWriter(
+        Path outputPath = Paths.get(logFilePath);
+        Files.createDirectories(outputPath.getParent());
+        try (BufferedWriter writer = Files.newBufferedWriter(
                 outputPath,
-                java.nio.charset.StandardCharsets.UTF_8,
-                java.nio.file.StandardOpenOption.CREATE,
-                java.nio.file.StandardOpenOption.APPEND)) {
+                StandardCharsets.UTF_8,
+                StandardOpenOption.CREATE,
+                StandardOpenOption.APPEND)) {
             writer.write("start log summary" );
             writer.newLine();
             writer.write(summary);
@@ -130,13 +127,13 @@ public class LogManager {
     }
 
     public static void appendCode2FSFRemark(String logFilePath, String content) throws IOException {
-        java.nio.file.Path outputPath = java.nio.file.Paths.get(logFilePath);
-        java.nio.file.Files.createDirectories(outputPath.getParent());
-        try (java.io.BufferedWriter writer = java.nio.file.Files.newBufferedWriter(
+        Path outputPath = Paths.get(logFilePath);
+        Files.createDirectories(outputPath.getParent());
+        try (BufferedWriter writer = Files.newBufferedWriter(
                 outputPath,
-                java.nio.charset.StandardCharsets.UTF_8,
-                java.nio.file.StandardOpenOption.CREATE,
-                java.nio.file.StandardOpenOption.APPEND)) {
+                StandardCharsets.UTF_8,
+                StandardOpenOption.CREATE,
+                StandardOpenOption.APPEND)) {
             writer.write("start role remark");
             writer.newLine();
             writer.write(content);
@@ -150,7 +147,7 @@ public class LogManager {
 
     public static String file2String(String FilePath) {
         StringBuilder sb = new StringBuilder();
-        try (java.io.BufferedReader br = new java.io.BufferedReader(new java.io.FileReader(FilePath))) {
+        try (BufferedReader br = new BufferedReader(new FileReader(FilePath))) {
             String line;
             while ((line = br.readLine()) != null) {
                 sb.append(line).append("\n");
@@ -174,9 +171,9 @@ public class LogManager {
         return diy  + "/" +model + "/" + logTitle + LOG_FILE_SUFFIX;
     }
 
-    public static String codePath2FailedPath(String codePath){
+    public static String filePath2FailedPath(String path){
         //从文件路径中提取文件名（在Java程序中，即类名）
-        String title = codePath.substring(codePath.lastIndexOf("/") + 1);
+        String title = path.substring(path.lastIndexOf("/") + 1);
         return FAILED_DATASET_DIR  + "/" + title;
     }
     public static String codePath2AddedPrintPath(String codePath){
@@ -222,14 +219,14 @@ public class LogManager {
         }
     }
 
-    public static java.io.File[] fetchTxtFileInDir(String dir) {
-        java.io.File file = new java.io.File(dir);
+    public static File[] fetchTxtFileInDir(String dir) {
+        File file = new File(dir);
         return file.listFiles((d, name) -> name.endsWith(".txt"));
     }
 
     public static String[] fetchSuffixFilePathInDir(String inputDir,String suffix) {
             List<String> javaFiles = new ArrayList<>();
-            fetchSuffixFilesRecursive(new java.io.File(inputDir), javaFiles,suffix);
+            fetchSuffixFilesRecursive(new File(inputDir), javaFiles,suffix);
             return javaFiles.toArray(new String[0]);
     }
 
@@ -247,9 +244,9 @@ public class LogManager {
         Files.copy(p, dir.resolve(p.getFileName()), REPLACE_EXISTING);
     }
 
-    private static void fetchSuffixFilesRecursive(java.io.File dir, List<String> javaFiles,String suffix) {
+    private static void fetchSuffixFilesRecursive(File dir, List<String> javaFiles, String suffix) {
         if (dir.isDirectory()) {
-            for (java.io.File file : dir.listFiles()) {
+            for (File file : dir.listFiles()) {
                 if (file.isDirectory()) {
                     fetchSuffixFilesRecursive(file, javaFiles,suffix);
                 } else if (file.getName().endsWith(suffix)) {
@@ -258,7 +255,7 @@ public class LogManager {
             }
         }
     }
-    public static List<String[]> parseTD(String msgContent) {
+    public static List<String[]> parseTDFromMsg(String msgContent) {
         List<String[]> TDs = new ArrayList<>();
         /*
             由于LLM生成的结果格式为
@@ -323,7 +320,7 @@ public class LogManager {
         if(content.isEmpty()){
             return new ArrayList<>();
         }
-        return parseTD(content);
+        return parseTDFromMsg(content);
     }
     public static File[] fetchAllJavaFilesInDir(String dir) throws IOException {
         Path path = Paths.get(dir);
@@ -367,13 +364,13 @@ public class LogManager {
     public static void copyFileToExceptionDataset(String exceptionFile) throws IOException {
         File file = new File(exceptionFile);
         String name = file.getName();
-        String succFilePath = Exception_DATASET_DIR + "/" + name;
+        String succFilePath = EXCEPTION_DATASET_DIR + "/" + name;
         Files.copy(Path.of(exceptionFile), Path.of(succFilePath), REPLACE_EXISTING);
     }
 
-    public static String codePath2SuccPath(String codePath) {
+    public static String filePath2SuccPath(String path) {
         //从文件路径中提取文件名（在Java程序中，即类名）
-        String title = codePath.substring(codePath.lastIndexOf("/") + 1);
+        String title = path.substring(path.lastIndexOf("/") + 1);
         return SUCC_DATASET_DIR  + "/" + title;
     }
 
@@ -393,19 +390,19 @@ public class LogManager {
     }
 
     public static boolean saveACodeGenMsg(ModelMessage msg,String model,String className){
-        String logFilePath = CODE_GEN_LOG_DIR + "/" + model + "/" + className + ".txt";
-        java.nio.file.Path outputPath = java.nio.file.Paths.get(logFilePath);
+        String logFilePath = EVOLUTION_LOG_DIR + "/" + model + "/" + className + ".txt";
+        Path outputPath = Paths.get(logFilePath);
         try {
             Files.createDirectories(outputPath.getParent());
         } catch (IOException e) {
             System.out.println("记录CodeGenLog时失败");
             return false;
         }
-        try (java.io.BufferedWriter writer = java.nio.file.Files.newBufferedWriter(
+        try (BufferedWriter writer = Files.newBufferedWriter(
                 outputPath,
-                java.nio.charset.StandardCharsets.UTF_8,
-                java.nio.file.StandardOpenOption.CREATE,
-                java.nio.file.StandardOpenOption.APPEND)) {
+                StandardCharsets.UTF_8,
+                StandardOpenOption.CREATE,
+                StandardOpenOption.APPEND)) {
             writer.write("start role " + msg.getRole());
             writer.newLine();
             writer.write(msg.getContent());
@@ -451,16 +448,48 @@ public class LogManager {
         }
     }
 
+    public static void deletSummaryTxt(String dirPath) throws IOException {
+        File dir = new File(dirPath);
+        if (!dir.exists() || !dir.isDirectory()) {
+            throw new IllegalArgumentException("输入路径不是有效的目录: " + dirPath);
+        }
+        File[] experimentDirs = dir.listFiles(File::isDirectory);
+        List<String> experimentPaths = new ArrayList<>();
+        for (File experimentDir : experimentDirs) {
+            experimentPaths.add(experimentDir.getAbsolutePath());
+        }
+
+        String[] categories = new String[]{
+                "Branched",
+                "Multi-path-Loop",
+                "Nested-Loop",
+                "Sequential",
+                "Single-path-Loop"
+        };
+
+        //对单个实验进行处理
+        for (String ep : experimentPaths) {
+            for (String cat : categories) {
+                String t = ep + "/" + cat + "/summary.txt";
+                //如果t目录下存在deepseek-chat目录,则改名为gpt-4o
+                File f = new File(t);
+                if (f.exists()) {
+                    Files.delete(f.toPath());
+                }
+            }
+        }
+    }
+
     public static Set<String> getClassNameOfCategory(String anyCategoryDir){
         Set<String> calssNames = new HashSet<>();
-        java.io.File dir = new java.io.File(anyCategoryDir);
+        File dir = new File(anyCategoryDir);
         if (!dir.exists() || !dir.isDirectory()) {
             System.err.println("目录不存在或不是一个目录: " + anyCategoryDir);
             return calssNames;
         }
-        java.io.File[] files = dir.listFiles((d, name) -> name.endsWith(".java"));
+        File[] files = dir.listFiles((d, name) -> name.endsWith(".java"));
         if (files != null) {
-            for (java.io.File file : files) {
+            for (File file : files) {
                 String fileName = file.getName();
                 String className = fileName.substring(0, fileName.lastIndexOf("."));
                 calssNames.add(className);
@@ -609,16 +638,47 @@ public class LogManager {
 
     }
 
+    public static void renameDeepseekChatToGpt4o(String dirPath) {
+        File dir = new File(dirPath);
+        if (!dir.exists() || !dir.isDirectory()) {
+            throw new IllegalArgumentException("输入路径不是有效的目录: " + dirPath);
+        }
+        File[] experimentDirs = dir.listFiles(File::isDirectory);
+        List<String> experimentPaths = new ArrayList<>();
+        for (File experimentDir : experimentDirs) {
+            experimentPaths.add(experimentDir.getAbsolutePath());
+        }
+
+        String[] categories = new String[]{
+                "Branched",
+                "Multi-path-Loop",
+                "Nested-Loop",
+                "Sequential",
+                "Single-path-Loop"
+        };
+
+        //对单个实验进行处理
+        for (String ep : experimentPaths) {
+            for (String cat : categories) {
+                String t = ep + "/" + cat;
+                File f = new File(t + "/deepseek-chat");
+                if (f.exists() && f.isDirectory()) {
+                    f.renameTo(new File(t + "/gpt-4o"));
+                }
+            }
+        }
+    }
+
     public static Set<String> getCategoriesInDatasetDir(String datasetDir){
         Set<String> categories = new HashSet<>();
-        java.io.File dir = new java.io.File(datasetDir);
+        File dir = new File(datasetDir);
         if (!dir.exists() || !dir.isDirectory()) {
             System.err.println("目录不存在或不是一个目录: " + datasetDir);
             return categories;
         }
-        java.io.File[] files = dir.listFiles();
+        File[] files = dir.listFiles();
         if (files != null) {
-            for (java.io.File file : files) {
+            for (File file : files) {
                 if(!file.isDirectory()){
                     continue;
                 }
@@ -631,26 +691,17 @@ public class LogManager {
         return categories;
     }
 
-    public static void printFSF(List<String[]> FSF){
-        for (int i = 0; i < FSF.size(); i++) {
-            String T = FSF.get(i)[0];
-            String D = FSF.get(i)[1];
-            System.out.println("T"+ i + ": " + T);
-            System.out.println("D"+ i + ": " + D + "\n");
-        }
-    }
-
     public static void clearCurrentExperimentTmpFiles(String experimentName,String category,String modelName) throws IOException {
         System.out.println("Clearing the temporary files of current experiment: " + experimentName + " in category: " + category + " for model: " + modelName);
-        File[] files = fetchAllJavaFilesInDir(SUCC_DATASET_DIR);
+        File[] files = fetchAllFilesInDir(SUCC_DATASET_DIR);
         for (File file : files) {
             Files.delete(file.toPath());
         }
-        files = fetchAllJavaFilesInDir(FAILED_DATASET_DIR);
+        files = fetchAllFilesInDir(FAILED_DATASET_DIR);
         for (File file : files) {
             Files.delete(file.toPath());
         }
-        files = fetchAllJavaFilesInDir(Exception_DATASET_DIR);
+        files = fetchAllFilesInDir(EXCEPTION_DATASET_DIR);
         for (File file : files) {
             Files.delete(file.toPath());
         }
@@ -685,15 +736,15 @@ public class LogManager {
             return;
         }
         try {
-            File[] files = fetchAllJavaFilesInDir(SUCC_DATASET_DIR);
+            File[] files = fetchAllFilesInDir(SUCC_DATASET_DIR);
             for (File file : files) {
                 Files.copy(file.toPath(), Path.of(experimentSuccDatasetDir + "/" + file.getName()), REPLACE_EXISTING);
             }
-            files = fetchAllJavaFilesInDir(FAILED_DATASET_DIR);
+            files = fetchAllFilesInDir(FAILED_DATASET_DIR);
             for (File file : files) {
                 Files.copy(file.toPath(), Path.of(experimentFailedDatasetDir + "/" + file.getName()), REPLACE_EXISTING);
             }
-            files = fetchAllJavaFilesInDir(Exception_DATASET_DIR);
+            files = fetchAllFilesInDir(EXCEPTION_DATASET_DIR);
             for (File file : files) {
                 Files.copy(file.toPath(), Path.of(experimentExceptionDatasetDir + "/" + file.getName()), REPLACE_EXISTING);
             }
@@ -735,21 +786,17 @@ public class LogManager {
         }
         int succNum = 0, failedNum = 0, exceptionNum = 0, totalNum = 0;
         int succRate = 0;
-        try {
-            succNum = fetchAllJavaFilesInDir(experimentSuccDatasetDir).length;
-            failedNum = fetchAllJavaFilesInDir(experimentFailedDatasetDir).length;
-            exceptionNum = fetchAllJavaFilesInDir(experimentExceptionDatasetDir).length;
-            totalNum = succNum + failedNum + exceptionNum;
-            succRate =  (int)((float)succNum / (float)totalNum * 10000);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        succNum = fetchAllFilesInDir(experimentSuccDatasetDir).length;
+        failedNum = fetchAllFilesInDir(experimentFailedDatasetDir).length;
+        exceptionNum = fetchAllFilesInDir(experimentExceptionDatasetDir).length;
+        totalNum = succNum + failedNum + exceptionNum;
+        succRate =  (int)((float)succNum / (float)totalNum * 10000);
         //向summary.txt中写入信息
-        try (java.io.BufferedWriter writer = java.nio.file.Files.newBufferedWriter(
+        try (BufferedWriter writer = Files.newBufferedWriter(
                 summaryPath,
-                java.nio.charset.StandardCharsets.UTF_8,
-                java.nio.file.StandardOpenOption.CREATE,
-                java.nio.file.StandardOpenOption.APPEND)) {
+                StandardCharsets.UTF_8,
+                StandardOpenOption.CREATE,
+                StandardOpenOption.APPEND)) {
             writer.write("experimentName: " + experimentName);
             writer.newLine();
             writer.write("model: " + modelName);
@@ -773,18 +820,299 @@ public class LogManager {
 
     }
 
-    public static void main(String[] args) throws IOException {
-//        classifyHandledCodeFiles("resources/dataset/4-shot/failedDataset");
-//        classifyHandledCodeFiles("resources/dataset/4-shot/succDataset");
-//        moveClassifiedCode();
-//        Set<String> categoriesInDatasetDir = getCategoriesInDatasetDir("resources/dataset/0801-dataset");
-//        for (String category : categoriesInDatasetDir) {
-//            System.out.println(category);
-//        }
-        clearCurrentExperimentTmpFiles("080101-conversational","Single-path-Loop","deepseek-chat");
+    private static File[] fetchAllFilesInDir(String succDatasetDir) {
+        File file = new File(succDatasetDir);
+        return file.listFiles();
+    }
+
+    private static void deleteAllFilesInDir(String dir) throws IOException {
+        File[] files = fetchAllFilesInDir(dir);
+        if(files != null){
+            for (File file : files) {
+                Files.delete(file.toPath());
+            }
+        }
     }
 
     public static String getExperimentLogPath(String experimentName,String category) {
         return  EXPERIMENT_DIR + "/" + experimentName + "/" + category ;
     }
+
+    public static String getOriginalCodeFromFile(String filePath) {
+        String codeGenTask = file2String(filePath);
+        return codeGenTask.substring(codeGenTask.indexOf(START_ORIGINAL_CODE) + START_ORIGINAL_CODE.length(), codeGenTask.indexOf(END_ORIGINAL_CODE));
+    }
+
+    public static List<String[]> parseTDFromString(String FSFString) throws RuntimeException {
+        List<String[]> FSF = new ArrayList<>();
+        String[] lines = FSFString.split("\n");
+        for(int i = 0; i < lines.length; i++){
+            if(!lines[i].startsWith("T")){
+                continue;
+            }
+            String[] TD = new String[2];
+            TD[0] = lines[i].substring(lines[i].indexOf(":") + 1).trim();
+            if(lines[++i].startsWith("D")){
+                TD[1] = lines[i].substring(lines[i].indexOf(":") + 1).trim();
+            }else {
+                throw new RuntimeException("Wrong code generation task form!");
+            }
+            FSF.add(TD);
+        }
+        return FSF;
+    }
+
+    public static List<String[]> getOriginalFSFFromFile(String filePath) throws RuntimeException {
+        String codeGenTask = file2String(filePath);
+        String originalFSFString = codeGenTask.substring(codeGenTask.indexOf(START_ORIGINAL_FSF) + START_ORIGINAL_FSF.length(), codeGenTask.indexOf(END_ORIGINAL_FSF));
+        if(originalFSFString.isEmpty()){
+            return null;
+        }
+        return parseTDFromString(originalFSFString);
+    }
+
+    public static List<String[]> getModifiedFSFFromFile(String filePath) throws RuntimeException {
+        String codeGenTask = file2String(filePath);
+        String modifiedFSFString = codeGenTask.substring(codeGenTask.indexOf(START_MODIFIED_FSF) + START_MODIFIED_FSF.length(), codeGenTask.indexOf(END_MODIFIED_FSF));
+        if(modifiedFSFString.isEmpty()){
+            return null;
+        }
+        return parseTDFromString(modifiedFSFString);
+    }
+
+    public static String[] parseCodeGenTask(String codeGenTaskPath) {
+        String codeGenTask = file2String(codeGenTaskPath);
+        String originalCode = codeGenTask.substring(codeGenTask.indexOf(START_ORIGINAL_CODE) + START_ORIGINAL_CODE.length(), codeGenTask.indexOf(END_ORIGINAL_CODE));
+        String originalFSF = codeGenTask.substring(codeGenTask.indexOf(START_ORIGINAL_FSF) + START_ORIGINAL_FSF.length(), codeGenTask.indexOf(END_ORIGINAL_FSF));
+        String modifiedFSF = codeGenTask.substring(codeGenTask.indexOf(START_MODIFIED_FSF) + START_MODIFIED_FSF.length(), codeGenTask.indexOf(END_MODIFIED_FSF));
+        String[] codeGenTaskInputs = new String[3];
+        codeGenTaskInputs[0] = originalCode;
+        codeGenTaskInputs[1] = originalFSF;
+        codeGenTaskInputs[2] = modifiedFSF;
+        return codeGenTaskInputs;
+    }
+
+    public static String evolutionTaskPath2LogPath(String taskFilePath,String model) {
+        //从文件路径中提取文件名（在Java程序中，即类名）
+        String logTitle = taskFilePath.substring(taskFilePath.lastIndexOf("/") + 1, taskFilePath.lastIndexOf("."));
+        String logPath = LOG_DIR + "/" + model + "/" + "log-" + logTitle + LOG_FILE_SUFFIX;
+        return logPath;
+    }
+
+    public static String parseModifiedCodeFormLog(String logPath) {
+        String lastestAssistantMsg = getLastestAssistantMsgFromLog(logPath);
+        if(lastestAssistantMsg.isEmpty()){
+            return "";
+        }
+        String modifiedCode = lastestAssistantMsg.substring(lastestAssistantMsg.indexOf("```") + 3, lastestAssistantMsg.lastIndexOf("```")).trim();
+        return modifiedCode;
+    }
+
+    public static void collectOriginalCodeAndFSF(String filePath){
+        String originalCode = getProgramFromLog(filePath).trim();
+        List<String[]> originalFSF = getLastestFSFFromLog(filePath);
+        //写成 evolutionTask
+        String className = filePath.substring(filePath.indexOf("-") + 1, filePath.indexOf(".txt"));
+        String taskFilePath = "resources/dataset/originalCodeFSF/" + className + ".txt";
+        //创建taskFilePath文件
+        try {
+            Files.createDirectories(Path.of("resources/dataset/originalCodeFSF"));
+            Files.createFile(Path.of(taskFilePath));
+        } catch (IOException e) {
+            System.out.println("创建evolutionTask文件失败: " + taskFilePath);
+        }
+        //写入内容
+        try (BufferedWriter writer = Files.newBufferedWriter(
+                Path.of(taskFilePath),
+                StandardCharsets.UTF_8,
+                StandardOpenOption.CREATE,
+                StandardOpenOption.APPEND)) {
+            writer.write(START_ORIGINAL_CODE);
+            writer.newLine();
+            writer.write(originalCode);
+            writer.newLine();
+            writer.write(END_ORIGINAL_CODE);
+            writer.newLine();
+            writer.write(START_ORIGINAL_FSF);
+            writer.newLine();
+            int count = 1;
+            for (String[] td : originalFSF) {
+                writer.write("T" + count + ": " + td[0]);
+                writer.newLine();
+                writer.write("D" + count + ": " + td[1]);
+                writer.newLine();
+                count++;
+            }
+            writer.write(END_ORIGINAL_FSF);
+            writer.newLine();
+        } catch (IOException e) {
+            System.out.println("写入evolutionTask文件失败: " + taskFilePath);
+        }
+    }
+
+    public static void writeACodeGenTask(String originalCode, List<String[]> originalFSF, List<String[]> modifiedFSF, String taskPath) {
+        try (BufferedWriter writer = Files.newBufferedWriter(
+                Path.of(taskPath),
+                StandardCharsets.UTF_8,
+                StandardOpenOption.CREATE,
+                StandardOpenOption.APPEND)) {
+            writer.write(START_ORIGINAL_CODE);
+            writer.newLine();
+            writer.write(originalCode);
+            writer.newLine();
+            writer.write(END_ORIGINAL_CODE);
+            writer.newLine();
+            writer.write(START_ORIGINAL_FSF);
+            writer.newLine();
+            int count1 = 1;
+            for (String[] td : originalFSF) {
+                writer.write("T" + count1 + ": " + td[0]);
+                writer.newLine();
+                writer.write("D" + count1 + ": " + td[1]);
+                writer.newLine();
+                count1++;
+            }
+            writer.write(END_ORIGINAL_FSF);
+            writer.newLine();
+            writer.write(START_MODIFIED_FSF);
+            writer.newLine();
+            int count2 = 1;
+            for (String[] td : modifiedFSF) {
+                writer.write("T" + count2 + ": " + td[0]);
+                writer.newLine();
+                writer.write("D" + count2+ ": " + td[1]);
+                writer.newLine();
+                count2++;
+            }
+            writer.write(END_MODIFIED_FSF);
+            writer.newLine();
+        } catch (IOException e) {
+            System.out.println("写入evolutionTask文件失败: " + taskPath);
+        }
+    }
+
+    public static HashMap<String,HashSet<String>> getClassifiedProgramsNames(String datasetDir){
+        HashMap<String,HashSet<String>> classifiedProgramsNames = new HashMap<>();
+        Set<String> categories = getCategoriesInDatasetDir(datasetDir);
+        for (String category : categories) {
+            classifiedProgramsNames.put(category, new HashSet<>());
+            String categoryDir = datasetDir + "/" + category;
+            File[] files = fetchAllFilesInDir(categoryDir);
+            if(files != null){
+                for (File file : files) {
+                    if(file.getName().endsWith(".java")){
+                        String className = file.getName().substring(0, file.getName().lastIndexOf("."));
+                        classifiedProgramsNames.get(category).add(className);
+                    }
+                }
+            }
+        }
+        return classifiedProgramsNames;
+    }
+
+    public static void statisticSpecgenCSV(String csvFilePath,String sourceDataset) throws IOException {
+        HashMap<String,HashSet<String>> classifiedProgramsNames = new HashMap<>();
+        classifiedProgramsNames = getClassifiedProgramsNames(sourceDataset);
+        Set<String> categoriesInDatasetDir = getCategoriesInDatasetDir(sourceDataset);
+        HashMap<String,Integer[]> categoryCounts = new HashMap<>();
+        //0: total, 1: success, 2: failed
+        for(String category : categoriesInDatasetDir) {
+            categoryCounts.put(category, new Integer[]{0, 0, 0});
+        }
+        //读取CSV文件
+        List<String> lines = Files.readAllLines(Path.of(csvFilePath));
+        for (String line : lines) {
+            String[] parts = line.split(",");
+            if (parts.length < 2) continue; // 确保有足够的列
+            String className = parts[0].substring(parts[0].indexOf("-") + 1, parts[0].lastIndexOf("-"));
+            String category = "";
+            for (String cat : classifiedProgramsNames.keySet()) {
+                if (classifiedProgramsNames.get(cat).contains(className)) {
+                    category = cat;
+                    break;
+                }
+            }
+            categoryCounts.get(category)[0]++;
+            if (parts[1].trim().equals("1")) {
+                categoryCounts.get(category)[1]++;
+            } else {
+                categoryCounts.get(category)[2]++;
+            }
+        }
+        //输出统计结果
+        System.out.println("Category,Total,Success,Failed,successProb");
+        for (String category : categoriesInDatasetDir) {
+            Integer[] counts = categoryCounts.get(category);
+            if (counts[0] == null) counts[0] = 0;
+            if (counts[1] == null) counts[1] = 0;
+            if (counts[2] == null) counts[2] = 0;
+            System.out.println(category + "," + counts[0] + "," + counts[1] + "," + counts[2] + "," + (counts[1] * 100.0 / counts[0]) + "%");
+        }
+    }
+
+    public static String getOriginalCodeFromEvoTaskFile(String txtPath) {
+        String content = LogManager.file2String(txtPath);
+        int startIndex = content.indexOf("START ORIGINAL CODE") + "START ORIGINAL CODE".length();
+        int endIndex = content.indexOf("*END* ORIGINAL CODE");
+        String originalCode = content.substring(startIndex,endIndex);
+        return originalCode.trim();
+    }
+
+    public static String getLastModifiedCodeFromEvolutionLog(String experimentDir ,String className, String model) {
+        String logPath = experimentDir + "/" + model + "/" + "log-" + className  + ".txt";
+        String modifiedCode = parseModifiedCodeFormLog(logPath);
+        return modifiedCode.trim();
+    }
+
+    public static void processDirectoryRenameMutant(String dirPath) throws IOException {
+        File dir = new File(dirPath);
+        if (!dir.exists() || !dir.isDirectory()) {
+            throw new IllegalArgumentException("输入路径不是有效的目录: " + dirPath);
+        }
+        traverseAndRename(dir);
+    }
+
+    private static void traverseAndRename(File file) throws IOException {
+        if (file.isDirectory()) {
+            File[] children = file.listFiles();
+            if (children != null) {
+                for (File child : children) {
+                    traverseAndRename(child);
+                }
+            }
+        } else {
+            String name = file.getName();
+            if (name.endsWith(".java") || name.endsWith(".txt")) {
+                String newName = name;
+                if (newName.contains("Original")) {
+                    newName = newName.replace("Original", "0");
+                }
+                if (newName.contains("Mutant")) {
+                    newName = newName.replace("Mutant", "");
+                }
+                if (newName.contains("M1")) {
+                    newName = newName.replace("M1", "1");
+                }
+                if (newName.contains("M2")) {
+                    newName = newName.replace("M2", "2");
+                }if (newName.contains("M3")) {
+                    newName = newName.replace("M3", "3");
+                }
+                if (newName.contains("M4")) {
+                    newName = newName.replace("M4", "4");
+                }
+                if (newName.contains("M5")) {
+                    newName = newName.replace("M5", "5");
+                }
+
+                if (!newName.equals(name)) {
+                    Path source = file.toPath();
+                    Path target = source.resolveSibling(newName);
+                    Files.move(source, target);
+                    System.out.println("重命名: " + source + " -> " + target);
+                }
+            }
+        }
+    }
+
 }

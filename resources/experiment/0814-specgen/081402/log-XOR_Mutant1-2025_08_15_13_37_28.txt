@@ -1,0 +1,22 @@
+public class XOR_Mutant1 {
+    /*@ requires true;  // No special preconditions needed
+      @ ensures \result == (b1 ? !b2 : b2);
+      @ ensures \result == (b1 != b2);
+      @ pure
+      @*/
+    public static boolean xor(boolean b1, boolean b2) {
+        if(b1 == true) {
+            //@ assert b1;
+            //@ ensures \result == !b2;
+            return !b2;
+        }
+        else {
+            //@ assert !b1;
+            //@ ensures \result == b2;
+            return b2;
+        }
+    }
+}
+==============================
+
+==============================

@@ -1,0 +1,55 @@
+public class Conjunction_Mutant4 {
+    //@ ensures \result == (b1 == false || b2 != true);
+    public static boolean conjunctOf(boolean b1, boolean b2) {
+        if(b1 == false)
+            return false;
+        if(b2 == true)
+            return false;
+        return true;
+    }
+}
+==============================
+/root/specgen/SpecGen/project/081403-specgen/tmp/Conjunction_Mutant4.java:5: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081403-specgen/tmp/Conjunction_Mutant4.java:2:) in method conjunctOf
+            return false;
+            ^
+/root/specgen/SpecGen/project/081403-specgen/tmp/Conjunction_Mutant4.java:2: verify: Associated declaration: /root/specgen/SpecGen/project/081403-specgen/tmp/Conjunction_Mutant4.java:5:
+    //@ ensures \result == (b1 == false || b2 != true);
+        ^
+2 verification failures
+
+==============================
+public class Conjunction_Mutant4 {
+    //@ ensures \result == (b1 == false || b2 != true);  
+    public static boolean conjunctOf(boolean b1, boolean b2) {
+        if(b1 == false)
+            return false;
+        if(b2 == true)
+            return false;
+        return true;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081403-specgen/tmp/Conjunction_Mutant4.java:5: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081403-specgen/tmp/Conjunction_Mutant4.java:2:) in method conjunctOf
+            return false;
+            ^
+/root/specgen/SpecGen/project/081403-specgen/tmp/Conjunction_Mutant4.java:2: verify: Associated declaration: /root/specgen/SpecGen/project/081403-specgen/tmp/Conjunction_Mutant4.java:5:
+    //@ ensures \result == (b1 == false || b2 != true);  
+        ^
+2 verification failures
+
+==============================
+public class Conjunction_Mutant4 {
+ 
+    public static boolean conjunctOf(boolean b1, boolean b2) {
+        if(b1 == false)
+            return false;
+        if(b2 == true)
+            return false;
+        return true;
+    }
+}
+
+==============================
+
+==============================

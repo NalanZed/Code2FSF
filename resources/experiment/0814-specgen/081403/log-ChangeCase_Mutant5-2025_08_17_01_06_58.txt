@@ -1,0 +1,107 @@
+public class ChangeCase_Mutant5 {
+
+    //@ requires true;
+    //@ ensures \result == c || 
+    //@         (c >= 'a' && c <= 'z' && \result == (char)(c - 'a' + 'A')) ||
+    //@         (c >= 'A' && c <= 'Z' && \result == (char)(c - 'A' + 'a'));
+    public static char changeCase(char c) {
+        char result = ' ';
+        if (c > 'z') {
+            result = c;
+        } else if (c >= 'a') {
+            result = (char) ('a' - 'A' + c);
+        } else if (c > 'Z') {
+            result = c;
+        } else if (c >= 'A') {
+            result = (char) (c - 'A' + 'a');
+        } else {
+            result = c;
+        }
+        return result;
+    }
+}
+==============================
+/root/specgen/SpecGen/project/081403-specgen/tmp/ChangeCase_Mutant5.java:20: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081403-specgen/tmp/ChangeCase_Mutant5.java:4:) in method changeCase
+        return result;
+        ^
+/root/specgen/SpecGen/project/081403-specgen/tmp/ChangeCase_Mutant5.java:4: verify: Associated declaration: /root/specgen/SpecGen/project/081403-specgen/tmp/ChangeCase_Mutant5.java:20:
+    //@ ensures \result == c || 
+        ^
+2 verification failures
+
+==============================
+public class ChangeCase_Mutant5 {
+
+    //@ requires true;
+    //@ ensures \result == c ||   
+    //@         (c >= 'a' && c <= 'z' && \result == (char)(c - 'a' + 'A')) ||
+    //@         (c >= 'A' && c <= 'Z' && \result == (char)(c - 'A' + 'a'));
+    public static char changeCase(char c) {
+        char result = ' ';
+        if (c > 'z') {
+            result = c;
+        } else if (c >= 'a') {
+            result = (char) ('a' - 'A' + c);
+        } else if (c > 'Z') {
+            result = c;
+        } else if (c >= 'A') {
+            result = (char) (c - 'A' + 'a');
+        } else {
+            result = c;
+        }
+        return result;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081403-specgen/tmp/ChangeCase_Mutant5.java:20: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081403-specgen/tmp/ChangeCase_Mutant5.java:4:) in method changeCase
+        return result;
+        ^
+/root/specgen/SpecGen/project/081403-specgen/tmp/ChangeCase_Mutant5.java:4: verify: Associated declaration: /root/specgen/SpecGen/project/081403-specgen/tmp/ChangeCase_Mutant5.java:20:
+    //@ ensures \result == c ||   
+        ^
+2 verification failures
+
+==============================
+public class ChangeCase_Mutant5 {
+
+    //@ requires true;
+ 
+    //@         (c >= 'a' && c <= 'z' && \result == (char)(c - 'a' + 'A')) ||
+    //@         (c >= 'A' && c <= 'Z' && \result == (char)(c - 'A' + 'a'));
+    public static char changeCase(char c) {
+        char result = ' ';
+        if (c > 'z') {
+            result = c;
+        } else if (c >= 'a') {
+            result = (char) ('a' - 'A' + c);
+        } else if (c > 'Z') {
+            result = c;
+        } else if (c >= 'A') {
+            result = (char) (c - 'A' + 'a');
+        } else {
+            result = c;
+        }
+        return result;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081403-specgen/tmp/ChangeCase_Mutant5.java:5: error: illegal start of type
+    //@         (c >= 'a' && c <= 'z' && \result == (char)(c - 'a' + 'A')) ||
+                ^
+/root/specgen/SpecGen/project/081403-specgen/tmp/ChangeCase_Mutant5.java:5: error: <identifier> expected
+    //@         (c >= 'a' && c <= 'z' && \result == (char)(c - 'a' + 'A')) ||
+                  ^
+/root/specgen/SpecGen/project/081403-specgen/tmp/ChangeCase_Mutant5.java:5: error: ';' expected
+    //@         (c >= 'a' && c <= 'z' && \result == (char)(c - 'a' + 'A')) ||
+                                                          ^
+/root/specgen/SpecGen/project/081403-specgen/tmp/ChangeCase_Mutant5.java:6: error: <identifier> expected
+    //@         (c >= 'A' && c <= 'Z' && \result == (char)(c - 'A' + 'a'));
+                                                         ^
+/root/specgen/SpecGen/project/081403-specgen/tmp/ChangeCase_Mutant5.java:6: error: <identifier> expected
+    //@         (c >= 'A' && c <= 'Z' && \result == (char)(c - 'A' + 'a'));
+                                                            ^
+5 errors
+
+==============================

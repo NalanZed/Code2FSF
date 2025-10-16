@@ -1,0 +1,81 @@
+start role user
+Please modify the following code according to the modified FSF:
+```Code
+
+
+public class AddLoop_Original {
+    public static int AddLoop(int x, int y) {
+        int sum = x;
+        if (y > 0) {
+            int n = y;
+            while (n > 0) {
+                sum = sum + 1;
+                n = n - 1;
+            }
+        } else {
+            int n = -y;
+            while (n > 0) {
+                sum = sum - 1;
+                n = n - 1;
+            }
+        }
+        return sum;
+    }
+}
+
+```
+```Original FSF
+T0: y > 0
+D0: sum == x + y
+
+T1: y < 0
+D1: sum == x + y
+
+T2: y == 0
+D2: sum == x
+
+```Modified FSF
+T0: (y < 0) || (y > 0)
+D0: sum == x + y
+
+T1: y == 0
+D1: sum == x
+
+```
+
+
+*end* role user
+start role assistant
+```
+public class AddLoop_Modified {
+    public static int AddLoop(int x, int y) {
+        int sum = x;
+        if (y != 0) {
+            int n = Math.abs(y);
+            while (n > 0) {
+                sum = sum + (y > 0 ? 1 : -1);
+                n = n - 1;
+            }
+        }
+        return sum;
+    }
+}
+```
+
+The modified code:
+1. Combines the cases for y > 0 and y < 0 into a single condition (y != 0)
+2. Uses Math.abs() to get the absolute value of y for the loop counter
+3. Uses a ternary operator to determine whether to add or subtract 1 based on y's sign
+4. Maintains the same behavior for y == 0 (returns x directly)
+5. Still preserves the original logic of adding/subtracting 1 repeatedly in a loop
+
+The code is now more concise while still matching the modified FSF requirements, where:
+- For any non-zero y (positive or negative), it returns x + y
+- For y == 0, it returns x
+*end* role assistant
+start role user
+FSF validation failed with unexpected error: Unknown error occurred during validation of T: (y < 0) || (y > 0)	D: sum == x + y
+*end* role user
+start role remark
+Validation FAIL--Unknown error!
+*end* role remark

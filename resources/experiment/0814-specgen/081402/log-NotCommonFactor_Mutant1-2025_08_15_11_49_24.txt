@@ -1,0 +1,55 @@
+public class NotCommonFactor_Mutant1 {
+
+    /*@ requires factor != 0;
+      @ ensures \result == (a % factor == 0 || b % factor == 0);
+      @ pure
+      @*/
+    public static boolean notCommonFactor(int a, int b, int factor) {
+        return a % factor == 0 || b % factor != 0; // Changed != to ==
+    }
+}
+==============================
+/root/specgen/SpecGen/project/081402-specgen/tmp/NotCommonFactor_Mutant1.java:8: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081402-specgen/tmp/NotCommonFactor_Mutant1.java:4:) in method notCommonFactor
+        return a % factor == 0 || b % factor != 0; // Changed != to ==
+        ^
+/root/specgen/SpecGen/project/081402-specgen/tmp/NotCommonFactor_Mutant1.java:4: verify: Associated declaration: /root/specgen/SpecGen/project/081402-specgen/tmp/NotCommonFactor_Mutant1.java:8:
+      @ ensures \result == (a % factor == 0 || b % factor == 0);
+        ^
+2 verification failures
+
+==============================
+public class NotCommonFactor_Mutant1 {
+
+    /*@ requires factor != 0;
+      @ ensures \result == (a % factor == 0 || b % factor == 0);  
+      @ pure
+      @*/
+    public static boolean notCommonFactor(int a, int b, int factor) {
+        return a % factor == 0 || b % factor != 0; // Changed != to ==
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081402-specgen/tmp/NotCommonFactor_Mutant1.java:8: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081402-specgen/tmp/NotCommonFactor_Mutant1.java:4:) in method notCommonFactor
+        return a % factor == 0 || b % factor != 0; // Changed != to ==
+        ^
+/root/specgen/SpecGen/project/081402-specgen/tmp/NotCommonFactor_Mutant1.java:4: verify: Associated declaration: /root/specgen/SpecGen/project/081402-specgen/tmp/NotCommonFactor_Mutant1.java:8:
+      @ ensures \result == (a % factor == 0 || b % factor == 0);  
+        ^
+2 verification failures
+
+==============================
+public class NotCommonFactor_Mutant1 {
+
+    /*@ requires factor != 0;
+ 
+      @ pure
+      @*/
+    public static boolean notCommonFactor(int a, int b, int factor) {
+        return a % factor == 0 || b % factor != 0; // Changed != to ==
+    }
+}
+
+==============================
+
+==============================

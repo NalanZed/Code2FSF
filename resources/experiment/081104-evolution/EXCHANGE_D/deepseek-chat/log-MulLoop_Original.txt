@@ -1,0 +1,80 @@
+start role user
+Please modify the following code according to the modified FSF:
+```Code
+
+
+public class MulLoop_Original {
+
+	public static int mulLoop(int a, int b) {
+        int res = 0;
+        if (b >= 0) {
+            for(int i = 0; i < b; i++) {
+                res = res + a;
+            }
+        } else {
+            for(int i = 0; i < -b; i++) {
+                res = res - a;
+            }
+        }
+        return res;
+    }
+
+}
+
+```
+```Original FSF
+T0: b == 0
+D0: res == 0
+
+T1: b > 0
+D1: res == a * b
+
+T2: b < 0
+D2: res == a * b
+
+```Modified FSF
+T0: b == 0
+D0: res == a * b
+
+T1: b > 0
+D1: res == 0
+
+T2: b < 0
+D2: res == a * b
+
+```
+
+
+*end* role user
+start role assistant
+```
+public class MulLoop_Modified {
+
+    public static int mulLoop(int a, int b) {
+        int res = 0;
+        if (b == 0) {
+            res = a * b;
+        } else if (b > 0) {
+            res = 0;
+        } else {
+            for(int i = 0; i < -b; i++) {
+                res = res - a;
+            }
+        }
+        return res;
+    }
+}
+```
+
+The modified code:
+1. Handles the b == 0 case explicitly to satisfy D0
+2. Returns 0 directly when b > 0 to satisfy D1
+3. Keeps the original negative b logic to satisfy D2 (since it already matches the modified FSF)
+4. Removes the unnecessary positive b loop since we just return 0 now
+5. Maintains the same structure and variable names as the original code
+
+The changes are minimal and focused only on the parts needed to match the modified FSF requirements.
+*end* role assistant
+start role remark
+Validation SUCCESS!
+*end* role remark

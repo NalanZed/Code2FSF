@@ -1,0 +1,1153 @@
+public class GetLowCaseLoop_M4 {
+    //@ ensures ('A' <= c && c <= 'Z') ==> (\result == (char)(c - 'A' + 'a'));
+    //@ ensures (c < 'A' || c > 'Z') ==> \result == 0;
+    public static char getLowCase(char c) {
+        char t = 'f';
+        //@ maintaining 'f' <= t && t <= 'z' + 1;
+        //@ maintaining (\forall char ch; 'f' <= ch && ch < t; ch != (char)(c - 'A' + 'a'));
+        while(t <= 'z' && t != c - 'A' + 'a') {
+            if(c < 'F' || c > 'Z') {
+                return 0;
+            }
+            t++;
+        }
+        return t;
+    }
+}
+==============================
+/root/specgen/SpecGen/project/082102-specgen/tmp/GetLowCaseLoop_M4.java:14: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/082102-specgen/tmp/GetLowCaseLoop_M4.java:3:) in method getLowCase
+        return t;
+        ^
+/root/specgen/SpecGen/project/082102-specgen/tmp/GetLowCaseLoop_M4.java:3: verify: Associated declaration: /root/specgen/SpecGen/project/082102-specgen/tmp/GetLowCaseLoop_M4.java:14:
+    //@ ensures (c < 'A' || c > 'Z') ==> \result == 0;
+        ^
+2 verification failures
+
+==============================
+public class GetLowCaseLoop_M4 {
+    //@ ensures ('A' <= c && c <= 'Z') ==> (\result == (char)(c - 'A' + 'a'));
+    //@ ensures (c < 'A' || c > 'Z') ==> \result == 0;  
+    public static char getLowCase(char c) {
+        char t = 'f';
+        //@ maintaining 'f' <= t && t <= 'z' + 1;
+        //@ maintaining (\forall char ch; 'f' <= ch && ch < t; ch != (char)(c - 'A' + 'a'));
+        while(t <= 'z' && t != c - 'A' + 'a') {
+            if(c < 'F' || c > 'Z') {
+                return 0;
+            }
+            t++;
+        }
+        return t;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/082102-specgen/tmp/GetLowCaseLoop_M4.java:14: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/082102-specgen/tmp/GetLowCaseLoop_M4.java:3:) in method getLowCase
+        return t;
+        ^
+/root/specgen/SpecGen/project/082102-specgen/tmp/GetLowCaseLoop_M4.java:3: verify: Associated declaration: /root/specgen/SpecGen/project/082102-specgen/tmp/GetLowCaseLoop_M4.java:14:
+    //@ ensures (c < 'A' || c > 'Z') ==> \result == 0;  
+        ^
+2 verification failures
+
+==============================
+public class GetLowCaseLoop_M4 {
+    //@ ensures ('A' <= c && c <= 'Z') ==> (\result == (char)(c - 'A' + 'a'));
+    //@ ensures (c < 'A' || c >= 'Z') ==> \result == 0;  
+    public static char getLowCase(char c) {
+        char t = 'f';
+        //@ maintaining 'f' <= t && t <= 'z' + 1;
+        //@ maintaining (\forall char ch; 'f' <= ch && ch < t; ch != (char)(c - 'A' + 'a'));
+        while(t <= 'z' && t != c - 'A' + 'a') {
+            if(c < 'F' || c > 'Z') {
+                return 0;
+            }
+            t++;
+        }
+        return t;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/082102-specgen/tmp/GetLowCaseLoop_M4.java:14: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/082102-specgen/tmp/GetLowCaseLoop_M4.java:3:) in method getLowCase
+        return t;
+        ^
+/root/specgen/SpecGen/project/082102-specgen/tmp/GetLowCaseLoop_M4.java:3: verify: Associated declaration: /root/specgen/SpecGen/project/082102-specgen/tmp/GetLowCaseLoop_M4.java:14:
+    //@ ensures (c < 'A' || c >= 'Z') ==> \result == 0;  
+        ^
+2 verification failures
+
+==============================
+public class GetLowCaseLoop_M4 {
+    //@ ensures ('A' <= c && c <= 'Z') ==> (\result == (char)(c - 'A' + 'a'));
+    //@ ensures (c <= 'A' || c > 'Z') ==> \result == 0;  
+    public static char getLowCase(char c) {
+        char t = 'f';
+        //@ maintaining 'f' <= t && t <= 'z' + 1;
+        //@ maintaining (\forall char ch; 'f' <= ch && ch < t; ch != (char)(c - 'A' + 'a'));
+        while(t <= 'z' && t != c - 'A' + 'a') {
+            if(c < 'F' || c > 'Z') {
+                return 0;
+            }
+            t++;
+        }
+        return t;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/082102-specgen/tmp/GetLowCaseLoop_M4.java:14: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/082102-specgen/tmp/GetLowCaseLoop_M4.java:3:) in method getLowCase
+        return t;
+        ^
+/root/specgen/SpecGen/project/082102-specgen/tmp/GetLowCaseLoop_M4.java:3: verify: Associated declaration: /root/specgen/SpecGen/project/082102-specgen/tmp/GetLowCaseLoop_M4.java:14:
+    //@ ensures (c <= 'A' || c > 'Z') ==> \result == 0;  
+        ^
+2 verification failures
+
+==============================
+public class GetLowCaseLoop_M4 {
+    //@ ensures ('A' <= c && c <= 'Z') ==> (\result == (char)(c - 'A' + 'a'));
+    //@ ensures (c <= 'A' || c >= 'Z') ==> \result == 0;  
+    public static char getLowCase(char c) {
+        char t = 'f';
+        //@ maintaining 'f' <= t && t <= 'z' + 1;
+        //@ maintaining (\forall char ch; 'f' <= ch && ch < t; ch != (char)(c - 'A' + 'a'));
+        while(t <= 'z' && t != c - 'A' + 'a') {
+            if(c < 'F' || c > 'Z') {
+                return 0;
+            }
+            t++;
+        }
+        return t;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/082102-specgen/tmp/GetLowCaseLoop_M4.java:14: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/082102-specgen/tmp/GetLowCaseLoop_M4.java:3:) in method getLowCase
+        return t;
+        ^
+/root/specgen/SpecGen/project/082102-specgen/tmp/GetLowCaseLoop_M4.java:3: verify: Associated declaration: /root/specgen/SpecGen/project/082102-specgen/tmp/GetLowCaseLoop_M4.java:14:
+    //@ ensures (c <= 'A' || c >= 'Z') ==> \result == 0;  
+        ^
+2 verification failures
+
+==============================
+public class GetLowCaseLoop_M4 {
+    //@ ensures ('A' <= c && c <= 'Z') ==> (\result == (char)(c - 'A' + 'a'));
+ 
+    public static char getLowCase(char c) {
+        char t = 'f';
+        //@ maintaining 'f' <= t && t <= 'z' + 1;
+        //@ maintaining (\forall char ch; 'f' <= ch && ch < t; ch != (char)(c - 'A' + 'a'));
+        while(t <= 'z' && t != c - 'A' + 'a') {
+            if(c < 'F' || c > 'Z') {
+                return 0;
+            }
+            t++;
+        }
+        return t;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/082102-specgen/tmp/GetLowCaseLoop_M4.java:10: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/082102-specgen/tmp/GetLowCaseLoop_M4.java:2:) in method getLowCase
+                return 0;
+                ^
+/root/specgen/SpecGen/project/082102-specgen/tmp/GetLowCaseLoop_M4.java:2: verify: Associated declaration: /root/specgen/SpecGen/project/082102-specgen/tmp/GetLowCaseLoop_M4.java:10:
+    //@ ensures ('A' <= c && c <= 'Z') ==> (\result == (char)(c - 'A' + 'a'));
+        ^
+2 verification failures
+
+==============================
+public class GetLowCaseLoop_M4 {
+    //@ ensures ('A' < c && c < 'Z') ==> (\result == (char)(c - 'A' + 'a'));  
+ 
+    public static char getLowCase(char c) {
+        char t = 'f';
+        //@ maintaining 'f' <= t && t <= 'z' + 1;
+        //@ maintaining (\forall char ch; 'f' <= ch && ch < t; ch != (char)(c - 'A' + 'a'));
+        while(t <= 'z' && t != c - 'A' + 'a') {
+            if(c < 'F' || c > 'Z') {
+                return 0;
+            }
+            t++;
+        }
+        return t;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/082102-specgen/tmp/GetLowCaseLoop_M4.java:10: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/082102-specgen/tmp/GetLowCaseLoop_M4.java:2:) in method getLowCase
+                return 0;
+                ^
+/root/specgen/SpecGen/project/082102-specgen/tmp/GetLowCaseLoop_M4.java:2: verify: Associated declaration: /root/specgen/SpecGen/project/082102-specgen/tmp/GetLowCaseLoop_M4.java:10:
+    //@ ensures ('A' < c && c < 'Z') ==> (\result == (char)(c - 'A' + 'a'));  
+        ^
+2 verification failures
+
+==============================
+public class GetLowCaseLoop_M4 {
+    //@ ensures ('A' < c && c <= 'Z') ==> (\result == (char)(c - 'A' + 'a'));  
+ 
+    public static char getLowCase(char c) {
+        char t = 'f';
+        //@ maintaining 'f' <= t && t <= 'z' + 1;
+        //@ maintaining (\forall char ch; 'f' <= ch && ch < t; ch != (char)(c - 'A' + 'a'));
+        while(t <= 'z' && t != c - 'A' + 'a') {
+            if(c < 'F' || c > 'Z') {
+                return 0;
+            }
+            t++;
+        }
+        return t;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/082102-specgen/tmp/GetLowCaseLoop_M4.java:10: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/082102-specgen/tmp/GetLowCaseLoop_M4.java:2:) in method getLowCase
+                return 0;
+                ^
+/root/specgen/SpecGen/project/082102-specgen/tmp/GetLowCaseLoop_M4.java:2: verify: Associated declaration: /root/specgen/SpecGen/project/082102-specgen/tmp/GetLowCaseLoop_M4.java:10:
+    //@ ensures ('A' < c && c <= 'Z') ==> (\result == (char)(c - 'A' + 'a'));  
+        ^
+2 verification failures
+
+==============================
+public class GetLowCaseLoop_M4 {
+    //@ ensures ('A' < c && c - 1 <= 'Z') ==> (\result == (char)(c - 'A' + 'a'));  
+ 
+    public static char getLowCase(char c) {
+        char t = 'f';
+        //@ maintaining 'f' <= t && t <= 'z' + 1;
+        //@ maintaining (\forall char ch; 'f' <= ch && ch < t; ch != (char)(c - 'A' + 'a'));
+        while(t <= 'z' && t != c - 'A' + 'a') {
+            if(c < 'F' || c > 'Z') {
+                return 0;
+            }
+            t++;
+        }
+        return t;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/082102-specgen/tmp/GetLowCaseLoop_M4.java:10: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/082102-specgen/tmp/GetLowCaseLoop_M4.java:2:) in method getLowCase
+                return 0;
+                ^
+/root/specgen/SpecGen/project/082102-specgen/tmp/GetLowCaseLoop_M4.java:2: verify: Associated declaration: /root/specgen/SpecGen/project/082102-specgen/tmp/GetLowCaseLoop_M4.java:10:
+    //@ ensures ('A' < c && c - 1 <= 'Z') ==> (\result == (char)(c - 'A' + 'a'));  
+        ^
+2 verification failures
+
+==============================
+public class GetLowCaseLoop_M4 {
+    //@ ensures ('A' <= c && c < 'Z') ==> (\result == (char)(c - 'A' + 'a'));  
+ 
+    public static char getLowCase(char c) {
+        char t = 'f';
+        //@ maintaining 'f' <= t && t <= 'z' + 1;
+        //@ maintaining (\forall char ch; 'f' <= ch && ch < t; ch != (char)(c - 'A' + 'a'));
+        while(t <= 'z' && t != c - 'A' + 'a') {
+            if(c < 'F' || c > 'Z') {
+                return 0;
+            }
+            t++;
+        }
+        return t;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/082102-specgen/tmp/GetLowCaseLoop_M4.java:10: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/082102-specgen/tmp/GetLowCaseLoop_M4.java:2:) in method getLowCase
+                return 0;
+                ^
+/root/specgen/SpecGen/project/082102-specgen/tmp/GetLowCaseLoop_M4.java:2: verify: Associated declaration: /root/specgen/SpecGen/project/082102-specgen/tmp/GetLowCaseLoop_M4.java:10:
+    //@ ensures ('A' <= c && c < 'Z') ==> (\result == (char)(c - 'A' + 'a'));  
+        ^
+2 verification failures
+
+==============================
+public class GetLowCaseLoop_M4 {
+    //@ ensures ('A' <= c && c <= 'Z') ==> (\result == (char)(c - 'A' + 'a'));  
+ 
+    public static char getLowCase(char c) {
+        char t = 'f';
+        //@ maintaining 'f' <= t && t <= 'z' + 1;
+        //@ maintaining (\forall char ch; 'f' <= ch && ch < t; ch != (char)(c - 'A' + 'a'));
+        while(t <= 'z' && t != c - 'A' + 'a') {
+            if(c < 'F' || c > 'Z') {
+                return 0;
+            }
+            t++;
+        }
+        return t;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/082102-specgen/tmp/GetLowCaseLoop_M4.java:10: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/082102-specgen/tmp/GetLowCaseLoop_M4.java:2:) in method getLowCase
+                return 0;
+                ^
+/root/specgen/SpecGen/project/082102-specgen/tmp/GetLowCaseLoop_M4.java:2: verify: Associated declaration: /root/specgen/SpecGen/project/082102-specgen/tmp/GetLowCaseLoop_M4.java:10:
+    //@ ensures ('A' <= c && c <= 'Z') ==> (\result == (char)(c - 'A' + 'a'));  
+        ^
+2 verification failures
+
+==============================
+public class GetLowCaseLoop_M4 {
+    //@ ensures ('A' <= c && c - 1 <= 'Z') ==> (\result == (char)(c - 'A' + 'a'));  
+ 
+    public static char getLowCase(char c) {
+        char t = 'f';
+        //@ maintaining 'f' <= t && t <= 'z' + 1;
+        //@ maintaining (\forall char ch; 'f' <= ch && ch < t; ch != (char)(c - 'A' + 'a'));
+        while(t <= 'z' && t != c - 'A' + 'a') {
+            if(c < 'F' || c > 'Z') {
+                return 0;
+            }
+            t++;
+        }
+        return t;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/082102-specgen/tmp/GetLowCaseLoop_M4.java:10: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/082102-specgen/tmp/GetLowCaseLoop_M4.java:2:) in method getLowCase
+                return 0;
+                ^
+/root/specgen/SpecGen/project/082102-specgen/tmp/GetLowCaseLoop_M4.java:2: verify: Associated declaration: /root/specgen/SpecGen/project/082102-specgen/tmp/GetLowCaseLoop_M4.java:10:
+    //@ ensures ('A' <= c && c - 1 <= 'Z') ==> (\result == (char)(c - 'A' + 'a'));  
+        ^
+2 verification failures
+
+==============================
+public class GetLowCaseLoop_M4 {
+    //@ ensures ('A' - 1 <= c && c < 'Z') ==> (\result == (char)(c - 'A' + 'a'));  
+ 
+    public static char getLowCase(char c) {
+        char t = 'f';
+        //@ maintaining 'f' <= t && t <= 'z' + 1;
+        //@ maintaining (\forall char ch; 'f' <= ch && ch < t; ch != (char)(c - 'A' + 'a'));
+        while(t <= 'z' && t != c - 'A' + 'a') {
+            if(c < 'F' || c > 'Z') {
+                return 0;
+            }
+            t++;
+        }
+        return t;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/082102-specgen/tmp/GetLowCaseLoop_M4.java:10: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/082102-specgen/tmp/GetLowCaseLoop_M4.java:2:) in method getLowCase
+                return 0;
+                ^
+/root/specgen/SpecGen/project/082102-specgen/tmp/GetLowCaseLoop_M4.java:2: verify: Associated declaration: /root/specgen/SpecGen/project/082102-specgen/tmp/GetLowCaseLoop_M4.java:10:
+    //@ ensures ('A' - 1 <= c && c < 'Z') ==> (\result == (char)(c - 'A' + 'a'));  
+        ^
+2 verification failures
+
+==============================
+public class GetLowCaseLoop_M4 {
+    //@ ensures ('A' - 1 <= c && c <= 'Z') ==> (\result == (char)(c - 'A' + 'a'));  
+ 
+    public static char getLowCase(char c) {
+        char t = 'f';
+        //@ maintaining 'f' <= t && t <= 'z' + 1;
+        //@ maintaining (\forall char ch; 'f' <= ch && ch < t; ch != (char)(c - 'A' + 'a'));
+        while(t <= 'z' && t != c - 'A' + 'a') {
+            if(c < 'F' || c > 'Z') {
+                return 0;
+            }
+            t++;
+        }
+        return t;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/082102-specgen/tmp/GetLowCaseLoop_M4.java:10: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/082102-specgen/tmp/GetLowCaseLoop_M4.java:2:) in method getLowCase
+                return 0;
+                ^
+/root/specgen/SpecGen/project/082102-specgen/tmp/GetLowCaseLoop_M4.java:2: verify: Associated declaration: /root/specgen/SpecGen/project/082102-specgen/tmp/GetLowCaseLoop_M4.java:10:
+    //@ ensures ('A' - 1 <= c && c <= 'Z') ==> (\result == (char)(c - 'A' + 'a'));  
+        ^
+2 verification failures
+
+==============================
+public class GetLowCaseLoop_M4 {
+    //@ ensures ('A' - 1 <= c && c - 1 <= 'Z') ==> (\result == (char)(c - 'A' + 'a'));  
+ 
+    public static char getLowCase(char c) {
+        char t = 'f';
+        //@ maintaining 'f' <= t && t <= 'z' + 1;
+        //@ maintaining (\forall char ch; 'f' <= ch && ch < t; ch != (char)(c - 'A' + 'a'));
+        while(t <= 'z' && t != c - 'A' + 'a') {
+            if(c < 'F' || c > 'Z') {
+                return 0;
+            }
+            t++;
+        }
+        return t;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/082102-specgen/tmp/GetLowCaseLoop_M4.java:10: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/082102-specgen/tmp/GetLowCaseLoop_M4.java:2:) in method getLowCase
+                return 0;
+                ^
+/root/specgen/SpecGen/project/082102-specgen/tmp/GetLowCaseLoop_M4.java:2: verify: Associated declaration: /root/specgen/SpecGen/project/082102-specgen/tmp/GetLowCaseLoop_M4.java:10:
+    //@ ensures ('A' - 1 <= c && c - 1 <= 'Z') ==> (\result == (char)(c - 'A' + 'a'));  
+        ^
+2 verification failures
+
+==============================
+public class GetLowCaseLoop_M4 {
+    //@ ensures ('A' < c && c < 'Z') ==> (\result == (char)(c + 'A' + 'a'));  
+ 
+    public static char getLowCase(char c) {
+        char t = 'f';
+        //@ maintaining 'f' <= t && t <= 'z' + 1;
+        //@ maintaining (\forall char ch; 'f' <= ch && ch < t; ch != (char)(c - 'A' + 'a'));
+        while(t <= 'z' && t != c - 'A' + 'a') {
+            if(c < 'F' || c > 'Z') {
+                return 0;
+            }
+            t++;
+        }
+        return t;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/082102-specgen/tmp/GetLowCaseLoop_M4.java:14: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/082102-specgen/tmp/GetLowCaseLoop_M4.java:2:) in method getLowCase
+        return t;
+        ^
+/root/specgen/SpecGen/project/082102-specgen/tmp/GetLowCaseLoop_M4.java:2: verify: Associated declaration: /root/specgen/SpecGen/project/082102-specgen/tmp/GetLowCaseLoop_M4.java:14:
+    //@ ensures ('A' < c && c < 'Z') ==> (\result == (char)(c + 'A' + 'a'));  
+        ^
+2 verification failures
+
+==============================
+public class GetLowCaseLoop_M4 {
+    //@ ensures ('A' < c && c < 'Z') ==> (\result == (char)(c + 'A' - 'a'));  
+ 
+    public static char getLowCase(char c) {
+        char t = 'f';
+        //@ maintaining 'f' <= t && t <= 'z' + 1;
+        //@ maintaining (\forall char ch; 'f' <= ch && ch < t; ch != (char)(c - 'A' + 'a'));
+        while(t <= 'z' && t != c - 'A' + 'a') {
+            if(c < 'F' || c > 'Z') {
+                return 0;
+            }
+            t++;
+        }
+        return t;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/082102-specgen/tmp/GetLowCaseLoop_M4.java:14: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/082102-specgen/tmp/GetLowCaseLoop_M4.java:2:) in method getLowCase
+        return t;
+        ^
+/root/specgen/SpecGen/project/082102-specgen/tmp/GetLowCaseLoop_M4.java:2: verify: Associated declaration: /root/specgen/SpecGen/project/082102-specgen/tmp/GetLowCaseLoop_M4.java:14:
+    //@ ensures ('A' < c && c < 'Z') ==> (\result == (char)(c + 'A' - 'a'));  
+        ^
+2 verification failures
+
+==============================
+public class GetLowCaseLoop_M4 {
+    //@ ensures ('A' < c && c < 'Z') ==> (\result == (char)(c - 'A' - 'a'));  
+ 
+    public static char getLowCase(char c) {
+        char t = 'f';
+        //@ maintaining 'f' <= t && t <= 'z' + 1;
+        //@ maintaining (\forall char ch; 'f' <= ch && ch < t; ch != (char)(c - 'A' + 'a'));
+        while(t <= 'z' && t != c - 'A' + 'a') {
+            if(c < 'F' || c > 'Z') {
+                return 0;
+            }
+            t++;
+        }
+        return t;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/082102-specgen/tmp/GetLowCaseLoop_M4.java:2: verify: The prover cannot establish an assertion (ArithmeticCastRange) in method getLowCase
+    //@ ensures ('A' < c && c < 'Z') ==> (\result == (char)(c - 'A' - 'a'));  
+                                                     ^
+/root/specgen/SpecGen/project/082102-specgen/tmp/GetLowCaseLoop_M4.java:14: verify: Associated method exit
+        return t;
+        ^
+2 verification failures
+
+==============================
+public class GetLowCaseLoop_M4 {
+    //@ ensures ('A' < c && c <= 'Z') ==> (\result == (char)(c + 'A' + 'a'));  
+ 
+    public static char getLowCase(char c) {
+        char t = 'f';
+        //@ maintaining 'f' <= t && t <= 'z' + 1;
+        //@ maintaining (\forall char ch; 'f' <= ch && ch < t; ch != (char)(c - 'A' + 'a'));
+        while(t <= 'z' && t != c - 'A' + 'a') {
+            if(c < 'F' || c > 'Z') {
+                return 0;
+            }
+            t++;
+        }
+        return t;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/082102-specgen/tmp/GetLowCaseLoop_M4.java:14: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/082102-specgen/tmp/GetLowCaseLoop_M4.java:2:) in method getLowCase
+        return t;
+        ^
+/root/specgen/SpecGen/project/082102-specgen/tmp/GetLowCaseLoop_M4.java:2: verify: Associated declaration: /root/specgen/SpecGen/project/082102-specgen/tmp/GetLowCaseLoop_M4.java:14:
+    //@ ensures ('A' < c && c <= 'Z') ==> (\result == (char)(c + 'A' + 'a'));  
+        ^
+2 verification failures
+
+==============================
+public class GetLowCaseLoop_M4 {
+    //@ ensures ('A' < c && c <= 'Z') ==> (\result == (char)(c + 'A' - 'a'));  
+ 
+    public static char getLowCase(char c) {
+        char t = 'f';
+        //@ maintaining 'f' <= t && t <= 'z' + 1;
+        //@ maintaining (\forall char ch; 'f' <= ch && ch < t; ch != (char)(c - 'A' + 'a'));
+        while(t <= 'z' && t != c - 'A' + 'a') {
+            if(c < 'F' || c > 'Z') {
+                return 0;
+            }
+            t++;
+        }
+        return t;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/082102-specgen/tmp/GetLowCaseLoop_M4.java:14: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/082102-specgen/tmp/GetLowCaseLoop_M4.java:2:) in method getLowCase
+        return t;
+        ^
+/root/specgen/SpecGen/project/082102-specgen/tmp/GetLowCaseLoop_M4.java:2: verify: Associated declaration: /root/specgen/SpecGen/project/082102-specgen/tmp/GetLowCaseLoop_M4.java:14:
+    //@ ensures ('A' < c && c <= 'Z') ==> (\result == (char)(c + 'A' - 'a'));  
+        ^
+2 verification failures
+
+==============================
+public class GetLowCaseLoop_M4 {
+    //@ ensures ('A' < c && c <= 'Z') ==> (\result == (char)(c - 'A' - 'a'));  
+ 
+    public static char getLowCase(char c) {
+        char t = 'f';
+        //@ maintaining 'f' <= t && t <= 'z' + 1;
+        //@ maintaining (\forall char ch; 'f' <= ch && ch < t; ch != (char)(c - 'A' + 'a'));
+        while(t <= 'z' && t != c - 'A' + 'a') {
+            if(c < 'F' || c > 'Z') {
+                return 0;
+            }
+            t++;
+        }
+        return t;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/082102-specgen/tmp/GetLowCaseLoop_M4.java:2: verify: The prover cannot establish an assertion (ArithmeticCastRange) in method getLowCase
+    //@ ensures ('A' < c && c <= 'Z') ==> (\result == (char)(c - 'A' - 'a'));  
+                                                      ^
+/root/specgen/SpecGen/project/082102-specgen/tmp/GetLowCaseLoop_M4.java:14: verify: Associated method exit
+        return t;
+        ^
+2 verification failures
+
+==============================
+public class GetLowCaseLoop_M4 {
+    //@ ensures ('A' < c && c - 1 <= 'Z') ==> (\result == (char)(c + 'A' + 'a'));  
+ 
+    public static char getLowCase(char c) {
+        char t = 'f';
+        //@ maintaining 'f' <= t && t <= 'z' + 1;
+        //@ maintaining (\forall char ch; 'f' <= ch && ch < t; ch != (char)(c - 'A' + 'a'));
+        while(t <= 'z' && t != c - 'A' + 'a') {
+            if(c < 'F' || c > 'Z') {
+                return 0;
+            }
+            t++;
+        }
+        return t;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/082102-specgen/tmp/GetLowCaseLoop_M4.java:14: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/082102-specgen/tmp/GetLowCaseLoop_M4.java:2:) in method getLowCase
+        return t;
+        ^
+/root/specgen/SpecGen/project/082102-specgen/tmp/GetLowCaseLoop_M4.java:2: verify: Associated declaration: /root/specgen/SpecGen/project/082102-specgen/tmp/GetLowCaseLoop_M4.java:14:
+    //@ ensures ('A' < c && c - 1 <= 'Z') ==> (\result == (char)(c + 'A' + 'a'));  
+        ^
+2 verification failures
+
+==============================
+public class GetLowCaseLoop_M4 {
+    //@ ensures ('A' < c && c - 1 <= 'Z') ==> (\result == (char)(c + 'A' - 'a'));  
+ 
+    public static char getLowCase(char c) {
+        char t = 'f';
+        //@ maintaining 'f' <= t && t <= 'z' + 1;
+        //@ maintaining (\forall char ch; 'f' <= ch && ch < t; ch != (char)(c - 'A' + 'a'));
+        while(t <= 'z' && t != c - 'A' + 'a') {
+            if(c < 'F' || c > 'Z') {
+                return 0;
+            }
+            t++;
+        }
+        return t;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/082102-specgen/tmp/GetLowCaseLoop_M4.java:14: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/082102-specgen/tmp/GetLowCaseLoop_M4.java:2:) in method getLowCase
+        return t;
+        ^
+/root/specgen/SpecGen/project/082102-specgen/tmp/GetLowCaseLoop_M4.java:2: verify: Associated declaration: /root/specgen/SpecGen/project/082102-specgen/tmp/GetLowCaseLoop_M4.java:14:
+    //@ ensures ('A' < c && c - 1 <= 'Z') ==> (\result == (char)(c + 'A' - 'a'));  
+        ^
+2 verification failures
+
+==============================
+public class GetLowCaseLoop_M4 {
+    //@ ensures ('A' < c && c - 1 <= 'Z') ==> (\result == (char)(c - 'A' - 'a'));  
+ 
+    public static char getLowCase(char c) {
+        char t = 'f';
+        //@ maintaining 'f' <= t && t <= 'z' + 1;
+        //@ maintaining (\forall char ch; 'f' <= ch && ch < t; ch != (char)(c - 'A' + 'a'));
+        while(t <= 'z' && t != c - 'A' + 'a') {
+            if(c < 'F' || c > 'Z') {
+                return 0;
+            }
+            t++;
+        }
+        return t;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/082102-specgen/tmp/GetLowCaseLoop_M4.java:2: verify: The prover cannot establish an assertion (ArithmeticCastRange) in method getLowCase
+    //@ ensures ('A' < c && c - 1 <= 'Z') ==> (\result == (char)(c - 'A' - 'a'));  
+                                                          ^
+/root/specgen/SpecGen/project/082102-specgen/tmp/GetLowCaseLoop_M4.java:14: verify: Associated method exit
+        return t;
+        ^
+2 verification failures
+
+==============================
+public class GetLowCaseLoop_M4 {
+    //@ ensures ('A' <= c && c < 'Z') ==> (\result == (char)(c + 'A' + 'a'));  
+ 
+    public static char getLowCase(char c) {
+        char t = 'f';
+        //@ maintaining 'f' <= t && t <= 'z' + 1;
+        //@ maintaining (\forall char ch; 'f' <= ch && ch < t; ch != (char)(c - 'A' + 'a'));
+        while(t <= 'z' && t != c - 'A' + 'a') {
+            if(c < 'F' || c > 'Z') {
+                return 0;
+            }
+            t++;
+        }
+        return t;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/082102-specgen/tmp/GetLowCaseLoop_M4.java:14: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/082102-specgen/tmp/GetLowCaseLoop_M4.java:2:) in method getLowCase
+        return t;
+        ^
+/root/specgen/SpecGen/project/082102-specgen/tmp/GetLowCaseLoop_M4.java:2: verify: Associated declaration: /root/specgen/SpecGen/project/082102-specgen/tmp/GetLowCaseLoop_M4.java:14:
+    //@ ensures ('A' <= c && c < 'Z') ==> (\result == (char)(c + 'A' + 'a'));  
+        ^
+2 verification failures
+
+==============================
+public class GetLowCaseLoop_M4 {
+    //@ ensures ('A' <= c && c < 'Z') ==> (\result == (char)(c + 'A' - 'a'));  
+ 
+    public static char getLowCase(char c) {
+        char t = 'f';
+        //@ maintaining 'f' <= t && t <= 'z' + 1;
+        //@ maintaining (\forall char ch; 'f' <= ch && ch < t; ch != (char)(c - 'A' + 'a'));
+        while(t <= 'z' && t != c - 'A' + 'a') {
+            if(c < 'F' || c > 'Z') {
+                return 0;
+            }
+            t++;
+        }
+        return t;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/082102-specgen/tmp/GetLowCaseLoop_M4.java:14: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/082102-specgen/tmp/GetLowCaseLoop_M4.java:2:) in method getLowCase
+        return t;
+        ^
+/root/specgen/SpecGen/project/082102-specgen/tmp/GetLowCaseLoop_M4.java:2: verify: Associated declaration: /root/specgen/SpecGen/project/082102-specgen/tmp/GetLowCaseLoop_M4.java:14:
+    //@ ensures ('A' <= c && c < 'Z') ==> (\result == (char)(c + 'A' - 'a'));  
+        ^
+2 verification failures
+
+==============================
+public class GetLowCaseLoop_M4 {
+    //@ ensures ('A' <= c && c < 'Z') ==> (\result == (char)(c - 'A' - 'a'));  
+ 
+    public static char getLowCase(char c) {
+        char t = 'f';
+        //@ maintaining 'f' <= t && t <= 'z' + 1;
+        //@ maintaining (\forall char ch; 'f' <= ch && ch < t; ch != (char)(c - 'A' + 'a'));
+        while(t <= 'z' && t != c - 'A' + 'a') {
+            if(c < 'F' || c > 'Z') {
+                return 0;
+            }
+            t++;
+        }
+        return t;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/082102-specgen/tmp/GetLowCaseLoop_M4.java:2: verify: The prover cannot establish an assertion (ArithmeticCastRange) in method getLowCase
+    //@ ensures ('A' <= c && c < 'Z') ==> (\result == (char)(c - 'A' - 'a'));  
+                                                      ^
+/root/specgen/SpecGen/project/082102-specgen/tmp/GetLowCaseLoop_M4.java:14: verify: Associated method exit
+        return t;
+        ^
+2 verification failures
+
+==============================
+public class GetLowCaseLoop_M4 {
+    //@ ensures ('A' <= c && c <= 'Z') ==> (\result == (char)(c + 'A' + 'a'));  
+ 
+    public static char getLowCase(char c) {
+        char t = 'f';
+        //@ maintaining 'f' <= t && t <= 'z' + 1;
+        //@ maintaining (\forall char ch; 'f' <= ch && ch < t; ch != (char)(c - 'A' + 'a'));
+        while(t <= 'z' && t != c - 'A' + 'a') {
+            if(c < 'F' || c > 'Z') {
+                return 0;
+            }
+            t++;
+        }
+        return t;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/082102-specgen/tmp/GetLowCaseLoop_M4.java:14: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/082102-specgen/tmp/GetLowCaseLoop_M4.java:2:) in method getLowCase
+        return t;
+        ^
+/root/specgen/SpecGen/project/082102-specgen/tmp/GetLowCaseLoop_M4.java:2: verify: Associated declaration: /root/specgen/SpecGen/project/082102-specgen/tmp/GetLowCaseLoop_M4.java:14:
+    //@ ensures ('A' <= c && c <= 'Z') ==> (\result == (char)(c + 'A' + 'a'));  
+        ^
+2 verification failures
+
+==============================
+public class GetLowCaseLoop_M4 {
+    //@ ensures ('A' <= c && c <= 'Z') ==> (\result == (char)(c + 'A' - 'a'));  
+ 
+    public static char getLowCase(char c) {
+        char t = 'f';
+        //@ maintaining 'f' <= t && t <= 'z' + 1;
+        //@ maintaining (\forall char ch; 'f' <= ch && ch < t; ch != (char)(c - 'A' + 'a'));
+        while(t <= 'z' && t != c - 'A' + 'a') {
+            if(c < 'F' || c > 'Z') {
+                return 0;
+            }
+            t++;
+        }
+        return t;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/082102-specgen/tmp/GetLowCaseLoop_M4.java:14: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/082102-specgen/tmp/GetLowCaseLoop_M4.java:2:) in method getLowCase
+        return t;
+        ^
+/root/specgen/SpecGen/project/082102-specgen/tmp/GetLowCaseLoop_M4.java:2: verify: Associated declaration: /root/specgen/SpecGen/project/082102-specgen/tmp/GetLowCaseLoop_M4.java:14:
+    //@ ensures ('A' <= c && c <= 'Z') ==> (\result == (char)(c + 'A' - 'a'));  
+        ^
+2 verification failures
+
+==============================
+public class GetLowCaseLoop_M4 {
+    //@ ensures ('A' <= c && c <= 'Z') ==> (\result == (char)(c - 'A' - 'a'));  
+ 
+    public static char getLowCase(char c) {
+        char t = 'f';
+        //@ maintaining 'f' <= t && t <= 'z' + 1;
+        //@ maintaining (\forall char ch; 'f' <= ch && ch < t; ch != (char)(c - 'A' + 'a'));
+        while(t <= 'z' && t != c - 'A' + 'a') {
+            if(c < 'F' || c > 'Z') {
+                return 0;
+            }
+            t++;
+        }
+        return t;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/082102-specgen/tmp/GetLowCaseLoop_M4.java:2: verify: The prover cannot establish an assertion (ArithmeticCastRange) in method getLowCase
+    //@ ensures ('A' <= c && c <= 'Z') ==> (\result == (char)(c - 'A' - 'a'));  
+                                                       ^
+/root/specgen/SpecGen/project/082102-specgen/tmp/GetLowCaseLoop_M4.java:14: verify: Associated method exit
+        return t;
+        ^
+2 verification failures
+
+==============================
+public class GetLowCaseLoop_M4 {
+    //@ ensures ('A' <= c && c - 1 <= 'Z') ==> (\result == (char)(c + 'A' + 'a'));  
+ 
+    public static char getLowCase(char c) {
+        char t = 'f';
+        //@ maintaining 'f' <= t && t <= 'z' + 1;
+        //@ maintaining (\forall char ch; 'f' <= ch && ch < t; ch != (char)(c - 'A' + 'a'));
+        while(t <= 'z' && t != c - 'A' + 'a') {
+            if(c < 'F' || c > 'Z') {
+                return 0;
+            }
+            t++;
+        }
+        return t;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/082102-specgen/tmp/GetLowCaseLoop_M4.java:14: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/082102-specgen/tmp/GetLowCaseLoop_M4.java:2:) in method getLowCase
+        return t;
+        ^
+/root/specgen/SpecGen/project/082102-specgen/tmp/GetLowCaseLoop_M4.java:2: verify: Associated declaration: /root/specgen/SpecGen/project/082102-specgen/tmp/GetLowCaseLoop_M4.java:14:
+    //@ ensures ('A' <= c && c - 1 <= 'Z') ==> (\result == (char)(c + 'A' + 'a'));  
+        ^
+2 verification failures
+
+==============================
+public class GetLowCaseLoop_M4 {
+    //@ ensures ('A' <= c && c - 1 <= 'Z') ==> (\result == (char)(c + 'A' - 'a'));  
+ 
+    public static char getLowCase(char c) {
+        char t = 'f';
+        //@ maintaining 'f' <= t && t <= 'z' + 1;
+        //@ maintaining (\forall char ch; 'f' <= ch && ch < t; ch != (char)(c - 'A' + 'a'));
+        while(t <= 'z' && t != c - 'A' + 'a') {
+            if(c < 'F' || c > 'Z') {
+                return 0;
+            }
+            t++;
+        }
+        return t;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/082102-specgen/tmp/GetLowCaseLoop_M4.java:14: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/082102-specgen/tmp/GetLowCaseLoop_M4.java:2:) in method getLowCase
+        return t;
+        ^
+/root/specgen/SpecGen/project/082102-specgen/tmp/GetLowCaseLoop_M4.java:2: verify: Associated declaration: /root/specgen/SpecGen/project/082102-specgen/tmp/GetLowCaseLoop_M4.java:14:
+    //@ ensures ('A' <= c && c - 1 <= 'Z') ==> (\result == (char)(c + 'A' - 'a'));  
+        ^
+2 verification failures
+
+==============================
+public class GetLowCaseLoop_M4 {
+    //@ ensures ('A' <= c && c - 1 <= 'Z') ==> (\result == (char)(c - 'A' - 'a'));  
+ 
+    public static char getLowCase(char c) {
+        char t = 'f';
+        //@ maintaining 'f' <= t && t <= 'z' + 1;
+        //@ maintaining (\forall char ch; 'f' <= ch && ch < t; ch != (char)(c - 'A' + 'a'));
+        while(t <= 'z' && t != c - 'A' + 'a') {
+            if(c < 'F' || c > 'Z') {
+                return 0;
+            }
+            t++;
+        }
+        return t;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/082102-specgen/tmp/GetLowCaseLoop_M4.java:2: verify: The prover cannot establish an assertion (ArithmeticCastRange) in method getLowCase
+    //@ ensures ('A' <= c && c - 1 <= 'Z') ==> (\result == (char)(c - 'A' - 'a'));  
+                                                           ^
+/root/specgen/SpecGen/project/082102-specgen/tmp/GetLowCaseLoop_M4.java:14: verify: Associated method exit
+        return t;
+        ^
+2 verification failures
+
+==============================
+public class GetLowCaseLoop_M4 {
+    //@ ensures ('A' - 1 <= c && c < 'Z') ==> (\result == (char)(c + 'A' + 'a'));  
+ 
+    public static char getLowCase(char c) {
+        char t = 'f';
+        //@ maintaining 'f' <= t && t <= 'z' + 1;
+        //@ maintaining (\forall char ch; 'f' <= ch && ch < t; ch != (char)(c - 'A' + 'a'));
+        while(t <= 'z' && t != c - 'A' + 'a') {
+            if(c < 'F' || c > 'Z') {
+                return 0;
+            }
+            t++;
+        }
+        return t;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/082102-specgen/tmp/GetLowCaseLoop_M4.java:14: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/082102-specgen/tmp/GetLowCaseLoop_M4.java:2:) in method getLowCase
+        return t;
+        ^
+/root/specgen/SpecGen/project/082102-specgen/tmp/GetLowCaseLoop_M4.java:2: verify: Associated declaration: /root/specgen/SpecGen/project/082102-specgen/tmp/GetLowCaseLoop_M4.java:14:
+    //@ ensures ('A' - 1 <= c && c < 'Z') ==> (\result == (char)(c + 'A' + 'a'));  
+        ^
+2 verification failures
+
+==============================
+public class GetLowCaseLoop_M4 {
+    //@ ensures ('A' - 1 <= c && c < 'Z') ==> (\result == (char)(c + 'A' - 'a'));  
+ 
+    public static char getLowCase(char c) {
+        char t = 'f';
+        //@ maintaining 'f' <= t && t <= 'z' + 1;
+        //@ maintaining (\forall char ch; 'f' <= ch && ch < t; ch != (char)(c - 'A' + 'a'));
+        while(t <= 'z' && t != c - 'A' + 'a') {
+            if(c < 'F' || c > 'Z') {
+                return 0;
+            }
+            t++;
+        }
+        return t;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/082102-specgen/tmp/GetLowCaseLoop_M4.java:14: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/082102-specgen/tmp/GetLowCaseLoop_M4.java:2:) in method getLowCase
+        return t;
+        ^
+/root/specgen/SpecGen/project/082102-specgen/tmp/GetLowCaseLoop_M4.java:2: verify: Associated declaration: /root/specgen/SpecGen/project/082102-specgen/tmp/GetLowCaseLoop_M4.java:14:
+    //@ ensures ('A' - 1 <= c && c < 'Z') ==> (\result == (char)(c + 'A' - 'a'));  
+        ^
+2 verification failures
+
+==============================
+public class GetLowCaseLoop_M4 {
+    //@ ensures ('A' - 1 <= c && c < 'Z') ==> (\result == (char)(c - 'A' - 'a'));  
+ 
+    public static char getLowCase(char c) {
+        char t = 'f';
+        //@ maintaining 'f' <= t && t <= 'z' + 1;
+        //@ maintaining (\forall char ch; 'f' <= ch && ch < t; ch != (char)(c - 'A' + 'a'));
+        while(t <= 'z' && t != c - 'A' + 'a') {
+            if(c < 'F' || c > 'Z') {
+                return 0;
+            }
+            t++;
+        }
+        return t;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/082102-specgen/tmp/GetLowCaseLoop_M4.java:2: verify: The prover cannot establish an assertion (ArithmeticCastRange) in method getLowCase
+    //@ ensures ('A' - 1 <= c && c < 'Z') ==> (\result == (char)(c - 'A' - 'a'));  
+                                                          ^
+/root/specgen/SpecGen/project/082102-specgen/tmp/GetLowCaseLoop_M4.java:14: verify: Associated method exit
+        return t;
+        ^
+2 verification failures
+
+==============================
+public class GetLowCaseLoop_M4 {
+    //@ ensures ('A' - 1 <= c && c <= 'Z') ==> (\result == (char)(c + 'A' + 'a'));  
+ 
+    public static char getLowCase(char c) {
+        char t = 'f';
+        //@ maintaining 'f' <= t && t <= 'z' + 1;
+        //@ maintaining (\forall char ch; 'f' <= ch && ch < t; ch != (char)(c - 'A' + 'a'));
+        while(t <= 'z' && t != c - 'A' + 'a') {
+            if(c < 'F' || c > 'Z') {
+                return 0;
+            }
+            t++;
+        }
+        return t;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/082102-specgen/tmp/GetLowCaseLoop_M4.java:14: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/082102-specgen/tmp/GetLowCaseLoop_M4.java:2:) in method getLowCase
+        return t;
+        ^
+/root/specgen/SpecGen/project/082102-specgen/tmp/GetLowCaseLoop_M4.java:2: verify: Associated declaration: /root/specgen/SpecGen/project/082102-specgen/tmp/GetLowCaseLoop_M4.java:14:
+    //@ ensures ('A' - 1 <= c && c <= 'Z') ==> (\result == (char)(c + 'A' + 'a'));  
+        ^
+2 verification failures
+
+==============================
+public class GetLowCaseLoop_M4 {
+    //@ ensures ('A' - 1 <= c && c <= 'Z') ==> (\result == (char)(c + 'A' - 'a'));  
+ 
+    public static char getLowCase(char c) {
+        char t = 'f';
+        //@ maintaining 'f' <= t && t <= 'z' + 1;
+        //@ maintaining (\forall char ch; 'f' <= ch && ch < t; ch != (char)(c - 'A' + 'a'));
+        while(t <= 'z' && t != c - 'A' + 'a') {
+            if(c < 'F' || c > 'Z') {
+                return 0;
+            }
+            t++;
+        }
+        return t;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/082102-specgen/tmp/GetLowCaseLoop_M4.java:14: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/082102-specgen/tmp/GetLowCaseLoop_M4.java:2:) in method getLowCase
+        return t;
+        ^
+/root/specgen/SpecGen/project/082102-specgen/tmp/GetLowCaseLoop_M4.java:2: verify: Associated declaration: /root/specgen/SpecGen/project/082102-specgen/tmp/GetLowCaseLoop_M4.java:14:
+    //@ ensures ('A' - 1 <= c && c <= 'Z') ==> (\result == (char)(c + 'A' - 'a'));  
+        ^
+2 verification failures
+
+==============================
+public class GetLowCaseLoop_M4 {
+    //@ ensures ('A' - 1 <= c && c <= 'Z') ==> (\result == (char)(c - 'A' - 'a'));  
+ 
+    public static char getLowCase(char c) {
+        char t = 'f';
+        //@ maintaining 'f' <= t && t <= 'z' + 1;
+        //@ maintaining (\forall char ch; 'f' <= ch && ch < t; ch != (char)(c - 'A' + 'a'));
+        while(t <= 'z' && t != c - 'A' + 'a') {
+            if(c < 'F' || c > 'Z') {
+                return 0;
+            }
+            t++;
+        }
+        return t;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/082102-specgen/tmp/GetLowCaseLoop_M4.java:2: verify: The prover cannot establish an assertion (ArithmeticCastRange) in method getLowCase
+    //@ ensures ('A' - 1 <= c && c <= 'Z') ==> (\result == (char)(c - 'A' - 'a'));  
+                                                           ^
+/root/specgen/SpecGen/project/082102-specgen/tmp/GetLowCaseLoop_M4.java:14: verify: Associated method exit
+        return t;
+        ^
+2 verification failures
+
+==============================
+public class GetLowCaseLoop_M4 {
+    //@ ensures ('A' - 1 <= c && c - 1 <= 'Z') ==> (\result == (char)(c + 'A' + 'a'));  
+ 
+    public static char getLowCase(char c) {
+        char t = 'f';
+        //@ maintaining 'f' <= t && t <= 'z' + 1;
+        //@ maintaining (\forall char ch; 'f' <= ch && ch < t; ch != (char)(c - 'A' + 'a'));
+        while(t <= 'z' && t != c - 'A' + 'a') {
+            if(c < 'F' || c > 'Z') {
+                return 0;
+            }
+            t++;
+        }
+        return t;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/082102-specgen/tmp/GetLowCaseLoop_M4.java:14: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/082102-specgen/tmp/GetLowCaseLoop_M4.java:2:) in method getLowCase
+        return t;
+        ^
+/root/specgen/SpecGen/project/082102-specgen/tmp/GetLowCaseLoop_M4.java:2: verify: Associated declaration: /root/specgen/SpecGen/project/082102-specgen/tmp/GetLowCaseLoop_M4.java:14:
+    //@ ensures ('A' - 1 <= c && c - 1 <= 'Z') ==> (\result == (char)(c + 'A' + 'a'));  
+        ^
+2 verification failures
+
+==============================
+public class GetLowCaseLoop_M4 {
+    //@ ensures ('A' - 1 <= c && c - 1 <= 'Z') ==> (\result == (char)(c + 'A' - 'a'));  
+ 
+    public static char getLowCase(char c) {
+        char t = 'f';
+        //@ maintaining 'f' <= t && t <= 'z' + 1;
+        //@ maintaining (\forall char ch; 'f' <= ch && ch < t; ch != (char)(c - 'A' + 'a'));
+        while(t <= 'z' && t != c - 'A' + 'a') {
+            if(c < 'F' || c > 'Z') {
+                return 0;
+            }
+            t++;
+        }
+        return t;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/082102-specgen/tmp/GetLowCaseLoop_M4.java:14: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/082102-specgen/tmp/GetLowCaseLoop_M4.java:2:) in method getLowCase
+        return t;
+        ^
+/root/specgen/SpecGen/project/082102-specgen/tmp/GetLowCaseLoop_M4.java:2: verify: Associated declaration: /root/specgen/SpecGen/project/082102-specgen/tmp/GetLowCaseLoop_M4.java:14:
+    //@ ensures ('A' - 1 <= c && c - 1 <= 'Z') ==> (\result == (char)(c + 'A' - 'a'));  
+        ^
+2 verification failures
+
+==============================
+public class GetLowCaseLoop_M4 {
+    //@ ensures ('A' - 1 <= c && c - 1 <= 'Z') ==> (\result == (char)(c - 'A' - 'a'));  
+ 
+    public static char getLowCase(char c) {
+        char t = 'f';
+        //@ maintaining 'f' <= t && t <= 'z' + 1;
+        //@ maintaining (\forall char ch; 'f' <= ch && ch < t; ch != (char)(c - 'A' + 'a'));
+        while(t <= 'z' && t != c - 'A' + 'a') {
+            if(c < 'F' || c > 'Z') {
+                return 0;
+            }
+            t++;
+        }
+        return t;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/082102-specgen/tmp/GetLowCaseLoop_M4.java:2: verify: The prover cannot establish an assertion (ArithmeticCastRange) in method getLowCase
+    //@ ensures ('A' - 1 <= c && c - 1 <= 'Z') ==> (\result == (char)(c - 'A' - 'a'));  
+                                                               ^
+/root/specgen/SpecGen/project/082102-specgen/tmp/GetLowCaseLoop_M4.java:14: verify: Associated method exit
+        return t;
+        ^
+2 verification failures
+
+==============================
+public class GetLowCaseLoop_M4 {
+ 
+ 
+    public static char getLowCase(char c) {
+        char t = 'f';
+        //@ maintaining 'f' <= t && t <= 'z' + 1;
+        //@ maintaining (\forall char ch; 'f' <= ch && ch < t; ch != (char)(c - 'A' + 'a'));
+        while(t <= 'z' && t != c - 'A' + 'a') {
+            if(c < 'F' || c > 'Z') {
+                return 0;
+            }
+            t++;
+        }
+        return t;
+    }
+}
+
+==============================
+
+==============================

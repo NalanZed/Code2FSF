@@ -1,0 +1,62 @@
+start role user
+Please modify the following code according to the modified FSF:
+```Code
+
+
+public class WindCompensation_Original {
+    public static int windCompensation(int windSpeed) {
+        int compensation = 0;
+        if (windSpeed > 20) {
+            compensation = (windSpeed - 20) * 2;
+        } else if (windSpeed > 10) {
+            compensation = windSpeed - 10;
+        }
+        return compensation;
+    }
+}
+
+```
+```Original FSF
+T0: windSpeed > 20
+D0: compensation == (windSpeed - 20) * 2
+
+T1: windSpeed > 10 && windSpeed <= 20
+D1: compensation == windSpeed - 10
+
+T2: windSpeed <= 10
+D2: compensation == 0
+
+```Modified FSF
+T0: (windSpeed > 20) || (windSpeed > 10 && windSpeed <= 20)
+D0: compensation == (windSpeed - 20) * 2
+
+T1: windSpeed <= 10
+D1: compensation == 0
+
+```
+
+
+*end* role user
+start role assistant
+```
+public class WindCompensation_Modified {
+    public static int windCompensation(int windSpeed) {
+        int compensation = 0;
+        if (windSpeed > 10) {
+            compensation = (windSpeed - 20) * 2;
+        }
+        return compensation;
+    }
+}
+```
+
+Explanation:
+1. The modified FSF combines the first two cases (windSpeed > 20 and 10 < windSpeed ≤ 20) into one condition (windSpeed > 10)
+2. In both of these cases, the compensation is now (windSpeed - 20) * 2
+3. The else case (windSpeed ≤ 10) remains the same with compensation = 0
+4. The code is simplified by removing the nested if-else structure since both conditions now use the same calculation
+5. Note that this will give different results than the original for wind speeds between 10 and 20, but matches the modified FSF requirements
+*end* role assistant
+start role remark
+Validation SUCCESS!
+*end* role remark

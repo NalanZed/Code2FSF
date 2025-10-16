@@ -1,0 +1,34 @@
+public class AltitudeController_Mutant4 {
+    /*@ public normal_behavior
+      @ requires true;
+      @ ensures (Math.abs(targetHeight - currentHeight) >= 30) ==>
+      @          (\result == (targetHeight > currentHeight ? 5 : -5));
+      @ ensures (Math.abs(targetHeight - currentHeight) > 20 && 
+      @          Math.abs(targetHeight - currentHeight) < 30) ==>
+      @          (\result == (targetHeight > currentHeight ? 3 : -3));
+      @ ensures (Math.abs(targetHeight - currentHeight) > 10 && 
+      @          Math.abs(targetHeight - currentHeight) <= 20) ==>
+      @          (\result == (targetHeight > currentHeight ? 2 : -2));
+      @ ensures (Math.abs(targetHeight - currentHeight) <= 10) ==>
+      @          (\result == (targetHeight - currentHeight));
+      @*/
+    public static int altitudeController(int currentHeight, int targetHeight) {
+        int error = targetHeight - currentHeight;
+        int absError = 0;
+        absError = error < 0 ? -error : error;
+        int controlSignal = 0;
+        if (absError >= 30) { //Changed > to >=
+            controlSignal = error > 0 ? 5 : -5;
+        } else if (absError > 20) {
+            controlSignal = error > 0 ? 3 : -3;
+        } else if (absError > 10) {
+            controlSignal = error > 0 ? 2 : -2;
+        } else {
+            controlSignal = error;
+        }
+        return controlSignal;
+    }
+}
+==============================
+
+==============================

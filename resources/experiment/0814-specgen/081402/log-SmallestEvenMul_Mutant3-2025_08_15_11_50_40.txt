@@ -1,0 +1,58 @@
+public class SmallestEvenMul_Mutant3 {
+
+    //@ requires n > 0;
+    //@ ensures \result > 0;
+    //@ ensures \result % 2 == 0;
+    //@ ensures \result % n == 0;
+    //@ ensures (\forall int i; i > 0 && i % 2 == 0 && i % n == 0; \result <= i);
+    public static int smallestEvenMultiple(int n) {
+        return n / 2 == 0 ? n : 2 * n;
+    }
+}
+==============================
+/root/specgen/SpecGen/project/081402-specgen/tmp/SmallestEvenMul_Mutant3.java:9: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081402-specgen/tmp/SmallestEvenMul_Mutant3.java:5:) in method smallestEvenMultiple
+        return n / 2 == 0 ? n : 2 * n;
+        ^
+/root/specgen/SpecGen/project/081402-specgen/tmp/SmallestEvenMul_Mutant3.java:5: verify: Associated declaration: /root/specgen/SpecGen/project/081402-specgen/tmp/SmallestEvenMul_Mutant3.java:9:
+    //@ ensures \result % 2 == 0;
+        ^
+2 verification failures
+
+==============================
+public class SmallestEvenMul_Mutant3 {
+
+    //@ requires n > 0;
+    //@ ensures \result > 0;
+    //@ ensures \result % 2 == 0;  
+    //@ ensures \result % n == 0;
+    //@ ensures (\forall int i; i > 0 && i % 2 == 0 && i % n == 0; \result <= i);
+    public static int smallestEvenMultiple(int n) {
+        return n / 2 == 0 ? n : 2 * n;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081402-specgen/tmp/SmallestEvenMul_Mutant3.java:9: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081402-specgen/tmp/SmallestEvenMul_Mutant3.java:5:) in method smallestEvenMultiple
+        return n / 2 == 0 ? n : 2 * n;
+        ^
+/root/specgen/SpecGen/project/081402-specgen/tmp/SmallestEvenMul_Mutant3.java:5: verify: Associated declaration: /root/specgen/SpecGen/project/081402-specgen/tmp/SmallestEvenMul_Mutant3.java:9:
+    //@ ensures \result % 2 == 0;  
+        ^
+2 verification failures
+
+==============================
+public class SmallestEvenMul_Mutant3 {
+
+    //@ requires n > 0;
+    //@ ensures \result > 0;
+ 
+    //@ ensures \result % n == 0;
+    //@ ensures (\forall int i; i > 0 && i % 2 == 0 && i % n == 0; \result <= i);
+    public static int smallestEvenMultiple(int n) {
+        return n / 2 == 0 ? n : 2 * n;
+    }
+}
+
+==============================
+
+==============================

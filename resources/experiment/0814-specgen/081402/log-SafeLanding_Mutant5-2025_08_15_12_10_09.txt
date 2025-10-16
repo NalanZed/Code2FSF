@@ -1,0 +1,16 @@
+public class SafeLanding_Mutant5 {
+    /*@ public normal_behavior
+      @   ensures (height > 5 || speed > 3 || tilt > 10) ==> \result == 0;
+      @   ensures (height <= 5 && speed <= 3 && tilt <= 10) ==> \result == 1;
+      @*/
+    public static int safeLanding(int height, int speed, int tilt) {
+        int safe = 1;
+        if (height > 5 || speed > 3 || tilt > 10) {
+            safe = 0;
+        }
+        return safe;
+    }
+}
+==============================
+
+==============================

@@ -1,0 +1,102 @@
+public class LCM_Original {
+
+    //@ requires num1 != 0 && num2 != 0;
+    //@ ensures \result > 0 ==> (\result % num1 == 0 && \result % num2 == 0 && 
+    //@                         (\forall int i; i > 0 && i < \result; !(i % num1 == 0 && i % num2 == 0)));
+    //@ ensures \result == -1 ==> (num1 == 0 || num2 == 0 || \result == Integer.MAX_VALUE);
+    public static int lcm(int num1, int num2)
+    {
+        if (num1 == 0 || num2 == 0) {
+            return -1;
+        }
+        if (num1 < 0)
+            num1 = -num1;
+        if (num2 < 0)
+            num2 = -num2;
+
+        int result = 0;
+        if( num1 > num2 ){
+            result = num1;
+        }
+        else{
+            result = num2;
+        }
+
+        //@ maintaining result >= \old(result) && result <= Integer.MAX_VALUE;
+        //@ maintaining (\forall int i; \old(result) <= i && i < result; !(i % num1 == 0 && i % num2 == 0));
+        //@ decreases Integer.MAX_VALUE - result;
+        while (result < Integer.MAX_VALUE)
+        {
+            if (result % num1 == 0 && result % num2 == 0)
+            {
+                break;
+            }
+            result++;
+        }
+
+        if (result % num1 == 0 && result % num2 == 0) {
+            return result;
+        }
+        return -1;
+    }
+}
+==============================
+/root/specgen/SpecGen/project/081401-specgen/tmp/LCM_Original.java:25: error: cannot find symbol
+        //@ maintaining result >= \old(result) && result <= Integer.MAX_VALUE;
+                                       ^
+  symbol:   variable result
+  location: class LCM_Original
+/root/specgen/SpecGen/project/081401-specgen/tmp/LCM_Original.java:26: error: cannot find symbol
+        //@ maintaining (\forall int i; \old(result) <= i && i < result; !(i % num1 == 0 && i % num2 == 0));
+                                             ^
+  symbol:   variable result
+  location: class LCM_Original
+2 errors
+
+==============================
+public class LCM_Original {
+
+    //@ requires num1 != 0 && num2 != 0;
+    //@ ensures \result > 0 ==> (\result % num1 == 0 && \result % num2 == 0 && 
+    //@                         (\forall int i; i > 0 && i < \result; !(i % num1 == 0 && i % num2 == 0)));
+    //@ ensures \result == -1 ==> (num1 == 0 || num2 == 0 || \result == Integer.MAX_VALUE);
+    public static int lcm(int num1, int num2)
+    {
+        if (num1 == 0 || num2 == 0) {
+            return -1;
+        }
+        if (num1 < 0)
+            num1 = -num1;
+        if (num2 < 0)
+            num2 = -num2;
+
+        int result = 0;
+        if( num1 > num2 ){
+            result = num1;
+        }
+        else{
+            result = num2;
+        }
+
+        //@ maintaining result >= num1 && result >= num2;
+        //@ maintaining result <= Integer.MAX_VALUE;
+        //@ maintaining (\forall int i; num1 <= i && i < result; !(i % num1 == 0 && i % num2 == 0));
+        //@ decreases Integer.MAX_VALUE - result;
+        while (result < Integer.MAX_VALUE)
+        {
+            if (result % num1 == 0 && result % num2 == 0)
+            {
+                break;
+            }
+            result++;
+        }
+
+        if (result % num1 == 0 && result % num2 == 0) {
+            return result;
+        }
+        return -1;
+    }
+}
+==============================
+
+==============================

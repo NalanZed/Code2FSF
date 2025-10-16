@@ -1,0 +1,884 @@
+public class DigitRoot_Original {
+    //@ requires num >= 0;
+    //@ ensures \result == num % 9 || \result == 9;
+    //@ ensures 0 <= \result && \result <= 9;
+    public static int function(int num) {
+        //@ maintaining num >= 0;
+        //@ decreases num;
+        while (num >= 10) {
+            int sum = 0;
+            //@ maintaining sum >= 0;
+            //@ maintaining sum == \sum(\bigint) (num / (10^\result)) % 10;
+            //@ decreases num;
+            while (num > 0) {
+                sum = sum + (num % 10);
+                num = num / 10;
+            }
+            num = sum;
+        }
+        return num;
+    }
+}
+==============================
+/root/specgen/SpecGen/project/081402-specgen/tmp/DigitRoot_Original.java:11: error: illegal start of type
+            //@ maintaining sum == \sum(\bigint) (num / (10^\result)) % 10;
+                                       ^
+1 error
+
+==============================
+public class DigitRoot_Original {
+    //@ requires num >= 0;
+    //@ ensures \result >= 0 && \result <= 9;
+    //@ ensures \result == (num == 0 ? 0 : (num % 9 == 0 ? 9 : num % 9));
+    public static int function(int num) {
+        //@ maintaining num >= 0;
+        //@ decreases num;
+        while (num >= 10) {
+            int sum = 0;
+            //@ maintaining sum >= 0;
+            //@ maintaining sum == digitSum(num, \old(num) - num);
+            //@ decreases num;
+            while (num > 0) {
+                sum = sum + (num % 10);
+                num = num / 10;
+            }
+            num = sum;
+        }
+        return num;
+    }
+
+    //@ model pure helper function \bigint digitSum(int remaining, int processed);
+    //@ ensures \result == (processed == 0 ? 0 : (processed % 10 + digitSum(remaining, processed / 10)));
+}
+==============================
+/root/specgen/SpecGen/project/081402-specgen/tmp/DigitRoot_Original.java:22: error: ';' expected
+    //@ model pure helper function \bigint digitSum(int remaining, int processed);
+                                          ^
+/root/specgen/SpecGen/project/081402-specgen/tmp/DigitRoot_Original.java:22: error: invalid method declaration; return type required
+    //@ model pure helper function \bigint digitSum(int remaining, int processed);
+                                           ^
+/root/specgen/SpecGen/project/081402-specgen/tmp/DigitRoot_Original.java:23: error: Method specifications without a following method declaration
+    //@ ensures \result == (processed == 0 ? 0 : (processed % 10 + digitSum(remaining, processed / 10)));
+        ^
+3 errors
+
+==============================
+public class DigitRoot_Original {
+    //@ requires num >= 0;
+    //@ ensures \result >= 0 && \result <= 9;
+    //@ ensures \result == (num == 0 ? 0 : (num % 9 == 0 ? 9 : num % 9));
+    public static int function(int num) {
+        //@ maintaining num >= 0;
+        //@ decreases num;
+        while (num >= 10) {
+            int sum = 0;
+            //@ maintaining sum >= 0;
+            //@ maintaining (\forall int i; 0 <= i && i <= \old(num) - num; 
+            //@   sum == digitSum(i));
+            //@ decreases num;
+            while (num > 0) {
+                sum = sum + (num % 10);
+                num = num / 10;
+            }
+            num = sum;
+        }
+        return num;
+    }
+
+    //@ pure
+    //@ helper
+    private static int digitSum(int n) {
+        if (n == 0) return 0;
+        return (n % 10) + digitSum(n / 10);
+    }
+}
+==============================
+/root/specgen/SpecGen/project/081402-specgen/tmp/DigitRoot_Original.java:20: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081402-specgen/tmp/DigitRoot_Original.java:4:) in method function
+        return num;
+        ^
+/root/specgen/SpecGen/project/081402-specgen/tmp/DigitRoot_Original.java:4: verify: Associated declaration: /root/specgen/SpecGen/project/081402-specgen/tmp/DigitRoot_Original.java:20:
+    //@ ensures \result == (num == 0 ? 0 : (num % 9 == 0 ? 9 : num % 9));
+        ^
+2 verification failures
+
+==============================
+public class DigitRoot_Original {
+    //@ requires num >= 0;
+    //@ ensures \result >= 0 && \result <= 9;
+    //@ ensures \result == (num == 0 ? 0 : (num % 9 == 0 ? 9 : num % 9));  
+    public static int function(int num) {
+        //@ maintaining num >= 0;
+        //@ decreases num;
+        while (num >= 10) {
+            int sum = 0;
+            //@ maintaining sum >= 0;
+            //@ maintaining (\forall int i; 0 <= i && i <= \old(num) - num; 
+            //@   sum == digitSum(i));
+            //@ decreases num;
+            while (num > 0) {
+                sum = sum + (num % 10);
+                num = num / 10;
+            }
+            num = sum;
+        }
+        return num;
+    }
+
+    //@ pure
+    //@ helper
+    private static int digitSum(int n) {
+        if (n == 0) return 0;
+        return (n % 10) + digitSum(n / 10);
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081402-specgen/tmp/DigitRoot_Original.java:20: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081402-specgen/tmp/DigitRoot_Original.java:4:) in method function
+        return num;
+        ^
+/root/specgen/SpecGen/project/081402-specgen/tmp/DigitRoot_Original.java:4: verify: Associated declaration: /root/specgen/SpecGen/project/081402-specgen/tmp/DigitRoot_Original.java:20:
+    //@ ensures \result == (num == 0 ? 0 : (num % 9 == 0 ? 9 : num % 9));  
+        ^
+2 verification failures
+
+==============================
+public class DigitRoot_Original {
+    //@ requires num >= 0;
+    //@ ensures \result >= 0 && \result <= 9;
+ 
+    public static int function(int num) {
+        //@ maintaining num >= 0;
+        //@ decreases num;
+        while (num >= 10) {
+            int sum = 0;
+            //@ maintaining sum >= 0;
+            //@ maintaining (\forall int i; 0 <= i && i <= \old(num) - num; 
+            //@   sum == digitSum(i));
+            //@ decreases num;
+            while (num > 0) {
+                sum = sum + (num % 10);
+                num = num / 10;
+            }
+            num = sum;
+        }
+        return num;
+    }
+
+    //@ pure
+    //@ helper
+    private static int digitSum(int n) {
+        if (n == 0) return 0;
+        return (n % 10) + digitSum(n / 10);
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081402-specgen/tmp/DigitRoot_Original.java:11: verify: The prover cannot establish an assertion (LoopInvariantBeforeLoop) in method function
+            //@ maintaining (\forall int i; 0 <= i && i <= \old(num) - num; 
+                ^
+1 verification failure
+
+==============================
+public class DigitRoot_Original {
+    //@ requires num >= 0;
+    //@ ensures \result >= 0 && \result <= 9;
+ 
+    public static int function(int num) {
+        //@ maintaining num >= 0;
+        //@ decreases num;
+        while (num >= 10) {
+            int sum = 0;
+            //@ maintaining sum >= 0;
+            //@ maintaining (\forall int i; 0 < i && i < \old(num) - num;   
+            //@   sum == digitSum(i));
+            //@ decreases num;
+            while (num > 0) {
+                sum = sum + (num % 10);
+                num = num / 10;
+            }
+            num = sum;
+        }
+        return num;
+    }
+
+    //@ pure
+    //@ helper
+    private static int digitSum(int n) {
+        if (n == 0) return 0;
+        return (n % 10) + digitSum(n / 10);
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081402-specgen/tmp/DigitRoot_Original.java:11: verify: The prover cannot establish an assertion (LoopInvariantBeforeLoop) in method function
+            //@ maintaining (\forall int i; 0 < i && i < \old(num) - num;   
+                ^
+1 verification failure
+
+==============================
+public class DigitRoot_Original {
+    //@ requires num >= 0;
+    //@ ensures \result >= 0 && \result <= 9;
+ 
+    public static int function(int num) {
+        //@ maintaining num >= 0;
+        //@ decreases num;
+        while (num >= 10) {
+            int sum = 0;
+            //@ maintaining sum >= 0;
+            //@ maintaining (\forall int i; 0 < i && i <= \old(num) - num;   
+            //@   sum == digitSum(i));
+            //@ decreases num;
+            while (num > 0) {
+                sum = sum + (num % 10);
+                num = num / 10;
+            }
+            num = sum;
+        }
+        return num;
+    }
+
+    //@ pure
+    //@ helper
+    private static int digitSum(int n) {
+        if (n == 0) return 0;
+        return (n % 10) + digitSum(n / 10);
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081402-specgen/tmp/DigitRoot_Original.java:11: verify: The prover cannot establish an assertion (LoopInvariantBeforeLoop) in method function
+            //@ maintaining (\forall int i; 0 < i && i <= \old(num) - num;   
+                ^
+1 verification failure
+
+==============================
+public class DigitRoot_Original {
+    //@ requires num >= 0;
+    //@ ensures \result >= 0 && \result <= 9;
+ 
+    public static int function(int num) {
+        //@ maintaining num >= 0;
+        //@ decreases num;
+        while (num >= 10) {
+            int sum = 0;
+            //@ maintaining sum >= 0;
+            //@ maintaining (\forall int i; 0 < i && i - 1 <= \old(num) - num;   
+            //@   sum == digitSum(i));
+            //@ decreases num;
+            while (num > 0) {
+                sum = sum + (num % 10);
+                num = num / 10;
+            }
+            num = sum;
+        }
+        return num;
+    }
+
+    //@ pure
+    //@ helper
+    private static int digitSum(int n) {
+        if (n == 0) return 0;
+        return (n % 10) + digitSum(n / 10);
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081402-specgen/tmp/DigitRoot_Original.java:11: verify: The prover cannot establish an assertion (LoopInvariantBeforeLoop) in method function
+            //@ maintaining (\forall int i; 0 < i && i - 1 <= \old(num) - num;   
+                ^
+1 verification failure
+
+==============================
+public class DigitRoot_Original {
+    //@ requires num >= 0;
+    //@ ensures \result >= 0 && \result <= 9;
+ 
+    public static int function(int num) {
+        //@ maintaining num >= 0;
+        //@ decreases num;
+        while (num >= 10) {
+            int sum = 0;
+            //@ maintaining sum >= 0;
+            //@ maintaining (\forall int i; 0 <= i && i < \old(num) - num;   
+            //@   sum == digitSum(i));
+            //@ decreases num;
+            while (num > 0) {
+                sum = sum + (num % 10);
+                num = num / 10;
+            }
+            num = sum;
+        }
+        return num;
+    }
+
+    //@ pure
+    //@ helper
+    private static int digitSum(int n) {
+        if (n == 0) return 0;
+        return (n % 10) + digitSum(n / 10);
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081402-specgen/tmp/DigitRoot_Original.java:11: verify: The prover cannot establish an assertion (LoopInvariantBeforeLoop) in method function
+            //@ maintaining (\forall int i; 0 <= i && i < \old(num) - num;   
+                ^
+1 verification failure
+
+==============================
+public class DigitRoot_Original {
+    //@ requires num >= 0;
+    //@ ensures \result >= 0 && \result <= 9;
+ 
+    public static int function(int num) {
+        //@ maintaining num >= 0;
+        //@ decreases num;
+        while (num >= 10) {
+            int sum = 0;
+            //@ maintaining sum >= 0;
+            //@ maintaining (\forall int i; 0 <= i && i <= \old(num) - num;   
+            //@   sum == digitSum(i));
+            //@ decreases num;
+            while (num > 0) {
+                sum = sum + (num % 10);
+                num = num / 10;
+            }
+            num = sum;
+        }
+        return num;
+    }
+
+    //@ pure
+    //@ helper
+    private static int digitSum(int n) {
+        if (n == 0) return 0;
+        return (n % 10) + digitSum(n / 10);
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081402-specgen/tmp/DigitRoot_Original.java:11: verify: The prover cannot establish an assertion (LoopInvariantBeforeLoop) in method function
+            //@ maintaining (\forall int i; 0 <= i && i <= \old(num) - num;   
+                ^
+1 verification failure
+
+==============================
+public class DigitRoot_Original {
+    //@ requires num >= 0;
+    //@ ensures \result >= 0 && \result <= 9;
+ 
+    public static int function(int num) {
+        //@ maintaining num >= 0;
+        //@ decreases num;
+        while (num >= 10) {
+            int sum = 0;
+            //@ maintaining sum >= 0;
+            //@ maintaining (\forall int i; 0 <= i && i - 1 <= \old(num) - num;   
+            //@   sum == digitSum(i));
+            //@ decreases num;
+            while (num > 0) {
+                sum = sum + (num % 10);
+                num = num / 10;
+            }
+            num = sum;
+        }
+        return num;
+    }
+
+    //@ pure
+    //@ helper
+    private static int digitSum(int n) {
+        if (n == 0) return 0;
+        return (n % 10) + digitSum(n / 10);
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081402-specgen/tmp/DigitRoot_Original.java:11: verify: The prover cannot establish an assertion (LoopInvariantBeforeLoop) in method function
+            //@ maintaining (\forall int i; 0 <= i && i - 1 <= \old(num) - num;   
+                ^
+1 verification failure
+
+==============================
+public class DigitRoot_Original {
+    //@ requires num >= 0;
+    //@ ensures \result >= 0 && \result <= 9;
+ 
+    public static int function(int num) {
+        //@ maintaining num >= 0;
+        //@ decreases num;
+        while (num >= 10) {
+            int sum = 0;
+            //@ maintaining sum >= 0;
+            //@ maintaining (\forall int i; 0 - 1 <= i && i < \old(num) - num;   
+            //@   sum == digitSum(i));
+            //@ decreases num;
+            while (num > 0) {
+                sum = sum + (num % 10);
+                num = num / 10;
+            }
+            num = sum;
+        }
+        return num;
+    }
+
+    //@ pure
+    //@ helper
+    private static int digitSum(int n) {
+        if (n == 0) return 0;
+        return (n % 10) + digitSum(n / 10);
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081402-specgen/tmp/DigitRoot_Original.java:11: verify: The prover cannot establish an assertion (LoopInvariantBeforeLoop) in method function
+            //@ maintaining (\forall int i; 0 - 1 <= i && i < \old(num) - num;   
+                ^
+1 verification failure
+
+==============================
+public class DigitRoot_Original {
+    //@ requires num >= 0;
+    //@ ensures \result >= 0 && \result <= 9;
+ 
+    public static int function(int num) {
+        //@ maintaining num >= 0;
+        //@ decreases num;
+        while (num >= 10) {
+            int sum = 0;
+            //@ maintaining sum >= 0;
+            //@ maintaining (\forall int i; 0 - 1 <= i && i <= \old(num) - num;   
+            //@   sum == digitSum(i));
+            //@ decreases num;
+            while (num > 0) {
+                sum = sum + (num % 10);
+                num = num / 10;
+            }
+            num = sum;
+        }
+        return num;
+    }
+
+    //@ pure
+    //@ helper
+    private static int digitSum(int n) {
+        if (n == 0) return 0;
+        return (n % 10) + digitSum(n / 10);
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081402-specgen/tmp/DigitRoot_Original.java:11: verify: The prover cannot establish an assertion (LoopInvariantBeforeLoop) in method function
+            //@ maintaining (\forall int i; 0 - 1 <= i && i <= \old(num) - num;   
+                ^
+1 verification failure
+
+==============================
+public class DigitRoot_Original {
+    //@ requires num >= 0;
+    //@ ensures \result >= 0 && \result <= 9;
+ 
+    public static int function(int num) {
+        //@ maintaining num >= 0;
+        //@ decreases num;
+        while (num >= 10) {
+            int sum = 0;
+            //@ maintaining sum >= 0;
+            //@ maintaining (\forall int i; 0 - 1 <= i && i - 1 <= \old(num) - num;   
+            //@   sum == digitSum(i));
+            //@ decreases num;
+            while (num > 0) {
+                sum = sum + (num % 10);
+                num = num / 10;
+            }
+            num = sum;
+        }
+        return num;
+    }
+
+    //@ pure
+    //@ helper
+    private static int digitSum(int n) {
+        if (n == 0) return 0;
+        return (n % 10) + digitSum(n / 10);
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081402-specgen/tmp/DigitRoot_Original.java:11: verify: The prover cannot establish an assertion (LoopInvariantBeforeLoop) in method function
+            //@ maintaining (\forall int i; 0 - 1 <= i && i - 1 <= \old(num) - num;   
+                ^
+1 verification failure
+
+==============================
+public class DigitRoot_Original {
+    //@ requires num >= 0;
+    //@ ensures \result >= 0 && \result <= 9;
+ 
+    public static int function(int num) {
+        //@ maintaining num >= 0;
+        //@ decreases num;
+        while (num >= 10) {
+            int sum = 0;
+            //@ maintaining sum >= 0;
+            //@ maintaining (\exists int i; 0 < i && i < \old(num) - num;   
+            //@   sum == digitSum(i));
+            //@ decreases num;
+            while (num > 0) {
+                sum = sum + (num % 10);
+                num = num / 10;
+            }
+            num = sum;
+        }
+        return num;
+    }
+
+    //@ pure
+    //@ helper
+    private static int digitSum(int n) {
+        if (n == 0) return 0;
+        return (n % 10) + digitSum(n / 10);
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081402-specgen/tmp/DigitRoot_Original.java:11: verify: The prover cannot establish an assertion (LoopInvariantBeforeLoop) in method function
+            //@ maintaining (\exists int i; 0 < i && i < \old(num) - num;   
+                ^
+1 verification failure
+
+==============================
+public class DigitRoot_Original {
+    //@ requires num >= 0;
+    //@ ensures \result >= 0 && \result <= 9;
+ 
+    public static int function(int num) {
+        //@ maintaining num >= 0;
+        //@ decreases num;
+        while (num >= 10) {
+            int sum = 0;
+            //@ maintaining sum >= 0;
+            //@ maintaining (\exists int i; 0 < i && i <= \old(num) - num;   
+            //@   sum == digitSum(i));
+            //@ decreases num;
+            while (num > 0) {
+                sum = sum + (num % 10);
+                num = num / 10;
+            }
+            num = sum;
+        }
+        return num;
+    }
+
+    //@ pure
+    //@ helper
+    private static int digitSum(int n) {
+        if (n == 0) return 0;
+        return (n % 10) + digitSum(n / 10);
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081402-specgen/tmp/DigitRoot_Original.java:11: verify: The prover cannot establish an assertion (LoopInvariantBeforeLoop) in method function
+            //@ maintaining (\exists int i; 0 < i && i <= \old(num) - num;   
+                ^
+1 verification failure
+
+==============================
+public class DigitRoot_Original {
+    //@ requires num >= 0;
+    //@ ensures \result >= 0 && \result <= 9;
+ 
+    public static int function(int num) {
+        //@ maintaining num >= 0;
+        //@ decreases num;
+        while (num >= 10) {
+            int sum = 0;
+            //@ maintaining sum >= 0;
+            //@ maintaining (\exists int i; 0 < i && i - 1 <= \old(num) - num;   
+            //@   sum == digitSum(i));
+            //@ decreases num;
+            while (num > 0) {
+                sum = sum + (num % 10);
+                num = num / 10;
+            }
+            num = sum;
+        }
+        return num;
+    }
+
+    //@ pure
+    //@ helper
+    private static int digitSum(int n) {
+        if (n == 0) return 0;
+        return (n % 10) + digitSum(n / 10);
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081402-specgen/tmp/DigitRoot_Original.java:11: verify: The prover cannot establish an assertion (LoopInvariantBeforeLoop) in method function
+            //@ maintaining (\exists int i; 0 < i && i - 1 <= \old(num) - num;   
+                ^
+1 verification failure
+
+==============================
+public class DigitRoot_Original {
+    //@ requires num >= 0;
+    //@ ensures \result >= 0 && \result <= 9;
+ 
+    public static int function(int num) {
+        //@ maintaining num >= 0;
+        //@ decreases num;
+        while (num >= 10) {
+            int sum = 0;
+            //@ maintaining sum >= 0;
+            //@ maintaining (\exists int i; 0 <= i && i < \old(num) - num;   
+            //@   sum == digitSum(i));
+            //@ decreases num;
+            while (num > 0) {
+                sum = sum + (num % 10);
+                num = num / 10;
+            }
+            num = sum;
+        }
+        return num;
+    }
+
+    //@ pure
+    //@ helper
+    private static int digitSum(int n) {
+        if (n == 0) return 0;
+        return (n % 10) + digitSum(n / 10);
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081402-specgen/tmp/DigitRoot_Original.java:11: verify: The prover cannot establish an assertion (LoopInvariantBeforeLoop) in method function
+            //@ maintaining (\exists int i; 0 <= i && i < \old(num) - num;   
+                ^
+1 verification failure
+
+==============================
+public class DigitRoot_Original {
+    //@ requires num >= 0;
+    //@ ensures \result >= 0 && \result <= 9;
+ 
+    public static int function(int num) {
+        //@ maintaining num >= 0;
+        //@ decreases num;
+        while (num >= 10) {
+            int sum = 0;
+            //@ maintaining sum >= 0;
+            //@ maintaining (\exists int i; 0 <= i && i <= \old(num) - num;   
+            //@   sum == digitSum(i));
+            //@ decreases num;
+            while (num > 0) {
+                sum = sum + (num % 10);
+                num = num / 10;
+            }
+            num = sum;
+        }
+        return num;
+    }
+
+    //@ pure
+    //@ helper
+    private static int digitSum(int n) {
+        if (n == 0) return 0;
+        return (n % 10) + digitSum(n / 10);
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081402-specgen/tmp/DigitRoot_Original.java:11: verify: The prover cannot establish an assertion (LoopInvariantBeforeLoop) in method function
+            //@ maintaining (\exists int i; 0 <= i && i <= \old(num) - num;   
+                ^
+1 verification failure
+
+==============================
+public class DigitRoot_Original {
+    //@ requires num >= 0;
+    //@ ensures \result >= 0 && \result <= 9;
+ 
+    public static int function(int num) {
+        //@ maintaining num >= 0;
+        //@ decreases num;
+        while (num >= 10) {
+            int sum = 0;
+            //@ maintaining sum >= 0;
+            //@ maintaining (\exists int i; 0 <= i && i - 1 <= \old(num) - num;   
+            //@   sum == digitSum(i));
+            //@ decreases num;
+            while (num > 0) {
+                sum = sum + (num % 10);
+                num = num / 10;
+            }
+            num = sum;
+        }
+        return num;
+    }
+
+    //@ pure
+    //@ helper
+    private static int digitSum(int n) {
+        if (n == 0) return 0;
+        return (n % 10) + digitSum(n / 10);
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081402-specgen/tmp/DigitRoot_Original.java:11: verify: The prover cannot establish an assertion (LoopInvariantBeforeLoop) in method function
+            //@ maintaining (\exists int i; 0 <= i && i - 1 <= \old(num) - num;   
+                ^
+1 verification failure
+
+==============================
+public class DigitRoot_Original {
+    //@ requires num >= 0;
+    //@ ensures \result >= 0 && \result <= 9;
+ 
+    public static int function(int num) {
+        //@ maintaining num >= 0;
+        //@ decreases num;
+        while (num >= 10) {
+            int sum = 0;
+            //@ maintaining sum >= 0;
+            //@ maintaining (\exists int i; 0 - 1 <= i && i < \old(num) - num;   
+            //@   sum == digitSum(i));
+            //@ decreases num;
+            while (num > 0) {
+                sum = sum + (num % 10);
+                num = num / 10;
+            }
+            num = sum;
+        }
+        return num;
+    }
+
+    //@ pure
+    //@ helper
+    private static int digitSum(int n) {
+        if (n == 0) return 0;
+        return (n % 10) + digitSum(n / 10);
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081402-specgen/tmp/DigitRoot_Original.java:11: verify: The prover cannot establish an assertion (LoopInvariantBeforeLoop) in method function
+            //@ maintaining (\exists int i; 0 - 1 <= i && i < \old(num) - num;   
+                ^
+1 verification failure
+
+==============================
+public class DigitRoot_Original {
+    //@ requires num >= 0;
+    //@ ensures \result >= 0 && \result <= 9;
+ 
+    public static int function(int num) {
+        //@ maintaining num >= 0;
+        //@ decreases num;
+        while (num >= 10) {
+            int sum = 0;
+            //@ maintaining sum >= 0;
+            //@ maintaining (\exists int i; 0 - 1 <= i && i <= \old(num) - num;   
+            //@   sum == digitSum(i));
+            //@ decreases num;
+            while (num > 0) {
+                sum = sum + (num % 10);
+                num = num / 10;
+            }
+            num = sum;
+        }
+        return num;
+    }
+
+    //@ pure
+    //@ helper
+    private static int digitSum(int n) {
+        if (n == 0) return 0;
+        return (n % 10) + digitSum(n / 10);
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081402-specgen/tmp/DigitRoot_Original.java:11: verify: The prover cannot establish an assertion (LoopInvariantBeforeLoop) in method function
+            //@ maintaining (\exists int i; 0 - 1 <= i && i <= \old(num) - num;   
+                ^
+1 verification failure
+
+==============================
+public class DigitRoot_Original {
+    //@ requires num >= 0;
+    //@ ensures \result >= 0 && \result <= 9;
+ 
+    public static int function(int num) {
+        //@ maintaining num >= 0;
+        //@ decreases num;
+        while (num >= 10) {
+            int sum = 0;
+            //@ maintaining sum >= 0;
+            //@ maintaining (\exists int i; 0 - 1 <= i && i - 1 <= \old(num) - num;   
+            //@   sum == digitSum(i));
+            //@ decreases num;
+            while (num > 0) {
+                sum = sum + (num % 10);
+                num = num / 10;
+            }
+            num = sum;
+        }
+        return num;
+    }
+
+    //@ pure
+    //@ helper
+    private static int digitSum(int n) {
+        if (n == 0) return 0;
+        return (n % 10) + digitSum(n / 10);
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081402-specgen/tmp/DigitRoot_Original.java:11: verify: The prover cannot establish an assertion (LoopInvariantBeforeLoop) in method function
+            //@ maintaining (\exists int i; 0 - 1 <= i && i - 1 <= \old(num) - num;   
+                ^
+1 verification failure
+
+==============================
+public class DigitRoot_Original {
+    //@ requires num >= 0;
+    //@ ensures \result >= 0 && \result <= 9;
+ 
+    public static int function(int num) {
+        //@ maintaining num >= 0;
+        //@ decreases num;
+        while (num >= 10) {
+            int sum = 0;
+            //@ maintaining sum >= 0;
+ 
+            //@   sum == digitSum(i));
+            //@ decreases num;
+            while (num > 0) {
+                sum = sum + (num % 10);
+                num = num / 10;
+            }
+            num = sum;
+        }
+        return num;
+    }
+
+    //@ pure
+    //@ helper
+    private static int digitSum(int n) {
+        if (n == 0) return 0;
+        return (n % 10) + digitSum(n / 10);
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081402-specgen/tmp/DigitRoot_Original.java:12: error: Expected loop specifications while in JML: sum is not a loop specification keyword
+            //@   sum == digitSum(i));
+                  ^
+1 error
+
+==============================

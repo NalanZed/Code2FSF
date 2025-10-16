@@ -1,0 +1,20 @@
+START ORIGINAL CODE
+public class PowerOfTwo_Original {
+
+    public static boolean isPowerOfTwo(int n) {
+        return n > 0 && (n & (n - 1)) == 0;
+    }
+}
+*END* ORIGINAL CODE
+START ORIGINAL FSF
+T1: n > 0 && (n & (n - 1)) == 0
+D1: return_value == true
+T2: n <= 0 || (n & (n - 1)) != 0
+D2: return_value == false
+*END* ORIGINAL FSF
+START MODIFIED FSF
+T1: n >= 0 && (n & (n - 1)) == 0
+D1: return_value == true
+T2: n < 0 || (n & (n - 1)) != 0
+D2: return_value == false
+*END* MODIFIED FSF

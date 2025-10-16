@@ -1,0 +1,256 @@
+public class Abs_Mutant3 {
+
+    //@ ensures (num < 0 ==> \result == -num) && (num >= 0 ==> \result == num);
+    //@ ensures \result >= 0;
+    public static int Abs(int num) {
+        if (num < 0)
+            return -num;
+        else
+            return -num;  // BUG: Should return 'num' instead of '-num'
+    }
+}
+==============================
+/root/specgen/SpecGen/project/081402-specgen/tmp/Abs_Mutant3.java:9: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081402-specgen/tmp/Abs_Mutant3.java:3:) in method Abs
+            return -num;  // BUG: Should return 'num' instead of '-num'
+            ^
+/root/specgen/SpecGen/project/081402-specgen/tmp/Abs_Mutant3.java:3: verify: Associated declaration: /root/specgen/SpecGen/project/081402-specgen/tmp/Abs_Mutant3.java:9:
+    //@ ensures (num < 0 ==> \result == -num) && (num >= 0 ==> \result == num);
+        ^
+2 verification failures
+
+==============================
+public class Abs_Mutant3 {
+
+    //@ ensures (num < 0 ==> \result == -num) && (num > 0 ==> \result == num);  
+    //@ ensures \result >= 0;
+    public static int Abs(int num) {
+        if (num < 0)
+            return -num;
+        else
+            return -num;  // BUG: Should return 'num' instead of '-num'
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081402-specgen/tmp/Abs_Mutant3.java:9: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081402-specgen/tmp/Abs_Mutant3.java:3:) in method Abs
+            return -num;  // BUG: Should return 'num' instead of '-num'
+            ^
+/root/specgen/SpecGen/project/081402-specgen/tmp/Abs_Mutant3.java:3: verify: Associated declaration: /root/specgen/SpecGen/project/081402-specgen/tmp/Abs_Mutant3.java:9:
+    //@ ensures (num < 0 ==> \result == -num) && (num > 0 ==> \result == num);  
+        ^
+2 verification failures
+
+==============================
+public class Abs_Mutant3 {
+
+    //@ ensures (num < 0 ==> \result == -num) && (num >= 0 ==> \result == num);  
+    //@ ensures \result >= 0;
+    public static int Abs(int num) {
+        if (num < 0)
+            return -num;
+        else
+            return -num;  // BUG: Should return 'num' instead of '-num'
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081402-specgen/tmp/Abs_Mutant3.java:9: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081402-specgen/tmp/Abs_Mutant3.java:3:) in method Abs
+            return -num;  // BUG: Should return 'num' instead of '-num'
+            ^
+/root/specgen/SpecGen/project/081402-specgen/tmp/Abs_Mutant3.java:3: verify: Associated declaration: /root/specgen/SpecGen/project/081402-specgen/tmp/Abs_Mutant3.java:9:
+    //@ ensures (num < 0 ==> \result == -num) && (num >= 0 ==> \result == num);  
+        ^
+2 verification failures
+
+==============================
+public class Abs_Mutant3 {
+
+    //@ ensures (num < 0 ==> \result == -num) && (num + 1 >= 0 ==> \result == num);  
+    //@ ensures \result >= 0;
+    public static int Abs(int num) {
+        if (num < 0)
+            return -num;
+        else
+            return -num;  // BUG: Should return 'num' instead of '-num'
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081402-specgen/tmp/Abs_Mutant3.java:7: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081402-specgen/tmp/Abs_Mutant3.java:3:) in method Abs
+            return -num;
+            ^
+/root/specgen/SpecGen/project/081402-specgen/tmp/Abs_Mutant3.java:3: verify: Associated declaration: /root/specgen/SpecGen/project/081402-specgen/tmp/Abs_Mutant3.java:7:
+    //@ ensures (num < 0 ==> \result == -num) && (num + 1 >= 0 ==> \result == num);  
+        ^
+2 verification failures
+
+==============================
+public class Abs_Mutant3 {
+
+    //@ ensures (num <= 0 ==> \result == -num) && (num > 0 ==> \result == num);  
+    //@ ensures \result >= 0;
+    public static int Abs(int num) {
+        if (num < 0)
+            return -num;
+        else
+            return -num;  // BUG: Should return 'num' instead of '-num'
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081402-specgen/tmp/Abs_Mutant3.java:9: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081402-specgen/tmp/Abs_Mutant3.java:3:) in method Abs
+            return -num;  // BUG: Should return 'num' instead of '-num'
+            ^
+/root/specgen/SpecGen/project/081402-specgen/tmp/Abs_Mutant3.java:3: verify: Associated declaration: /root/specgen/SpecGen/project/081402-specgen/tmp/Abs_Mutant3.java:9:
+    //@ ensures (num <= 0 ==> \result == -num) && (num > 0 ==> \result == num);  
+        ^
+2 verification failures
+
+==============================
+public class Abs_Mutant3 {
+
+    //@ ensures (num <= 0 ==> \result == -num) && (num >= 0 ==> \result == num);  
+    //@ ensures \result >= 0;
+    public static int Abs(int num) {
+        if (num < 0)
+            return -num;
+        else
+            return -num;  // BUG: Should return 'num' instead of '-num'
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081402-specgen/tmp/Abs_Mutant3.java:9: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081402-specgen/tmp/Abs_Mutant3.java:3:) in method Abs
+            return -num;  // BUG: Should return 'num' instead of '-num'
+            ^
+/root/specgen/SpecGen/project/081402-specgen/tmp/Abs_Mutant3.java:3: verify: Associated declaration: /root/specgen/SpecGen/project/081402-specgen/tmp/Abs_Mutant3.java:9:
+    //@ ensures (num <= 0 ==> \result == -num) && (num >= 0 ==> \result == num);  
+        ^
+2 verification failures
+
+==============================
+public class Abs_Mutant3 {
+
+    //@ ensures (num <= 0 ==> \result == -num) && (num + 1 >= 0 ==> \result == num);  
+    //@ ensures \result >= 0;
+    public static int Abs(int num) {
+        if (num < 0)
+            return -num;
+        else
+            return -num;  // BUG: Should return 'num' instead of '-num'
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081402-specgen/tmp/Abs_Mutant3.java:7: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081402-specgen/tmp/Abs_Mutant3.java:3:) in method Abs
+            return -num;
+            ^
+/root/specgen/SpecGen/project/081402-specgen/tmp/Abs_Mutant3.java:3: verify: Associated declaration: /root/specgen/SpecGen/project/081402-specgen/tmp/Abs_Mutant3.java:7:
+    //@ ensures (num <= 0 ==> \result == -num) && (num + 1 >= 0 ==> \result == num);  
+        ^
+2 verification failures
+
+==============================
+public class Abs_Mutant3 {
+
+ 
+    //@ ensures \result >= 0;
+    public static int Abs(int num) {
+        if (num < 0)
+            return -num;
+        else
+            return -num;  // BUG: Should return 'num' instead of '-num'
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081402-specgen/tmp/Abs_Mutant3.java:9: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081402-specgen/tmp/Abs_Mutant3.java:4:) in method Abs
+            return -num;  // BUG: Should return 'num' instead of '-num'
+            ^
+/root/specgen/SpecGen/project/081402-specgen/tmp/Abs_Mutant3.java:4: verify: Associated declaration: /root/specgen/SpecGen/project/081402-specgen/tmp/Abs_Mutant3.java:9:
+    //@ ensures \result >= 0;
+        ^
+2 verification failures
+
+==============================
+public class Abs_Mutant3 {
+
+ 
+    //@ ensures \result > 0;  
+    public static int Abs(int num) {
+        if (num < 0)
+            return -num;
+        else
+            return -num;  // BUG: Should return 'num' instead of '-num'
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081402-specgen/tmp/Abs_Mutant3.java:9: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081402-specgen/tmp/Abs_Mutant3.java:4:) in method Abs
+            return -num;  // BUG: Should return 'num' instead of '-num'
+            ^
+/root/specgen/SpecGen/project/081402-specgen/tmp/Abs_Mutant3.java:4: verify: Associated declaration: /root/specgen/SpecGen/project/081402-specgen/tmp/Abs_Mutant3.java:9:
+    //@ ensures \result > 0;  
+        ^
+2 verification failures
+
+==============================
+public class Abs_Mutant3 {
+
+ 
+    //@ ensures \result >= 0;  
+    public static int Abs(int num) {
+        if (num < 0)
+            return -num;
+        else
+            return -num;  // BUG: Should return 'num' instead of '-num'
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081402-specgen/tmp/Abs_Mutant3.java:9: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081402-specgen/tmp/Abs_Mutant3.java:4:) in method Abs
+            return -num;  // BUG: Should return 'num' instead of '-num'
+            ^
+/root/specgen/SpecGen/project/081402-specgen/tmp/Abs_Mutant3.java:4: verify: Associated declaration: /root/specgen/SpecGen/project/081402-specgen/tmp/Abs_Mutant3.java:9:
+    //@ ensures \result >= 0;  
+        ^
+2 verification failures
+
+==============================
+public class Abs_Mutant3 {
+
+ 
+    //@ ensures \result + 1 >= 0;  
+    public static int Abs(int num) {
+        if (num < 0)
+            return -num;
+        else
+            return -num;  // BUG: Should return 'num' instead of '-num'
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081402-specgen/tmp/Abs_Mutant3.java:9: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081402-specgen/tmp/Abs_Mutant3.java:4:) in method Abs
+            return -num;  // BUG: Should return 'num' instead of '-num'
+            ^
+/root/specgen/SpecGen/project/081402-specgen/tmp/Abs_Mutant3.java:4: verify: Associated declaration: /root/specgen/SpecGen/project/081402-specgen/tmp/Abs_Mutant3.java:9:
+    //@ ensures \result + 1 >= 0;  
+        ^
+2 verification failures
+
+==============================
+public class Abs_Mutant3 {
+
+ 
+ 
+    public static int Abs(int num) {
+        if (num < 0)
+            return -num;
+        else
+            return -num;  // BUG: Should return 'num' instead of '-num'
+    }
+}
+
+==============================
+
+==============================

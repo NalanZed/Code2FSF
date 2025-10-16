@@ -1,0 +1,15 @@
+public class AbsSeq_Mutant1 {
+    //@ ensures \result >= 0;
+    //@ ensures (num <= 0 ==> \result == -num) && (num > 0 ==> \result == num);
+    public static int Abs(int num) {
+        if (num <= 0) {
+            num = -num;
+	    return num;
+        } else {
+            return num;
+        }
+    }
+}
+==============================
+
+==============================

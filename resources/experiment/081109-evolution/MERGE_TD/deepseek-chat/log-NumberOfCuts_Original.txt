@@ -1,0 +1,58 @@
+start role user
+Please modify the following code according to the modified FSF:
+```Code
+
+
+public class NumberOfCuts_Original {
+
+    public static int numberOfCuts(int n) {
+        if (n == 1) {
+            return 0;
+        }
+        if (n % 2 == 0) {
+            return n / 2;
+        }
+        return n;
+    }
+}
+
+```
+```Original FSF
+T0: n == 1
+D0: return_value == 0
+
+T1: n % 2 == 0 && n != 1
+D1: return_value == n / 2
+
+T2: n % 2 != 0 && n != 1
+D2: return_value == n
+
+```Modified FSF
+T0: (n % 2 == 0 && n != 1) || (n == 1)
+D0: return_value == n / 2
+
+T1: n % 2 != 0 && n != 1
+D1: return_value == n
+
+```
+
+
+*end* role user
+start role assistant
+```
+public class NumberOfCuts_Modified {
+
+    public static int numberOfCuts(int n) {
+        if ((n % 2 == 0) || (n == 1)) {
+            return n / 2;
+        }
+        return n;
+    }
+}
+```
+
+The modified code combines the first two conditions from the original FSF (T0 and T1) into a single condition in the modified FSF (T0). The logic is simplified by checking if n is even OR equals 1 first, returning n/2 in those cases, and otherwise returning n for odd numbers greater than 1. This matches exactly with the modified FSF requirements while making minimal changes to the original code structure.
+*end* role assistant
+start role remark
+Validation SUCCESS!
+*end* role remark

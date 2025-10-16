@@ -1,0 +1,576 @@
+START ORIGINAL CODE
+
+public class Calculator_Original {
+
+    public static int calculate(int num1, int num2, char operator) {
+        int output;
+        switch(operator) {
+            case '+':
+                output = num1 + num2;
+                break;
+            case '-':
+                output = num1 - num2;
+                break;
+            case '*':
+                output = num1 * num2;
+                break;
+            case '/':
+                output = num1 / num2;
+                break;
+            case '%':
+                output = num1 % num2;
+                break;
+            default:
+                return -1;
+        }
+        return output;
+    }
+}
+
+*END* ORIGINAL CODE
+START ORIGINAL FSF
+T1: operator == '+'
+D1: output == num1 + num2
+T2: operator == '-'
+D2: output == num1 - num2
+T3: operator == '*'
+D3: output == num1 * num2
+T4: operator == '/' && num2 != 0
+D4: output == num1 / num2
+T5: operator == '/' && num2 == 0
+D5: Exception
+T6: operator == '%' && num2 != 0
+D6: output == num1 % num2
+T7: operator == '%' && num2 == 0
+D7: Exception
+T8: operator != '+' && operator != '-' && operator != '*' && operator != '/' && operator != '%'
+D8: return_value == -1
+*END* ORIGINAL FSF
+START MODIFIED FSF
+T1: operator == '+'
+D1: output == num1 + num2
+T2: operator == '-'
+D2: output == num1 - num2
+T3: (operator == '*') || (operator != '+' && operator != '-' && operator != '*' && operator != '/' && operator != '%')
+D3: output == num1 * num2
+T4: operator == '/' && num2 != 0
+D4: output == num1 / num2
+T5: operator == '/' && num2 == 0
+D5: Exception
+T6: operator == '%' && num2 != 0
+D6: output == num1 % num2
+T7: operator == '%' && num2 == 0
+D7: Exception
+*END* MODIFIED FSF
+START ORIGINAL CODE
+
+public class Calculator_Original {
+
+    public static int calculate(int num1, int num2, char operator) {
+        int output;
+        switch(operator) {
+            case '+':
+                output = num1 + num2;
+                break;
+            case '-':
+                output = num1 - num2;
+                break;
+            case '*':
+                output = num1 * num2;
+                break;
+            case '/':
+                output = num1 / num2;
+                break;
+            case '%':
+                output = num1 % num2;
+                break;
+            default:
+                return -1;
+        }
+        return output;
+    }
+}
+
+*END* ORIGINAL CODE
+START ORIGINAL FSF
+T1: operator == '+'
+D1: output == num1 + num2
+T2: operator == '-'
+D2: output == num1 - num2
+T3: operator == '*'
+D3: output == num1 * num2
+T4: operator == '/' && num2 != 0
+D4: output == num1 / num2
+T5: operator == '/' && num2 == 0
+D5: Exception
+T6: operator == '%' && num2 != 0
+D6: output == num1 % num2
+T7: operator == '%' && num2 == 0
+D7: Exception
+T8: operator != '+' && operator != '-' && operator != '*' && operator != '/' && operator != '%'
+D8: return_value == -1
+*END* ORIGINAL FSF
+START MODIFIED FSF
+T1: operator == '+'
+D1: output == num1 + num2
+T2: operator == '-'
+D2: output == num1 - num2
+T3: operator == '*'
+D3: output == num1 * num2
+T4: operator == '/' && num2 != 0
+D4: output == num1 / num2
+T5: operator == '/' && num2 == 0
+D5: Exception
+T6: (operator == '%' && num2 == 0) || (operator == '%' && num2 != 0)
+D6: Exception
+T7: operator != '+' && operator != '-' && operator != '*' && operator != '/' && operator != '%'
+D7: return_value == -1
+*END* MODIFIED FSF
+START ORIGINAL CODE
+
+public class Calculator_Original {
+
+    public static int calculate(int num1, int num2, char operator) {
+        int output;
+        switch(operator) {
+            case '+':
+                output = num1 + num2;
+                break;
+            case '-':
+                output = num1 - num2;
+                break;
+            case '*':
+                output = num1 * num2;
+                break;
+            case '/':
+                output = num1 / num2;
+                break;
+            case '%':
+                output = num1 % num2;
+                break;
+            default:
+                return -1;
+        }
+        return output;
+    }
+}
+
+*END* ORIGINAL CODE
+START ORIGINAL FSF
+T1: operator == '+'
+D1: output == num1 + num2
+T2: operator == '-'
+D2: output == num1 - num2
+T3: operator == '*'
+D3: output == num1 * num2
+T4: operator == '/' && num2 != 0
+D4: output == num1 / num2
+T5: operator == '/' && num2 == 0
+D5: Exception
+T6: operator == '%' && num2 != 0
+D6: output == num1 % num2
+T7: operator == '%' && num2 == 0
+D7: Exception
+T8: operator != '+' && operator != '-' && operator != '*' && operator != '/' && operator != '%'
+D8: return_value == -1
+*END* ORIGINAL FSF
+START MODIFIED FSF
+T1: operator == '+'
+D1: output == num1 + num2
+T2: operator == '-'
+D2: output == num1 - num2
+T3: operator == '*'
+D3: output == num1 * num2
+T4: operator == '/' && num2 != 0
+D4: output == num1 / num2
+T5: operator == '/' && num2 == 0
+D5: Exception
+T6: operator == '%' && num2 == 0
+D6: Exception
+T7: (operator != '+' && operator != '-' && operator != '*' && operator != '/' && operator != '%') || (operator == '%' && num2 != 0)
+D7: return_value == -1
+*END* MODIFIED FSF
+START ORIGINAL CODE
+
+public class Calculator_Original {
+
+    public static int calculate(int num1, int num2, char operator) {
+        int output;
+        switch(operator) {
+            case '+':
+                output = num1 + num2;
+                break;
+            case '-':
+                output = num1 - num2;
+                break;
+            case '*':
+                output = num1 * num2;
+                break;
+            case '/':
+                output = num1 / num2;
+                break;
+            case '%':
+                output = num1 % num2;
+                break;
+            default:
+                return -1;
+        }
+        return output;
+    }
+}
+
+*END* ORIGINAL CODE
+START ORIGINAL FSF
+T1: operator == '+'
+D1: output == num1 + num2
+T2: operator == '-'
+D2: output == num1 - num2
+T3: operator == '*'
+D3: output == num1 * num2
+T4: operator == '/' && num2 != 0
+D4: output == num1 / num2
+T5: operator == '/' && num2 == 0
+D5: Exception
+T6: operator == '%' && num2 != 0
+D6: output == num1 % num2
+T7: operator == '%' && num2 == 0
+D7: Exception
+T8: operator != '+' && operator != '-' && operator != '*' && operator != '/' && operator != '%'
+D8: return_value == -1
+*END* ORIGINAL FSF
+START MODIFIED FSF
+T1: operator == '+'
+D1: output == num1 + num2
+T2: operator == '-'
+D2: output == num1 - num2
+T3: operator == '*'
+D3: output == num1 * num2
+T4: operator == '/' && num2 != 0
+D4: output == num1 / num2
+T5: operator == '/' && num2 == 0
+D5: Exception
+T6: operator == '%' && num2 != 0
+D6: output == num1 % num2
+T7: (operator != '+' && operator != '-' && operator != '*' && operator != '/' && operator != '%') || (operator == '%' && num2 == 0)
+D7: return_value == -1
+*END* MODIFIED FSF
+START ORIGINAL CODE
+
+public class Calculator_Original {
+
+    public static int calculate(int num1, int num2, char operator) {
+        int output;
+        switch(operator) {
+            case '+':
+                output = num1 + num2;
+                break;
+            case '-':
+                output = num1 - num2;
+                break;
+            case '*':
+                output = num1 * num2;
+                break;
+            case '/':
+                output = num1 / num2;
+                break;
+            case '%':
+                output = num1 % num2;
+                break;
+            default:
+                return -1;
+        }
+        return output;
+    }
+}
+
+*END* ORIGINAL CODE
+START ORIGINAL FSF
+T1: operator == '+'
+D1: output == num1 + num2
+T2: operator == '-'
+D2: output == num1 - num2
+T3: operator == '*'
+D3: output == num1 * num2
+T4: operator == '/' && num2 != 0
+D4: output == num1 / num2
+T5: operator == '/' && num2 == 0
+D5: Exception
+T6: operator == '%' && num2 != 0
+D6: output == num1 % num2
+T7: operator == '%' && num2 == 0
+D7: Exception
+T8: operator != '+' && operator != '-' && operator != '*' && operator != '/' && operator != '%'
+D8: return_value == -1
+*END* ORIGINAL FSF
+START MODIFIED FSF
+T1: (operator == '+') || (operator == '%' && num2 != 0)
+D1: output == num1 + num2
+T2: operator == '-'
+D2: output == num1 - num2
+T3: operator == '*'
+D3: output == num1 * num2
+T4: operator == '/' && num2 != 0
+D4: output == num1 / num2
+T5: operator == '/' && num2 == 0
+D5: Exception
+T6: operator == '%' && num2 == 0
+D6: Exception
+T7: operator != '+' && operator != '-' && operator != '*' && operator != '/' && operator != '%'
+D7: return_value == -1
+*END* MODIFIED FSF
+START ORIGINAL CODE
+
+public class Calculator_Original {
+
+    public static int calculate(int num1, int num2, char operator) {
+        int output;
+        switch(operator) {
+            case '+':
+                output = num1 + num2;
+                break;
+            case '-':
+                output = num1 - num2;
+                break;
+            case '*':
+                output = num1 * num2;
+                break;
+            case '/':
+                output = num1 / num2;
+                break;
+            case '%':
+                output = num1 % num2;
+                break;
+            default:
+                return -1;
+        }
+        return output;
+    }
+}
+
+*END* ORIGINAL CODE
+START ORIGINAL FSF
+T1: operator == '+'
+D1: output == num1 + num2
+T2: operator == '-'
+D2: output == num1 - num2
+T3: operator == '*'
+D3: output == num1 * num2
+T4: operator == '/' && num2 != 0
+D4: output == num1 / num2
+T5: operator == '/' && num2 == 0
+D5: Exception
+T6: operator == '%' && num2 != 0
+D6: output == num1 % num2
+T7: operator == '%' && num2 == 0
+D7: Exception
+T8: operator != '+' && operator != '-' && operator != '*' && operator != '/' && operator != '%'
+D8: return_value == -1
+*END* ORIGINAL FSF
+START MODIFIED FSF
+T1: (operator == '+') || (operator == '%' && num2 != 0)
+D1: output == num1 + num2
+T2: operator == '-'
+D2: output == num1 - num2
+T3: operator == '*'
+D3: output == num1 * num2
+T4: operator == '/' && num2 != 0
+D4: output == num1 / num2
+T5: operator == '/' && num2 == 0
+D5: Exception
+T6: operator == '%' && num2 == 0
+D6: Exception
+T7: operator != '+' && operator != '-' && operator != '*' && operator != '/' && operator != '%'
+D7: return_value == -1
+*END* MODIFIED FSF
+START ORIGINAL CODE
+
+public class Calculator_Original {
+
+    public static int calculate(int num1, int num2, char operator) {
+        int output;
+        switch(operator) {
+            case '+':
+                output = num1 + num2;
+                break;
+            case '-':
+                output = num1 - num2;
+                break;
+            case '*':
+                output = num1 * num2;
+                break;
+            case '/':
+                output = num1 / num2;
+                break;
+            case '%':
+                output = num1 % num2;
+                break;
+            default:
+                return -1;
+        }
+        return output;
+    }
+}
+
+*END* ORIGINAL CODE
+START ORIGINAL FSF
+T1: operator == '+'
+D1: output == num1 + num2
+T2: operator == '-'
+D2: output == num1 - num2
+T3: operator == '*'
+D3: output == num1 * num2
+T4: operator == '/' && num2 != 0
+D4: output == num1 / num2
+T5: operator == '/' && num2 == 0
+D5: Exception
+T6: operator == '%' && num2 != 0
+D6: output == num1 % num2
+T7: operator == '%' && num2 == 0
+D7: Exception
+T8: operator != '+' && operator != '-' && operator != '*' && operator != '/' && operator != '%'
+D8: return_value == -1
+*END* ORIGINAL FSF
+START MODIFIED FSF
+T1: operator == '+'
+D1: output == num1 + num2
+T2: operator == '-'
+D2: output == num1 - num2
+T3: operator == '*'
+D3: output == num1 * num2
+T4: (operator == '/' && num2 != 0) || (operator == '%' && num2 != 0)
+D4: output == num1 / num2
+T5: operator == '/' && num2 == 0
+D5: Exception
+T6: operator == '%' && num2 == 0
+D6: Exception
+T7: operator != '+' && operator != '-' && operator != '*' && operator != '/' && operator != '%'
+D7: return_value == -1
+*END* MODIFIED FSF
+START ORIGINAL CODE
+
+public class Calculator_Original {
+
+    public static int calculate(int num1, int num2, char operator) {
+        int output;
+        switch(operator) {
+            case '+':
+                output = num1 + num2;
+                break;
+            case '-':
+                output = num1 - num2;
+                break;
+            case '*':
+                output = num1 * num2;
+                break;
+            case '/':
+                output = num1 / num2;
+                break;
+            case '%':
+                output = num1 % num2;
+                break;
+            default:
+                return -1;
+        }
+        return output;
+    }
+}
+
+*END* ORIGINAL CODE
+START ORIGINAL FSF
+T1: operator == '+'
+D1: output == num1 + num2
+T2: operator == '-'
+D2: output == num1 - num2
+T3: operator == '*'
+D3: output == num1 * num2
+T4: operator == '/' && num2 != 0
+D4: output == num1 / num2
+T5: operator == '/' && num2 == 0
+D5: Exception
+T6: operator == '%' && num2 != 0
+D6: output == num1 % num2
+T7: operator == '%' && num2 == 0
+D7: Exception
+T8: operator != '+' && operator != '-' && operator != '*' && operator != '/' && operator != '%'
+D8: return_value == -1
+*END* ORIGINAL FSF
+START MODIFIED FSF
+T1: operator == '+'
+D1: output == num1 + num2
+T2: operator == '-'
+D2: output == num1 - num2
+T3: operator == '*'
+D3: output == num1 * num2
+T4: operator == '/' && num2 != 0
+D4: output == num1 / num2
+T5: operator == '%' && num2 != 0
+D5: output == num1 % num2
+T6: operator == '%' && num2 == 0
+D6: Exception
+T7: (operator != '+' && operator != '-' && operator != '*' && operator != '/' && operator != '%') || (operator == '/' && num2 == 0)
+D7: return_value == -1
+*END* MODIFIED FSF
+START ORIGINAL CODE
+
+public class Calculator_Original {
+
+    public static int calculate(int num1, int num2, char operator) {
+        int output;
+        switch(operator) {
+            case '+':
+                output = num1 + num2;
+                break;
+            case '-':
+                output = num1 - num2;
+                break;
+            case '*':
+                output = num1 * num2;
+                break;
+            case '/':
+                output = num1 / num2;
+                break;
+            case '%':
+                output = num1 % num2;
+                break;
+            default:
+                return -1;
+        }
+        return output;
+    }
+}
+
+*END* ORIGINAL CODE
+START ORIGINAL FSF
+T1: operator == '+'
+D1: output == num1 + num2
+T2: operator == '-'
+D2: output == num1 - num2
+T3: operator == '*'
+D3: output == num1 * num2
+T4: operator == '/' && num2 != 0
+D4: output == num1 / num2
+T5: operator == '/' && num2 == 0
+D5: Exception
+T6: operator == '%' && num2 != 0
+D6: output == num1 % num2
+T7: operator == '%' && num2 == 0
+D7: Exception
+T8: operator != '+' && operator != '-' && operator != '*' && operator != '/' && operator != '%'
+D8: return_value == -1
+*END* ORIGINAL FSF
+START MODIFIED FSF
+T1: operator == '+'
+D1: output == num1 + num2
+T2: operator == '-'
+D2: output == num1 - num2
+T3: operator == '/' && num2 != 0
+D3: output == num1 / num2
+T4: operator == '/' && num2 == 0
+D4: Exception
+T5: operator == '%' && num2 != 0
+D5: output == num1 % num2
+T6: (operator == '%' && num2 == 0) || (operator == '*')
+D6: Exception
+T7: operator != '+' && operator != '-' && operator != '*' && operator != '/' && operator != '%'
+D7: return_value == -1
+*END* MODIFIED FSF

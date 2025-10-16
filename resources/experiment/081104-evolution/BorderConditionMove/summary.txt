@@ -1,0 +1,8 @@
+experimentName: 081104-evolution
+model: deepseek-chat
+category: BorderConditionMove
+total number: 25
+success number: 24
+success rate: 96.0%
+failed number: 1
+exception number: 0

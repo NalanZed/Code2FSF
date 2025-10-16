@@ -1,0 +1,21 @@
+public class GetUpCaseLoop_Mutant3 {
+    //@ requires (int)Character.MIN_VALUE <= (int)c && (int)c <= (int)Character.MAX_VALUE;
+    //@ ensures \result == 0 <==> (c < 'f' || c > 'z');
+    //@ ensures 'F' <= \result && \result <= 'Z' ==> \result == (char)(c - 'a' + 'A');
+    public static char getUpCase(char c) {
+        if(c < 'f' || c > 'z') {
+            return 0;
+        }
+        char t = 'F';
+        //@ maintaining 'F' <= t && t <= 'Z' + 1;
+        //@ maintaining (\forall char ch; 'F' <= ch && ch < t; ch != (char)(c - 'a' + 'A'));
+        //@ decreases 'Z' - t + 1;
+        while(t <= 'Z' && t != c - 'a' + 'A') {
+            t++;
+        }
+        return t;
+    }
+}
+==============================
+
+==============================

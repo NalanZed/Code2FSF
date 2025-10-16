@@ -1,0 +1,73 @@
+public class IsCommonMultipleBranch_Mutant4 {
+    //@ requires a != 0 && b != 0;
+    //@ ensures \result == (m % a == 0 && m % b == 0);
+    public static boolean isCommonMultiple(int a, int b, int m) {
+        if (m % a != 0) {
+            //@ assert m % a != 0;
+            return false;
+        }
+        if (m % b != 0) {
+            //@ assert m % a == 0 && m % b != 0;
+            return true;
+        }
+        //@ assert m % a == 0 && m % b == 0;
+        return true;
+    }
+}
+==============================
+/root/specgen/SpecGen/project/081402-specgen/tmp/IsCommonMultipleBranch_Mutant4.java:11: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081402-specgen/tmp/IsCommonMultipleBranch_Mutant4.java:3:) in method isCommonMultiple
+            return true;
+            ^
+/root/specgen/SpecGen/project/081402-specgen/tmp/IsCommonMultipleBranch_Mutant4.java:3: verify: Associated declaration: /root/specgen/SpecGen/project/081402-specgen/tmp/IsCommonMultipleBranch_Mutant4.java:11:
+    //@ ensures \result == (m % a == 0 && m % b == 0);
+        ^
+2 verification failures
+
+==============================
+public class IsCommonMultipleBranch_Mutant4 {
+    //@ requires a != 0 && b != 0;
+    //@ ensures \result == (m % a == 0 && m % b == 0);  
+    public static boolean isCommonMultiple(int a, int b, int m) {
+        if (m % a != 0) {
+            //@ assert m % a != 0;
+            return false;
+        }
+        if (m % b != 0) {
+            //@ assert m % a == 0 && m % b != 0;
+            return true;
+        }
+        //@ assert m % a == 0 && m % b == 0;
+        return true;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081402-specgen/tmp/IsCommonMultipleBranch_Mutant4.java:11: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081402-specgen/tmp/IsCommonMultipleBranch_Mutant4.java:3:) in method isCommonMultiple
+            return true;
+            ^
+/root/specgen/SpecGen/project/081402-specgen/tmp/IsCommonMultipleBranch_Mutant4.java:3: verify: Associated declaration: /root/specgen/SpecGen/project/081402-specgen/tmp/IsCommonMultipleBranch_Mutant4.java:11:
+    //@ ensures \result == (m % a == 0 && m % b == 0);  
+        ^
+2 verification failures
+
+==============================
+public class IsCommonMultipleBranch_Mutant4 {
+    //@ requires a != 0 && b != 0;
+ 
+    public static boolean isCommonMultiple(int a, int b, int m) {
+        if (m % a != 0) {
+            //@ assert m % a != 0;
+            return false;
+        }
+        if (m % b != 0) {
+            //@ assert m % a == 0 && m % b != 0;
+            return true;
+        }
+        //@ assert m % a == 0 && m % b == 0;
+        return true;
+    }
+}
+
+==============================
+
+==============================

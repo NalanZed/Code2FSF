@@ -1,0 +1,20 @@
+public class PowerOfTwoLoop_Original {
+
+    //@ requires n != Integer.MIN_VALUE;
+    //@ ensures \result <==> (n > 0 && (\exists int k; k >= 0; n == 1 << k));
+    public static boolean isPowerOfTwo(int n) {
+        if (n <= 0) {
+            return false;
+        }
+        //@ maintaining n > 0;
+        //@ maintaining (\exists int k; k >= 0; \old(n) == n * (1 << \count));
+        //@ decreases n;
+        while (n % 2 == 0) {
+            n /= 2;
+        }
+        return n == 1;
+    }
+}
+==============================
+
+==============================

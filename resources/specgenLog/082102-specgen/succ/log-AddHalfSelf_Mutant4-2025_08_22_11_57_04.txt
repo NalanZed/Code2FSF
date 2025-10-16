@@ -1,0 +1,781 @@
+public class AddHalfSelf_Mutant4{
+    //@ requires x >= 0 ==> x + (x/2) <= Integer.MAX_VALUE;
+    //@ requires x < 0 ==> x - ((-x)/2) >= Integer.MIN_VALUE;
+    //@ ensures \result == (x >= 0 ? x + (x/2) : x - ((-x)/2));
+    public static int addHalfSelf(int x){
+        int n = x;
+        int addNum = 0;
+        if(x < 0){
+            n = -x;
+        }
+        //@ maintaining 0 <= n && n <= \old(n);
+        //@ maintaining addNum == 2*((\old(n) - n)/2);
+        //@ decreases n;
+        while(n > 0){
+            if(n % 2 == 0){
+                addNum += 2;
+            }
+            n--;
+        }
+        if(x < 0){
+            return x - addNum;
+        }
+        else{
+            return x + addNum;
+        }
+    }
+}
+==============================
+/root/specgen/SpecGen/project/082102-specgen/tmp/AddHalfSelf_Mutant4.java:11: error: cannot find symbol
+        //@ maintaining 0 <= n && n <= \old(n);
+                                            ^
+  symbol:   variable n
+  location: class AddHalfSelf_Mutant4
+/root/specgen/SpecGen/project/082102-specgen/tmp/AddHalfSelf_Mutant4.java:12: error: cannot find symbol
+        //@ maintaining addNum == 2*((\old(n) - n)/2);
+                                           ^
+  symbol:   variable n
+  location: class AddHalfSelf_Mutant4
+2 errors
+
+==============================
+public class AddHalfSelf_Mutant4{
+    //@ requires x >= 0 ==> x + (x/2) <= Integer.MAX_VALUE;
+    //@ requires x < 0 ==> x - ((-x)/2) >= Integer.MIN_VALUE;
+    //@ ensures \result == (x >= 0 ? x + (x/2) : x - ((-x)/2));
+    public static int addHalfSelf(int x){
+        int n = x;
+        int addNum = 0;
+        if(x < 0){
+            n = -x;
+        }
+        //@ maintaining 0 <= n && n <= \old(n);
+        //@ maintaining addNum == 2*((\old(n) - n)/2);
+        //@ decreases n;
+        while(n > 0){
+            if(n % 2 == 0){
+                addNum += 2;
+            }
+            n--;
+        }
+        if(x < 0){
+            return x - addNum;
+        }
+        else{
+            return x + addNum;
+        }
+    }
+}
+==============================
+/root/specgen/SpecGen/project/082102-specgen/tmp/AddHalfSelf_Mutant4.java:11: error: cannot find symbol
+        //@ maintaining 0 <= n && n <= \old(n);
+                                            ^
+  symbol:   variable n
+  location: class AddHalfSelf_Mutant4
+/root/specgen/SpecGen/project/082102-specgen/tmp/AddHalfSelf_Mutant4.java:12: error: cannot find symbol
+        //@ maintaining addNum == 2*((\old(n) - n)/2);
+                                           ^
+  symbol:   variable n
+  location: class AddHalfSelf_Mutant4
+2 errors
+
+==============================
+public class AddHalfSelf_Mutant4{
+    //@ requires x >= 0 ==> x + (x/2) <= Integer.MAX_VALUE;
+    //@ requires x < 0 ==> x - ((-x)/2) >= Integer.MIN_VALUE;
+    //@ ensures \result == (x >= 0 ? x + (x/2) : x - ((-x)/2));
+    public static int addHalfSelf(int x){
+        int n = x;
+        int addNum = 0;
+        if(x < 0){
+            n = -x;
+        }
+        //@ maintaining 0 <= n;
+        //@ maintaining addNum == 2*((x < 0 ? -x : x) - n)/2;
+        //@ decreases n;
+        while(n > 0){
+            if(n % 2 == 0){
+                addNum += 2;
+            }
+            n--;
+        }
+        if(x < 0){
+            return x - addNum;
+        }
+        else{
+            return x + addNum;
+        }
+    }
+}
+==============================
+/root/specgen/SpecGen/project/082102-specgen/tmp/AddHalfSelf_Mutant4.java:24: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/082102-specgen/tmp/AddHalfSelf_Mutant4.java:4:) in method addHalfSelf
+            return x + addNum;
+            ^
+/root/specgen/SpecGen/project/082102-specgen/tmp/AddHalfSelf_Mutant4.java:4: verify: Associated declaration: /root/specgen/SpecGen/project/082102-specgen/tmp/AddHalfSelf_Mutant4.java:24:
+    //@ ensures \result == (x >= 0 ? x + (x/2) : x - ((-x)/2));
+        ^
+2 verification failures
+
+==============================
+public class AddHalfSelf_Mutant4{
+    //@ requires x >= 0 ==> x + (x/2) <= Integer.MAX_VALUE;
+    //@ requires x < 0 ==> x - ((-x)/2) >= Integer.MIN_VALUE;
+    //@ ensures \result == (x > 0 ? x + (x/2) : x - ((-x)/2));  
+    public static int addHalfSelf(int x){
+        int n = x;
+        int addNum = 0;
+        if(x < 0){
+            n = -x;
+        }
+        //@ maintaining 0 <= n;
+        //@ maintaining addNum == 2*((x < 0 ? -x : x) - n)/2;
+        //@ decreases n;
+        while(n > 0){
+            if(n % 2 == 0){
+                addNum += 2;
+            }
+            n--;
+        }
+        if(x < 0){
+            return x - addNum;
+        }
+        else{
+            return x + addNum;
+        }
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/082102-specgen/tmp/AddHalfSelf_Mutant4.java:24: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/082102-specgen/tmp/AddHalfSelf_Mutant4.java:4:) in method addHalfSelf
+            return x + addNum;
+            ^
+/root/specgen/SpecGen/project/082102-specgen/tmp/AddHalfSelf_Mutant4.java:4: verify: Associated declaration: /root/specgen/SpecGen/project/082102-specgen/tmp/AddHalfSelf_Mutant4.java:24:
+    //@ ensures \result == (x > 0 ? x + (x/2) : x - ((-x)/2));  
+        ^
+2 verification failures
+
+==============================
+public class AddHalfSelf_Mutant4{
+    //@ requires x >= 0 ==> x + (x/2) <= Integer.MAX_VALUE;
+    //@ requires x < 0 ==> x - ((-x)/2) >= Integer.MIN_VALUE;
+    //@ ensures \result == (x >= 0 ? x + (x/2) : x - ((-x)/2));  
+    public static int addHalfSelf(int x){
+        int n = x;
+        int addNum = 0;
+        if(x < 0){
+            n = -x;
+        }
+        //@ maintaining 0 <= n;
+        //@ maintaining addNum == 2*((x < 0 ? -x : x) - n)/2;
+        //@ decreases n;
+        while(n > 0){
+            if(n % 2 == 0){
+                addNum += 2;
+            }
+            n--;
+        }
+        if(x < 0){
+            return x - addNum;
+        }
+        else{
+            return x + addNum;
+        }
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/082102-specgen/tmp/AddHalfSelf_Mutant4.java:24: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/082102-specgen/tmp/AddHalfSelf_Mutant4.java:4:) in method addHalfSelf
+            return x + addNum;
+            ^
+/root/specgen/SpecGen/project/082102-specgen/tmp/AddHalfSelf_Mutant4.java:4: verify: Associated declaration: /root/specgen/SpecGen/project/082102-specgen/tmp/AddHalfSelf_Mutant4.java:24:
+    //@ ensures \result == (x >= 0 ? x + (x/2) : x - ((-x)/2));  
+        ^
+2 verification failures
+
+==============================
+public class AddHalfSelf_Mutant4{
+    //@ requires x >= 0 ==> x + (x/2) <= Integer.MAX_VALUE;
+    //@ requires x < 0 ==> x - ((-x)/2) >= Integer.MIN_VALUE;
+    //@ ensures \result == (x + 1 >= 0 ? x + (x/2) : x - ((-x)/2));  
+    public static int addHalfSelf(int x){
+        int n = x;
+        int addNum = 0;
+        if(x < 0){
+            n = -x;
+        }
+        //@ maintaining 0 <= n;
+        //@ maintaining addNum == 2*((x < 0 ? -x : x) - n)/2;
+        //@ decreases n;
+        while(n > 0){
+            if(n % 2 == 0){
+                addNum += 2;
+            }
+            n--;
+        }
+        if(x < 0){
+            return x - addNum;
+        }
+        else{
+            return x + addNum;
+        }
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/082102-specgen/tmp/AddHalfSelf_Mutant4.java:24: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/082102-specgen/tmp/AddHalfSelf_Mutant4.java:4:) in method addHalfSelf
+            return x + addNum;
+            ^
+/root/specgen/SpecGen/project/082102-specgen/tmp/AddHalfSelf_Mutant4.java:4: verify: Associated declaration: /root/specgen/SpecGen/project/082102-specgen/tmp/AddHalfSelf_Mutant4.java:24:
+    //@ ensures \result == (x + 1 >= 0 ? x + (x/2) : x - ((-x)/2));  
+        ^
+2 verification failures
+
+==============================
+public class AddHalfSelf_Mutant4{
+    //@ requires x >= 0 ==> x + (x/2) <= Integer.MAX_VALUE;
+    //@ requires x < 0 ==> x - ((-x)/2) >= Integer.MIN_VALUE;
+    //@ ensures \result == (x > 0 ? x + (x/2) : x + ((-x)/2));  
+    public static int addHalfSelf(int x){
+        int n = x;
+        int addNum = 0;
+        if(x < 0){
+            n = -x;
+        }
+        //@ maintaining 0 <= n;
+        //@ maintaining addNum == 2*((x < 0 ? -x : x) - n)/2;
+        //@ decreases n;
+        while(n > 0){
+            if(n % 2 == 0){
+                addNum += 2;
+            }
+            n--;
+        }
+        if(x < 0){
+            return x - addNum;
+        }
+        else{
+            return x + addNum;
+        }
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/082102-specgen/tmp/AddHalfSelf_Mutant4.java:24: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/082102-specgen/tmp/AddHalfSelf_Mutant4.java:4:) in method addHalfSelf
+            return x + addNum;
+            ^
+/root/specgen/SpecGen/project/082102-specgen/tmp/AddHalfSelf_Mutant4.java:4: verify: Associated declaration: /root/specgen/SpecGen/project/082102-specgen/tmp/AddHalfSelf_Mutant4.java:24:
+    //@ ensures \result == (x > 0 ? x + (x/2) : x + ((-x)/2));  
+        ^
+2 verification failures
+
+==============================
+public class AddHalfSelf_Mutant4{
+    //@ requires x >= 0 ==> x + (x/2) <= Integer.MAX_VALUE;
+    //@ requires x < 0 ==> x - ((-x)/2) >= Integer.MIN_VALUE;
+    //@ ensures \result == (x > 0 ? x - (x/2) : x + ((-x)/2));  
+    public static int addHalfSelf(int x){
+        int n = x;
+        int addNum = 0;
+        if(x < 0){
+            n = -x;
+        }
+        //@ maintaining 0 <= n;
+        //@ maintaining addNum == 2*((x < 0 ? -x : x) - n)/2;
+        //@ decreases n;
+        while(n > 0){
+            if(n % 2 == 0){
+                addNum += 2;
+            }
+            n--;
+        }
+        if(x < 0){
+            return x - addNum;
+        }
+        else{
+            return x + addNum;
+        }
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/082102-specgen/tmp/AddHalfSelf_Mutant4.java:24: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/082102-specgen/tmp/AddHalfSelf_Mutant4.java:4:) in method addHalfSelf
+            return x + addNum;
+            ^
+/root/specgen/SpecGen/project/082102-specgen/tmp/AddHalfSelf_Mutant4.java:4: verify: Associated declaration: /root/specgen/SpecGen/project/082102-specgen/tmp/AddHalfSelf_Mutant4.java:24:
+    //@ ensures \result == (x > 0 ? x - (x/2) : x + ((-x)/2));  
+        ^
+2 verification failures
+
+==============================
+public class AddHalfSelf_Mutant4{
+    //@ requires x >= 0 ==> x + (x/2) <= Integer.MAX_VALUE;
+    //@ requires x < 0 ==> x - ((-x)/2) >= Integer.MIN_VALUE;
+    //@ ensures \result == (x > 0 ? x - (x/2) : x - ((-x)/2));  
+    public static int addHalfSelf(int x){
+        int n = x;
+        int addNum = 0;
+        if(x < 0){
+            n = -x;
+        }
+        //@ maintaining 0 <= n;
+        //@ maintaining addNum == 2*((x < 0 ? -x : x) - n)/2;
+        //@ decreases n;
+        while(n > 0){
+            if(n % 2 == 0){
+                addNum += 2;
+            }
+            n--;
+        }
+        if(x < 0){
+            return x - addNum;
+        }
+        else{
+            return x + addNum;
+        }
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/082102-specgen/tmp/AddHalfSelf_Mutant4.java:24: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/082102-specgen/tmp/AddHalfSelf_Mutant4.java:4:) in method addHalfSelf
+            return x + addNum;
+            ^
+/root/specgen/SpecGen/project/082102-specgen/tmp/AddHalfSelf_Mutant4.java:4: verify: Associated declaration: /root/specgen/SpecGen/project/082102-specgen/tmp/AddHalfSelf_Mutant4.java:24:
+    //@ ensures \result == (x > 0 ? x - (x/2) : x - ((-x)/2));  
+        ^
+2 verification failures
+
+==============================
+public class AddHalfSelf_Mutant4{
+    //@ requires x >= 0 ==> x + (x/2) <= Integer.MAX_VALUE;
+    //@ requires x < 0 ==> x - ((-x)/2) >= Integer.MIN_VALUE;
+    //@ ensures \result == (x >= 0 ? x + (x/2) : x + ((-x)/2));  
+    public static int addHalfSelf(int x){
+        int n = x;
+        int addNum = 0;
+        if(x < 0){
+            n = -x;
+        }
+        //@ maintaining 0 <= n;
+        //@ maintaining addNum == 2*((x < 0 ? -x : x) - n)/2;
+        //@ decreases n;
+        while(n > 0){
+            if(n % 2 == 0){
+                addNum += 2;
+            }
+            n--;
+        }
+        if(x < 0){
+            return x - addNum;
+        }
+        else{
+            return x + addNum;
+        }
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/082102-specgen/tmp/AddHalfSelf_Mutant4.java:24: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/082102-specgen/tmp/AddHalfSelf_Mutant4.java:4:) in method addHalfSelf
+            return x + addNum;
+            ^
+/root/specgen/SpecGen/project/082102-specgen/tmp/AddHalfSelf_Mutant4.java:4: verify: Associated declaration: /root/specgen/SpecGen/project/082102-specgen/tmp/AddHalfSelf_Mutant4.java:24:
+    //@ ensures \result == (x >= 0 ? x + (x/2) : x + ((-x)/2));  
+        ^
+2 verification failures
+
+==============================
+public class AddHalfSelf_Mutant4{
+    //@ requires x >= 0 ==> x + (x/2) <= Integer.MAX_VALUE;
+    //@ requires x < 0 ==> x - ((-x)/2) >= Integer.MIN_VALUE;
+    //@ ensures \result == (x >= 0 ? x - (x/2) : x + ((-x)/2));  
+    public static int addHalfSelf(int x){
+        int n = x;
+        int addNum = 0;
+        if(x < 0){
+            n = -x;
+        }
+        //@ maintaining 0 <= n;
+        //@ maintaining addNum == 2*((x < 0 ? -x : x) - n)/2;
+        //@ decreases n;
+        while(n > 0){
+            if(n % 2 == 0){
+                addNum += 2;
+            }
+            n--;
+        }
+        if(x < 0){
+            return x - addNum;
+        }
+        else{
+            return x + addNum;
+        }
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/082102-specgen/tmp/AddHalfSelf_Mutant4.java:24: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/082102-specgen/tmp/AddHalfSelf_Mutant4.java:4:) in method addHalfSelf
+            return x + addNum;
+            ^
+/root/specgen/SpecGen/project/082102-specgen/tmp/AddHalfSelf_Mutant4.java:4: verify: Associated declaration: /root/specgen/SpecGen/project/082102-specgen/tmp/AddHalfSelf_Mutant4.java:24:
+    //@ ensures \result == (x >= 0 ? x - (x/2) : x + ((-x)/2));  
+        ^
+2 verification failures
+
+==============================
+public class AddHalfSelf_Mutant4{
+    //@ requires x >= 0 ==> x + (x/2) <= Integer.MAX_VALUE;
+    //@ requires x < 0 ==> x - ((-x)/2) >= Integer.MIN_VALUE;
+    //@ ensures \result == (x >= 0 ? x - (x/2) : x - ((-x)/2));  
+    public static int addHalfSelf(int x){
+        int n = x;
+        int addNum = 0;
+        if(x < 0){
+            n = -x;
+        }
+        //@ maintaining 0 <= n;
+        //@ maintaining addNum == 2*((x < 0 ? -x : x) - n)/2;
+        //@ decreases n;
+        while(n > 0){
+            if(n % 2 == 0){
+                addNum += 2;
+            }
+            n--;
+        }
+        if(x < 0){
+            return x - addNum;
+        }
+        else{
+            return x + addNum;
+        }
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/082102-specgen/tmp/AddHalfSelf_Mutant4.java:24: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/082102-specgen/tmp/AddHalfSelf_Mutant4.java:4:) in method addHalfSelf
+            return x + addNum;
+            ^
+/root/specgen/SpecGen/project/082102-specgen/tmp/AddHalfSelf_Mutant4.java:4: verify: Associated declaration: /root/specgen/SpecGen/project/082102-specgen/tmp/AddHalfSelf_Mutant4.java:24:
+    //@ ensures \result == (x >= 0 ? x - (x/2) : x - ((-x)/2));  
+        ^
+2 verification failures
+
+==============================
+public class AddHalfSelf_Mutant4{
+    //@ requires x >= 0 ==> x + (x/2) <= Integer.MAX_VALUE;
+    //@ requires x < 0 ==> x - ((-x)/2) >= Integer.MIN_VALUE;
+    //@ ensures \result == (x + 1 >= 0 ? x + (x/2) : x + ((-x)/2));  
+    public static int addHalfSelf(int x){
+        int n = x;
+        int addNum = 0;
+        if(x < 0){
+            n = -x;
+        }
+        //@ maintaining 0 <= n;
+        //@ maintaining addNum == 2*((x < 0 ? -x : x) - n)/2;
+        //@ decreases n;
+        while(n > 0){
+            if(n % 2 == 0){
+                addNum += 2;
+            }
+            n--;
+        }
+        if(x < 0){
+            return x - addNum;
+        }
+        else{
+            return x + addNum;
+        }
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/082102-specgen/tmp/AddHalfSelf_Mutant4.java:24: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/082102-specgen/tmp/AddHalfSelf_Mutant4.java:4:) in method addHalfSelf
+            return x + addNum;
+            ^
+/root/specgen/SpecGen/project/082102-specgen/tmp/AddHalfSelf_Mutant4.java:4: verify: Associated declaration: /root/specgen/SpecGen/project/082102-specgen/tmp/AddHalfSelf_Mutant4.java:24:
+    //@ ensures \result == (x + 1 >= 0 ? x + (x/2) : x + ((-x)/2));  
+        ^
+2 verification failures
+
+==============================
+public class AddHalfSelf_Mutant4{
+    //@ requires x >= 0 ==> x + (x/2) <= Integer.MAX_VALUE;
+    //@ requires x < 0 ==> x - ((-x)/2) >= Integer.MIN_VALUE;
+    //@ ensures \result == (x + 1 >= 0 ? x - (x/2) : x + ((-x)/2));  
+    public static int addHalfSelf(int x){
+        int n = x;
+        int addNum = 0;
+        if(x < 0){
+            n = -x;
+        }
+        //@ maintaining 0 <= n;
+        //@ maintaining addNum == 2*((x < 0 ? -x : x) - n)/2;
+        //@ decreases n;
+        while(n > 0){
+            if(n % 2 == 0){
+                addNum += 2;
+            }
+            n--;
+        }
+        if(x < 0){
+            return x - addNum;
+        }
+        else{
+            return x + addNum;
+        }
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/082102-specgen/tmp/AddHalfSelf_Mutant4.java:24: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/082102-specgen/tmp/AddHalfSelf_Mutant4.java:4:) in method addHalfSelf
+            return x + addNum;
+            ^
+/root/specgen/SpecGen/project/082102-specgen/tmp/AddHalfSelf_Mutant4.java:4: verify: Associated declaration: /root/specgen/SpecGen/project/082102-specgen/tmp/AddHalfSelf_Mutant4.java:24:
+    //@ ensures \result == (x + 1 >= 0 ? x - (x/2) : x + ((-x)/2));  
+        ^
+2 verification failures
+
+==============================
+public class AddHalfSelf_Mutant4{
+    //@ requires x >= 0 ==> x + (x/2) <= Integer.MAX_VALUE;
+    //@ requires x < 0 ==> x - ((-x)/2) >= Integer.MIN_VALUE;
+    //@ ensures \result == (x + 1 >= 0 ? x - (x/2) : x - ((-x)/2));  
+    public static int addHalfSelf(int x){
+        int n = x;
+        int addNum = 0;
+        if(x < 0){
+            n = -x;
+        }
+        //@ maintaining 0 <= n;
+        //@ maintaining addNum == 2*((x < 0 ? -x : x) - n)/2;
+        //@ decreases n;
+        while(n > 0){
+            if(n % 2 == 0){
+                addNum += 2;
+            }
+            n--;
+        }
+        if(x < 0){
+            return x - addNum;
+        }
+        else{
+            return x + addNum;
+        }
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/082102-specgen/tmp/AddHalfSelf_Mutant4.java:24: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/082102-specgen/tmp/AddHalfSelf_Mutant4.java:4:) in method addHalfSelf
+            return x + addNum;
+            ^
+/root/specgen/SpecGen/project/082102-specgen/tmp/AddHalfSelf_Mutant4.java:4: verify: Associated declaration: /root/specgen/SpecGen/project/082102-specgen/tmp/AddHalfSelf_Mutant4.java:24:
+    //@ ensures \result == (x + 1 >= 0 ? x - (x/2) : x - ((-x)/2));  
+        ^
+2 verification failures
+
+==============================
+public class AddHalfSelf_Mutant4{
+    //@ requires x >= 0 ==> x + (x/2) <= Integer.MAX_VALUE;
+    //@ requires x < 0 ==> x - ((-x)/2) >= Integer.MIN_VALUE;
+ 
+    public static int addHalfSelf(int x){
+        int n = x;
+        int addNum = 0;
+        if(x < 0){
+            n = -x;
+        }
+        //@ maintaining 0 <= n;
+        //@ maintaining addNum == 2*((x < 0 ? -x : x) - n)/2;
+        //@ decreases n;
+        while(n > 0){
+            if(n % 2 == 0){
+                addNum += 2;
+            }
+            n--;
+        }
+        if(x < 0){
+            return x - addNum;
+        }
+        else{
+            return x + addNum;
+        }
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/082102-specgen/tmp/AddHalfSelf_Mutant4.java:12: verify: The prover cannot establish an assertion (LoopInvariant) in method addHalfSelf
+        //@ maintaining addNum == 2*((x < 0 ? -x : x) - n)/2;
+            ^
+1 verification failure
+
+==============================
+public class AddHalfSelf_Mutant4{
+    //@ requires x >= 0 ==> x + (x/2) <= Integer.MAX_VALUE;
+    //@ requires x < 0 ==> x - ((-x)/2) >= Integer.MIN_VALUE;
+ 
+    public static int addHalfSelf(int x){
+        int n = x;
+        int addNum = 0;
+        if(x < 0){
+            n = -x;
+        }
+        //@ maintaining 0 <= n;
+        //@ maintaining addNum == 2*((x < 0 ? -x : x) - n)/2;  
+        //@ decreases n;
+        while(n > 0){
+            if(n % 2 == 0){
+                addNum += 2;
+            }
+            n--;
+        }
+        if(x < 0){
+            return x - addNum;
+        }
+        else{
+            return x + addNum;
+        }
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/082102-specgen/tmp/AddHalfSelf_Mutant4.java:12: verify: The prover cannot establish an assertion (LoopInvariant) in method addHalfSelf
+        //@ maintaining addNum == 2*((x < 0 ? -x : x) - n)/2;  
+            ^
+1 verification failure
+
+==============================
+public class AddHalfSelf_Mutant4{
+    //@ requires x >= 0 ==> x + (x/2) <= Integer.MAX_VALUE;
+    //@ requires x < 0 ==> x - ((-x)/2) >= Integer.MIN_VALUE;
+ 
+    public static int addHalfSelf(int x){
+        int n = x;
+        int addNum = 0;
+        if(x < 0){
+            n = -x;
+        }
+        //@ maintaining 0 <= n;
+        //@ maintaining addNum == 2*((x <= 0 ? -x : x) - n)/2;  
+        //@ decreases n;
+        while(n > 0){
+            if(n % 2 == 0){
+                addNum += 2;
+            }
+            n--;
+        }
+        if(x < 0){
+            return x - addNum;
+        }
+        else{
+            return x + addNum;
+        }
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/082102-specgen/tmp/AddHalfSelf_Mutant4.java:12: verify: The prover cannot establish an assertion (LoopInvariant) in method addHalfSelf
+        //@ maintaining addNum == 2*((x <= 0 ? -x : x) - n)/2;  
+            ^
+1 verification failure
+
+==============================
+public class AddHalfSelf_Mutant4{
+    //@ requires x >= 0 ==> x + (x/2) <= Integer.MAX_VALUE;
+    //@ requires x < 0 ==> x - ((-x)/2) >= Integer.MIN_VALUE;
+ 
+    public static int addHalfSelf(int x){
+        int n = x;
+        int addNum = 0;
+        if(x < 0){
+            n = -x;
+        }
+        //@ maintaining 0 <= n;
+        //@ maintaining addNum == 2*((x < 0 ? -x : x) + n)/2;  
+        //@ decreases n;
+        while(n > 0){
+            if(n % 2 == 0){
+                addNum += 2;
+            }
+            n--;
+        }
+        if(x < 0){
+            return x - addNum;
+        }
+        else{
+            return x + addNum;
+        }
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/082102-specgen/tmp/AddHalfSelf_Mutant4.java:12: verify: The prover cannot establish an assertion (LoopInvariantBeforeLoop) in method addHalfSelf
+        //@ maintaining addNum == 2*((x < 0 ? -x : x) + n)/2;  
+            ^
+1 verification failure
+
+==============================
+public class AddHalfSelf_Mutant4{
+    //@ requires x >= 0 ==> x + (x/2) <= Integer.MAX_VALUE;
+    //@ requires x < 0 ==> x - ((-x)/2) >= Integer.MIN_VALUE;
+ 
+    public static int addHalfSelf(int x){
+        int n = x;
+        int addNum = 0;
+        if(x < 0){
+            n = -x;
+        }
+        //@ maintaining 0 <= n;
+        //@ maintaining addNum == 2*((x <= 0 ? -x : x) + n)/2;  
+        //@ decreases n;
+        while(n > 0){
+            if(n % 2 == 0){
+                addNum += 2;
+            }
+            n--;
+        }
+        if(x < 0){
+            return x - addNum;
+        }
+        else{
+            return x + addNum;
+        }
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/082102-specgen/tmp/AddHalfSelf_Mutant4.java:12: verify: The prover cannot establish an assertion (LoopInvariant) in method addHalfSelf
+        //@ maintaining addNum == 2*((x <= 0 ? -x : x) + n)/2;  
+            ^
+1 verification failure
+
+==============================
+public class AddHalfSelf_Mutant4{
+    //@ requires x >= 0 ==> x + (x/2) <= Integer.MAX_VALUE;
+    //@ requires x < 0 ==> x - ((-x)/2) >= Integer.MIN_VALUE;
+ 
+    public static int addHalfSelf(int x){
+        int n = x;
+        int addNum = 0;
+        if(x < 0){
+            n = -x;
+        }
+        //@ maintaining 0 <= n;
+ 
+        //@ decreases n;
+        while(n > 0){
+            if(n % 2 == 0){
+                addNum += 2;
+            }
+            n--;
+        }
+        if(x < 0){
+            return x - addNum;
+        }
+        else{
+            return x + addNum;
+        }
+    }
+}
+
+==============================
+
+==============================

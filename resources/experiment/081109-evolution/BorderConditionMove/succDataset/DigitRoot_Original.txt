@@ -1,0 +1,28 @@
+START ORIGINAL CODE
+public class DigitRoot_Original {
+
+    public static int function(int num) {
+        while (num >= 10) {
+            int sum = 0;
+            while (num > 0) {
+                sum = sum + (num % 10);
+                num = num / 10;
+            }
+            num = sum;
+        }
+        return num;
+    }
+}
+*END* ORIGINAL CODE
+START ORIGINAL FSF
+T1: num < 10
+D1: return_value == num
+T2: num >= 10
+D2: return_value == num % 9 || return_value == 9
+*END* ORIGINAL FSF
+START MODIFIED FSF
+T1: num <= 10
+D1: return_value == num
+T2: num > 10
+D2: return_value == num % 9 || return_value == 9
+*END* MODIFIED FSF

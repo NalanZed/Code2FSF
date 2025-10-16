@@ -1,0 +1,17 @@
+public class NumberOfCuts_Original {
+
+    //@ requires n >= 1;
+    //@ ensures \result == (n == 1 ? 0 : (n % 2 == 0 ? n / 2 : n));
+    public static int numberOfCuts(int n) {
+        if (n == 1) {
+            return 0;
+        }
+        if (n % 2 == 0) {
+            return n / 2;
+        }
+        return n;
+    }
+}
+==============================
+
+==============================

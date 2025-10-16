@@ -1,0 +1,157 @@
+public class XOR_Mutant5 {
+    //@ ensures \result == (b1 != b2);
+    //@ ensures \result <==> (b1 && !b2) || (!b1 && b2);
+    public static boolean xor(boolean b1, boolean b2) {
+        if(b1 == true) {
+            if(b2 == true) {
+                return false;
+            }
+            else {
+                return b1;
+            }
+        }
+        else {
+            if(b2 == true) {
+                return b1;
+            }
+            else {
+                return false;
+            }
+        }
+    }
+}
+==============================
+/root/specgen/SpecGen/project/081402-specgen/tmp/XOR_Mutant5.java:15: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081402-specgen/tmp/XOR_Mutant5.java:2:) in method xor
+                return b1;
+                ^
+/root/specgen/SpecGen/project/081402-specgen/tmp/XOR_Mutant5.java:2: verify: Associated declaration: /root/specgen/SpecGen/project/081402-specgen/tmp/XOR_Mutant5.java:15:
+    //@ ensures \result == (b1 != b2);
+        ^
+2 verification failures
+
+==============================
+public class XOR_Mutant5 {
+    //@ ensures \result == (b1 != b2);  
+    //@ ensures \result <==> (b1 && !b2) || (!b1 && b2);
+    public static boolean xor(boolean b1, boolean b2) {
+        if(b1 == true) {
+            if(b2 == true) {
+                return false;
+            }
+            else {
+                return b1;
+            }
+        }
+        else {
+            if(b2 == true) {
+                return b1;
+            }
+            else {
+                return false;
+            }
+        }
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081402-specgen/tmp/XOR_Mutant5.java:15: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081402-specgen/tmp/XOR_Mutant5.java:2:) in method xor
+                return b1;
+                ^
+/root/specgen/SpecGen/project/081402-specgen/tmp/XOR_Mutant5.java:2: verify: Associated declaration: /root/specgen/SpecGen/project/081402-specgen/tmp/XOR_Mutant5.java:15:
+    //@ ensures \result == (b1 != b2);  
+        ^
+2 verification failures
+
+==============================
+public class XOR_Mutant5 {
+ 
+    //@ ensures \result <==> (b1 && !b2) || (!b1 && b2);
+    public static boolean xor(boolean b1, boolean b2) {
+        if(b1 == true) {
+            if(b2 == true) {
+                return false;
+            }
+            else {
+                return b1;
+            }
+        }
+        else {
+            if(b2 == true) {
+                return b1;
+            }
+            else {
+                return false;
+            }
+        }
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081402-specgen/tmp/XOR_Mutant5.java:15: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081402-specgen/tmp/XOR_Mutant5.java:3:) in method xor
+                return b1;
+                ^
+/root/specgen/SpecGen/project/081402-specgen/tmp/XOR_Mutant5.java:3: verify: Associated declaration: /root/specgen/SpecGen/project/081402-specgen/tmp/XOR_Mutant5.java:15:
+    //@ ensures \result <==> (b1 && !b2) || (!b1 && b2);
+        ^
+2 verification failures
+
+==============================
+public class XOR_Mutant5 {
+ 
+    //@ ensures \result <==> (b1 && !b2) || (!b1 && b2);  
+    public static boolean xor(boolean b1, boolean b2) {
+        if(b1 == true) {
+            if(b2 == true) {
+                return false;
+            }
+            else {
+                return b1;
+            }
+        }
+        else {
+            if(b2 == true) {
+                return b1;
+            }
+            else {
+                return false;
+            }
+        }
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081402-specgen/tmp/XOR_Mutant5.java:15: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081402-specgen/tmp/XOR_Mutant5.java:3:) in method xor
+                return b1;
+                ^
+/root/specgen/SpecGen/project/081402-specgen/tmp/XOR_Mutant5.java:3: verify: Associated declaration: /root/specgen/SpecGen/project/081402-specgen/tmp/XOR_Mutant5.java:15:
+    //@ ensures \result <==> (b1 && !b2) || (!b1 && b2);  
+        ^
+2 verification failures
+
+==============================
+public class XOR_Mutant5 {
+ 
+ 
+    public static boolean xor(boolean b1, boolean b2) {
+        if(b1 == true) {
+            if(b2 == true) {
+                return false;
+            }
+            else {
+                return b1;
+            }
+        }
+        else {
+            if(b2 == true) {
+                return b1;
+            }
+            else {
+                return false;
+            }
+        }
+    }
+}
+
+==============================
+
+==============================

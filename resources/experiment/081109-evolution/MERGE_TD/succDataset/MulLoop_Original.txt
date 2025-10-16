@@ -1,0 +1,315 @@
+START ORIGINAL CODE
+
+public class MulLoop_Original {
+
+	public static int mulLoop(int a, int b) {
+        int res = 0;
+        if (b >= 0) {
+            for(int i = 0; i < b; i++) {
+                res = res + a;
+            }
+        } else {
+            for(int i = 0; i < -b; i++) {
+                res = res - a;
+            }
+        }
+        return res;
+    }
+
+}
+
+*END* ORIGINAL CODE
+START ORIGINAL FSF
+T1: b == 0
+D1: res == 0
+T2: b > 0
+D2: res == a * b
+T3: b < 0
+D3: res == a * b
+*END* ORIGINAL FSF
+START MODIFIED FSF
+T1: (b == 0) || (b > 0)
+D1: res == 0
+T2: b < 0
+D2: res == a * b
+*END* MODIFIED FSF
+START ORIGINAL CODE
+
+public class MulLoop_Original {
+
+	public static int mulLoop(int a, int b) {
+        int res = 0;
+        if (b >= 0) {
+            for(int i = 0; i < b; i++) {
+                res = res + a;
+            }
+        } else {
+            for(int i = 0; i < -b; i++) {
+                res = res - a;
+            }
+        }
+        return res;
+    }
+
+}
+
+*END* ORIGINAL CODE
+START ORIGINAL FSF
+T1: b == 0
+D1: res == 0
+T2: b > 0
+D2: res == a * b
+T3: b < 0
+D3: res == a * b
+*END* ORIGINAL FSF
+START MODIFIED FSF
+T1: b > 0
+D1: res == a * b
+T2: (b < 0) || (b == 0)
+D2: res == a * b
+*END* MODIFIED FSF
+START ORIGINAL CODE
+
+public class MulLoop_Original {
+
+	public static int mulLoop(int a, int b) {
+        int res = 0;
+        if (b >= 0) {
+            for(int i = 0; i < b; i++) {
+                res = res + a;
+            }
+        } else {
+            for(int i = 0; i < -b; i++) {
+                res = res - a;
+            }
+        }
+        return res;
+    }
+
+}
+
+*END* ORIGINAL CODE
+START ORIGINAL FSF
+T1: b == 0
+D1: res == 0
+T2: b > 0
+D2: res == a * b
+T3: b < 0
+D3: res == a * b
+*END* ORIGINAL FSF
+START MODIFIED FSF
+T1: (b == 0) || (b < 0)
+D1: res == 0
+T2: b > 0
+D2: res == a * b
+*END* MODIFIED FSF
+START ORIGINAL CODE
+
+public class MulLoop_Original {
+
+	public static int mulLoop(int a, int b) {
+        int res = 0;
+        if (b >= 0) {
+            for(int i = 0; i < b; i++) {
+                res = res + a;
+            }
+        } else {
+            for(int i = 0; i < -b; i++) {
+                res = res - a;
+            }
+        }
+        return res;
+    }
+
+}
+
+*END* ORIGINAL CODE
+START ORIGINAL FSF
+T1: b == 0
+D1: res == 0
+T2: b > 0
+D2: res == a * b
+T3: b < 0
+D3: res == a * b
+*END* ORIGINAL FSF
+START MODIFIED FSF
+T1: (b > 0) || (b == 0)
+D1: res == a * b
+T2: b < 0
+D2: res == a * b
+*END* MODIFIED FSF
+START ORIGINAL CODE
+
+public class MulLoop_Original {
+
+	public static int mulLoop(int a, int b) {
+        int res = 0;
+        if (b >= 0) {
+            for(int i = 0; i < b; i++) {
+                res = res + a;
+            }
+        } else {
+            for(int i = 0; i < -b; i++) {
+                res = res - a;
+            }
+        }
+        return res;
+    }
+
+}
+
+*END* ORIGINAL CODE
+START ORIGINAL FSF
+T1: b == 0
+D1: res == 0
+T2: b > 0
+D2: res == a * b
+T3: b < 0
+D3: res == a * b
+*END* ORIGINAL FSF
+START MODIFIED FSF
+T1: (b == 0) || (b < 0)
+D1: res == 0
+T2: b > 0
+D2: res == a * b
+*END* MODIFIED FSF
+START ORIGINAL CODE
+
+public class MulLoop_Original {
+
+	public static int mulLoop(int a, int b) {
+        int res = 0;
+        if (b >= 0) {
+            for(int i = 0; i < b; i++) {
+                res = res + a;
+            }
+        } else {
+            for(int i = 0; i < -b; i++) {
+                res = res - a;
+            }
+        }
+        return res;
+    }
+
+}
+
+*END* ORIGINAL CODE
+START ORIGINAL FSF
+T1: b == 0
+D1: res == 0
+T2: b > 0
+D2: res == a * b
+T3: b < 0
+D3: res == a * b
+*END* ORIGINAL FSF
+START MODIFIED FSF
+T1: (b > 0) || (b == 0)
+D1: res == a * b
+T2: b < 0
+D2: res == a * b
+*END* MODIFIED FSF
+START ORIGINAL CODE
+
+public class MulLoop_Original {
+
+	public static int mulLoop(int a, int b) {
+        int res = 0;
+        if (b >= 0) {
+            for(int i = 0; i < b; i++) {
+                res = res + a;
+            }
+        } else {
+            for(int i = 0; i < -b; i++) {
+                res = res - a;
+            }
+        }
+        return res;
+    }
+
+}
+
+*END* ORIGINAL CODE
+START ORIGINAL FSF
+T1: b == 0
+D1: res == 0
+T2: b > 0
+D2: res == a * b
+T3: b < 0
+D3: res == a * b
+*END* ORIGINAL FSF
+START MODIFIED FSF
+T1: (b == 0) || (b > 0)
+D1: res == 0
+T2: b < 0
+D2: res == a * b
+*END* MODIFIED FSF
+START ORIGINAL CODE
+
+public class MulLoop_Original {
+
+	public static int mulLoop(int a, int b) {
+        int res = 0;
+        if (b >= 0) {
+            for(int i = 0; i < b; i++) {
+                res = res + a;
+            }
+        } else {
+            for(int i = 0; i < -b; i++) {
+                res = res - a;
+            }
+        }
+        return res;
+    }
+
+}
+
+*END* ORIGINAL CODE
+START ORIGINAL FSF
+T1: b == 0
+D1: res == 0
+T2: b > 0
+D2: res == a * b
+T3: b < 0
+D3: res == a * b
+*END* ORIGINAL FSF
+START MODIFIED FSF
+T1: (b == 0) || (b > 0)
+D1: res == 0
+T2: b < 0
+D2: res == a * b
+*END* MODIFIED FSF
+START ORIGINAL CODE
+
+public class MulLoop_Original {
+
+	public static int mulLoop(int a, int b) {
+        int res = 0;
+        if (b >= 0) {
+            for(int i = 0; i < b; i++) {
+                res = res + a;
+            }
+        } else {
+            for(int i = 0; i < -b; i++) {
+                res = res - a;
+            }
+        }
+        return res;
+    }
+
+}
+
+*END* ORIGINAL CODE
+START ORIGINAL FSF
+T1: b == 0
+D1: res == 0
+T2: b > 0
+D2: res == a * b
+T3: b < 0
+D3: res == a * b
+*END* ORIGINAL FSF
+START MODIFIED FSF
+T1: b > 0
+D1: res == a * b
+T2: (b < 0) || (b == 0)
+D2: res == a * b
+*END* MODIFIED FSF

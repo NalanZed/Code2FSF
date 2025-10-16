@@ -1,0 +1,17 @@
+public class Return100_Mutant4 {
+    //@ ensures \result == 101;  // Note: Due to mutant initialization (res=1), result is 101 instead of 100
+    public static int return100 () {
+        int res = 1; // CHANGED: initialized res to 1 instead of 0
+        int i = 0;
+        //@ maintaining res == 1 + i;
+        //@ maintaining 0 <= i && i <= 100;
+        //@ decreases 100 - i;
+        for(i = 0; i < 100; i++) {
+            res = res + 1;
+        }
+        return res;
+    }
+}
+==============================
+
+==============================

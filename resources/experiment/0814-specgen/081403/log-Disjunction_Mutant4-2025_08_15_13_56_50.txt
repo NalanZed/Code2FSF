@@ -1,0 +1,17 @@
+public class Disjunction_Mutant4 {
+    /*@ ensures \result == (!b1 && b2);
+      @ ensures b1 == true ==> \result == false;
+      @ ensures b2 == true && b1 == false ==> \result == true;
+      @ ensures b1 == false && b2 == false ==> \result == false;
+      @*/
+    public static boolean disjunctOf(boolean b1, boolean b2) {
+        if(b1 == true)
+            return false;
+        if(b2 == true)
+            return true;
+        return false;
+    }
+}
+==============================
+
+==============================

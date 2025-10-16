@@ -1,0 +1,163 @@
+public class XOR_Mutant2 {
+    /*@ ensures \result == (b1 != b2);
+      @ ensures \result <==> (b1 && !b2) || (!b1 && b2);
+      @*/
+    public static boolean xor(boolean b1, boolean b2) {
+        if(b1 == true) {
+            if(b1 == true) {
+                //@ assert b1 && b1;
+                return false;
+            }
+            else {
+                //@ assert b1 && !b1;
+                return true;
+            }
+        }
+        else {
+            if(b2 == true) {
+                //@ assert !b1 && b2;
+                return true;
+            }
+            else {
+                //@ assert !b1 && !b2;
+                return false;
+            }
+        }
+    }
+}
+==============================
+/root/specgen/SpecGen/project/081402-specgen/tmp/XOR_Mutant2.java:9: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081402-specgen/tmp/XOR_Mutant2.java:2:) in method xor
+                return false;
+                ^
+/root/specgen/SpecGen/project/081402-specgen/tmp/XOR_Mutant2.java:2: verify: Associated declaration: /root/specgen/SpecGen/project/081402-specgen/tmp/XOR_Mutant2.java:9:
+    /*@ ensures \result == (b1 != b2);
+        ^
+2 verification failures
+
+==============================
+public class XOR_Mutant2 {
+    /*@ ensures \result == (b1 != b2);  
+      @ ensures \result <==> (b1 && !b2) || (!b1 && b2);
+      @*/
+    public static boolean xor(boolean b1, boolean b2) {
+        if(b1 == true) {
+            if(b1 == true) {
+                //@ assert b1 && b1;
+                return false;
+            }
+            else {
+                //@ assert b1 && !b1;
+                return true;
+            }
+        }
+        else {
+            if(b2 == true) {
+                //@ assert !b1 && b2;
+                return true;
+            }
+            else {
+                //@ assert !b1 && !b2;
+                return false;
+            }
+        }
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081402-specgen/tmp/XOR_Mutant2.java:9: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081402-specgen/tmp/XOR_Mutant2.java:2:) in method xor
+                return false;
+                ^
+/root/specgen/SpecGen/project/081402-specgen/tmp/XOR_Mutant2.java:2: verify: Associated declaration: /root/specgen/SpecGen/project/081402-specgen/tmp/XOR_Mutant2.java:9:
+    /*@ ensures \result == (b1 != b2);  
+        ^
+2 verification failures
+
+==============================
+public class XOR_Mutant2 {
+ 
+      @ ensures \result <==> (b1 && !b2) || (!b1 && b2);
+      @*/
+    public static boolean xor(boolean b1, boolean b2) {
+        if(b1 == true) {
+            if(b1 == true) {
+                //@ assert b1 && b1;
+                return false;
+            }
+            else {
+                //@ assert b1 && !b1;
+                return true;
+            }
+        }
+        else {
+            if(b2 == true) {
+                //@ assert !b1 && b2;
+                return true;
+            }
+            else {
+                //@ assert !b1 && !b2;
+                return false;
+            }
+        }
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081402-specgen/tmp/XOR_Mutant2.java:3: error: illegal character: '\'
+      @ ensures \result <==> (b1 && !b2) || (!b1 && b2);
+                ^
+/root/specgen/SpecGen/project/081402-specgen/tmp/XOR_Mutant2.java:3: error: illegal start of type
+      @ ensures \result <==> (b1 && !b2) || (!b1 && b2);
+                        ^
+/root/specgen/SpecGen/project/081402-specgen/tmp/XOR_Mutant2.java:3: error: <identifier> expected
+      @ ensures \result <==> (b1 && !b2) || (!b1 && b2);
+                                ^
+/root/specgen/SpecGen/project/081402-specgen/tmp/XOR_Mutant2.java:3: error: <identifier> expected
+      @ ensures \result <==> (b1 && !b2) || (!b1 && b2);
+                                       ^
+/root/specgen/SpecGen/project/081402-specgen/tmp/XOR_Mutant2.java:3: error: <identifier> expected
+      @ ensures \result <==> (b1 && !b2) || (!b1 && b2);
+                                                ^
+/root/specgen/SpecGen/project/081402-specgen/tmp/XOR_Mutant2.java:3: error: <identifier> expected
+      @ ensures \result <==> (b1 && !b2) || (!b1 && b2);
+                                                      ^
+/root/specgen/SpecGen/project/081402-specgen/tmp/XOR_Mutant2.java:4: error: <identifier> expected
+      @*/
+       ^
+7 errors
+
+==============================
+public class XOR_Mutant2 {
+ 
+ 
+      @*/
+    public static boolean xor(boolean b1, boolean b2) {
+        if(b1 == true) {
+            if(b1 == true) {
+                //@ assert b1 && b1;
+                return false;
+            }
+            else {
+                //@ assert b1 && !b1;
+                return true;
+            }
+        }
+        else {
+            if(b2 == true) {
+                //@ assert !b1 && b2;
+                return true;
+            }
+            else {
+                //@ assert !b1 && !b2;
+                return false;
+            }
+        }
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081402-specgen/tmp/XOR_Mutant2.java:4: error: <identifier> expected
+      @*/
+       ^
+1 error
+
+==============================

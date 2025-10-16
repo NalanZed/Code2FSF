@@ -1,0 +1,64 @@
+public class SmallestEvenMulBranch_Mutant2 {
+
+    //@ requires n >= 1;
+    //@ ensures n % 2 == 0 ==> \result == n + 1;
+    //@ ensures n % 2 != 0 ==> \result == 2 * n;
+    //@ ensures \result % 2 == 0;  // The result should still be even (though mutant may violate this)
+    public static int smallestEvenMultiple(int n) {
+        if (n % 2 == 0) {
+            return n + 1;
+        }
+        return 2 * n;
+    }
+}
+==============================
+/root/specgen/SpecGen/project/081402-specgen/tmp/SmallestEvenMulBranch_Mutant2.java:9: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081402-specgen/tmp/SmallestEvenMulBranch_Mutant2.java:6:) in method smallestEvenMultiple
+            return n + 1;
+            ^
+/root/specgen/SpecGen/project/081402-specgen/tmp/SmallestEvenMulBranch_Mutant2.java:6: verify: Associated declaration: /root/specgen/SpecGen/project/081402-specgen/tmp/SmallestEvenMulBranch_Mutant2.java:9:
+    //@ ensures \result % 2 == 0;  // The result should still be even (though mutant may violate this)
+        ^
+2 verification failures
+
+==============================
+public class SmallestEvenMulBranch_Mutant2 {
+
+    //@ requires n >= 1;
+    //@ ensures n % 2 == 0 ==> \result == n + 1;
+    //@ ensures n % 2 != 0 ==> \result == 2 * n;
+    //@ ensures \result % 2 == 0;  // The result should still be even (though mutant may violate this)  
+    public static int smallestEvenMultiple(int n) {
+        if (n % 2 == 0) {
+            return n + 1;
+        }
+        return 2 * n;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081402-specgen/tmp/SmallestEvenMulBranch_Mutant2.java:9: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081402-specgen/tmp/SmallestEvenMulBranch_Mutant2.java:6:) in method smallestEvenMultiple
+            return n + 1;
+            ^
+/root/specgen/SpecGen/project/081402-specgen/tmp/SmallestEvenMulBranch_Mutant2.java:6: verify: Associated declaration: /root/specgen/SpecGen/project/081402-specgen/tmp/SmallestEvenMulBranch_Mutant2.java:9:
+    //@ ensures \result % 2 == 0;  // The result should still be even (though mutant may violate this)  
+        ^
+2 verification failures
+
+==============================
+public class SmallestEvenMulBranch_Mutant2 {
+
+    //@ requires n >= 1;
+    //@ ensures n % 2 == 0 ==> \result == n + 1;
+    //@ ensures n % 2 != 0 ==> \result == 2 * n;
+ 
+    public static int smallestEvenMultiple(int n) {
+        if (n % 2 == 0) {
+            return n + 1;
+        }
+        return 2 * n;
+    }
+}
+
+==============================
+
+==============================

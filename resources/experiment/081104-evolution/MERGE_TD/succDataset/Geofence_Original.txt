@@ -1,0 +1,312 @@
+START ORIGINAL CODE
+
+public class Geofence_Original {
+    public static int geofence(int x, int y,int limitX, int limitY) {
+        int alarm = 0;
+        if (x < 0 || x > limitX) {
+            alarm = 1;
+        }
+        if (y < 0 || y > limitY) {
+            alarm = 1;
+        }
+        return alarm;
+    }
+}
+
+*END* ORIGINAL CODE
+START ORIGINAL FSF
+T1: x < 0 || x > limitX || y < 0 || y > limitY
+D1: alarm == 1
+T2: x >= 0 && x <= limitX && y >= 0 && y <= limitY
+D2: alarm == 0
+*END* ORIGINAL FSF
+START MODIFIED FSF
+T1: (x < 0 || x > limitX || y < 0 || y > limitY) || (x >= 0 && x <= limitX && y >= 0 && y <= limitY)
+D1: alarm == 1
+*END* MODIFIED FSF
+START ORIGINAL CODE
+
+public class Geofence_Original {
+    public static int geofence(int x, int y,int limitX, int limitY) {
+        int alarm = 0;
+        if (x < 0 || x > limitX) {
+            alarm = 1;
+        }
+        if (y < 0 || y > limitY) {
+            alarm = 1;
+        }
+        return alarm;
+    }
+}
+
+*END* ORIGINAL CODE
+START ORIGINAL FSF
+T1: x < 0 || x > limitX || y < 0 || y > limitY
+D1: alarm == 1
+T2: x >= 0 && x <= limitX && y >= 0 && y <= limitY
+D2: alarm == 0
+*END* ORIGINAL FSF
+START MODIFIED FSF
+T1: (x < 0 || x > limitX || y < 0 || y > limitY) || (x >= 0 && x <= limitX && y >= 0 && y <= limitY)
+D1: alarm == 1
+*END* MODIFIED FSF
+START ORIGINAL CODE
+
+public class Geofence_Original {
+    public static int geofence(int x, int y,int limitX, int limitY) {
+        int alarm = 0;
+        if (x < 0 || x > limitX) {
+            alarm = 1;
+        }
+        if (y < 0 || y > limitY) {
+            alarm = 1;
+        }
+        return alarm;
+    }
+}
+
+*END* ORIGINAL CODE
+START ORIGINAL FSF
+T1: x < 0 || x > limitX || y < 0 || y > limitY
+D1: alarm == 1
+T2: x >= 0 && x <= limitX && y >= 0 && y <= limitY
+D2: alarm == 0
+*END* ORIGINAL FSF
+START MODIFIED FSF
+T1: (x >= 0 && x <= limitX && y >= 0 && y <= limitY) || (x < 0 || x > limitX || y < 0 || y > limitY)
+D1: alarm == 0
+*END* MODIFIED FSF
+START ORIGINAL CODE
+
+public class Geofence_Original {
+    public static int geofence(int x, int y,int limitX, int limitY) {
+        int alarm = 0;
+        if (x < 0 || x > limitX) {
+            alarm = 1;
+        }
+        if (y < 0 || y > limitY) {
+            alarm = 1;
+        }
+        return alarm;
+    }
+}
+
+*END* ORIGINAL CODE
+START ORIGINAL FSF
+T1: x < 0 || x > limitX || y < 0 || y > limitY
+D1: alarm == 1
+T2: x >= 0 && x <= limitX && y >= 0 && y <= limitY
+D2: alarm == 0
+*END* ORIGINAL FSF
+START MODIFIED FSF
+T1: (x < 0 || x > limitX || y < 0 || y > limitY) || (x >= 0 && x <= limitX && y >= 0 && y <= limitY)
+D1: alarm == 1
+*END* MODIFIED FSF
+START ORIGINAL CODE
+
+public class Geofence_Original {
+    public static int geofence(int x, int y,int limitX, int limitY) {
+        int alarm = 0;
+        if (x < 0 || x > limitX) {
+            alarm = 1;
+        }
+        if (y < 0 || y > limitY) {
+            alarm = 1;
+        }
+        return alarm;
+    }
+}
+
+*END* ORIGINAL CODE
+START ORIGINAL FSF
+T1: x < 0 || x > limitX || y < 0 || y > limitY
+D1: alarm == 1
+T2: x >= 0 && x <= limitX && y >= 0 && y <= limitY
+D2: alarm == 0
+*END* ORIGINAL FSF
+START MODIFIED FSF
+T1: (x < 0 || x > limitX || y < 0 || y > limitY) || (x >= 0 && x <= limitX && y >= 0 && y <= limitY)
+D1: alarm == 1
+*END* MODIFIED FSF
+START ORIGINAL CODE
+
+public class Geofence_Original {
+    public static int geofence(int x, int y,int limitX, int limitY) {
+        int alarm = 0;
+        if (x < 0 || x > limitX) {
+            alarm = 1;
+        }
+        if (y < 0 || y > limitY) {
+            alarm = 1;
+        }
+        return alarm;
+    }
+}
+
+*END* ORIGINAL CODE
+START ORIGINAL FSF
+T1: x < 0 || x > limitX || y < 0 || y > limitY
+D1: alarm == 1
+T2: x >= 0 && x <= limitX && y >= 0 && y <= limitY
+D2: alarm == 0
+*END* ORIGINAL FSF
+START MODIFIED FSF
+T1: (x < 0 || x > limitX || y < 0 || y > limitY) || (x >= 0 && x <= limitX && y >= 0 && y <= limitY)
+D1: alarm == 1
+*END* MODIFIED FSF
+START ORIGINAL CODE
+
+public class Geofence_Original {
+    public static int geofence(int x, int y,int limitX, int limitY) {
+        int alarm = 0;
+        if (x < 0 || x > limitX) {
+            alarm = 1;
+        }
+        if (y < 0 || y > limitY) {
+            alarm = 1;
+        }
+        return alarm;
+    }
+}
+
+*END* ORIGINAL CODE
+START ORIGINAL FSF
+T1: x < 0 || x > limitX || y < 0 || y > limitY
+D1: alarm == 1
+T2: x >= 0 && x <= limitX && y >= 0 && y <= limitY
+D2: alarm == 0
+*END* ORIGINAL FSF
+START MODIFIED FSF
+T1: (x < 0 || x > limitX || y < 0 || y > limitY) || (x >= 0 && x <= limitX && y >= 0 && y <= limitY)
+D1: alarm == 1
+*END* MODIFIED FSF
+START ORIGINAL CODE
+
+public class Geofence_Original {
+    public static int geofence(int x, int y,int limitX, int limitY) {
+        int alarm = 0;
+        if (x < 0 || x > limitX) {
+            alarm = 1;
+        }
+        if (y < 0 || y > limitY) {
+            alarm = 1;
+        }
+        return alarm;
+    }
+}
+
+*END* ORIGINAL CODE
+START ORIGINAL FSF
+T1: x < 0 || x > limitX || y < 0 || y > limitY
+D1: alarm == 1
+T2: x >= 0 && x <= limitX && y >= 0 && y <= limitY
+D2: alarm == 0
+*END* ORIGINAL FSF
+START MODIFIED FSF
+T1: (x < 0 || x > limitX || y < 0 || y > limitY) || (x >= 0 && x <= limitX && y >= 0 && y <= limitY)
+D1: alarm == 1
+*END* MODIFIED FSF
+START ORIGINAL CODE
+
+public class Geofence_Original {
+    public static int geofence(int x, int y,int limitX, int limitY) {
+        int alarm = 0;
+        if (x < 0 || x > limitX) {
+            alarm = 1;
+        }
+        if (y < 0 || y > limitY) {
+            alarm = 1;
+        }
+        return alarm;
+    }
+}
+
+*END* ORIGINAL CODE
+START ORIGINAL FSF
+T1: x < 0 || x > limitX || y < 0 || y > limitY
+D1: alarm == 1
+T2: x >= 0 && x <= limitX && y >= 0 && y <= limitY
+D2: alarm == 0
+*END* ORIGINAL FSF
+START MODIFIED FSF
+T1: (x >= 0 && x <= limitX && y >= 0 && y <= limitY) || (x < 0 || x > limitX || y < 0 || y > limitY)
+D1: alarm == 0
+*END* MODIFIED FSF
+START ORIGINAL CODE
+
+public class Geofence_Original {
+    public static int geofence(int x, int y,int limitX, int limitY) {
+        int alarm = 0;
+        if (x < 0 || x > limitX) {
+            alarm = 1;
+        }
+        if (y < 0 || y > limitY) {
+            alarm = 1;
+        }
+        return alarm;
+    }
+}
+
+*END* ORIGINAL CODE
+START ORIGINAL FSF
+T1: x < 0 || x > limitX || y < 0 || y > limitY
+D1: alarm == 1
+T2: x >= 0 && x <= limitX && y >= 0 && y <= limitY
+D2: alarm == 0
+*END* ORIGINAL FSF
+START MODIFIED FSF
+T1: (x >= 0 && x <= limitX && y >= 0 && y <= limitY) || (x < 0 || x > limitX || y < 0 || y > limitY)
+D1: alarm == 0
+*END* MODIFIED FSF
+START ORIGINAL CODE
+
+public class Geofence_Original {
+    public static int geofence(int x, int y,int limitX, int limitY) {
+        int alarm = 0;
+        if (x < 0 || x > limitX) {
+            alarm = 1;
+        }
+        if (y < 0 || y > limitY) {
+            alarm = 1;
+        }
+        return alarm;
+    }
+}
+
+*END* ORIGINAL CODE
+START ORIGINAL FSF
+T1: x < 0 || x > limitX || y < 0 || y > limitY
+D1: alarm == 1
+T2: x >= 0 && x <= limitX && y >= 0 && y <= limitY
+D2: alarm == 0
+*END* ORIGINAL FSF
+START MODIFIED FSF
+T1: (x < 0 || x > limitX || y < 0 || y > limitY) || (x >= 0 && x <= limitX && y >= 0 && y <= limitY)
+D1: alarm == 1
+*END* MODIFIED FSF
+START ORIGINAL CODE
+
+public class Geofence_Original {
+    public static int geofence(int x, int y,int limitX, int limitY) {
+        int alarm = 0;
+        if (x < 0 || x > limitX) {
+            alarm = 1;
+        }
+        if (y < 0 || y > limitY) {
+            alarm = 1;
+        }
+        return alarm;
+    }
+}
+
+*END* ORIGINAL CODE
+START ORIGINAL FSF
+T1: x < 0 || x > limitX || y < 0 || y > limitY
+D1: alarm == 1
+T2: x >= 0 && x <= limitX && y >= 0 && y <= limitY
+D2: alarm == 0
+*END* ORIGINAL FSF
+START MODIFIED FSF
+T1: (x < 0 || x > limitX || y < 0 || y > limitY) || (x >= 0 && x <= limitX && y >= 0 && y <= limitY)
+D1: alarm == 1
+*END* MODIFIED FSF

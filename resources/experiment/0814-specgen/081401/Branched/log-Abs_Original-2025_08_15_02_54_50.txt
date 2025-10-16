@@ -1,0 +1,15 @@
+public class Abs_Original {
+
+    //@ requires num != Integer.MIN_VALUE;
+    //@ ensures \result >= 0;
+    //@ ensures (num < 0 ==> \result == -num) && (num >= 0 ==> \result == num);
+    /*@ pure @*/ public static int Abs(int num) {
+        if (num < 0)
+            return -num;
+        else
+            return num;
+    }
+}
+==============================
+
+==============================

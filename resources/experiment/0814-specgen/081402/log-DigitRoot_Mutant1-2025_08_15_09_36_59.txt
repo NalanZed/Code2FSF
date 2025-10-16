@@ -1,0 +1,870 @@
+public class DigitRoot_Mutant1 {
+    /*@ requires num >= 0;
+      @ ensures \result >= 0 && \result < 10;
+      @ ensures \result == num % 9 || \result == 9;
+      @*/
+    public static int function(int num) {
+        //@ maintaining num >= 0;
+        //@ decreases num;
+        while (num > 10) {
+            int sum = 0;
+            //@ maintaining sum >= 0;
+            //@ maintaining (\forall int d; 0 <= d < num; sum == \old(sum) + (d % 10));
+            //@ decreases num;
+            while (num > 0) {
+                sum = sum + (num % 10);
+                num = num / 10;
+            }
+            num = sum;
+        }
+        return num;
+    }
+}
+==============================
+/root/specgen/SpecGen/project/081402-specgen/tmp/DigitRoot_Mutant1.java:12: error: cannot find symbol
+            //@ maintaining (\forall int d; 0 <= d < num; sum == \old(sum) + (d % 10));
+                                                                      ^
+  symbol:   variable sum
+  location: class DigitRoot_Mutant1
+1 error
+
+==============================
+public class DigitRoot_Mutant1 {
+    /*@ requires num >= 0;
+      @ ensures \result >= 0 && \result < 10;
+      @ ensures \result == num % 9 || \result == 9;
+      @*/
+    public static int function(int num) {
+        //@ maintaining num >= 0;
+        //@ decreases num;
+        while (num > 10) {
+            int sum = 0;
+            //@ maintaining sum >= 0;
+            //@ maintaining (\forall int i; 0 <= i && i < \old(num) - num; 
+            //@   sum == (\sum int d; 0 <= d && d < \old(num) - num; (\old(num) / (int)Math.pow(10, d+1)) % 10));
+            //@ decreases num;
+            while (num > 0) {
+                sum = sum + (num % 10);
+                num = num / 10;
+            }
+            num = sum;
+        }
+        return num;
+    }
+}
+==============================
+/root/specgen/SpecGen/project/081402-specgen/tmp/DigitRoot_Mutant1.java:21: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081402-specgen/tmp/DigitRoot_Mutant1.java:3:) in method function
+        return num;
+        ^
+/root/specgen/SpecGen/project/081402-specgen/tmp/DigitRoot_Mutant1.java:3: verify: Associated declaration: /root/specgen/SpecGen/project/081402-specgen/tmp/DigitRoot_Mutant1.java:21:
+      @ ensures \result >= 0 && \result < 10;
+        ^
+2 verification failures
+
+==============================
+public class DigitRoot_Mutant1 {
+    /*@ requires num >= 0;
+      @ ensures \result > 0 && \result < 10;  
+      @ ensures \result == num % 9 || \result == 9;
+      @*/
+    public static int function(int num) {
+        //@ maintaining num >= 0;
+        //@ decreases num;
+        while (num > 10) {
+            int sum = 0;
+            //@ maintaining sum >= 0;
+            //@ maintaining (\forall int i; 0 <= i && i < \old(num) - num; 
+            //@   sum == (\sum int d; 0 <= d && d < \old(num) - num; (\old(num) / (int)Math.pow(10, d+1)) % 10));
+            //@ decreases num;
+            while (num > 0) {
+                sum = sum + (num % 10);
+                num = num / 10;
+            }
+            num = sum;
+        }
+        return num;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081402-specgen/tmp/DigitRoot_Mutant1.java:21: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081402-specgen/tmp/DigitRoot_Mutant1.java:3:) in method function
+        return num;
+        ^
+/root/specgen/SpecGen/project/081402-specgen/tmp/DigitRoot_Mutant1.java:3: verify: Associated declaration: /root/specgen/SpecGen/project/081402-specgen/tmp/DigitRoot_Mutant1.java:21:
+      @ ensures \result > 0 && \result < 10;  
+        ^
+2 verification failures
+
+==============================
+public class DigitRoot_Mutant1 {
+    /*@ requires num >= 0;
+      @ ensures \result > 0 && \result <= 10;  
+      @ ensures \result == num % 9 || \result == 9;
+      @*/
+    public static int function(int num) {
+        //@ maintaining num >= 0;
+        //@ decreases num;
+        while (num > 10) {
+            int sum = 0;
+            //@ maintaining sum >= 0;
+            //@ maintaining (\forall int i; 0 <= i && i < \old(num) - num; 
+            //@   sum == (\sum int d; 0 <= d && d < \old(num) - num; (\old(num) / (int)Math.pow(10, d+1)) % 10));
+            //@ decreases num;
+            while (num > 0) {
+                sum = sum + (num % 10);
+                num = num / 10;
+            }
+            num = sum;
+        }
+        return num;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081402-specgen/tmp/DigitRoot_Mutant1.java:21: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081402-specgen/tmp/DigitRoot_Mutant1.java:4:) in method function
+        return num;
+        ^
+/root/specgen/SpecGen/project/081402-specgen/tmp/DigitRoot_Mutant1.java:4: verify: Associated declaration: /root/specgen/SpecGen/project/081402-specgen/tmp/DigitRoot_Mutant1.java:21:
+      @ ensures \result == num % 9 || \result == 9;
+        ^
+2 verification failures
+
+==============================
+public class DigitRoot_Mutant1 {
+    /*@ requires num >= 0;
+      @ ensures \result > 0 && \result <= 10;  
+      @ ensures \result == num % 9 || \result == 9;  
+      @*/
+    public static int function(int num) {
+        //@ maintaining num >= 0;
+        //@ decreases num;
+        while (num > 10) {
+            int sum = 0;
+            //@ maintaining sum >= 0;
+            //@ maintaining (\forall int i; 0 <= i && i < \old(num) - num; 
+            //@   sum == (\sum int d; 0 <= d && d < \old(num) - num; (\old(num) / (int)Math.pow(10, d+1)) % 10));
+            //@ decreases num;
+            while (num > 0) {
+                sum = sum + (num % 10);
+                num = num / 10;
+            }
+            num = sum;
+        }
+        return num;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081402-specgen/tmp/DigitRoot_Mutant1.java:21: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081402-specgen/tmp/DigitRoot_Mutant1.java:4:) in method function
+        return num;
+        ^
+/root/specgen/SpecGen/project/081402-specgen/tmp/DigitRoot_Mutant1.java:4: verify: Associated declaration: /root/specgen/SpecGen/project/081402-specgen/tmp/DigitRoot_Mutant1.java:21:
+      @ ensures \result == num % 9 || \result == 9;  
+        ^
+2 verification failures
+
+==============================
+public class DigitRoot_Mutant1 {
+    /*@ requires num >= 0;
+      @ ensures \result > 0 && \result <= 10;  
+ 
+      @*/
+    public static int function(int num) {
+        //@ maintaining num >= 0;
+        //@ decreases num;
+        while (num > 10) {
+            int sum = 0;
+            //@ maintaining sum >= 0;
+            //@ maintaining (\forall int i; 0 <= i && i < \old(num) - num; 
+            //@   sum == (\sum int d; 0 <= d && d < \old(num) - num; (\old(num) / (int)Math.pow(10, d+1)) % 10));
+            //@ decreases num;
+            while (num > 0) {
+                sum = sum + (num % 10);
+                num = num / 10;
+            }
+            num = sum;
+        }
+        return num;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081402-specgen/tmp/DigitRoot_Mutant1.java:21: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081402-specgen/tmp/DigitRoot_Mutant1.java:3:) in method function
+        return num;
+        ^
+/root/specgen/SpecGen/project/081402-specgen/tmp/DigitRoot_Mutant1.java:3: verify: Associated declaration: /root/specgen/SpecGen/project/081402-specgen/tmp/DigitRoot_Mutant1.java:21:
+      @ ensures \result > 0 && \result <= 10;  
+        ^
+2 verification failures
+
+==============================
+public class DigitRoot_Mutant1 {
+    /*@ requires num >= 0;
+      @ ensures \result >= 0 && \result < 10;  
+ 
+      @*/
+    public static int function(int num) {
+        //@ maintaining num >= 0;
+        //@ decreases num;
+        while (num > 10) {
+            int sum = 0;
+            //@ maintaining sum >= 0;
+            //@ maintaining (\forall int i; 0 <= i && i < \old(num) - num; 
+            //@   sum == (\sum int d; 0 <= d && d < \old(num) - num; (\old(num) / (int)Math.pow(10, d+1)) % 10));
+            //@ decreases num;
+            while (num > 0) {
+                sum = sum + (num % 10);
+                num = num / 10;
+            }
+            num = sum;
+        }
+        return num;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081402-specgen/tmp/DigitRoot_Mutant1.java:21: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081402-specgen/tmp/DigitRoot_Mutant1.java:3:) in method function
+        return num;
+        ^
+/root/specgen/SpecGen/project/081402-specgen/tmp/DigitRoot_Mutant1.java:3: verify: Associated declaration: /root/specgen/SpecGen/project/081402-specgen/tmp/DigitRoot_Mutant1.java:21:
+      @ ensures \result >= 0 && \result < 10;  
+        ^
+2 verification failures
+
+==============================
+public class DigitRoot_Mutant1 {
+    /*@ requires num >= 0;
+      @ ensures \result >= 0 && \result <= 10;  
+ 
+      @*/
+    public static int function(int num) {
+        //@ maintaining num >= 0;
+        //@ decreases num;
+        while (num > 10) {
+            int sum = 0;
+            //@ maintaining sum >= 0;
+            //@ maintaining (\forall int i; 0 <= i && i < \old(num) - num; 
+            //@   sum == (\sum int d; 0 <= d && d < \old(num) - num; (\old(num) / (int)Math.pow(10, d+1)) % 10));
+            //@ decreases num;
+            while (num > 0) {
+                sum = sum + (num % 10);
+                num = num / 10;
+            }
+            num = sum;
+        }
+        return num;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081402-specgen/tmp/DigitRoot_Mutant1.java:12: verify: The prover cannot establish an assertion (LoopInvariantBeforeLoop) in method function
+            //@ maintaining (\forall int i; 0 <= i && i < \old(num) - num; 
+                ^
+1 verification failure
+
+==============================
+public class DigitRoot_Mutant1 {
+    /*@ requires num >= 0;
+      @ ensures \result >= 0 && \result <= 10;  
+ 
+      @*/
+    public static int function(int num) {
+        //@ maintaining num >= 0;
+        //@ decreases num;
+        while (num > 10) {
+            int sum = 0;
+            //@ maintaining sum >= 0;
+            //@ maintaining (\forall int i; 0 < i && i < \old(num) - num;   
+            //@   sum == (\sum int d; 0 <= d && d < \old(num) - num; (\old(num) / (int)Math.pow(10, d+1)) % 10));
+            //@ decreases num;
+            while (num > 0) {
+                sum = sum + (num % 10);
+                num = num / 10;
+            }
+            num = sum;
+        }
+        return num;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081402-specgen/tmp/DigitRoot_Mutant1.java:12: verify: The prover cannot establish an assertion (LoopInvariantBeforeLoop) in method function
+            //@ maintaining (\forall int i; 0 < i && i < \old(num) - num;   
+                ^
+1 verification failure
+
+==============================
+public class DigitRoot_Mutant1 {
+    /*@ requires num >= 0;
+      @ ensures \result >= 0 && \result <= 10;  
+ 
+      @*/
+    public static int function(int num) {
+        //@ maintaining num >= 0;
+        //@ decreases num;
+        while (num > 10) {
+            int sum = 0;
+            //@ maintaining sum >= 0;
+            //@ maintaining (\forall int i; 0 < i && i <= \old(num) - num;   
+            //@   sum == (\sum int d; 0 <= d && d < \old(num) - num; (\old(num) / (int)Math.pow(10, d+1)) % 10));
+            //@ decreases num;
+            while (num > 0) {
+                sum = sum + (num % 10);
+                num = num / 10;
+            }
+            num = sum;
+        }
+        return num;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081402-specgen/tmp/DigitRoot_Mutant1.java:12: verify: The prover cannot establish an assertion (LoopInvariantBeforeLoop) in method function
+            //@ maintaining (\forall int i; 0 < i && i <= \old(num) - num;   
+                ^
+1 verification failure
+
+==============================
+public class DigitRoot_Mutant1 {
+    /*@ requires num >= 0;
+      @ ensures \result >= 0 && \result <= 10;  
+ 
+      @*/
+    public static int function(int num) {
+        //@ maintaining num >= 0;
+        //@ decreases num;
+        while (num > 10) {
+            int sum = 0;
+            //@ maintaining sum >= 0;
+            //@ maintaining (\forall int i; 0 <= i && i < \old(num) - num;   
+            //@   sum == (\sum int d; 0 <= d && d < \old(num) - num; (\old(num) / (int)Math.pow(10, d+1)) % 10));
+            //@ decreases num;
+            while (num > 0) {
+                sum = sum + (num % 10);
+                num = num / 10;
+            }
+            num = sum;
+        }
+        return num;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081402-specgen/tmp/DigitRoot_Mutant1.java:12: verify: The prover cannot establish an assertion (LoopInvariantBeforeLoop) in method function
+            //@ maintaining (\forall int i; 0 <= i && i < \old(num) - num;   
+                ^
+1 verification failure
+
+==============================
+public class DigitRoot_Mutant1 {
+    /*@ requires num >= 0;
+      @ ensures \result >= 0 && \result <= 10;  
+ 
+      @*/
+    public static int function(int num) {
+        //@ maintaining num >= 0;
+        //@ decreases num;
+        while (num > 10) {
+            int sum = 0;
+            //@ maintaining sum >= 0;
+            //@ maintaining (\forall int i; 0 <= i && i <= \old(num) - num;   
+            //@   sum == (\sum int d; 0 <= d && d < \old(num) - num; (\old(num) / (int)Math.pow(10, d+1)) % 10));
+            //@ decreases num;
+            while (num > 0) {
+                sum = sum + (num % 10);
+                num = num / 10;
+            }
+            num = sum;
+        }
+        return num;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081402-specgen/tmp/DigitRoot_Mutant1.java:12: verify: The prover cannot establish an assertion (LoopInvariantBeforeLoop) in method function
+            //@ maintaining (\forall int i; 0 <= i && i <= \old(num) - num;   
+                ^
+1 verification failure
+
+==============================
+public class DigitRoot_Mutant1 {
+    /*@ requires num >= 0;
+      @ ensures \result >= 0 && \result <= 10;  
+ 
+      @*/
+    public static int function(int num) {
+        //@ maintaining num >= 0;
+        //@ decreases num;
+        while (num > 10) {
+            int sum = 0;
+            //@ maintaining sum >= 0;
+            //@ maintaining (\forall int i; 0 - 1 <= i && i < \old(num) - num;   
+            //@   sum == (\sum int d; 0 <= d && d < \old(num) - num; (\old(num) / (int)Math.pow(10, d+1)) % 10));
+            //@ decreases num;
+            while (num > 0) {
+                sum = sum + (num % 10);
+                num = num / 10;
+            }
+            num = sum;
+        }
+        return num;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081402-specgen/tmp/DigitRoot_Mutant1.java:12: verify: The prover cannot establish an assertion (LoopInvariantBeforeLoop) in method function
+            //@ maintaining (\forall int i; 0 - 1 <= i && i < \old(num) - num;   
+                ^
+1 verification failure
+
+==============================
+public class DigitRoot_Mutant1 {
+    /*@ requires num >= 0;
+      @ ensures \result >= 0 && \result <= 10;  
+ 
+      @*/
+    public static int function(int num) {
+        //@ maintaining num >= 0;
+        //@ decreases num;
+        while (num > 10) {
+            int sum = 0;
+            //@ maintaining sum >= 0;
+            //@ maintaining (\forall int i; 0 - 1 <= i && i <= \old(num) - num;   
+            //@   sum == (\sum int d; 0 <= d && d < \old(num) - num; (\old(num) / (int)Math.pow(10, d+1)) % 10));
+            //@ decreases num;
+            while (num > 0) {
+                sum = sum + (num % 10);
+                num = num / 10;
+            }
+            num = sum;
+        }
+        return num;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081402-specgen/tmp/DigitRoot_Mutant1.java:12: verify: The prover cannot establish an assertion (LoopInvariantBeforeLoop) in method function
+            //@ maintaining (\forall int i; 0 - 1 <= i && i <= \old(num) - num;   
+                ^
+1 verification failure
+
+==============================
+public class DigitRoot_Mutant1 {
+    /*@ requires num >= 0;
+      @ ensures \result >= 0 && \result <= 10;  
+ 
+      @*/
+    public static int function(int num) {
+        //@ maintaining num >= 0;
+        //@ decreases num;
+        while (num > 10) {
+            int sum = 0;
+            //@ maintaining sum >= 0;
+            //@ maintaining (\exists int i; 0 < i && i < \old(num) - num;   
+            //@   sum == (\sum int d; 0 <= d && d < \old(num) - num; (\old(num) / (int)Math.pow(10, d+1)) % 10));
+            //@ decreases num;
+            while (num > 0) {
+                sum = sum + (num % 10);
+                num = num / 10;
+            }
+            num = sum;
+        }
+        return num;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081402-specgen/tmp/DigitRoot_Mutant1.java:12: verify: The prover cannot establish an assertion (LoopInvariantBeforeLoop) in method function
+            //@ maintaining (\exists int i; 0 < i && i < \old(num) - num;   
+                ^
+1 verification failure
+
+==============================
+public class DigitRoot_Mutant1 {
+    /*@ requires num >= 0;
+      @ ensures \result >= 0 && \result <= 10;  
+ 
+      @*/
+    public static int function(int num) {
+        //@ maintaining num >= 0;
+        //@ decreases num;
+        while (num > 10) {
+            int sum = 0;
+            //@ maintaining sum >= 0;
+            //@ maintaining (\exists int i; 0 < i && i <= \old(num) - num;   
+            //@   sum == (\sum int d; 0 <= d && d < \old(num) - num; (\old(num) / (int)Math.pow(10, d+1)) % 10));
+            //@ decreases num;
+            while (num > 0) {
+                sum = sum + (num % 10);
+                num = num / 10;
+            }
+            num = sum;
+        }
+        return num;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081402-specgen/tmp/DigitRoot_Mutant1.java:12: verify: The prover cannot establish an assertion (LoopInvariantBeforeLoop) in method function
+            //@ maintaining (\exists int i; 0 < i && i <= \old(num) - num;   
+                ^
+1 verification failure
+
+==============================
+public class DigitRoot_Mutant1 {
+    /*@ requires num >= 0;
+      @ ensures \result >= 0 && \result <= 10;  
+ 
+      @*/
+    public static int function(int num) {
+        //@ maintaining num >= 0;
+        //@ decreases num;
+        while (num > 10) {
+            int sum = 0;
+            //@ maintaining sum >= 0;
+            //@ maintaining (\exists int i; 0 <= i && i < \old(num) - num;   
+            //@   sum == (\sum int d; 0 <= d && d < \old(num) - num; (\old(num) / (int)Math.pow(10, d+1)) % 10));
+            //@ decreases num;
+            while (num > 0) {
+                sum = sum + (num % 10);
+                num = num / 10;
+            }
+            num = sum;
+        }
+        return num;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081402-specgen/tmp/DigitRoot_Mutant1.java:12: verify: The prover cannot establish an assertion (LoopInvariantBeforeLoop) in method function
+            //@ maintaining (\exists int i; 0 <= i && i < \old(num) - num;   
+                ^
+1 verification failure
+
+==============================
+public class DigitRoot_Mutant1 {
+    /*@ requires num >= 0;
+      @ ensures \result >= 0 && \result <= 10;  
+ 
+      @*/
+    public static int function(int num) {
+        //@ maintaining num >= 0;
+        //@ decreases num;
+        while (num > 10) {
+            int sum = 0;
+            //@ maintaining sum >= 0;
+            //@ maintaining (\exists int i; 0 <= i && i <= \old(num) - num;   
+            //@   sum == (\sum int d; 0 <= d && d < \old(num) - num; (\old(num) / (int)Math.pow(10, d+1)) % 10));
+            //@ decreases num;
+            while (num > 0) {
+                sum = sum + (num % 10);
+                num = num / 10;
+            }
+            num = sum;
+        }
+        return num;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081402-specgen/tmp/DigitRoot_Mutant1.java:12: verify: The prover cannot establish an assertion (LoopInvariantBeforeLoop) in method function
+            //@ maintaining (\exists int i; 0 <= i && i <= \old(num) - num;   
+                ^
+1 verification failure
+
+==============================
+public class DigitRoot_Mutant1 {
+    /*@ requires num >= 0;
+      @ ensures \result >= 0 && \result <= 10;  
+ 
+      @*/
+    public static int function(int num) {
+        //@ maintaining num >= 0;
+        //@ decreases num;
+        while (num > 10) {
+            int sum = 0;
+            //@ maintaining sum >= 0;
+            //@ maintaining (\exists int i; 0 - 1 <= i && i < \old(num) - num;   
+            //@   sum == (\sum int d; 0 <= d && d < \old(num) - num; (\old(num) / (int)Math.pow(10, d+1)) % 10));
+            //@ decreases num;
+            while (num > 0) {
+                sum = sum + (num % 10);
+                num = num / 10;
+            }
+            num = sum;
+        }
+        return num;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081402-specgen/tmp/DigitRoot_Mutant1.java:12: verify: The prover cannot establish an assertion (LoopInvariantBeforeLoop) in method function
+            //@ maintaining (\exists int i; 0 - 1 <= i && i < \old(num) - num;   
+                ^
+1 verification failure
+
+==============================
+public class DigitRoot_Mutant1 {
+    /*@ requires num >= 0;
+      @ ensures \result >= 0 && \result <= 10;  
+ 
+      @*/
+    public static int function(int num) {
+        //@ maintaining num >= 0;
+        //@ decreases num;
+        while (num > 10) {
+            int sum = 0;
+            //@ maintaining sum >= 0;
+            //@ maintaining (\exists int i; 0 - 1 <= i && i <= \old(num) - num;   
+            //@   sum == (\sum int d; 0 <= d && d < \old(num) - num; (\old(num) / (int)Math.pow(10, d+1)) % 10));
+            //@ decreases num;
+            while (num > 0) {
+                sum = sum + (num % 10);
+                num = num / 10;
+            }
+            num = sum;
+        }
+        return num;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081402-specgen/tmp/DigitRoot_Mutant1.java:12: verify: The prover cannot establish an assertion (LoopInvariantBeforeLoop) in method function
+            //@ maintaining (\exists int i; 0 - 1 <= i && i <= \old(num) - num;   
+                ^
+1 verification failure
+
+==============================
+public class DigitRoot_Mutant1 {
+    /*@ requires num >= 0;
+      @ ensures \result >= 0 && \result <= 10;  
+ 
+      @*/
+    public static int function(int num) {
+        //@ maintaining num >= 0;
+        //@ decreases num;
+        while (num > 10) {
+            int sum = 0;
+            //@ maintaining sum >= 0;
+ 
+            //@   sum == (\sum int d; 0 <= d && d < \old(num) - num; (\old(num) / (int)Math.pow(10, d+1)) % 10));
+            //@ decreases num;
+            while (num > 0) {
+                sum = sum + (num % 10);
+                num = num / 10;
+            }
+            num = sum;
+        }
+        return num;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081402-specgen/tmp/DigitRoot_Mutant1.java:13: error: Expected loop specifications while in JML: sum is not a loop specification keyword
+            //@   sum == (\sum int d; 0 <= d && d < \old(num) - num; (\old(num) / (int)Math.pow(10, d+1)) % 10));
+                  ^
+/root/specgen/SpecGen/project/081402-specgen/tmp/DigitRoot_Mutant1.java:13: error: not a statement
+            //@   sum == (\sum int d; 0 <= d && d < \old(num) - num; (\old(num) / (int)Math.pow(10, d+1)) % 10));
+                                             ^
+/root/specgen/SpecGen/project/081402-specgen/tmp/DigitRoot_Mutant1.java:13: error: Expected a declaration or a JML construct inside the JML annotation here
+            //@   sum == (\sum int d; 0 <= d && d < \old(num) - num; (\old(num) / (int)Math.pow(10, d+1)) % 10));
+                                      ^
+/root/specgen/SpecGen/project/081402-specgen/tmp/DigitRoot_Mutant1.java:11: error: Loop specifications must immediately precede a loop statement
+            //@ maintaining sum >= 0;
+                ^
+/root/specgen/SpecGen/project/081402-specgen/tmp/DigitRoot_Mutant1.java:13: error: not a statement
+            //@   sum == (\sum int d; 0 <= d && d < \old(num) - num; (\old(num) / (int)Math.pow(10, d+1)) % 10));
+                                                                                                          ^
+/root/specgen/SpecGen/project/081402-specgen/tmp/DigitRoot_Mutant1.java:13: error: ';' expected
+            //@   sum == (\sum int d; 0 <= d && d < \old(num) - num; (\old(num) / (int)Math.pow(10, d+1)) % 10));
+                                                                                                              ^
+/root/specgen/SpecGen/project/081402-specgen/tmp/DigitRoot_Mutant1.java:13: error: Expected a declaration or a JML construct inside the JML annotation here
+            //@   sum == (\sum int d; 0 <= d && d < \old(num) - num; (\old(num) / (int)Math.pow(10, d+1)) % 10));
+                                                                     ^
+7 errors
+
+==============================
+public class DigitRoot_Mutant1 {
+    /*@ requires num >= 0;
+      @ ensures \result >= 0 && \result <= 10;  
+ 
+      @*/
+    public static int function(int num) {
+        //@ maintaining num >= 0;
+        //@ decreases num;
+        while (num > 10) {
+            int sum = 0;
+            //@ maintaining sum > 0;  
+ 
+            //@   sum == (\sum int d; 0 <= d && d < \old(num) - num; (\old(num) / (int)Math.pow(10, d+1)) % 10));
+            //@ decreases num;
+            while (num > 0) {
+                sum = sum + (num % 10);
+                num = num / 10;
+            }
+            num = sum;
+        }
+        return num;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081402-specgen/tmp/DigitRoot_Mutant1.java:13: error: Expected loop specifications while in JML: sum is not a loop specification keyword
+            //@   sum == (\sum int d; 0 <= d && d < \old(num) - num; (\old(num) / (int)Math.pow(10, d+1)) % 10));
+                  ^
+/root/specgen/SpecGen/project/081402-specgen/tmp/DigitRoot_Mutant1.java:13: error: not a statement
+            //@   sum == (\sum int d; 0 <= d && d < \old(num) - num; (\old(num) / (int)Math.pow(10, d+1)) % 10));
+                                             ^
+/root/specgen/SpecGen/project/081402-specgen/tmp/DigitRoot_Mutant1.java:13: error: Expected a declaration or a JML construct inside the JML annotation here
+            //@   sum == (\sum int d; 0 <= d && d < \old(num) - num; (\old(num) / (int)Math.pow(10, d+1)) % 10));
+                                      ^
+/root/specgen/SpecGen/project/081402-specgen/tmp/DigitRoot_Mutant1.java:11: error: Loop specifications must immediately precede a loop statement
+            //@ maintaining sum > 0;  
+                ^
+/root/specgen/SpecGen/project/081402-specgen/tmp/DigitRoot_Mutant1.java:13: error: not a statement
+            //@   sum == (\sum int d; 0 <= d && d < \old(num) - num; (\old(num) / (int)Math.pow(10, d+1)) % 10));
+                                                                                                          ^
+/root/specgen/SpecGen/project/081402-specgen/tmp/DigitRoot_Mutant1.java:13: error: ';' expected
+            //@   sum == (\sum int d; 0 <= d && d < \old(num) - num; (\old(num) / (int)Math.pow(10, d+1)) % 10));
+                                                                                                              ^
+/root/specgen/SpecGen/project/081402-specgen/tmp/DigitRoot_Mutant1.java:13: error: Expected a declaration or a JML construct inside the JML annotation here
+            //@   sum == (\sum int d; 0 <= d && d < \old(num) - num; (\old(num) / (int)Math.pow(10, d+1)) % 10));
+                                                                     ^
+7 errors
+
+==============================
+public class DigitRoot_Mutant1 {
+    /*@ requires num >= 0;
+      @ ensures \result >= 0 && \result <= 10;  
+ 
+      @*/
+    public static int function(int num) {
+        //@ maintaining num >= 0;
+        //@ decreases num;
+        while (num > 10) {
+            int sum = 0;
+            //@ maintaining sum >= 0;  
+ 
+            //@   sum == (\sum int d; 0 <= d && d < \old(num) - num; (\old(num) / (int)Math.pow(10, d+1)) % 10));
+            //@ decreases num;
+            while (num > 0) {
+                sum = sum + (num % 10);
+                num = num / 10;
+            }
+            num = sum;
+        }
+        return num;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081402-specgen/tmp/DigitRoot_Mutant1.java:13: error: Expected loop specifications while in JML: sum is not a loop specification keyword
+            //@   sum == (\sum int d; 0 <= d && d < \old(num) - num; (\old(num) / (int)Math.pow(10, d+1)) % 10));
+                  ^
+/root/specgen/SpecGen/project/081402-specgen/tmp/DigitRoot_Mutant1.java:13: error: not a statement
+            //@   sum == (\sum int d; 0 <= d && d < \old(num) - num; (\old(num) / (int)Math.pow(10, d+1)) % 10));
+                                             ^
+/root/specgen/SpecGen/project/081402-specgen/tmp/DigitRoot_Mutant1.java:13: error: Expected a declaration or a JML construct inside the JML annotation here
+            //@   sum == (\sum int d; 0 <= d && d < \old(num) - num; (\old(num) / (int)Math.pow(10, d+1)) % 10));
+                                      ^
+/root/specgen/SpecGen/project/081402-specgen/tmp/DigitRoot_Mutant1.java:11: error: Loop specifications must immediately precede a loop statement
+            //@ maintaining sum >= 0;  
+                ^
+/root/specgen/SpecGen/project/081402-specgen/tmp/DigitRoot_Mutant1.java:13: error: not a statement
+            //@   sum == (\sum int d; 0 <= d && d < \old(num) - num; (\old(num) / (int)Math.pow(10, d+1)) % 10));
+                                                                                                          ^
+/root/specgen/SpecGen/project/081402-specgen/tmp/DigitRoot_Mutant1.java:13: error: ';' expected
+            //@   sum == (\sum int d; 0 <= d && d < \old(num) - num; (\old(num) / (int)Math.pow(10, d+1)) % 10));
+                                                                                                              ^
+/root/specgen/SpecGen/project/081402-specgen/tmp/DigitRoot_Mutant1.java:13: error: Expected a declaration or a JML construct inside the JML annotation here
+            //@   sum == (\sum int d; 0 <= d && d < \old(num) - num; (\old(num) / (int)Math.pow(10, d+1)) % 10));
+                                                                     ^
+7 errors
+
+==============================
+public class DigitRoot_Mutant1 {
+    /*@ requires num >= 0;
+      @ ensures \result >= 0 && \result <= 10;  
+ 
+      @*/
+    public static int function(int num) {
+        //@ maintaining num >= 0;
+        //@ decreases num;
+        while (num > 10) {
+            int sum = 0;
+            //@ maintaining sum + 1 >= 0;  
+ 
+            //@   sum == (\sum int d; 0 <= d && d < \old(num) - num; (\old(num) / (int)Math.pow(10, d+1)) % 10));
+            //@ decreases num;
+            while (num > 0) {
+                sum = sum + (num % 10);
+                num = num / 10;
+            }
+            num = sum;
+        }
+        return num;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081402-specgen/tmp/DigitRoot_Mutant1.java:13: error: Expected loop specifications while in JML: sum is not a loop specification keyword
+            //@   sum == (\sum int d; 0 <= d && d < \old(num) - num; (\old(num) / (int)Math.pow(10, d+1)) % 10));
+                  ^
+/root/specgen/SpecGen/project/081402-specgen/tmp/DigitRoot_Mutant1.java:13: error: not a statement
+            //@   sum == (\sum int d; 0 <= d && d < \old(num) - num; (\old(num) / (int)Math.pow(10, d+1)) % 10));
+                                             ^
+/root/specgen/SpecGen/project/081402-specgen/tmp/DigitRoot_Mutant1.java:13: error: Expected a declaration or a JML construct inside the JML annotation here
+            //@   sum == (\sum int d; 0 <= d && d < \old(num) - num; (\old(num) / (int)Math.pow(10, d+1)) % 10));
+                                      ^
+/root/specgen/SpecGen/project/081402-specgen/tmp/DigitRoot_Mutant1.java:11: error: Loop specifications must immediately precede a loop statement
+            //@ maintaining sum + 1 >= 0;  
+                ^
+/root/specgen/SpecGen/project/081402-specgen/tmp/DigitRoot_Mutant1.java:13: error: not a statement
+            //@   sum == (\sum int d; 0 <= d && d < \old(num) - num; (\old(num) / (int)Math.pow(10, d+1)) % 10));
+                                                                                                          ^
+/root/specgen/SpecGen/project/081402-specgen/tmp/DigitRoot_Mutant1.java:13: error: ';' expected
+            //@   sum == (\sum int d; 0 <= d && d < \old(num) - num; (\old(num) / (int)Math.pow(10, d+1)) % 10));
+                                                                                                              ^
+/root/specgen/SpecGen/project/081402-specgen/tmp/DigitRoot_Mutant1.java:13: error: Expected a declaration or a JML construct inside the JML annotation here
+            //@   sum == (\sum int d; 0 <= d && d < \old(num) - num; (\old(num) / (int)Math.pow(10, d+1)) % 10));
+                                                                     ^
+7 errors
+
+==============================
+public class DigitRoot_Mutant1 {
+    /*@ requires num >= 0;
+      @ ensures \result >= 0 && \result <= 10;  
+ 
+      @*/
+    public static int function(int num) {
+        //@ maintaining num >= 0;
+        //@ decreases num;
+        while (num > 10) {
+            int sum = 0;
+ 
+ 
+            //@   sum == (\sum int d; 0 <= d && d < \old(num) - num; (\old(num) / (int)Math.pow(10, d+1)) % 10));
+            //@ decreases num;
+            while (num > 0) {
+                sum = sum + (num % 10);
+                num = num / 10;
+            }
+            num = sum;
+        }
+        return num;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081402-specgen/tmp/DigitRoot_Mutant1.java:13: error: not a statement
+            //@   sum == (\sum int d; 0 <= d && d < \old(num) - num; (\old(num) / (int)Math.pow(10, d+1)) % 10));
+                      ^
+/root/specgen/SpecGen/project/081402-specgen/tmp/DigitRoot_Mutant1.java:13: error: ';' expected
+            //@   sum == (\sum int d; 0 <= d && d < \old(num) - num; (\old(num) / (int)Math.pow(10, d+1)) % 10));
+                                                                                                               ^
+/root/specgen/SpecGen/project/081402-specgen/tmp/DigitRoot_Mutant1.java:13: error: Expected a declaration or a JML construct inside the JML annotation here
+            //@   sum == (\sum int d; 0 <= d && d < \old(num) - num; (\old(num) / (int)Math.pow(10, d+1)) % 10));
+                  ^
+3 errors
+
+==============================

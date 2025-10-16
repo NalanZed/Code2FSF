@@ -1,0 +1,58 @@
+public class DigitRoot_Original {
+
+    /*@ requires num >= 0;
+      @ ensures \result >= 0 && \result <= 9;
+      @ ensures \result == (num == 0 ? 0 : (num % 9 == 0 ? 9 : num % 9));
+      @*/
+    public static int function(int num) {
+        //@ maintaining num >= 0;
+        //@ decreases num;
+        while (num >= 10) {
+            int sum = 0;
+            //@ maintaining sum >= 0;
+            //@ maintaining sum == \digit_sum(num, \old(num) - num);
+            //@ decreases num;
+            while (num > 0) {
+                sum = sum + (num % 10);
+                num = num / 10;
+            }
+            num = sum;
+        }
+        return num;
+    }
+}
+==============================
+/root/specgen/SpecGen/project/081401-specgen/tmp/DigitRoot_Original.java:13: error: This backslash token is unknown: \digit_sum
+            //@ maintaining sum == \digit_sum(num, \old(num) - num);
+                                   ^
+1 error
+
+==============================
+public class DigitRoot_Original {
+
+    /*@ requires num >= 0;
+      @ ensures \result >= 0 && \result <= 9;
+      @ ensures \result == (num == 0 ? 0 : (num % 9 == 0 ? 9 : num % 9));
+      @*/
+    public static int function(int num) {
+        //@ maintaining num >= 0;
+        //@ decreases num;
+        while (num >= 10) {
+            int sum = 0;
+            //@ maintaining sum >= 0;
+            //@ maintaining (\forall int i; 0 <= i && i < \old(num) - num; 
+            //@   sum == (\sum int d; 0 <= d && d <= 9; 
+            //@     (\num_of int k; 0 <= k && k < i; (num*10 + d) % 10 == d)));
+            //@ decreases num;
+            while (num > 0) {
+                sum = sum + (num % 10);
+                num = num / 10;
+            }
+            num = sum;
+        }
+        return num;
+    }
+}
+==============================
+
+==============================

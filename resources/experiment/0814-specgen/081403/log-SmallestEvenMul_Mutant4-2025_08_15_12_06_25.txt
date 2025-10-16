@@ -1,0 +1,11 @@
+public class SmallestEvenMul_Mutant4 {
+
+    //@ requires n >= 1;
+    //@ ensures \result == 0;  // Incorrect specification due to bug in implementation
+    public static int smallestEvenMultiple(int n) {
+        return 0;
+    }
+}
+==============================
+
+==============================

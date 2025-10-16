@@ -1,0 +1,43 @@
+start role user
+Please modify the following code according to the modified FSF:
+```Code
+
+
+public class DivisorGame_Original {
+
+    public static boolean divisorGame(int n) {
+        return n % 2 == 0;
+    }
+}
+
+```
+```Original FSF
+T0: n % 2 == 0
+D0: return_value == true
+
+T1: n % 2 != 0
+D1: return_value == false
+
+```Modified FSF
+T0: n % 2 == 0
+D0: return_value == false
+
+T1: n % 2 != 0
+D1: return_value == true
+
+```
+
+
+*end* role user
+start role assistant
+```
+public class DivisorGame_Modified {
+    public static boolean divisorGame(int n) {
+        return n % 2 != 0;
+    }
+}
+```
+*end* role assistant
+start role remark
+Validation SUCCESS!
+*end* role remark

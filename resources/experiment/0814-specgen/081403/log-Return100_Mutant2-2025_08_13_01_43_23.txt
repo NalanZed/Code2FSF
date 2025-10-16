@@ -1,0 +1,17 @@
+public class Return100_Mutant2 {
+    //@ ensures \result == 101;  // Note: Due to the changed condition, this now returns 101
+    public static int return100 () {
+        int res = 0;
+        int i = 0;
+        //@ maintaining 0 <= i && i <= 101;
+        //@ maintaining res == i;
+        //@ decreases 101 - i;
+        for(i = 0; i <= 100; i++) { // CHANGED: condition changed to <=
+            res = res + 1;
+        }
+        return res;
+    }
+}
+==============================
+
+==============================

@@ -1,0 +1,85 @@
+start role user
+Please modify the following code according to the modified FSF:
+```Code
+
+
+public class SubLoop_Original {
+    public static int subLoop(int x, int y) {
+        int sum = x;
+        if (y > 0) {
+            int n = y;
+            while (n > 0) {
+                sum = sum - 1;
+                n = n - 1;
+            }
+        } else {
+            int n = -y;
+            while (n > 0) {
+                sum = sum + 1;
+                n = n - 1;
+            }
+        }
+        return sum;
+    }
+}
+
+```
+```Original FSF
+T0: y > 0
+D0: sum == x - y
+
+T1: y < 0
+D1: sum == x + (-y)
+
+T2: y == 0
+D2: sum == x
+
+```Modified FSF
+T0: y > 0
+D0: sum == x
+
+T1: y < 0
+D1: sum == x + (-y)
+
+T2: y == 0
+D2: sum == x - y
+
+```
+
+
+*end* role user
+start role assistant
+```
+public class SubLoop_Modified {
+    public static int subLoop(int x, int y) {
+        int sum = x;
+        if (y > 0) {
+            // Do nothing when y > 0 (sum remains x)
+        } else if (y < 0) {
+            int n = -y;
+            while (n > 0) {
+                sum = sum + 1;
+                n = n - 1;
+            }
+        } else { // y == 0
+            sum = x - y; // Which is just x since y is 0
+        }
+        return sum;
+    }
+}
+```
+
+Key changes made:
+1. Removed the subtraction loop when y > 0 (since D0 now requires sum == x)
+2. Kept the addition loop for y < 0 case (same as original)
+3. Explicitly handled y == 0 case (though functionally same as original, made more explicit)
+4. Maintained the same structure and variable names as original code
+
+The modified version now satisfies:
+- When y > 0: returns x unchanged (no subtraction)
+- When y < 0: adds the absolute value of y to x
+- When y == 0: returns x (since x - 0 = x)
+*end* role assistant
+start role remark
+Validation SUCCESS!
+*end* role remark

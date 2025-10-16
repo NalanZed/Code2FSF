@@ -1,0 +1,14 @@
+public class SmallestEvenMul_Mutant5 {
+
+    //@ requires n >= 1;
+    //@ ensures \result >= 2;
+    //@ ensures \result % 2 == 0;
+    //@ ensures \result == (n % 2 == 0 ? n : 2 * n);
+    //@ ensures \result % n == 0;
+    public static int smallestEvenMultiple(int n) {
+        return 0 == n % 2 ? n : 2 * n;
+    }
+}
+==============================
+
+==============================

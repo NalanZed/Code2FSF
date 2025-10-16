@@ -1,0 +1,204 @@
+start role user
+Please modify the following code according to the modified FSF:
+```Code
+
+
+public class AltitudeController_Original {
+    public static int altitudeController(int currentHeight,int targetHeight) {
+        int error = targetHeight - currentHeight;
+        int absError = 0;
+        absError = error < 0 ? -error : error;
+        int controlSignal = 0;
+        if (absError > 30) {
+            controlSignal = error > 0 ? 5 : -5;
+        } else if (absError > 20) {
+            controlSignal = error > 0 ? 3 : -3;
+        } else if (absError > 10) {
+            controlSignal = error > 0 ? 2 : -2;
+        } else {
+            controlSignal = error;
+        }
+        return controlSignal;
+    }
+}
+
+```
+```Original FSF
+T0: targetHeight - currentHeight > 30
+D0: controlSignal == 5
+
+T1: targetHeight - currentHeight < -30
+D1: controlSignal == -5
+
+T2: targetHeight - currentHeight > 20 && targetHeight - currentHeight <= 30
+D2: controlSignal == 3
+
+T3: targetHeight - currentHeight < -20 && targetHeight - currentHeight >= -30
+D3: controlSignal == -3
+
+T4: targetHeight - currentHeight > 10 && targetHeight - currentHeight <= 20
+D4: controlSignal == 2
+
+T5: targetHeight - currentHeight < -10 && targetHeight - currentHeight >= -20
+D5: controlSignal == -2
+
+T6: targetHeight - currentHeight >= -10 && targetHeight - currentHeight <= 10
+D6: controlSignal == targetHeight - currentHeight
+
+```Modified FSF
+T0: targetHeight - currentHeight > 30
+D0: controlSignal == -5
+
+T1: targetHeight - currentHeight < -30
+D1: controlSignal == 5
+
+T2: targetHeight - currentHeight > 20 && targetHeight - currentHeight <= 30
+D2: controlSignal == 3
+
+T3: targetHeight - currentHeight < -20 && targetHeight - currentHeight >= -30
+D3: controlSignal == -3
+
+T4: targetHeight - currentHeight > 10 && targetHeight - currentHeight <= 20
+D4: controlSignal == 2
+
+T5: targetHeight - currentHeight < -10 && targetHeight - currentHeight >= -20
+D5: controlSignal == -2
+
+T6: targetHeight - currentHeight >= -10 && targetHeight - currentHeight <= 10
+D6: controlSignal == targetHeight - currentHeight
+
+```
+
+
+*end* role user
+start role assistant
+```java
+public class AltitudeController_Modified {
+    public static int altitudeController(int currentHeight, int targetHeight) {
+        int error = targetHeight - currentHeight;
+        int absError = error < 0 ? -error : error;
+        int controlSignal = 0;
+        
+        if (absError > 30) {
+            controlSignal = error > 0 ? -5 : 5;  // Modified signs here
+        } else if (absError > 20) {
+            controlSignal = error > 0 ? 3 : -3;
+        } else if (absError > 10) {
+            controlSignal = error > 0 ? 2 : -2;
+        } else {
+            controlSignal = error;
+        }
+        return controlSignal;
+    }
+}
+```
+
+The key change is in the first condition where we now return -5 when error is positive (targetHeight > currentHeight) and 5 when error is negative (targetHeight < currentHeight), which matches the modified FSF requirements. The other conditions remain the same as they weren't modified in the FSF.
+*end* role assistant
+start role user
+Please modify the following code according to the modified FSF:
+```Code
+
+
+public class AltitudeController_Original {
+    public static int altitudeController(int currentHeight,int targetHeight) {
+        int error = targetHeight - currentHeight;
+        int absError = 0;
+        absError = error < 0 ? -error : error;
+        int controlSignal = 0;
+        if (absError > 30) {
+            controlSignal = error > 0 ? 5 : -5;
+        } else if (absError > 20) {
+            controlSignal = error > 0 ? 3 : -3;
+        } else if (absError > 10) {
+            controlSignal = error > 0 ? 2 : -2;
+        } else {
+            controlSignal = error;
+        }
+        return controlSignal;
+    }
+}
+
+```
+```Original FSF
+T0: targetHeight - currentHeight > 30
+D0: controlSignal == 5
+
+T1: targetHeight - currentHeight < -30
+D1: controlSignal == -5
+
+T2: targetHeight - currentHeight > 20 && targetHeight - currentHeight <= 30
+D2: controlSignal == 3
+
+T3: targetHeight - currentHeight < -20 && targetHeight - currentHeight >= -30
+D3: controlSignal == -3
+
+T4: targetHeight - currentHeight > 10 && targetHeight - currentHeight <= 20
+D4: controlSignal == 2
+
+T5: targetHeight - currentHeight < -10 && targetHeight - currentHeight >= -20
+D5: controlSignal == -2
+
+T6: targetHeight - currentHeight >= -10 && targetHeight - currentHeight <= 10
+D6: controlSignal == targetHeight - currentHeight
+
+```Modified FSF
+T0: targetHeight - currentHeight > 30
+D0: controlSignal == -5
+
+T1: targetHeight - currentHeight < -30
+D1: controlSignal == 5
+
+T2: targetHeight - currentHeight > 20 && targetHeight - currentHeight <= 30
+D2: controlSignal == 3
+
+T3: targetHeight - currentHeight < -20 && targetHeight - currentHeight >= -30
+D3: controlSignal == -3
+
+T4: targetHeight - currentHeight > 10 && targetHeight - currentHeight <= 20
+D4: controlSignal == 2
+
+T5: targetHeight - currentHeight < -10 && targetHeight - currentHeight >= -20
+D5: controlSignal == -2
+
+T6: targetHeight - currentHeight >= -10 && targetHeight - currentHeight <= 10
+D6: controlSignal == targetHeight - currentHeight
+
+```
+
+
+*end* role user
+start role assistant
+```
+public class AltitudeController_Modified {
+    public static int altitudeController(int currentHeight, int targetHeight) {
+        int error = targetHeight - currentHeight;
+        int absError = error < 0 ? -error : error;
+        int controlSignal = 0;
+        
+        if (absError > 30) {
+            controlSignal = error > 0 ? -5 : 5;  // Modified signs here
+        } else if (absError > 20) {
+            controlSignal = error > 0 ? 3 : -3;
+        } else if (absError > 10) {
+            controlSignal = error > 0 ? 2 : -2;
+        } else {
+            controlSignal = error;
+        }
+        return controlSignal;
+    }
+}
+```
+
+The key change is in the first condition where I swapped the signs for the control signal when the absolute error is greater than 30. Now:
+- When the error is positive (>30), it returns -5 (instead of 5)
+- When the error is negative (<-30), it returns 5 (instead of -5)
+
+All other conditions remain the same as they weren't modified in the FSF. The code maintains the same structure and only changes the specific behavior that was modified in the FSF requirements.
+*end* role assistant
+start role user
+FSF validation failed with unexpected error: Unknown error occurred during validation of T: targetHeight - currentHeight > 30	D: controlSignal == -5
+*end* role user
+start role remark
+Validation FAIL--Unknown error!
+*end* role remark

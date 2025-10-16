@@ -1,0 +1,80 @@
+start role user
+Please modify the following code according to the modified FSF:
+```Code
+
+
+public class AddLoop_Original {
+    public static int AddLoop(int x, int y) {
+        int sum = x;
+        if (y > 0) {
+            int n = y;
+            while (n > 0) {
+                sum = sum + 1;
+                n = n - 1;
+            }
+        } else {
+            int n = -y;
+            while (n > 0) {
+                sum = sum - 1;
+                n = n - 1;
+            }
+        }
+        return sum;
+    }
+}
+
+```
+```Original FSF
+T0: y > 0
+D0: sum == x + y
+
+T1: y < 0
+D1: sum == x + y
+
+T2: y == 0
+D2: sum == x
+
+```Modified FSF
+T0: y > 0
+D0: sum == x
+
+T1: y < 0
+D1: sum == x + y
+
+T2: y == 0
+D2: sum == x + y
+
+```
+
+
+*end* role user
+start role assistant
+```
+public class AddLoop_Modified {
+    public static int AddLoop(int x, int y) {
+        int sum = x;
+        if (y > 0) {
+            // Do nothing when y > 0 (sum remains x)
+        } else {
+            int n = -y;
+            while (n > 0) {
+                sum = sum - 1;
+                n = n - 1;
+            }
+        }
+        return sum;
+    }
+}
+```
+
+The modified code:
+1. Keeps the original behavior when y ≤ 0 (both y < 0 and y == 0 cases)
+2. Removes the addition logic when y > 0, so sum remains equal to x in this case
+3. Maintains the same structure and style as the original code
+4. Still handles all edge cases correctly according to the modified FSF requirements
+
+The changes are minimal - we just removed the addition logic from the y > 0 case while keeping all other logic intact.
+*end* role assistant
+start role remark
+Validation SUCCESS!
+*end* role remark

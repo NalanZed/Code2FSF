@@ -1,0 +1,84 @@
+start role user
+Please modify the following code according to the modified FSF:
+```Code
+
+
+public class AddLoopFor_Original {
+    public static int addLoop(int x, int y) {
+        int sum = y;
+        if (x > 0) {
+            int n = 0;
+            for(n = x; n > 0; ) {
+                sum = sum + 1;
+                n = n - 1;
+            }
+        } else {
+            int n = 0;
+            for(n = -x; n > 0; ) {
+                sum = sum - 1;
+                n = n - 1;
+            }
+        }
+        return sum;
+    }
+}
+
+```
+```Original FSF
+T0: x > 0
+D0: sum == y + x
+
+T1: x < 0
+D1: sum == y + x
+
+T2: x == 0
+D2: sum == y
+
+```Modified FSF
+T0: (x < 0) || (x > 0)
+D0: sum == y + x
+
+T1: x == 0
+D1: sum == y
+
+```
+
+
+*end* role user
+start role assistant
+The modified FSF is actually simpler than the original one, combining the cases for positive and negative x into one condition. However, the code already satisfies this modified FSF since it correctly handles all cases (positive x, negative x, and x=0) as specified. 
+
+Here's the code (unchanged since it already conforms to the modified FSF):
+
+```
+public class AddLoopFor_Modified {
+    public static int addLoop(int x, int y) {
+        int sum = y;
+        if (x > 0) {
+            int n = 0;
+            for(n = x; n > 0; ) {
+                sum = sum + 1;
+                n = n - 1;
+            }
+        } else {
+            int n = 0;
+            for(n = -x; n > 0; ) {
+                sum = sum - 1;
+                n = n - 1;
+            }
+        }
+        return sum;
+    }
+}
+```
+
+Note: The code doesn't need any modifications because:
+1. For x > 0, it correctly implements sum = y + x (adding 1 x times)
+2. For x < 0, it correctly implements sum = y + x (subtracting 1 |x| times)
+3. For x == 0, it returns y directly (no loop iterations)
+
+The modified FSF just combines the first two cases into one condition (x != 0), which the code already handles correctly.
+*end* role assistant
+start role remark
+Validation SUCCESS!
+*end* role remark

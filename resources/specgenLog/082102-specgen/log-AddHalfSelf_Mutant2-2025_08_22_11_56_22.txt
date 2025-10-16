@@ -1,0 +1,402 @@
+public class AddHalfSelf_Mutant2{
+    //@ requires x >= Integer.MIN_VALUE && x <= Integer.MAX_VALUE;
+    //@ ensures x >= 0 ==> \result == x + (x / 2);
+    //@ ensures x < 0 ==> \result == x - ((-x) / 2);
+    public static int addHalfSelf(int x){
+        int n = x;
+        int addNum = 0;
+        if(x < 0){
+            n = -x;
+        }
+        //@ maintaining n >= 0;
+        //@ maintaining addNum == (\count int i; n < i && i <= \old(n); i % 2 == 1);
+        //@ decreases n;
+        while(n > 0){
+            if(n % 2 == 1){
+                addNum++;
+            }
+            n--;
+        }
+        if(x < 0){
+            return x - addNum;
+        }
+        else{
+            return x + addNum;
+        }
+    }
+}
+==============================
+/root/specgen/SpecGen/project/082102-specgen/tmp/AddHalfSelf_Mutant2.java:12: error: ')' expected
+        //@ maintaining addNum == (\count int i; n < i && i <= \old(n); i % 2 == 1);
+                                         ^
+/root/specgen/SpecGen/project/082102-specgen/tmp/AddHalfSelf_Mutant2.java:12: error: Incorrectly formed or terminated loop_invariant statement near here
+        //@ maintaining addNum == (\count int i; n < i && i <= \old(n); i % 2 == 1);
+                                          ^
+/root/specgen/SpecGen/project/082102-specgen/tmp/AddHalfSelf_Mutant2.java:12: error: Expected loop specifications while in JML: n is not a loop specification keyword
+        //@ maintaining addNum == (\count int i; n < i && i <= \old(n); i % 2 == 1);
+                                                 ^
+/root/specgen/SpecGen/project/082102-specgen/tmp/AddHalfSelf_Mutant2.java:12: error: Expected loop specifications while in JML: i is not a loop specification keyword
+        //@ maintaining addNum == (\count int i; n < i && i <= \old(n); i % 2 == 1);
+                                                                        ^
+4 errors
+
+==============================
+public class AddHalfSelf_Mutant2{
+    //@ requires x >= Integer.MIN_VALUE && x <= Integer.MAX_VALUE;
+    //@ ensures x >= 0 ==> \result == x + (x / 2);
+    //@ ensures x < 0 ==> \result == x - ((-x) / 2);
+    public static int addHalfSelf(int x){
+        int n = x;
+        int addNum = 0;
+        if(x < 0){
+            n = -x;
+        }
+        //@ maintaining n >= 0;
+        //@ maintaining addNum == (\num_of int i; n < i && i <= \old(n); i % 2 == 1);
+        //@ decreases n;
+        while(n > 0){
+            if(n % 2 == 1){
+                addNum++;
+            }
+            n--;
+        }
+        if(x < 0){
+            return x - addNum;
+        }
+        else{
+            return x + addNum;
+        }
+    }
+}
+==============================
+/root/specgen/SpecGen/project/082102-specgen/tmp/AddHalfSelf_Mutant2.java:12: error: cannot find symbol
+        //@ maintaining addNum == (\num_of int i; n < i && i <= \old(n); i % 2 == 1);
+                                                                     ^
+  symbol:   variable n
+  location: class AddHalfSelf_Mutant2
+1 error
+
+==============================
+public class AddHalfSelf_Mutant2{
+    //@ requires x >= Integer.MIN_VALUE && x <= Integer.MAX_VALUE;
+    //@ ensures x >= 0 ==> \result == x + (x / 2);
+    //@ ensures x < 0 ==> \result == x - ((-x) / 2);
+    public static int addHalfSelf(int x){
+        int n = x;
+        int addNum = 0;
+        //@ ghost int initialN = (x < 0) ? -x : x;
+        if(x < 0){
+            n = -x;
+        }
+        //@ maintaining n >= 0;
+        //@ maintaining addNum == (\num_of int i; n < i && i <= initialN; i % 2 == 1);
+        //@ decreases n;
+        while(n > 0){
+            if(n % 2 == 1){
+                addNum++;
+            }
+            n--;
+        }
+        if(x < 0){
+            return x - addNum;
+        }
+        else{
+            return x + addNum;
+        }
+    }
+}
+==============================
+/root/specgen/SpecGen/project/082102-specgen/tmp/AddHalfSelf_Mutant2.java:13: verify: The prover cannot establish an assertion (LoopInvariantBeforeLoop) in method addHalfSelf
+        //@ maintaining addNum == (\num_of int i; n < i && i <= initialN; i % 2 == 1);
+            ^
+1 verification failure
+
+==============================
+public class AddHalfSelf_Mutant2{
+    //@ requires x >= Integer.MIN_VALUE && x <= Integer.MAX_VALUE;
+    //@ ensures x >= 0 ==> \result == x + (x / 2);
+    //@ ensures x < 0 ==> \result == x - ((-x) / 2);
+    public static int addHalfSelf(int x){
+        int n = x;
+        int addNum = 0;
+        //@ ghost int initialN = (x < 0) ? -x : x;
+        if(x < 0){
+            n = -x;
+        }
+        //@ maintaining n >= 0;
+        //@ maintaining addNum == (\num_of int i; n < i && i < initialN; i % 2 == 1);  
+        //@ decreases n;
+        while(n > 0){
+            if(n % 2 == 1){
+                addNum++;
+            }
+            n--;
+        }
+        if(x < 0){
+            return x - addNum;
+        }
+        else{
+            return x + addNum;
+        }
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/082102-specgen/tmp/AddHalfSelf_Mutant2.java:14: verify: The prover cannot establish an assertion (LoopInvariantBeforeLoop) in method addHalfSelf
+        //@ maintaining addNum == (initialN + n) / 2 - (initialN % 2 == 1 ? 1 : 0);  
+            ^
+1 verification failure
+
+==============================
+public class AddHalfSelf_Mutant2{
+    //@ requires x >= Integer.MIN_VALUE && x <= Integer.MAX_VALUE;
+    //@ ensures x >= 0 ==> \result == x + (x / 2);
+    //@ ensures x < 0 ==> \result == x - ((-x) / 2);
+    public static int addHalfSelf(int x){
+        int n = x;
+        int addNum = 0;
+        //@ ghost int initialN = (x < 0) ? -x : x;
+        if(x < 0){
+            n = -x;
+        }
+        //@ maintaining n >= 0;
+        //@ maintaining addNum == (\num_of int i; n < i && i < initialN; i % 2 == 1);  
+        //@ decreases n;  
+        while(n > 0){
+            if(n % 2 == 1){
+                addNum++;
+            }
+            n--;
+        }
+        if(x < 0){
+            return x - addNum;
+        }
+        else{
+            return x + addNum;
+        }
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/082102-specgen/tmp/AddHalfSelf_Mutant2.java:14: verify: The prover cannot establish an assertion (LoopInvariantBeforeLoop) in method addHalfSelf
+        //@ maintaining addNum == (initialN - n) / 2 - (initialN % 2 == 1 ? 1 : 0);  
+            ^
+1 verification failure
+
+==============================
+public class AddHalfSelf_Mutant2{
+    //@ requires x >= Integer.MIN_VALUE && x <= Integer.MAX_VALUE;
+    //@ ensures x >= 0 ==> \result == x + (x / 2);
+    //@ ensures x < 0 ==> \result == x - ((-x) / 2);
+    public static int addHalfSelf(int x){
+        int n = x;
+        int addNum = 0;
+        //@ ghost int initialN = (x < 0) ? -x : x;
+        if(x < 0){
+            n = -x;
+        }
+        //@ maintaining n >= 0;
+        //@ maintaining addNum == (\num_of int i; n < i && i < initialN; i % 2 == 1);  
+ 
+        while(n > 0){
+            if(n % 2 == 1){
+                addNum++;
+            }
+            n--;
+        }
+        if(x < 0){
+            return x - addNum;
+        }
+        else{
+            return x + addNum;
+        }
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/082102-specgen/tmp/AddHalfSelf_Mutant2.java:13: verify: The prover cannot establish an assertion (LoopInvariantBeforeLoop) in method addHalfSelf
+        //@ maintaining n >= 0;
+                         ^
+1 verification failure
+
+==============================
+public class AddHalfSelf_Mutant2{
+    //@ requires x >= Integer.MIN_VALUE && x <= Integer.MAX_VALUE;
+    //@ ensures x >= 0 ==> \result == x + (x / 2);
+    //@ ensures x < 0 ==> \result == x - ((-x) / 2);
+    public static int addHalfSelf(int x){
+        int n = x;
+        int addNum = 0;
+        //@ ghost int initialN = (x < 0) ? -x : x;
+        if(x < 0){
+            n = -x;
+        }
+        //@ maintaining n >= 0;
+        //@ maintaining addNum == (\num_of int i; n < i && i <= initialN; i % 2 == 1);  
+ 
+        while(n > 0){
+            if(n % 2 == 1){
+                addNum++;
+            }
+            n--;
+        }
+        if(x < 0){
+            return x - addNum;
+        }
+        else{
+            return x + addNum;
+        }
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/082102-specgen/tmp/AddHalfSelf_Mutant2.java:13: verify: The prover cannot establish an assertion (LoopInvariantBeforeLoop) in method addHalfSelf
+        //@ maintaining n >= 0;
+                       ^
+1 verification failure
+
+==============================
+public class AddHalfSelf_Mutant2{
+    //@ requires x >= Integer.MIN_VALUE && x <= Integer.MAX_VALUE;
+    //@ ensures x >= 0 ==> \result == x + (x / 2);
+    //@ ensures x < 0 ==> \result == x - ((-x) / 2);
+    public static int addHalfSelf(int x){
+        int n = x;
+        int addNum = 0;
+        //@ ghost int initialN = (x < 0) ? -x : x;
+        if(x < 0){
+            n = -x;
+        }
+        //@ maintaining n >= 0;
+        //@ maintaining addNum == (\num_of int i; n < i && i - 1 <= initialN; i % 2 == 1);  
+ 
+        while(n > 0){
+            if(n % 2 == 1){
+                addNum++;
+            }
+            n--;
+        }
+        if(x < 0){
+            return x - addNum;
+        }
+        else{
+            return x + addNum;
+        }
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/082102-specgen/tmp/AddHalfSelf_Mutant2.java:13: verify: The prover cannot establish an assertion (LoopInvariantBeforeLoop) in method addHalfSelf
+        //@ maintaining n >= 0;
+                      ^
+1 verification failure
+
+==============================
+public class AddHalfSelf_Mutant2{
+    //@ requires x >= Integer.MIN_VALUE && x <= Integer.MAX_VALUE;
+    //@ ensures x >= 0 ==> \result == x + (x / 2);
+    //@ ensures x < 0 ==> \result == x - ((-x) / 2);
+    public static int addHalfSelf(int x){
+        int n = x;
+        int addNum = 0;
+        //@ ghost int initialN = (x < 0) ? -x : x;
+        if(x < 0){
+            n = -x;
+        }
+        //@ maintaining n >= 0;
+        //@ maintaining addNum == (\num_of int i; n <= i && i < initialN; i % 2 == 1);  
+ 
+        while(n > 0){
+            if(n % 2 == 1){
+                addNum++;
+            }
+            n--;
+        }
+        if(x < 0){
+            return x - addNum;
+        }
+        else{
+            return x + addNum;
+        }
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/082102-specgen/tmp/AddHalfSelf_Mutant2.java:13: verify: The prover cannot establish an assertion (LoopInvariantBeforeLoop) in method addHalfSelf
+        //@ maintaining n >= 0;
+                       ^
+1 verification failure
+
+==============================
+public class AddHalfSelf_Mutant2{
+    //@ requires x >= Integer.MIN_VALUE && x <= Integer.MAX_VALUE;
+    //@ ensures x >= 0 ==> \result == x + (x / 2);
+    //@ ensures x < 0 ==> \result == x - ((-x) / 2);
+    public static int addHalfSelf(int x){
+        int n = x;
+        int addNum = 0;
+        //@ ghost int initialN = (x < 0) ? -x : x;
+        if(x < 0){
+            n = -x;
+        }
+        //@ maintaining n >= 0;
+        //@ maintaining addNum == (\num_of int i; n <= i && i <= initialN; i % 2 == 1);  
+ 
+        while(n > 0){
+            if(n % 2 == 1){
+                addNum++;
+            }
+            n--;
+        }
+        if(x < 0){
+            return x - addNum;
+        }
+        else{
+            return x + addNum;
+        }
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/082102-specgen/tmp/AddHalfSelf_Mutant2.java:13: verify: The prover cannot establish an assertion (LoopInvariantBeforeLoop) in method addHalfSelf
+        //@ maintaining n >= 0;
+                      ^
+1 verification failure
+
+==============================
+public class AddHalfSelf_Mutant2{
+    //@ requires x >= Integer.MIN_VALUE && x <= Integer.MAX_VALUE;
+    //@ ensures x >= 0 ==> \result == x + (x / 2);
+    //@ ensures x < 0 ==> \result == x - ((-x) / 2);
+    public static int addHalfSelf(int x){
+        int n = x;
+        int addNum = 0;
+        //@ ghost int initialN = (x < 0) ? -x : x;
+        if(x < 0){
+            n = -x;
+        }
+        //@ maintaining n >= 0;
+        //@ maintaining addNum == (\num_of int i; n <= i && i - 1 <= initialN; i % 2 == 1);  
+ 
+        while(n > 0){
+            if(n % 2 == 1){
+                addNum++;
+            }
+            n--;
+        }
+        if(x < 0){
+            return x - addNum;
+        }
+        else{
+            return x + addNum;
+        }
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/082102-specgen/tmp/AddHalfSelf_Mutant2.java:16: verify: The prover cannot establish an assertion (LoopInvariantBeforeLoop) in method addHalfSelf
+        while(n > 0){
+                 ^
+1 verification failure
+
+==============================

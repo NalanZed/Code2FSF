@@ -1,0 +1,86 @@
+start role user
+Please modify the following code according to the modified FSF:
+```Code
+
+
+public class LeapYear_Original {
+
+    public static boolean isLeapYear(int year) {
+        boolean leap = false;
+        if (year % 4 == 0) {
+            if (year % 100 == 0) {
+                if (year % 400 == 0)
+                    leap = true;
+                else
+                    leap = false;
+            } else
+                leap = true;
+        } else
+            leap = false;
+        return leap;
+    }
+}
+
+```
+```Original FSF
+T0: year % 400 == 0
+D0: leap == true
+
+T1: year % 100 == 0 && year % 400 != 0
+D1: leap == false
+
+T2: year % 4 == 0 && year % 100 != 0
+D2: leap == true
+
+T3: year % 4 != 0
+D3: leap == false
+
+```Modified FSF
+T0: year % 400 == 0
+D0: leap == true
+
+T1: year % 100 == 0 && year % 400 != 0
+D1: leap == false
+
+T2: year % 4 == 0 && year % 100 != 0
+D2: leap == true
+
+T3: year % 4 != 0
+D3: leap == false
+
+```
+
+
+*end* role user
+start role assistant
+The modified FSF is identical to the original FSF, so no changes to the code are needed. The original code already perfectly matches the modified FSF requirements. Here's the code as-is:
+
+```
+public class LeapYear_Original {
+
+    public static boolean isLeapYear(int year) {
+        boolean leap = false;
+        if (year % 4 == 0) {
+            if (year % 100 == 0) {
+                if (year % 400 == 0)
+                    leap = true;
+                else
+                    leap = false;
+            } else
+                leap = true;
+        } else
+            leap = false;
+        return leap;
+    }
+}
+```
+
+Since the modified FSF didn't introduce any changes to the expected behavior, the original implementation remains correct and doesn't require modification. The code already:
+1. Returns true for years divisible by 400 (T0)
+2. Returns false for years divisible by 100 but not 400 (T1)
+3. Returns true for years divisible by 4 but not 100 (T2)
+4. Returns false for all other years (T3)
+*end* role assistant
+start role remark
+Validation SUCCESS!
+*end* role remark

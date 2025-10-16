@@ -1,0 +1,70 @@
+start role user
+Please modify the following code according to the modified FSF:
+```Code
+
+public class ChangeCase_Original {
+
+    public static char changeCase(char c) {
+        char result = ' ';
+        if (c > 'z') {
+            result = c;
+        } else if (c >= 'a') {
+            result = (char) (c - 'a' + 'A');
+        } else if (c > 'Z') {
+            result = c;
+        } else if (c >= 'A') {
+            result = (char) (c - 'A' + 'a');
+        } else {
+            result = c;
+        }
+        return result;
+    }
+}
+```
+```Original FSF
+T0: c > 'z' || (c < 'A') || (c > 'Z' && c < 'a')
+D0: result == c
+
+T1: c >= 'a' && c <= 'z'
+D1: result == (char)(c - 'a' + 'A')
+
+T2: c >= 'A' && c <= 'Z'
+D2: result == (char)(c - 'A' + 'a')
+
+```Modified FSF
+T0: c > 'z' || (c <= 'A') || (c > 'Z' && c < 'a')
+D0: result == c
+
+T1: c >= 'a' && c <= 'z'
+D1: result == (char)(c - 'a' + 'A')
+
+T2: c > 'A' && c <= 'Z'
+D2: result == (char)(c - 'A' + 'a')
+
+```
+
+
+*end* role user
+start role assistant
+```
+public class ChangeCase_Modified {
+
+    public static char changeCase(char c) {
+        char result = ' ';
+        if (c > 'z' || c <= 'A' || (c > 'Z' && c < 'a')) {
+            result = c;
+        } else if (c >= 'a') {
+            result = (char) (c - 'a' + 'A');
+        } else if (c > 'A') {
+            result = (char) (c - 'A' + 'a');
+        } else {
+            result = c;
+        }
+        return result;
+    }
+}
+```
+*end* role assistant
+start role remark
+Validation SUCCESS!
+*end* role remark

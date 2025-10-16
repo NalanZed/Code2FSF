@@ -1,0 +1,14 @@
+public class Abs_Mutant5 {
+
+    //@ ensures num < 0 ==> \result == -num;
+    //@ ensures num >= 0 ==> \result == 0;
+    public static int Abs(int num) {
+        if (num < 0)
+            return -num;
+        else
+            return 0;
+    }
+}
+==============================
+
+==============================

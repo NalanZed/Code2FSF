@@ -1,0 +1,153 @@
+public class SmallestEvenMul_Mutant1 {
+
+    /*@ requires n > 0;
+      @ ensures \result > 0;
+      @ ensures \result % 2 == 0;
+      @ ensures n % 2 != 0 ==> \result == 2 * n;
+      @ ensures n % 2 == 0 ==> \result == n;
+      @*/
+    public static int smallestEvenMultiple(int n) {
+        return n % 2 != 0 ? n : 2 * n;
+    }
+}
+==============================
+/root/specgen/SpecGen/project/081401-specgen/tmp/SmallestEvenMul_Mutant1.java:10: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081401-specgen/tmp/SmallestEvenMul_Mutant1.java:5:) in method smallestEvenMultiple
+        return n % 2 != 0 ? n : 2 * n;
+        ^
+/root/specgen/SpecGen/project/081401-specgen/tmp/SmallestEvenMul_Mutant1.java:5: verify: Associated declaration: /root/specgen/SpecGen/project/081401-specgen/tmp/SmallestEvenMul_Mutant1.java:10:
+      @ ensures \result % 2 == 0;
+        ^
+2 verification failures
+
+==============================
+public class SmallestEvenMul_Mutant1 {
+
+    /*@ requires n > 0;
+      @ ensures \result > 0;
+      @ ensures \result % 2 == 0;  
+      @ ensures n % 2 != 0 ==> \result == 2 * n;
+      @ ensures n % 2 == 0 ==> \result == n;
+      @*/
+    public static int smallestEvenMultiple(int n) {
+        return n % 2 != 0 ? n : 2 * n;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081401-specgen/tmp/SmallestEvenMul_Mutant1.java:10: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081401-specgen/tmp/SmallestEvenMul_Mutant1.java:5:) in method smallestEvenMultiple
+        return n % 2 != 0 ? n : 2 * n;
+        ^
+/root/specgen/SpecGen/project/081401-specgen/tmp/SmallestEvenMul_Mutant1.java:5: verify: Associated declaration: /root/specgen/SpecGen/project/081401-specgen/tmp/SmallestEvenMul_Mutant1.java:10:
+      @ ensures \result % 2 == 0;  
+        ^
+2 verification failures
+
+==============================
+public class SmallestEvenMul_Mutant1 {
+
+    /*@ requires n > 0;
+      @ ensures \result > 0;
+ 
+      @ ensures n % 2 != 0 ==> \result == 2 * n;
+      @ ensures n % 2 == 0 ==> \result == n;
+      @*/
+    public static int smallestEvenMultiple(int n) {
+        return n % 2 != 0 ? n : 2 * n;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081401-specgen/tmp/SmallestEvenMul_Mutant1.java:10: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081401-specgen/tmp/SmallestEvenMul_Mutant1.java:6:) in method smallestEvenMultiple
+        return n % 2 != 0 ? n : 2 * n;
+        ^
+/root/specgen/SpecGen/project/081401-specgen/tmp/SmallestEvenMul_Mutant1.java:6: verify: Associated declaration: /root/specgen/SpecGen/project/081401-specgen/tmp/SmallestEvenMul_Mutant1.java:10:
+      @ ensures n % 2 != 0 ==> \result == 2 * n;
+        ^
+2 verification failures
+
+==============================
+public class SmallestEvenMul_Mutant1 {
+
+    /*@ requires n > 0;
+      @ ensures \result > 0;
+ 
+      @ ensures n % 2 != 0 ==> \result == 2 * n;  
+      @ ensures n % 2 == 0 ==> \result == n;
+      @*/
+    public static int smallestEvenMultiple(int n) {
+        return n % 2 != 0 ? n : 2 * n;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081401-specgen/tmp/SmallestEvenMul_Mutant1.java:10: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081401-specgen/tmp/SmallestEvenMul_Mutant1.java:6:) in method smallestEvenMultiple
+        return n % 2 != 0 ? n : 2 * n;
+        ^
+/root/specgen/SpecGen/project/081401-specgen/tmp/SmallestEvenMul_Mutant1.java:6: verify: Associated declaration: /root/specgen/SpecGen/project/081401-specgen/tmp/SmallestEvenMul_Mutant1.java:10:
+      @ ensures n % 2 != 0 ==> \result == 2 * n;  
+        ^
+2 verification failures
+
+==============================
+public class SmallestEvenMul_Mutant1 {
+
+    /*@ requires n > 0;
+      @ ensures \result > 0;
+ 
+ 
+      @ ensures n % 2 == 0 ==> \result == n;
+      @*/
+    public static int smallestEvenMultiple(int n) {
+        return n % 2 != 0 ? n : 2 * n;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081401-specgen/tmp/SmallestEvenMul_Mutant1.java:10: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081401-specgen/tmp/SmallestEvenMul_Mutant1.java:7:) in method smallestEvenMultiple
+        return n % 2 != 0 ? n : 2 * n;
+        ^
+/root/specgen/SpecGen/project/081401-specgen/tmp/SmallestEvenMul_Mutant1.java:7: verify: Associated declaration: /root/specgen/SpecGen/project/081401-specgen/tmp/SmallestEvenMul_Mutant1.java:10:
+      @ ensures n % 2 == 0 ==> \result == n;
+        ^
+2 verification failures
+
+==============================
+public class SmallestEvenMul_Mutant1 {
+
+    /*@ requires n > 0;
+      @ ensures \result > 0;
+ 
+ 
+      @ ensures n % 2 == 0 ==> \result == n;  
+      @*/
+    public static int smallestEvenMultiple(int n) {
+        return n % 2 != 0 ? n : 2 * n;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081401-specgen/tmp/SmallestEvenMul_Mutant1.java:10: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081401-specgen/tmp/SmallestEvenMul_Mutant1.java:7:) in method smallestEvenMultiple
+        return n % 2 != 0 ? n : 2 * n;
+        ^
+/root/specgen/SpecGen/project/081401-specgen/tmp/SmallestEvenMul_Mutant1.java:7: verify: Associated declaration: /root/specgen/SpecGen/project/081401-specgen/tmp/SmallestEvenMul_Mutant1.java:10:
+      @ ensures n % 2 == 0 ==> \result == n;  
+        ^
+2 verification failures
+
+==============================
+public class SmallestEvenMul_Mutant1 {
+
+    /*@ requires n > 0;
+      @ ensures \result > 0;
+ 
+ 
+ 
+      @*/
+    public static int smallestEvenMultiple(int n) {
+        return n % 2 != 0 ? n : 2 * n;
+    }
+}
+
+==============================
+
+==============================

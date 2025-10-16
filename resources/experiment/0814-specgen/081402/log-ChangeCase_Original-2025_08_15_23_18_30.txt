@@ -1,0 +1,24 @@
+public class ChangeCase_Original {
+
+    //@ ensures ('a' <= c && c <= 'z') ==> \result == (char)(c - 'a' + 'A');
+    //@ ensures ('A' <= c && c <= 'Z') ==> \result == (char)(c - 'A' + 'a');
+    //@ ensures !('a' <= c && c <= 'z') && !('A' <= c && c <= 'Z') ==> \result == c;
+    public static char changeCase(char c) {
+        char result = ' ';
+        if (c > 'z') {
+            result = c;
+        } else if (c >= 'a') {
+            result = (char) (c - 'a' + 'A');
+        } else if (c > 'Z') {
+            result = c;
+        } else if (c >= 'A') {
+            result = (char) (c - 'A' + 'a');
+        } else {
+            result = c;
+        }
+        return result;
+    }
+}
+==============================
+
+==============================

@@ -1,0 +1,29 @@
+public class PrimeCheck_Original {
+
+    //@ requires a >= 2;
+    //@ ensures \result <==> (\forall int k; 2 <= k && k <= a/2; a % k != 0);
+    //@ ensures !\result ==> (\exists int k; 2 <= k && k <= a/2; a % k == 0);
+    public static boolean isPrime(int a) {
+        int i = 2;
+        int mid = a / 2;
+        //@ maintaining 2 <= i && i <= mid + 1;
+        //@ maintaining (\forall int k; 2 <= k && k < i; a % k != 0);
+        //@ decreases mid - i;
+        while (i <= mid) {
+            if (a % i == 0)
+                return false;
+            i++;
+        }
+        return true;
+    }
+}
+==============================
+/root/specgen/SpecGen/project/081401-specgen/tmp/PrimeCheck_Original.java:17: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081401-specgen/tmp/PrimeCheck_Original.java:4:) in method isPrime
+        return true;
+        ^
+/root/specgen/SpecGen/project/081401-specgen/tmp/PrimeCheck_Original.java:4: verify: Associated declaration: /root/specgen/SpecGen/project/081401-specgen/tmp/PrimeCheck_Original.java:17:
+    //@ ensures \result <==> (\forall int k; 2 <= k && k <= a/2; a % k != 0);
+        ^
+2 verification failures
+
+==============================

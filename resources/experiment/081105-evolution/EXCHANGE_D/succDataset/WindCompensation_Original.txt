@@ -1,0 +1,29 @@
+START ORIGINAL CODE
+
+public class WindCompensation_Original {
+    public static int windCompensation(int windSpeed) {
+        int compensation = 0;
+        if (windSpeed > 20) {
+            compensation = (windSpeed - 20) * 2;
+        } else if (windSpeed > 10) {
+            compensation = windSpeed - 10;
+        }
+        return compensation;
+    }
+}
+
+*END* ORIGINAL CODE
+START ORIGINAL FSF
+T1: windSpeed > 20
+D1: compensation == (windSpeed - 20) * 2
+T2: windSpeed > 10 && windSpeed <= 20
+D2: compensation == windSpeed - 10
+T3: windSpeed <= 10
+D3: compensation == 0
+*END* ORIGINAL FSF
+START MODIFIED FSF
+T1: (windSpeed > 20) || (windSpeed > 10 && windSpeed <= 20)
+D1: compensation == (windSpeed - 20) * 2
+T2: windSpeed <= 10
+D2: compensation == 0
+*END* MODIFIED FSF

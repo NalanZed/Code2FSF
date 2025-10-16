@@ -1,0 +1,30 @@
+public class XOR_Mutant4 {
+    /*@ ensures \result == (b1 != b2);
+      @ ensures \result <==> (b1 && !b2) || (!b1 && b2);
+      @*/
+    public static boolean xor(boolean b1, boolean b2) {
+        if(b1) {
+            if(b2) {
+                //@ assert b1 && b2;
+                return false;
+            }
+            else {
+                //@ assert b1 && !b2;
+                return true;
+            }
+        }
+        else {
+            if(b2) {
+                //@ assert !b1 && b2;
+                return true;
+            }
+            else {
+                //@ assert !b1 && !b2;
+                return false;
+            }
+        }
+    }
+}
+==============================
+
+==============================

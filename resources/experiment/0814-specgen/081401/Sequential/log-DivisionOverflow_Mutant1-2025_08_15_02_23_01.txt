@@ -1,0 +1,13 @@
+public class DivisionOverflow_Mutant1 {
+    //@ requires denom != 0;
+    //@ ensures \result == nom * denom;
+    //@ signals (ArithmeticException) (Integer.MAX_VALUE / Math.abs(denom) < Math.abs(nom)) 
+    //@         || (Integer.MIN_VALUE / Math.abs(denom) > -Math.abs(nom));
+    public static int division_test_fail_overflow(int nom, int denom) {
+        int tmp = nom * denom; //change division operation to multiplication
+        return tmp;
+    }
+}
+==============================
+
+==============================

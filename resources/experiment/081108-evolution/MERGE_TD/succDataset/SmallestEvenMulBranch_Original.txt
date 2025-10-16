@@ -1,0 +1,184 @@
+START ORIGINAL CODE
+
+public class SmallestEvenMulBranch_Original {
+
+    public static int smallestEvenMultiple(int n) {
+        if (n % 2 == 0) {
+            return n;
+        }
+        return 2 * n;
+    }
+}
+
+*END* ORIGINAL CODE
+START ORIGINAL FSF
+T1: n % 2 == 0
+D1: return_value == n
+T2: n % 2 != 0
+D2: return_value == 2 * n
+*END* ORIGINAL FSF
+START MODIFIED FSF
+T1: (n % 2 == 0) || (n % 2 != 0)
+D1: return_value == n
+*END* MODIFIED FSF
+START ORIGINAL CODE
+
+public class SmallestEvenMulBranch_Original {
+
+    public static int smallestEvenMultiple(int n) {
+        if (n % 2 == 0) {
+            return n;
+        }
+        return 2 * n;
+    }
+}
+
+*END* ORIGINAL CODE
+START ORIGINAL FSF
+T1: n % 2 == 0
+D1: return_value == n
+T2: n % 2 != 0
+D2: return_value == 2 * n
+*END* ORIGINAL FSF
+START MODIFIED FSF
+T1: (n % 2 != 0) || (n % 2 == 0)
+D1: return_value == 2 * n
+*END* MODIFIED FSF
+START ORIGINAL CODE
+
+public class SmallestEvenMulBranch_Original {
+
+    public static int smallestEvenMultiple(int n) {
+        if (n % 2 == 0) {
+            return n;
+        }
+        return 2 * n;
+    }
+}
+
+*END* ORIGINAL CODE
+START ORIGINAL FSF
+T1: n % 2 == 0
+D1: return_value == n
+T2: n % 2 != 0
+D2: return_value == 2 * n
+*END* ORIGINAL FSF
+START MODIFIED FSF
+T1: (n % 2 == 0) || (n % 2 != 0)
+D1: return_value == n
+*END* MODIFIED FSF
+START ORIGINAL CODE
+
+public class SmallestEvenMulBranch_Original {
+
+    public static int smallestEvenMultiple(int n) {
+        if (n % 2 == 0) {
+            return n;
+        }
+        return 2 * n;
+    }
+}
+
+*END* ORIGINAL CODE
+START ORIGINAL FSF
+T1: n % 2 == 0
+D1: return_value == n
+T2: n % 2 != 0
+D2: return_value == 2 * n
+*END* ORIGINAL FSF
+START MODIFIED FSF
+T1: (n % 2 == 0) || (n % 2 != 0)
+D1: return_value == n
+*END* MODIFIED FSF
+START ORIGINAL CODE
+
+public class SmallestEvenMulBranch_Original {
+
+    public static int smallestEvenMultiple(int n) {
+        if (n % 2 == 0) {
+            return n;
+        }
+        return 2 * n;
+    }
+}
+
+*END* ORIGINAL CODE
+START ORIGINAL FSF
+T1: n % 2 == 0
+D1: return_value == n
+T2: n % 2 != 0
+D2: return_value == 2 * n
+*END* ORIGINAL FSF
+START MODIFIED FSF
+T1: (n % 2 != 0) || (n % 2 == 0)
+D1: return_value == 2 * n
+*END* MODIFIED FSF
+START ORIGINAL CODE
+
+public class SmallestEvenMulBranch_Original {
+
+    public static int smallestEvenMultiple(int n) {
+        if (n % 2 == 0) {
+            return n;
+        }
+        return 2 * n;
+    }
+}
+
+*END* ORIGINAL CODE
+START ORIGINAL FSF
+T1: n % 2 == 0
+D1: return_value == n
+T2: n % 2 != 0
+D2: return_value == 2 * n
+*END* ORIGINAL FSF
+START MODIFIED FSF
+T1: (n % 2 == 0) || (n % 2 != 0)
+D1: return_value == n
+*END* MODIFIED FSF
+START ORIGINAL CODE
+
+public class SmallestEvenMulBranch_Original {
+
+    public static int smallestEvenMultiple(int n) {
+        if (n % 2 == 0) {
+            return n;
+        }
+        return 2 * n;
+    }
+}
+
+*END* ORIGINAL CODE
+START ORIGINAL FSF
+T1: n % 2 == 0
+D1: return_value == n
+T2: n % 2 != 0
+D2: return_value == 2 * n
+*END* ORIGINAL FSF
+START MODIFIED FSF
+T1: (n % 2 == 0) || (n % 2 != 0)
+D1: return_value == n
+*END* MODIFIED FSF
+START ORIGINAL CODE
+
+public class SmallestEvenMulBranch_Original {
+
+    public static int smallestEvenMultiple(int n) {
+        if (n % 2 == 0) {
+            return n;
+        }
+        return 2 * n;
+    }
+}
+
+*END* ORIGINAL CODE
+START ORIGINAL FSF
+T1: n % 2 == 0
+D1: return_value == n
+T2: n % 2 != 0
+D2: return_value == 2 * n
+*END* ORIGINAL FSF
+START MODIFIED FSF
+T1: (n % 2 == 0) || (n % 2 != 0)
+D1: return_value == n
+*END* MODIFIED FSF

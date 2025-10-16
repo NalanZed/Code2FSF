@@ -1,0 +1,23 @@
+public class GyroHealthCheck_Mutant3 {
+    //@ requires Integer.MIN_VALUE < x - y && x - y < Integer.MAX_VALUE;
+    //@ requires Integer.MIN_VALUE < y - z && y - z < Integer.MAX_VALUE;
+    //@ requires Integer.MIN_VALUE < x - z && x - z < Integer.MAX_VALUE;
+    //@ ensures \result == 1 <==> (Math.abs(x - y) > 10 && Math.abs(y - z) > 10 && Math.abs(x - z) > 10);
+    //@ ensures \result == 0 || \result == 1;
+    public static int gyroHealthCheck(int x, int y, int z) {
+        int diffXY = x - y;
+        if (diffXY < 0) diffXY = -diffXY;
+        int diffYZ = y - z;
+        if (diffYZ < 0) diffYZ = -diffYZ;
+        int diffXZ = x - z;
+        if (diffXZ < 0) diffXZ = -diffXZ;
+        int alarm = 0;
+        if (diffXY > 10 && diffYZ > 10 && diffXZ > 10) {
+            alarm = 1;
+        }
+        return alarm;
+    }
+}
+==============================
+
+==============================

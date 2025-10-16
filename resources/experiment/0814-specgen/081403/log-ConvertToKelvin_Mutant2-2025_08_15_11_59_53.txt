@@ -1,0 +1,11 @@
+public class ConvertToKelvin_Mutant2 {
+    //@ requires celsius >= -273.15;
+    //@ ensures \result == celsius - 273.15;  // Incorrect implementation (mutant)
+    //@ // ensures \result == celsius + 273.15;  // Correct implementation should be this
+    public static double convertTemperature(double celsius) {
+        return celsius - 273.15; // Changed addition to subtraction
+    }
+}
+==============================
+
+==============================

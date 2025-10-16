@@ -1,0 +1,42 @@
+start role user
+Please modify the following code according to the modified FSF:
+```Code
+
+
+public class ReLUSeq_Original {
+    public static double computeReLU(double x) {
+        return ((x >= 0.0) ? x : 0);
+    }
+}
+
+```
+```Original FSF
+T0: x >= 0.0
+D0: return_value == x
+
+T1: x < 0.0
+D1: return_value == 0
+
+```Modified FSF
+T0: x >= 0.0
+D0: return_value == 0
+
+T1: x < 0.0
+D1: return_value == x
+
+```
+
+
+*end* role user
+start role assistant
+```
+public class ReLUSeq_Modified {
+    public static double computeReLU(double x) {
+        return ((x >= 0.0) ? 0 : x);
+    }
+}
+```
+*end* role assistant
+start role remark
+Validation SUCCESS!
+*end* role remark

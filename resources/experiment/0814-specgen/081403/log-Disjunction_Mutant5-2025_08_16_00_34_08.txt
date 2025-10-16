@@ -1,0 +1,55 @@
+public class Disjunction_Mutant5 {
+    //@ ensures \result == (b1 || b2);  // Note: This is the correct specification, but the implementation doesn't satisfy it
+    public static boolean disjunctOf(boolean b1, boolean b2) {
+        if(b1 == true)
+            return true;
+        if(b2 == true)
+            return true;
+        return true;
+    }
+}
+==============================
+/root/specgen/SpecGen/project/081403-specgen/tmp/Disjunction_Mutant5.java:8: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081403-specgen/tmp/Disjunction_Mutant5.java:2:) in method disjunctOf
+        return true;
+        ^
+/root/specgen/SpecGen/project/081403-specgen/tmp/Disjunction_Mutant5.java:2: verify: Associated declaration: /root/specgen/SpecGen/project/081403-specgen/tmp/Disjunction_Mutant5.java:8:
+    //@ ensures \result == (b1 || b2);  // Note: This is the correct specification, but the implementation doesn't satisfy it
+        ^
+2 verification failures
+
+==============================
+public class Disjunction_Mutant5 {
+    //@ ensures \result == (b1 || b2);  // Note: This is the correct specification, but the implementation doesn't satisfy it  
+    public static boolean disjunctOf(boolean b1, boolean b2) {
+        if(b1 == true)
+            return true;
+        if(b2 == true)
+            return true;
+        return true;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081403-specgen/tmp/Disjunction_Mutant5.java:8: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081403-specgen/tmp/Disjunction_Mutant5.java:2:) in method disjunctOf
+        return true;
+        ^
+/root/specgen/SpecGen/project/081403-specgen/tmp/Disjunction_Mutant5.java:2: verify: Associated declaration: /root/specgen/SpecGen/project/081403-specgen/tmp/Disjunction_Mutant5.java:8:
+    //@ ensures \result == (b1 || b2);  // Note: This is the correct specification, but the implementation doesn't satisfy it  
+        ^
+2 verification failures
+
+==============================
+public class Disjunction_Mutant5 {
+ 
+    public static boolean disjunctOf(boolean b1, boolean b2) {
+        if(b1 == true)
+            return true;
+        if(b2 == true)
+            return true;
+        return true;
+    }
+}
+
+==============================
+
+==============================

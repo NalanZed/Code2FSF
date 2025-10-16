@@ -1,0 +1,84 @@
+public class PowerOfTwoBranch_Mutant3 {
+    //@ requires true;
+    //@ ensures \result <==> (n <= 0 || (n > 0 && (n & (n - 1)) == 0);
+    //@ ensures n <= 0 ==> \result == true;
+    //@ ensures n > 0 ==> \result == ((n & (n - 1)) == 0);
+    public static /*@ pure @*/ boolean isPowerOfTwo(int n) {
+        if (n <= 0) {
+            return true;
+        }
+        if ((n & (n - 1)) != 0) {
+            return false;
+        }
+        return true;
+    }
+}
+==============================
+/root/specgen/SpecGen/project/081401-specgen/tmp/PowerOfTwoBranch_Mutant3.java:3: error: ')' expected
+    //@ ensures \result <==> (n <= 0 || (n > 0 && (n & (n - 1)) == 0);
+                                                                     ^
+1 error
+
+==============================
+public class PowerOfTwoBranch_Mutant3 {
+    //@ requires true;
+    //@ ensures \result <==> (n <= 0 || (n > 0 && (n & (n - 1)) == 0);
+    //@ ensures n <= 0 ==> \result == true;
+    //@ ensures n > 0 ==> \result == ((n & (n - 1)) == 0);
+    public static /*@ pure @*/ boolean isPowerOfTwo(int n) {
+        if (n <= 0) {
+            return true;
+        }
+        if ((n & (n - 1)) != 0) {
+            return false;
+        }
+        return true;
+    }
+}
+==============================
+/root/specgen/SpecGen/project/081401-specgen/tmp/PowerOfTwoBranch_Mutant3.java:3: error: ')' expected
+    //@ ensures \result <==> (n <= 0 || (n > 0 && (n & (n - 1)) == 0);
+                                                                     ^
+1 error
+
+==============================
+public class PowerOfTwoBranch_Mutant3 {
+    //@ requires true;
+    //@ ensures \result <==> (n <= 0 || (n > 0 && (n & (n - 1)) == 0);
+    //@ ensures n <= 0 ==> \result == true;
+    //@ ensures n > 0 ==> \result == ((n & (n - 1)) == 0);
+    public static /*@ pure @*/ boolean isPowerOfTwo(int n) {
+        if (n <= 0) {
+            return true;
+        }
+        if ((n & (n - 1)) != 0) {
+            return false;
+        }
+        return true;
+    }
+}
+==============================
+/root/specgen/SpecGen/project/081401-specgen/tmp/PowerOfTwoBranch_Mutant3.java:3: error: ')' expected
+    //@ ensures \result <==> (n <= 0 || (n > 0 && (n & (n - 1)) == 0);
+                                                                     ^
+1 error
+
+==============================
+public class PowerOfTwoBranch_Mutant3 {
+    //@ requires true;
+    //@ ensures \result <==> (n <= 0 || (n > 0 && (n & (n - 1)) == 0));
+    //@ ensures n <= 0 ==> \result == true;
+    //@ ensures n > 0 ==> \result == ((n & (n - 1)) == 0);
+    public static /*@ pure @*/ boolean isPowerOfTwo(int n) {
+        if (n <= 0) {
+            return true;
+        }
+        if ((n & (n - 1)) != 0) {
+            return false;
+        }
+        return true;
+    }
+}
+==============================
+
+==============================

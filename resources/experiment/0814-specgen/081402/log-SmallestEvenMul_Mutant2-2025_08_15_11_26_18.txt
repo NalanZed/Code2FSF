@@ -1,0 +1,52 @@
+public class SmallestEvenMul_Mutant2 {
+
+    //@ requires n >= 1;
+    //@ ensures n % 2 == 0 ==> \result == n;
+    //@ ensures n % 2 != 0 ==> \result == 2 * n;
+    public static int smallestEvenMultiple(int n) {
+        return n % 2 == 0 ? n : 1 * n;
+    }
+}
+==============================
+/root/specgen/SpecGen/project/081402-specgen/tmp/SmallestEvenMul_Mutant2.java:7: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081402-specgen/tmp/SmallestEvenMul_Mutant2.java:5:) in method smallestEvenMultiple
+        return n % 2 == 0 ? n : 1 * n;
+        ^
+/root/specgen/SpecGen/project/081402-specgen/tmp/SmallestEvenMul_Mutant2.java:5: verify: Associated declaration: /root/specgen/SpecGen/project/081402-specgen/tmp/SmallestEvenMul_Mutant2.java:7:
+    //@ ensures n % 2 != 0 ==> \result == 2 * n;
+        ^
+2 verification failures
+
+==============================
+public class SmallestEvenMul_Mutant2 {
+
+    //@ requires n >= 1;
+    //@ ensures n % 2 == 0 ==> \result == n;
+    //@ ensures n % 2 != 0 ==> \result == 2 * n;  
+    public static int smallestEvenMultiple(int n) {
+        return n % 2 == 0 ? n : 1 * n;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081402-specgen/tmp/SmallestEvenMul_Mutant2.java:7: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081402-specgen/tmp/SmallestEvenMul_Mutant2.java:5:) in method smallestEvenMultiple
+        return n % 2 == 0 ? n : 1 * n;
+        ^
+/root/specgen/SpecGen/project/081402-specgen/tmp/SmallestEvenMul_Mutant2.java:5: verify: Associated declaration: /root/specgen/SpecGen/project/081402-specgen/tmp/SmallestEvenMul_Mutant2.java:7:
+    //@ ensures n % 2 != 0 ==> \result == 2 * n;  
+        ^
+2 verification failures
+
+==============================
+public class SmallestEvenMul_Mutant2 {
+
+    //@ requires n >= 1;
+    //@ ensures n % 2 == 0 ==> \result == n;
+ 
+    public static int smallestEvenMultiple(int n) {
+        return n % 2 == 0 ? n : 1 * n;
+    }
+}
+
+==============================
+
+==============================

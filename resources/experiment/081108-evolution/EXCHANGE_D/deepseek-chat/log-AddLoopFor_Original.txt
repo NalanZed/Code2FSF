@@ -1,0 +1,81 @@
+start role user
+Please modify the following code according to the modified FSF:
+```Code
+
+
+public class AddLoopFor_Original {
+    public static int addLoop(int x, int y) {
+        int sum = y;
+        if (x > 0) {
+            int n = 0;
+            for(n = x; n > 0; ) {
+                sum = sum + 1;
+                n = n - 1;
+            }
+        } else {
+            int n = 0;
+            for(n = -x; n > 0; ) {
+                sum = sum - 1;
+                n = n - 1;
+            }
+        }
+        return sum;
+    }
+}
+
+```
+```Original FSF
+T0: x > 0
+D0: sum == y + x
+
+T1: x < 0
+D1: sum == y + x
+
+T2: x == 0
+D2: sum == y
+
+```Modified FSF
+T0: x > 0
+D0: sum == y + x
+
+T1: x < 0
+D1: sum == y
+
+T2: x == 0
+D2: sum == y + x
+
+```
+
+
+*end* role user
+start role assistant
+```
+public class AddLoopFor_Modified {
+    public static int addLoop(int x, int y) {
+        int sum = y;
+        if (x > 0) {
+            int n = 0;
+            for(n = x; n > 0; ) {
+                sum = sum + 1;
+                n = n - 1;
+            }
+        } else if (x < 0) {
+            // Do nothing (sum remains y)
+        } else {  // x == 0
+            sum = sum + x;  // This will just be sum = y + 0
+        }
+        return sum;
+    }
+}
+```
+
+The modified code:
+1. Keeps the original behavior for x > 0 (adding x to y)
+2. For x < 0, just returns y without modification (removed the subtraction loop)
+3. For x == 0, explicitly adds x (which is 0) to y, though this is equivalent to just returning y
+
+The changes match the modified FSF requirements while making minimal modifications to the original code structure.
+*end* role assistant
+start role remark
+Validation SUCCESS!
+*end* role remark

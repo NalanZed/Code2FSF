@@ -1,0 +1,61 @@
+public class SmallestEvenMulBranch_Mutant4 {
+
+    //@ ensures n % 2 == 0 ==> \result == n;
+    //@ ensures n % 2 != 0 ==> \result == 3 * n;
+    //@ ensures \result % 2 == 0;
+    public static int smallestEvenMultiple(int n) {
+        if (n % 2 == 0) {
+            return n;
+        }
+        return 3 * n;
+    }
+}
+==============================
+/root/specgen/SpecGen/project/081403-specgen/tmp/SmallestEvenMulBranch_Mutant4.java:10: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081403-specgen/tmp/SmallestEvenMulBranch_Mutant4.java:5:) in method smallestEvenMultiple
+        return 3 * n;
+        ^
+/root/specgen/SpecGen/project/081403-specgen/tmp/SmallestEvenMulBranch_Mutant4.java:5: verify: Associated declaration: /root/specgen/SpecGen/project/081403-specgen/tmp/SmallestEvenMulBranch_Mutant4.java:10:
+    //@ ensures \result % 2 == 0;
+        ^
+2 verification failures
+
+==============================
+public class SmallestEvenMulBranch_Mutant4 {
+
+    //@ ensures n % 2 == 0 ==> \result == n;
+    //@ ensures n % 2 != 0 ==> \result == 3 * n;
+    //@ ensures \result % 2 == 0;  
+    public static int smallestEvenMultiple(int n) {
+        if (n % 2 == 0) {
+            return n;
+        }
+        return 3 * n;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081403-specgen/tmp/SmallestEvenMulBranch_Mutant4.java:10: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081403-specgen/tmp/SmallestEvenMulBranch_Mutant4.java:5:) in method smallestEvenMultiple
+        return 3 * n;
+        ^
+/root/specgen/SpecGen/project/081403-specgen/tmp/SmallestEvenMulBranch_Mutant4.java:5: verify: Associated declaration: /root/specgen/SpecGen/project/081403-specgen/tmp/SmallestEvenMulBranch_Mutant4.java:10:
+    //@ ensures \result % 2 == 0;  
+        ^
+2 verification failures
+
+==============================
+public class SmallestEvenMulBranch_Mutant4 {
+
+    //@ ensures n % 2 == 0 ==> \result == n;
+    //@ ensures n % 2 != 0 ==> \result == 3 * n;
+ 
+    public static int smallestEvenMultiple(int n) {
+        if (n % 2 == 0) {
+            return n;
+        }
+        return 3 * n;
+    }
+}
+
+==============================
+
+==============================

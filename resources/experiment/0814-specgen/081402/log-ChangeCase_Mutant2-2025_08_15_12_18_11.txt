@@ -1,0 +1,30 @@
+public class ChangeCase_Mutant2 {
+
+    /*@ public normal_behavior
+      @   requires (int)Character.MIN_VALUE <= (int)c && (int)c <= (int)Character.MAX_VALUE;
+      @   ensures (c > 'z') ==> \result == c;
+      @   ensures (c >= 'a' && c <= 'z') ==> \result == (char)(c - 'a' + 'A');
+      @   ensures (c > 'Z' && c < 'a') ==> \result == c;
+      @   ensures (c >= 'A' && c <= 'Z') ==> \result == (char)(c - 'A' + 'a');
+      @   ensures (c < 'A') ==> \result == c;
+      @   ensures \result >= Character.MIN_VALUE && \result <= Character.MAX_VALUE;
+      @*/
+    public static char changeCase(char c) {
+        char result;
+        if (c > 'z') {
+            result = c;
+        } else if (c >= 'a') {
+            result = (char) (c - 'a' + 'A');
+        } else if (c > 'Z') {
+            result = c;
+        } else if (c >= 'A') {
+            result = (char) (c - 'A' + 'a');
+        } else {
+            result = c;
+        }
+        return result;
+    }
+}
+==============================
+
+==============================

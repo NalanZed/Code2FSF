@@ -1,0 +1,66 @@
+public class SafeLanding_Original {
+    //@ requires height >= 0 && speed >= 0 && tilt >= 0;
+    //@ ensures \result == 1 <==> (height <= 5 && speed <= 3 && tilt <= 10);
+    //@ ensures \result == 0 <==> (height > 5 || speed > 3 || tilt > 10);
+    //@ ensures \result == 0 || \result == 1;
+    public static int safeLanding(int height, int speed, int tilt) {
+        int safe = 1;
+        //@ maintaining safe == 1 <==> (\forall int i; 0 <= i && i < \count; 
+        //@     (i == 0 ==> height <= 5) && 
+        //@     (i == 1 ==> speed <= 3) && 
+        //@     (i == 2 ==> tilt <= 10));
+        //@ maintaining safe == 0 || safe == 1;
+        if (height > 5) {
+            safe = 0;
+        }
+        //@ maintaining safe == 1 <==> (height <= 5 && (\forall int i; 0 <= i && i < \count; 
+        //@     (i == 0 ==> speed <= 3) && 
+        //@     (i == 1 ==> tilt <= 10)));
+        //@ maintaining safe == 0 || safe == 1;
+        if (speed > 3) {
+            safe = 0;
+        }
+        //@ maintaining safe == 1 <==> (height <= 5 && speed <= 3 && (\forall int i; 0 <= i && i < \count; 
+        //@     (i == 0 ==> tilt <= 10)));
+        //@ maintaining safe == 0 || safe == 1;
+        if (tilt > 10) {
+            safe = 0;
+        }
+        return safe;
+    }
+}
+==============================
+/root/specgen/SpecGen/project/081401-specgen/tmp/SafeLanding_Original.java:8: error: Loop specifications must immediately precede a loop statement
+        //@ maintaining safe == 1 <==> (\forall int i; 0 <= i && i < \count; 
+            ^
+/root/specgen/SpecGen/project/081401-specgen/tmp/SafeLanding_Original.java:16: error: Loop specifications must immediately precede a loop statement
+        //@ maintaining safe == 1 <==> (height <= 5 && (\forall int i; 0 <= i && i < \count; 
+            ^
+/root/specgen/SpecGen/project/081401-specgen/tmp/SafeLanding_Original.java:23: error: Loop specifications must immediately precede a loop statement
+        //@ maintaining safe == 1 <==> (height <= 5 && speed <= 3 && (\forall int i; 0 <= i && i < \count; 
+            ^
+3 errors
+
+==============================
+public class SafeLanding_Original {
+    //@ requires height >= 0 && speed >= 0 && tilt >= 0;
+    //@ ensures \result == 1 <==> (height <= 5 && speed <= 3 && tilt <= 10);
+    //@ ensures \result == 0 <==> (height > 5 || speed > 3 || tilt > 10);
+    //@ ensures \result == 0 || \result == 1;
+    public static int safeLanding(int height, int speed, int tilt) {
+        int safe = 1;
+        if (height > 5) {
+            safe = 0;
+        }
+        if (speed > 3) {
+            safe = 0;
+        }
+        if (tilt > 10) {
+            safe = 0;
+        }
+        return safe;
+    }
+}
+==============================
+
+==============================

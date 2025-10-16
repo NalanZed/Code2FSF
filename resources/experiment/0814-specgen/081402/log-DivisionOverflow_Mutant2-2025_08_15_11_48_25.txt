@@ -1,0 +1,12 @@
+public class DivisionOverflow_Mutant2 {
+    //@ requires denom != -1; // Avoid division by zero (denom+1 != 0)
+    //@ requires denom != Integer.MAX_VALUE; // Avoid overflow in denom+1
+    //@ ensures \result == nom / (denom + 1);
+    public static int division_test_fail_overflow(int nom, int denom) {
+        int tmp = nom / (denom+1); // modifying denom by adding 1
+        return tmp;
+    }
+}
+==============================
+
+==============================

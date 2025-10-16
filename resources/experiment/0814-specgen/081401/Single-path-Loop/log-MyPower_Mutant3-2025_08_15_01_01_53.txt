@@ -1,0 +1,16 @@
+public class MyPower_Mutant3 {
+    //@ requires n >= 0;
+    //@ ensures \result == 1 + x * n;
+    public static int power(int x, int n) {
+        int res = 1;
+        //@ maintaining res == 1 + x * i && i <= n;
+        //@ decreases n - i;
+        for(int i = 0; i < n; i++){
+	        res = res + x;
+        }
+        return res;
+    }
+}
+==============================
+
+==============================

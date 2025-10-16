@@ -1,0 +1,218 @@
+public class AltitudeController_Mutant5 {
+    /*@ requires true;
+      @ ensures \result == (error > 30 ? (error > 0 ? 5 : -4) : 
+      @                   (error > 20 ? (error > 0 ? 3 : -3) : 
+      @                   (error > 10 ? (error > 0 ? 2 : -2) : error)));
+      @ ensures \result >= -4 && \result <= 5;
+      @ ensures (error > 30 && error > 0) ==> \result == 5;
+      @ ensures (error > 30 && error <= 0) ==> \result == -4;
+      @ ensures (error > 20 && error <= 30 && error > 0) ==> \result == 3;
+      @ ensures (error > 20 && error <= 30 && error <= 0) ==> \result == -3;
+      @ ensures (error > 10 && error <= 20 && error > 0) ==> \result == 2;
+      @ ensures (error > 10 && error <= 20 && error <= 0) ==> \result == -2;
+      @ ensures (error <= 10) ==> \result == error;
+      @*/
+    public static int altitudeController(int currentHeight, int targetHeight) {
+        int error = targetHeight - currentHeight;
+        int absError = 0;
+        absError = error < 0 ? -error : error;
+        int controlSignal = 0;
+        if (absError > 30) {
+            controlSignal = error > 0 ? 5 : -4; //Changed -5 to -4
+        } else if (absError > 20) {
+            controlSignal = error > 0 ? 3 : -3;
+        } else if (absError > 10) {
+            controlSignal = error > 0 ? 2 : -2;
+        } else {
+            controlSignal = error;
+        }
+        return controlSignal;
+    }
+}
+==============================
+/root/specgen/SpecGen/project/081403-specgen/tmp/AltitudeController_Mutant5.java:3: error: cannot find symbol
+      @ ensures \result == (error > 30 ? (error > 0 ? 5 : -4) : 
+                            ^
+  symbol:   variable error
+  location: class AltitudeController_Mutant5
+/root/specgen/SpecGen/project/081403-specgen/tmp/AltitudeController_Mutant5.java:3: error: cannot find symbol
+      @ ensures \result == (error > 30 ? (error > 0 ? 5 : -4) : 
+                                          ^
+  symbol:   variable error
+  location: class AltitudeController_Mutant5
+/root/specgen/SpecGen/project/081403-specgen/tmp/AltitudeController_Mutant5.java:4: error: cannot find symbol
+      @                   (error > 20 ? (error > 0 ? 3 : -3) : 
+                           ^
+  symbol:   variable error
+  location: class AltitudeController_Mutant5
+/root/specgen/SpecGen/project/081403-specgen/tmp/AltitudeController_Mutant5.java:4: error: cannot find symbol
+      @                   (error > 20 ? (error > 0 ? 3 : -3) : 
+                                         ^
+  symbol:   variable error
+  location: class AltitudeController_Mutant5
+/root/specgen/SpecGen/project/081403-specgen/tmp/AltitudeController_Mutant5.java:5: error: cannot find symbol
+      @                   (error > 10 ? (error > 0 ? 2 : -2) : error)));
+                           ^
+  symbol:   variable error
+  location: class AltitudeController_Mutant5
+/root/specgen/SpecGen/project/081403-specgen/tmp/AltitudeController_Mutant5.java:5: error: cannot find symbol
+      @                   (error > 10 ? (error > 0 ? 2 : -2) : error)));
+                                         ^
+  symbol:   variable error
+  location: class AltitudeController_Mutant5
+/root/specgen/SpecGen/project/081403-specgen/tmp/AltitudeController_Mutant5.java:5: error: cannot find symbol
+      @                   (error > 10 ? (error > 0 ? 2 : -2) : error)));
+                                                               ^
+  symbol:   variable error
+  location: class AltitudeController_Mutant5
+/root/specgen/SpecGen/project/081403-specgen/tmp/AltitudeController_Mutant5.java:7: error: cannot find symbol
+      @ ensures (error > 30 && error > 0) ==> \result == 5;
+                 ^
+  symbol:   variable error
+  location: class AltitudeController_Mutant5
+/root/specgen/SpecGen/project/081403-specgen/tmp/AltitudeController_Mutant5.java:7: error: cannot find symbol
+      @ ensures (error > 30 && error > 0) ==> \result == 5;
+                               ^
+  symbol:   variable error
+  location: class AltitudeController_Mutant5
+/root/specgen/SpecGen/project/081403-specgen/tmp/AltitudeController_Mutant5.java:8: error: cannot find symbol
+      @ ensures (error > 30 && error <= 0) ==> \result == -4;
+                 ^
+  symbol:   variable error
+  location: class AltitudeController_Mutant5
+/root/specgen/SpecGen/project/081403-specgen/tmp/AltitudeController_Mutant5.java:8: error: cannot find symbol
+      @ ensures (error > 30 && error <= 0) ==> \result == -4;
+                               ^
+  symbol:   variable error
+  location: class AltitudeController_Mutant5
+/root/specgen/SpecGen/project/081403-specgen/tmp/AltitudeController_Mutant5.java:9: error: cannot find symbol
+      @ ensures (error > 20 && error <= 30 && error > 0) ==> \result == 3;
+                 ^
+  symbol:   variable error
+  location: class AltitudeController_Mutant5
+/root/specgen/SpecGen/project/081403-specgen/tmp/AltitudeController_Mutant5.java:9: error: cannot find symbol
+      @ ensures (error > 20 && error <= 30 && error > 0) ==> \result == 3;
+                               ^
+  symbol:   variable error
+  location: class AltitudeController_Mutant5
+/root/specgen/SpecGen/project/081403-specgen/tmp/AltitudeController_Mutant5.java:9: error: cannot find symbol
+      @ ensures (error > 20 && error <= 30 && error > 0) ==> \result == 3;
+                                              ^
+  symbol:   variable error
+  location: class AltitudeController_Mutant5
+/root/specgen/SpecGen/project/081403-specgen/tmp/AltitudeController_Mutant5.java:10: error: cannot find symbol
+      @ ensures (error > 20 && error <= 30 && error <= 0) ==> \result == -3;
+                 ^
+  symbol:   variable error
+  location: class AltitudeController_Mutant5
+/root/specgen/SpecGen/project/081403-specgen/tmp/AltitudeController_Mutant5.java:10: error: cannot find symbol
+      @ ensures (error > 20 && error <= 30 && error <= 0) ==> \result == -3;
+                               ^
+  symbol:   variable error
+  location: class AltitudeController_Mutant5
+/root/specgen/SpecGen/project/081403-specgen/tmp/AltitudeController_Mutant5.java:10: error: cannot find symbol
+      @ ensures (error > 20 && error <= 30 && error <= 0) ==> \result == -3;
+                                              ^
+  symbol:   variable error
+  location: class AltitudeController_Mutant5
+/root/specgen/SpecGen/project/081403-specgen/tmp/AltitudeController_Mutant5.java:11: error: cannot find symbol
+      @ ensures (error > 10 && error <= 20 && error > 0) ==> \result == 2;
+                 ^
+  symbol:   variable error
+  location: class AltitudeController_Mutant5
+/root/specgen/SpecGen/project/081403-specgen/tmp/AltitudeController_Mutant5.java:11: error: cannot find symbol
+      @ ensures (error > 10 && error <= 20 && error > 0) ==> \result == 2;
+                               ^
+  symbol:   variable error
+  location: class AltitudeController_Mutant5
+/root/specgen/SpecGen/project/081403-specgen/tmp/AltitudeController_Mutant5.java:11: error: cannot find symbol
+      @ ensures (error > 10 && error <= 20 && error > 0) ==> \result == 2;
+                                              ^
+  symbol:   variable error
+  location: class AltitudeController_Mutant5
+/root/specgen/SpecGen/project/081403-specgen/tmp/AltitudeController_Mutant5.java:12: error: cannot find symbol
+      @ ensures (error > 10 && error <= 20 && error <= 0) ==> \result == -2;
+                 ^
+  symbol:   variable error
+  location: class AltitudeController_Mutant5
+/root/specgen/SpecGen/project/081403-specgen/tmp/AltitudeController_Mutant5.java:12: error: cannot find symbol
+      @ ensures (error > 10 && error <= 20 && error <= 0) ==> \result == -2;
+                               ^
+  symbol:   variable error
+  location: class AltitudeController_Mutant5
+/root/specgen/SpecGen/project/081403-specgen/tmp/AltitudeController_Mutant5.java:12: error: cannot find symbol
+      @ ensures (error > 10 && error <= 20 && error <= 0) ==> \result == -2;
+                                              ^
+  symbol:   variable error
+  location: class AltitudeController_Mutant5
+/root/specgen/SpecGen/project/081403-specgen/tmp/AltitudeController_Mutant5.java:13: error: cannot find symbol
+      @ ensures (error <= 10) ==> \result == error;
+                 ^
+  symbol:   variable error
+  location: class AltitudeController_Mutant5
+/root/specgen/SpecGen/project/081403-specgen/tmp/AltitudeController_Mutant5.java:13: error: cannot find symbol
+      @ ensures (error <= 10) ==> \result == error;
+                                             ^
+  symbol:   variable error
+  location: class AltitudeController_Mutant5
+25 errors
+
+==============================
+public class AltitudeController_Mutant5 {
+    /*@ requires true;
+      @ ensures \result == (targetHeight - currentHeight > 30 ? 
+      @                     (targetHeight - currentHeight > 0 ? 5 : -4) : 
+      @                   (Math.abs(targetHeight - currentHeight) > 20 ? 
+      @                     (targetHeight - currentHeight > 0 ? 3 : -3) : 
+      @                   (Math.abs(targetHeight - currentHeight) > 10 ? 
+      @                     (targetHeight - currentHeight > 0 ? 2 : -2) : 
+      @                     (targetHeight - currentHeight)));
+      @ ensures \result >= -4 && \result <= 5;
+      @ ensures (targetHeight - currentHeight > 30 && targetHeight - currentHeight > 0) ==> \result == 5;
+      @ ensures (targetHeight - currentHeight > 30 && targetHeight - currentHeight <= 0) ==> \result == -4;
+      @ ensures (Math.abs(targetHeight - currentHeight) > 20 && 
+      @          Math.abs(targetHeight - currentHeight) <= 30 && 
+      @          targetHeight - currentHeight > 0) ==> \result == 3;
+      @ ensures (Math.abs(targetHeight - currentHeight) > 20 && 
+      @          Math.abs(targetHeight - currentHeight) <= 30 && 
+      @          targetHeight - currentHeight <= 0) ==> \result == -3;
+      @ ensures (Math.abs(targetHeight - currentHeight) > 10 && 
+      @          Math.abs(targetHeight - currentHeight) <= 20 && 
+      @          targetHeight - currentHeight > 0) ==> \result == 2;
+      @ ensures (Math.abs(targetHeight - currentHeight) > 10 && 
+      @          Math.abs(targetHeight - currentHeight) <= 20 && 
+      @          targetHeight - currentHeight <= 0) ==> \result == -2;
+      @ ensures (Math.abs(targetHeight - currentHeight) <= 10) ==> \result == (targetHeight - currentHeight);
+      @*/
+    public static int altitudeController(int currentHeight, int targetHeight) {
+        int error = targetHeight - currentHeight;
+        int absError = 0;
+        absError = error < 0 ? -error : error;
+        int controlSignal = 0;
+        if (absError > 30) {
+            controlSignal = error > 0 ? 5 : -4; //Changed -5 to -4
+        } else if (absError > 20) {
+            controlSignal = error > 0 ? 3 : -3;
+        } else if (absError > 10) {
+            controlSignal = error > 0 ? 2 : -2;
+        } else {
+            controlSignal = error;
+        }
+        return controlSignal;
+    }
+}
+==============================
+/root/specgen/SpecGen/project/081403-specgen/tmp/AltitudeController_Mutant5.java:9: error: ')' expected
+      @                     (targetHeight - currentHeight)));
+                                                            ^
+1 error
+
+==============================
+public class AltitudeController_Mutant5 {
+    public static int computeThrust(int targetHeight, int currentHeight) {
+        return (int)(0.5 * (targetHeight - currentHeight));
+    }
+}
+==============================
+
+==============================

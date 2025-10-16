@@ -1,0 +1,80 @@
+start role user
+Please modify the following code according to the modified FSF:
+```Code
+
+
+public class AddLoop_Original {
+    public static int AddLoop(int x, int y) {
+        int sum = x;
+        if (y > 0) {
+            int n = y;
+            while (n > 0) {
+                sum = sum + 1;
+                n = n - 1;
+            }
+        } else {
+            int n = -y;
+            while (n > 0) {
+                sum = sum - 1;
+                n = n - 1;
+            }
+        }
+        return sum;
+    }
+}
+
+```
+```Original FSF
+T0: y > 0
+D0: sum == x + y
+
+T1: y < 0
+D1: sum == x + y
+
+T2: y == 0
+D2: sum == x
+
+```Modified FSF
+T0: y > 0
+D0: sum == x
+
+T1: y < 0
+D1: sum == x + y
+
+T2: y == 0
+D2: sum == x + y
+
+```
+
+
+*end* role user
+start role assistant
+```
+public class AddLoop_Modified {
+    public static int AddLoop(int x, int y) {
+        int sum = x;
+        if (y > 0) {
+            // Do nothing (sum remains x)
+        } else {
+            int n = -y;
+            while (n > 0) {
+                sum = sum - 1;
+                n = n - 1;
+            }
+        }
+        return sum;
+    }
+}
+```
+
+The modified code:
+1. Keeps the original structure and variable names
+2. Removes the addition logic when y > 0 (since D0 requires sum == x)
+3. Maintains the subtraction logic when y < 0 (since D1 requires sum == x + y)
+4. For y == 0, the sum will naturally be x + y (which equals x) since no operations are performed
+5. Preserves all the original control flow and variable declarations
+6. Makes minimal changes to achieve the modified FSF requirements
+*end* role assistant
+start role remark
+Validation SUCCESS!
+*end* role remark

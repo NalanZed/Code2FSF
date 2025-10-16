@@ -1,0 +1,13 @@
+public class DivisorGame_Mutant1 {
+    /*@ public normal_behavior
+      @   requires n >= 1;
+      @   ensures \result == (n % 2 == 1);
+      @   pure
+      @*/
+    public static boolean divisorGame(int n) {
+        return n % 2 == 1;
+    }
+}
+==============================
+
+==============================

@@ -1,0 +1,61 @@
+public class SmallestEvenMul_Mutant2 {
+
+    /*@ requires n >= 1;
+      @ ensures \result >= n;
+      @ ensures \result % 2 == 0;
+      @ ensures \result % n == 0;
+      @ ensures (\forall int k; n <= k && k < \result && k % n == 0; k % 2 != 0);
+      @*/
+    public static int smallestEvenMultiple(int n) {
+        return n % 2 == 0 ? n : 1 * n;
+    }
+}
+==============================
+/root/specgen/SpecGen/project/081403-specgen/tmp/SmallestEvenMul_Mutant2.java:10: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081403-specgen/tmp/SmallestEvenMul_Mutant2.java:5:) in method smallestEvenMultiple
+        return n % 2 == 0 ? n : 1 * n;
+        ^
+/root/specgen/SpecGen/project/081403-specgen/tmp/SmallestEvenMul_Mutant2.java:5: verify: Associated declaration: /root/specgen/SpecGen/project/081403-specgen/tmp/SmallestEvenMul_Mutant2.java:10:
+      @ ensures \result % 2 == 0;
+        ^
+2 verification failures
+
+==============================
+public class SmallestEvenMul_Mutant2 {
+
+    /*@ requires n >= 1;
+      @ ensures \result >= n;
+      @ ensures \result % 2 == 0;  
+      @ ensures \result % n == 0;
+      @ ensures (\forall int k; n <= k && k < \result && k % n == 0; k % 2 != 0);
+      @*/
+    public static int smallestEvenMultiple(int n) {
+        return n % 2 == 0 ? n : 1 * n;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081403-specgen/tmp/SmallestEvenMul_Mutant2.java:10: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081403-specgen/tmp/SmallestEvenMul_Mutant2.java:5:) in method smallestEvenMultiple
+        return n % 2 == 0 ? n : 1 * n;
+        ^
+/root/specgen/SpecGen/project/081403-specgen/tmp/SmallestEvenMul_Mutant2.java:5: verify: Associated declaration: /root/specgen/SpecGen/project/081403-specgen/tmp/SmallestEvenMul_Mutant2.java:10:
+      @ ensures \result % 2 == 0;  
+        ^
+2 verification failures
+
+==============================
+public class SmallestEvenMul_Mutant2 {
+
+    /*@ requires n >= 1;
+      @ ensures \result >= n;
+ 
+      @ ensures \result % n == 0;
+      @ ensures (\forall int k; n <= k && k < \result && k % n == 0; k % 2 != 0);
+      @*/
+    public static int smallestEvenMultiple(int n) {
+        return n % 2 == 0 ? n : 1 * n;
+    }
+}
+
+==============================
+
+==============================

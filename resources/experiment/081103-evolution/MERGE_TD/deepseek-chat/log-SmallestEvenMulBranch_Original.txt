@@ -1,0 +1,51 @@
+start role user
+Please modify the following code according to the modified FSF:
+```Code
+
+
+public class SmallestEvenMulBranch_Original {
+
+    public static int smallestEvenMultiple(int n) {
+        if (n % 2 == 0) {
+            return n;
+        }
+        return 2 * n;
+    }
+}
+
+```
+```Original FSF
+T0: n % 2 == 0
+D0: return_value == n
+
+T1: n % 2 != 0
+D1: return_value == 2 * n
+
+```Modified FSF
+T0: (n % 2 == 0) || (n % 2 != 0)
+D0: return_value == n
+
+```
+
+
+*end* role user
+start role assistant
+```
+public class SmallestEvenMulBranch_Modified {
+    public static int smallestEvenMultiple(int n) {
+        return n;
+    }
+}
+```
+
+Explanation:
+1. The original code had two cases:
+   - If n was even, return n
+   - If n was odd, return 2*n
+2. The modified FSF specifies that for all cases (both even and odd n), the function should just return n
+3. Therefore, we simplified the function to always return n directly, removing the conditional logic
+4. This meets the requirement of the modified FSF where the return value is always equal to n regardless of whether n is even or odd
+*end* role assistant
+start role remark
+Validation SUCCESS!
+*end* role remark

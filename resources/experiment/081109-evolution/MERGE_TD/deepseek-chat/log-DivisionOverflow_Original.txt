@@ -1,0 +1,49 @@
+start role user
+Please modify the following code according to the modified FSF:
+```Code
+
+
+public class DivisionOverflow_Original {
+
+    public static int division_test_fail_overflow(int nom, int denom) {
+        int tmp = nom / denom;
+        return tmp;
+    }
+}
+
+```
+```Original FSF
+T0: denom == 0
+D0: Exception
+
+T1: denom != 0
+D1: return_value == nom / denom
+
+```Modified FSF
+T0: (denom == 0) || (denom != 0)
+D0: Exception
+
+```
+
+
+*end* role user
+start role assistant
+```
+public class DivisionOverflow_Modified {
+
+    public static int division_test_fail_overflow(int nom, int denom) {
+        throw new ArithmeticException();
+    }
+}
+```
+
+Explanation:
+1. The modified FSF requires that the function always throws an exception, regardless of the input (both when denom is 0 and when it's not)
+2. The simplest way to implement this is to make the function immediately throw an ArithmeticException
+3. I removed the division operation since it's no longer needed
+4. The function signature remains the same to maintain compatibility
+5. This satisfies the modified FSF where all cases (T0) must result in an exception (D0)
+*end* role assistant
+start role remark
+Validation SUCCESS!
+*end* role remark

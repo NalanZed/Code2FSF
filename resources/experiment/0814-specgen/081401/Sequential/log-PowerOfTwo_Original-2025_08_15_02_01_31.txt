@@ -1,0 +1,12 @@
+public class PowerOfTwo_Original {
+
+    //@ requires n != Integer.MIN_VALUE;
+    //@ ensures \result == (n > 0 && (n & (n - 1)) == 0);
+    //@ ensures \result <==> (\exists int k; 0 <= k <= 30; n == (1 << k));
+    public static boolean isPowerOfTwo(int n) {
+        return n > 0 && (n & (n - 1)) == 0;
+    }
+}
+==============================
+
+==============================

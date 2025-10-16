@@ -1,0 +1,19 @@
+public class Geofence_Mutant1 {
+    //@ requires limitX > 0 && limitY > 0;
+    //@ ensures \result == 0 || \result == 1;
+    //@ ensures (x <= 0 || x >= limitX || y < 0 || y > limitY) ==> \result == 1;
+    //@ ensures (x > 0 && x < limitX && y >= 0 && y <= limitY) ==> \result == 0;
+    public static int geofence(int x, int y, int limitX, int limitY) {
+        int alarm = 0;
+        if (x <= 0 || x >= limitX) {
+            alarm = 1;
+        }
+        if (y < 0 || y > limitY) {
+            alarm = 1;
+        }
+        return alarm;
+    }
+}
+==============================
+
+==============================

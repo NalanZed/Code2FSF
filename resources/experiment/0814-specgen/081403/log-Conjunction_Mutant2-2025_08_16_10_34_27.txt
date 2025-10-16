@@ -1,0 +1,61 @@
+public class Conjunction_Mutant2 {
+    /*@ public normal_behavior
+      @   ensures \result <==> (b1 && b2);
+      @*/
+    public static boolean conjunctOf(boolean b1, boolean b2) {
+        if(b1 == false)
+            return true;
+        if(b2 == false)
+            return false;
+        return true;
+    }
+}
+==============================
+/root/specgen/SpecGen/project/081403-specgen/tmp/Conjunction_Mutant2.java:7: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081403-specgen/tmp/Conjunction_Mutant2.java:3:) in method conjunctOf
+            return true;
+            ^
+/root/specgen/SpecGen/project/081403-specgen/tmp/Conjunction_Mutant2.java:3: verify: Associated declaration: /root/specgen/SpecGen/project/081403-specgen/tmp/Conjunction_Mutant2.java:7:
+      @   ensures \result <==> (b1 && b2);
+          ^
+2 verification failures
+
+==============================
+public class Conjunction_Mutant2 {
+    /*@ public normal_behavior
+      @   ensures \result <==> (b1 && b2);  
+      @*/
+    public static boolean conjunctOf(boolean b1, boolean b2) {
+        if(b1 == false)
+            return true;
+        if(b2 == false)
+            return false;
+        return true;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081403-specgen/tmp/Conjunction_Mutant2.java:7: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081403-specgen/tmp/Conjunction_Mutant2.java:3:) in method conjunctOf
+            return true;
+            ^
+/root/specgen/SpecGen/project/081403-specgen/tmp/Conjunction_Mutant2.java:3: verify: Associated declaration: /root/specgen/SpecGen/project/081403-specgen/tmp/Conjunction_Mutant2.java:7:
+      @   ensures \result <==> (b1 && b2);  
+          ^
+2 verification failures
+
+==============================
+public class Conjunction_Mutant2 {
+    /*@ public normal_behavior
+ 
+      @*/
+    public static boolean conjunctOf(boolean b1, boolean b2) {
+        if(b1 == false)
+            return true;
+        if(b2 == false)
+            return false;
+        return true;
+    }
+}
+
+==============================
+
+==============================

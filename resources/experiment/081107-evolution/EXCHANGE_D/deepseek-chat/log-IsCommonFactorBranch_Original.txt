@@ -1,0 +1,67 @@
+start role user
+Please modify the following code according to the modified FSF:
+```Code
+
+
+public class IsCommonFactorBranch_Original {
+    public static boolean isCommonFactor (int a, int b, int factor) {
+        if (a % factor != 0) {
+            return false;
+        }
+        if (b % factor != 0) {
+            return false;
+        }
+        return true;
+    }
+}
+
+```
+```Original FSF
+T0: factor == 0
+D0: Exception
+
+T1: factor != 0 && (a % factor != 0 || b % factor != 0)
+D1: return_value == false
+
+T2: factor != 0 && a % factor == 0 && b % factor == 0
+D2: return_value == true
+
+```Modified FSF
+T0: factor == 0
+D0: Exception
+
+T1: factor != 0 && (a % factor != 0 || b % factor != 0)
+D1: return_value == true
+
+T2: factor != 0 && a % factor == 0 && b % factor == 0
+D2: return_value == false
+
+```
+
+
+*end* role user
+start role assistant
+```
+public class IsCommonFactorBranch_Modified {
+    public static boolean isCommonFactor(int a, int b, int factor) {
+        if (a % factor != 0) {
+            return true;
+        }
+        if (b % factor != 0) {
+            return true;
+        }
+        return false;
+    }
+}
+```
+
+The modified code simply inverts the return values from the original version:
+1. When either a or b is not divisible by the factor (original returns false), now returns true
+2. When both are divisible by the factor (original returns true), now returns false
+3. The exception case for factor == 0 remains unchanged (though not explicitly handled in the code)
+
+This matches exactly with the modified FSF requirements while making minimal changes to the original code structure.
+*end* role assistant
+start role remark
+Validation SUCCESS!
+*end* role remark

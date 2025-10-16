@@ -1,0 +1,24 @@
+public class FizzBuzz_Mutant2 {
+    //@ requires n >= 0;
+    //@ ensures \result == 1 || \result == 4 || \result == 6 || \result == 9;
+    //@ ensures (n % 3 == 0 && n % 5 == 0) ==> \result == 9;
+    //@ ensures (n % 3 == 0 && n % 5 != 0) ==> \result == 4;
+    //@ ensures (n % 3 != 0 && n % 5 == 0) ==> \result == 6;
+    //@ ensures (n % 3 != 0 && n % 5 != 0) ==> \result == 1;
+    public static int fizzBuzz(int n) {
+        int res = 1; // changed from 0 to 1
+        //@ assert res == 1;
+        if (n % 3 == 0) {
+            res += 3;
+            //@ assert res == 4;
+        }
+        if (n % 5 == 0) {
+            res += 5;
+            //@ assert (n % 3 == 0) ==> (res == 9) && (n % 3 != 0) ==> (res == 6);
+        }
+        return res;
+    }
+}
+==============================
+
+==============================

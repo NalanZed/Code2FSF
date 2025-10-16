@@ -1,0 +1,64 @@
+start role user
+Please modify the following code according to the modified FSF:
+```Code
+
+
+public class IsCommonFactorBranch_Original {
+    public static boolean isCommonFactor (int a, int b, int factor) {
+        if (a % factor != 0) {
+            return false;
+        }
+        if (b % factor != 0) {
+            return false;
+        }
+        return true;
+    }
+}
+
+```
+```Original FSF
+T0: factor == 0
+D0: Exception
+
+T1: factor != 0 && (a % factor != 0 || b % factor != 0)
+D1: return_value == false
+
+T2: factor != 0 && a % factor == 0 && b % factor == 0
+D2: return_value == true
+
+```Modified FSF
+T0: (factor == 0) || (factor != 0 && a % factor == 0 && b % factor == 0)
+D0: Exception
+
+T1: factor != 0 && (a % factor != 0 || b % factor != 0)
+D1: return_value == false
+
+```
+
+
+*end* role user
+start role assistant
+```
+public class IsCommonFactorBranch_Modified {
+    public static boolean isCommonFactor(int a, int b, int factor) {
+        if (factor == 0 || (a % factor == 0 && b % factor == 0)) {
+            throw new IllegalArgumentException("Invalid factor");
+        }
+        if (a % factor != 0 || b % factor != 0) {
+            return false;
+        }
+        return true;
+    }
+}
+```
+
+The modified code:
+1. Changes the behavior to throw an exception when factor is 0 OR when it's a common factor (matching modified FSF T0)
+2. Returns false when factor is not a common factor (matching modified FSF T1)
+3. Note that the original T2 condition is now part of the exception case in the modified FSF
+
+The code structure maintains the same basic flow but changes the first condition to match the new requirements. The exception throwing behavior is added to handle the new case where factor is a valid common factor.
+*end* role assistant
+start role remark
+Validation SUCCESS!
+*end* role remark

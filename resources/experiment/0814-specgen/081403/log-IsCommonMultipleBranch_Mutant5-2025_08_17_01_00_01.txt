@@ -1,0 +1,67 @@
+public class IsCommonMultipleBranch_Mutant5 {
+    //@ requires a != 0 && b != 0;
+    //@ ensures \result == false;  // Note: This is a mutant that always returns false
+    //@ ensures \result == (m % a == 0 && m % b == 0);  // This would be the correct specification
+    public static boolean isCommonMultiple(int a, int b, int m) {
+        if (m % a != 0) {
+            return false;
+        }
+        if (m % b != 0) {
+            return false;
+        }
+        return false;
+    }
+}
+==============================
+/root/specgen/SpecGen/project/081403-specgen/tmp/IsCommonMultipleBranch_Mutant5.java:12: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081403-specgen/tmp/IsCommonMultipleBranch_Mutant5.java:4:) in method isCommonMultiple
+        return false;
+        ^
+/root/specgen/SpecGen/project/081403-specgen/tmp/IsCommonMultipleBranch_Mutant5.java:4: verify: Associated declaration: /root/specgen/SpecGen/project/081403-specgen/tmp/IsCommonMultipleBranch_Mutant5.java:12:
+    //@ ensures \result == (m % a == 0 && m % b == 0);  // This would be the correct specification
+        ^
+2 verification failures
+
+==============================
+public class IsCommonMultipleBranch_Mutant5 {
+    //@ requires a != 0 && b != 0;
+    //@ ensures \result == false;  // Note: This is a mutant that always returns false
+    //@ ensures \result == (m % a == 0 && m % b == 0);  // This would be the correct specification  
+    public static boolean isCommonMultiple(int a, int b, int m) {
+        if (m % a != 0) {
+            return false;
+        }
+        if (m % b != 0) {
+            return false;
+        }
+        return false;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081403-specgen/tmp/IsCommonMultipleBranch_Mutant5.java:12: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081403-specgen/tmp/IsCommonMultipleBranch_Mutant5.java:4:) in method isCommonMultiple
+        return false;
+        ^
+/root/specgen/SpecGen/project/081403-specgen/tmp/IsCommonMultipleBranch_Mutant5.java:4: verify: Associated declaration: /root/specgen/SpecGen/project/081403-specgen/tmp/IsCommonMultipleBranch_Mutant5.java:12:
+    //@ ensures \result == (m % a == 0 && m % b == 0);  // This would be the correct specification  
+        ^
+2 verification failures
+
+==============================
+public class IsCommonMultipleBranch_Mutant5 {
+    //@ requires a != 0 && b != 0;
+    //@ ensures \result == false;  // Note: This is a mutant that always returns false
+ 
+    public static boolean isCommonMultiple(int a, int b, int m) {
+        if (m % a != 0) {
+            return false;
+        }
+        if (m % b != 0) {
+            return false;
+        }
+        return false;
+    }
+}
+
+==============================
+
+==============================

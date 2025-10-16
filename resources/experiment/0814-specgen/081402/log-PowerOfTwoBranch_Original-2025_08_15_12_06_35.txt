@@ -1,0 +1,224 @@
+public class PowerOfTwoBranch_Original {
+
+    /*@ requires true;
+      @ ensures \result == (\exists int k; 0 <= k; n == (1 << k));
+      @ ensures n <= 0 ==> !\result;
+      @ ensures n > 0 && (n & (n - 1)) == 0 ==> \result;
+      @ ensures n > 0 && (n & (n - 1)) != 0 ==> !\result;
+      @*/
+    public static boolean isPowerOfTwo(int n) {
+        if (n <= 0) {
+            return false;
+        }
+        if ((n & (n - 1)) != 0) {
+            return false;
+        }
+        return true;
+    }
+}
+==============================
+/root/specgen/SpecGen/project/081402-specgen/tmp/PowerOfTwoBranch_Original.java:11: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081402-specgen/tmp/PowerOfTwoBranch_Original.java:4:) in method isPowerOfTwo
+            return false;
+            ^
+/root/specgen/SpecGen/project/081402-specgen/tmp/PowerOfTwoBranch_Original.java:4: verify: Associated declaration: /root/specgen/SpecGen/project/081402-specgen/tmp/PowerOfTwoBranch_Original.java:11:
+      @ ensures \result == (\exists int k; 0 <= k; n == (1 << k));
+        ^
+2 verification failures
+
+==============================
+public class PowerOfTwoBranch_Original {
+
+    /*@ requires true;
+      @ ensures \result == (\exists int k; 0 < k; n == (1 << k));  
+      @ ensures n <= 0 ==> !\result;
+      @ ensures n > 0 && (n & (n - 1)) == 0 ==> \result;
+      @ ensures n > 0 && (n & (n - 1)) != 0 ==> !\result;
+      @*/
+    public static boolean isPowerOfTwo(int n) {
+        if (n <= 0) {
+            return false;
+        }
+        if ((n & (n - 1)) != 0) {
+            return false;
+        }
+        return true;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081402-specgen/tmp/PowerOfTwoBranch_Original.java:11: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081402-specgen/tmp/PowerOfTwoBranch_Original.java:4:) in method isPowerOfTwo
+            return false;
+            ^
+/root/specgen/SpecGen/project/081402-specgen/tmp/PowerOfTwoBranch_Original.java:4: verify: Associated declaration: /root/specgen/SpecGen/project/081402-specgen/tmp/PowerOfTwoBranch_Original.java:11:
+      @ ensures \result == (\exists int k; 0 < k; n == (1 << k));  
+        ^
+2 verification failures
+
+==============================
+public class PowerOfTwoBranch_Original {
+
+    /*@ requires true;
+      @ ensures \result == (\exists int k; 0 <= k; n == (1 << k));  
+      @ ensures n <= 0 ==> !\result;
+      @ ensures n > 0 && (n & (n - 1)) == 0 ==> \result;
+      @ ensures n > 0 && (n & (n - 1)) != 0 ==> !\result;
+      @*/
+    public static boolean isPowerOfTwo(int n) {
+        if (n <= 0) {
+            return false;
+        }
+        if ((n & (n - 1)) != 0) {
+            return false;
+        }
+        return true;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081402-specgen/tmp/PowerOfTwoBranch_Original.java:11: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081402-specgen/tmp/PowerOfTwoBranch_Original.java:4:) in method isPowerOfTwo
+            return false;
+            ^
+/root/specgen/SpecGen/project/081402-specgen/tmp/PowerOfTwoBranch_Original.java:4: verify: Associated declaration: /root/specgen/SpecGen/project/081402-specgen/tmp/PowerOfTwoBranch_Original.java:11:
+      @ ensures \result == (\exists int k; 0 <= k; n == (1 << k));  
+        ^
+2 verification failures
+
+==============================
+public class PowerOfTwoBranch_Original {
+
+    /*@ requires true;
+      @ ensures \result == (\exists int k; 0 - 1 <= k; n == (1 << k));  
+      @ ensures n <= 0 ==> !\result;
+      @ ensures n > 0 && (n & (n - 1)) == 0 ==> \result;
+      @ ensures n > 0 && (n & (n - 1)) != 0 ==> !\result;
+      @*/
+    public static boolean isPowerOfTwo(int n) {
+        if (n <= 0) {
+            return false;
+        }
+        if ((n & (n - 1)) != 0) {
+            return false;
+        }
+        return true;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081402-specgen/tmp/PowerOfTwoBranch_Original.java:11: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081402-specgen/tmp/PowerOfTwoBranch_Original.java:4:) in method isPowerOfTwo
+            return false;
+            ^
+/root/specgen/SpecGen/project/081402-specgen/tmp/PowerOfTwoBranch_Original.java:4: verify: Associated declaration: /root/specgen/SpecGen/project/081402-specgen/tmp/PowerOfTwoBranch_Original.java:11:
+      @ ensures \result == (\exists int k; 0 - 1 <= k; n == (1 << k));  
+        ^
+2 verification failures
+
+==============================
+public class PowerOfTwoBranch_Original {
+
+    /*@ requires true;
+      @ ensures \result == (\forall int k; 0 < k; n == (1 << k));  
+      @ ensures n <= 0 ==> !\result;
+      @ ensures n > 0 && (n & (n - 1)) == 0 ==> \result;
+      @ ensures n > 0 && (n & (n - 1)) != 0 ==> !\result;
+      @*/
+    public static boolean isPowerOfTwo(int n) {
+        if (n <= 0) {
+            return false;
+        }
+        if ((n & (n - 1)) != 0) {
+            return false;
+        }
+        return true;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081402-specgen/tmp/PowerOfTwoBranch_Original.java:16: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081402-specgen/tmp/PowerOfTwoBranch_Original.java:4:) in method isPowerOfTwo
+        return true;
+        ^
+/root/specgen/SpecGen/project/081402-specgen/tmp/PowerOfTwoBranch_Original.java:4: verify: Associated declaration: /root/specgen/SpecGen/project/081402-specgen/tmp/PowerOfTwoBranch_Original.java:16:
+      @ ensures \result == (\forall int k; 0 < k; n == (1 << k));  
+        ^
+2 verification failures
+
+==============================
+public class PowerOfTwoBranch_Original {
+
+    /*@ requires true;
+      @ ensures \result == (\forall int k; 0 <= k; n == (1 << k));  
+      @ ensures n <= 0 ==> !\result;
+      @ ensures n > 0 && (n & (n - 1)) == 0 ==> \result;
+      @ ensures n > 0 && (n & (n - 1)) != 0 ==> !\result;
+      @*/
+    public static boolean isPowerOfTwo(int n) {
+        if (n <= 0) {
+            return false;
+        }
+        if ((n & (n - 1)) != 0) {
+            return false;
+        }
+        return true;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081402-specgen/tmp/PowerOfTwoBranch_Original.java:16: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081402-specgen/tmp/PowerOfTwoBranch_Original.java:4:) in method isPowerOfTwo
+        return true;
+        ^
+/root/specgen/SpecGen/project/081402-specgen/tmp/PowerOfTwoBranch_Original.java:4: verify: Associated declaration: /root/specgen/SpecGen/project/081402-specgen/tmp/PowerOfTwoBranch_Original.java:16:
+      @ ensures \result == (\forall int k; 0 <= k; n == (1 << k));  
+        ^
+2 verification failures
+
+==============================
+public class PowerOfTwoBranch_Original {
+
+    /*@ requires true;
+      @ ensures \result == (\forall int k; 0 - 1 <= k; n == (1 << k));  
+      @ ensures n <= 0 ==> !\result;
+      @ ensures n > 0 && (n & (n - 1)) == 0 ==> \result;
+      @ ensures n > 0 && (n & (n - 1)) != 0 ==> !\result;
+      @*/
+    public static boolean isPowerOfTwo(int n) {
+        if (n <= 0) {
+            return false;
+        }
+        if ((n & (n - 1)) != 0) {
+            return false;
+        }
+        return true;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081402-specgen/tmp/PowerOfTwoBranch_Original.java:16: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081402-specgen/tmp/PowerOfTwoBranch_Original.java:4:) in method isPowerOfTwo
+        return true;
+        ^
+/root/specgen/SpecGen/project/081402-specgen/tmp/PowerOfTwoBranch_Original.java:4: verify: Associated declaration: /root/specgen/SpecGen/project/081402-specgen/tmp/PowerOfTwoBranch_Original.java:16:
+      @ ensures \result == (\forall int k; 0 - 1 <= k; n == (1 << k));  
+        ^
+2 verification failures
+
+==============================
+public class PowerOfTwoBranch_Original {
+
+    /*@ requires true;
+ 
+      @ ensures n <= 0 ==> !\result;
+      @ ensures n > 0 && (n & (n - 1)) == 0 ==> \result;
+      @ ensures n > 0 && (n & (n - 1)) != 0 ==> !\result;
+      @*/
+    public static boolean isPowerOfTwo(int n) {
+        if (n <= 0) {
+            return false;
+        }
+        if ((n & (n - 1)) != 0) {
+            return false;
+        }
+        return true;
+    }
+}
+
+==============================
+
+==============================

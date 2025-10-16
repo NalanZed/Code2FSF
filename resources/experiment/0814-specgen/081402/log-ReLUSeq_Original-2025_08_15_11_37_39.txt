@@ -1,0 +1,11 @@
+public class ReLUSeq_Original {
+    //@ ensures x >= 0.0 ==> \result == x;
+    //@ ensures x < 0.0 ==> \result == 0.0;
+    //@ ensures \result >= 0.0;
+    public static /*@ pure @*/ double computeReLU(double x) {
+        return ((x >= 0.0) ? x : 0);
+    }
+}
+==============================
+
+==============================

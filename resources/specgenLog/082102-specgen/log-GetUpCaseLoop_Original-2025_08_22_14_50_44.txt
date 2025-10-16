@@ -1,0 +1,77 @@
+public class GetUpCaseLoop {
+    //@ requires 'a' <= c && c <= 'f';
+    //@ ensures \result == (char)(c - 'a' + 'A');
+    //@ also
+    //@ requires c < 'a' || c > 'f';
+    //@ ensures \result == 0;
+    public static char getUpCase(char c) {
+        if(c < 'a' || c > 'f') {
+            return 0;
+        }
+        char t = 'F';
+        //@ maintaining 'A' <= t && t <= 'F';
+        //@ maintaining (\forall char ch; t < ch && ch <= 'F'; ch != (char)(c - 'a' + 'A'));
+        //@ decreases t - 'A';
+        while(t >= 'A' && t != c - 'a' + 'A') {
+            t--;
+        }
+        return t;
+    }
+}
+==============================
+/root/specgen/SpecGen/project/082102-specgen/tmp/GetUpCaseLoop_Original.java:1: error: class GetUpCaseLoop is public, should be declared in a file named GetUpCaseLoop.java
+public class GetUpCaseLoop {
+       ^
+1 error
+
+==============================
+public class GetUpCaseLoop {
+    //@ requires 'a' <= c && c <= 'f';
+    //@ ensures \result == (char)(c - 'a' + 'A');
+    //@ also
+    //@ requires c < 'a' || c > 'f';
+    //@ ensures \result == 0;
+    public static char getUpCase(char c) {
+        if(c < 'a' || c > 'f') {
+            return 0;
+        }
+        char t = 'F';
+        //@ maintaining 'A' <= t && t <= 'F';
+        //@ maintaining (\forall char ch; t < ch && ch <= 'F'; ch != (char)(c - 'a' + 'A'));
+        //@ decreases t - 'A';
+        while(t >= 'A' && t != c - 'a' + 'A') {
+            t--;
+        }
+        return t;
+    }
+}
+==============================
+/root/specgen/SpecGen/project/082102-specgen/tmp/GetUpCaseLoop_Original.java:1: error: class GetUpCaseLoop is public, should be declared in a file named GetUpCaseLoop.java
+public class GetUpCaseLoop {
+       ^
+1 error
+
+==============================
+class GetUpCaseLoop {
+    //@ requires 'a' <= c && c <= 'f';
+    //@ ensures \result == (char)(c - 'a' + 'A');
+    //@ also
+    //@ requires c < 'a' || c > 'f';
+    //@ ensures \result == 0;
+    public static char getUpCase(char c) {
+        if(c < 'a' || c > 'f') {
+            return 0;
+        }
+        char t = 'F';
+        //@ maintaining 'A' <= t && t <= 'F';
+        //@ maintaining (\forall char ch; t < ch && ch <= 'F'; ch != (char)(c - 'a' + 'A'));
+        //@ decreases t - 'A';
+        while(t >= 'A' && t != c - 'a' + 'A') {
+            t--;
+        }
+        return t;
+    }
+}
+==============================
+
+==============================

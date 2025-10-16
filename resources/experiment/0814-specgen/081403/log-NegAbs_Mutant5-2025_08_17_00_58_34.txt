@@ -1,0 +1,13 @@
+public class NegAbs_Mutant5 {
+    //@ ensures (num < 0) ==> (\result == num);
+    //@ ensures (num >= 0) ==> (\result == num + 1);
+    public static int negAbs(int num) {
+        if (num < 0)
+            return num;
+        else
+            return num + 1;
+    }
+}
+==============================
+
+==============================

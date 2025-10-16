@@ -1,0 +1,82 @@
+start role user
+Please modify the following code according to the modified FSF:
+```Code
+
+
+public class AddLoop_Original {
+    public static int AddLoop(int x, int y) {
+        int sum = x;
+        if (y > 0) {
+            int n = y;
+            while (n > 0) {
+                sum = sum + 1;
+                n = n - 1;
+            }
+        } else {
+            int n = -y;
+            while (n > 0) {
+                sum = sum - 1;
+                n = n - 1;
+            }
+        }
+        return sum;
+    }
+}
+
+```
+```Original FSF
+T0: y > 0
+D0: sum == x + y
+
+T1: y < 0
+D1: sum == x + y
+
+T2: y == 0
+D2: sum == x
+
+```Modified FSF
+T0: (y < 0) || (y > 0)
+D0: sum == x + y
+
+T1: y == 0
+D1: sum == x
+
+```
+
+
+*end* role user
+start role assistant
+The modified FSF is actually a simplification of the original FSF, combining T0 and T1 into a single case (y != 0) and keeping T2 as the y == 0 case. The code's behavior doesn't need to change since it already satisfies the modified FSF. However, we can simplify the code structure to match the modified FSF's organization:
+
+```
+public class AddLoop_Modified {
+    public static int AddLoop(int x, int y) {
+        int sum = x;
+        if (y != 0) {
+            int n = Math.abs(y);
+            while (n > 0) {
+                sum = sum + (y > 0 ? 1 : -1);
+                n = n - 1;
+            }
+        }
+        return sum;
+    }
+}
+```
+
+Key changes made:
+1. Combined the two branches into one by using Math.abs() and ternary operator
+2. Simplified the condition to check y != 0 instead of separate positive/negative cases
+3. The behavior remains exactly the same as the original code
+4. The structure now more clearly reflects the modified FSF's organization
+
+The modified code still satisfies:
+- When y != 0 (T0), returns x + y (D0)
+- When y == 0 (T1), returns x (D1)
+*end* role assistant
+start role user
+FSF validation failed with unexpected error: Unknown error occurred during validation of T: (y < 0) || (y > 0)	D: sum == x + y
+*end* role user
+start role remark
+Validation FAIL--Unknown error!
+*end* role remark

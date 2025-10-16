@@ -1,0 +1,22 @@
+public class SafeLanding_Mutant3 {
+    //@ requires height >= 0 && speed >= 0 && tilt >= 0;
+    //@ ensures \result == 1 <==> (height <= 5 && speed <= 3 && tilt < 10);
+    //@ ensures \result == 0 <==> (height > 5 || speed > 3 || tilt >= 10);
+    //@ ensures \result == 0 || \result == 1;
+    public static int safeLanding(int height, int speed, int tilt) {
+        int safe = 1;
+        if (height > 5) {
+            safe = 0;
+        }
+        if (speed > 3) {
+            safe = 0;
+        }
+        if (tilt >= 10) {
+            safe = 0;
+        }
+        return safe;
+    }
+}
+==============================
+
+==============================

@@ -1,0 +1,54 @@
+start role user
+Please modify the following code according to the modified FSF:
+```Code
+
+public class Geofence_Original {
+    public static int geofence(int x, int y,int limitX, int limitY) {
+        int alarm = 0;
+        if (x < 0 || x > limitX) {
+            alarm = 1;
+        }
+        if (y < 0 || y > limitY) {
+            alarm = 1;
+        }
+        return alarm;
+    }
+}
+```
+```Original FSF
+T0: x < 0 || x > limitX || y < 0 || y > limitY
+D0: alarm == 1
+
+T1: x >= 0 && x <= limitX && y >= 0 && y <= limitY
+D1: alarm == 0
+
+```Modified FSF
+T0: x <= 0 || x >= limitX || y <= 0 || y >= limitY
+D0: alarm == 1
+
+T1: x > 0 && x < limitX && y > 0 && y < limitY
+D1: alarm == 0
+
+```
+
+
+*end* role user
+start role assistant
+```
+public class Geofence_Modified {
+    public static int geofence(int x, int y,int limitX, int limitY) {
+        int alarm = 0;
+        if (x <= 0 || x >= limitX) {
+            alarm = 1;
+        }
+        if (y <= 0 || y >= limitY) {
+            alarm = 1;
+        }
+        return alarm;
+    }
+}
+```
+*end* role assistant
+start role remark
+Validation SUCCESS!
+*end* role remark

@@ -1,0 +1,76 @@
+start role user
+Please modify the following code according to the modified FSF:
+```Code
+
+
+public class GPSCheck_Original {
+    public static int GPSCheck(int satellites, int signalStrength) {
+        int alarm = 0;
+        if (satellites < 4) {
+            alarm = 1;
+        }
+        if (signalStrength < 20) {
+            alarm = 2;
+        }
+        return alarm;
+    }
+}
+
+```
+```Original FSF
+T0: satellites < 4 && signalStrength < 20
+D0: alarm == 2
+
+T1: satellites < 4 && signalStrength >= 20
+D1: alarm == 1
+
+T2: satellites >= 4 && signalStrength < 20
+D2: alarm == 2
+
+T3: satellites >= 4 && signalStrength >= 20
+D3: alarm == 0
+
+```Modified FSF
+T0: satellites < 4 && signalStrength < 20
+D0: alarm == 2
+
+T1: satellites < 4 && signalStrength >= 20
+D1: alarm == 1
+
+T2: satellites >= 4 && signalStrength < 20
+D2: alarm == 2
+
+T3: satellites >= 4 && signalStrength >= 20
+D3: alarm == 0
+
+```
+
+
+*end* role user
+start role assistant
+The modified FSF is identical to the original FSF, so no changes to the code are needed. The original code already perfectly matches the specified behavior in both the original and modified FSF. Here's the output for completeness:
+
+```
+public class GPSCheck_Modified {
+    public static int GPSCheck(int satellites, int signalStrength) {
+        int alarm = 0;
+        if (satellites < 4) {
+            alarm = 1;
+        }
+        if (signalStrength < 20) {
+            alarm = 2;
+        }
+        return alarm;
+    }
+}
+```
+
+Note: Since the modified FSF requirements are exactly the same as the original FSF, the code remains unchanged. The behavior already correctly implements:
+1. Priority to signal strength alarm (code 2) when both conditions are bad
+2. Satellite count alarm (code 1) when only satellites are insufficient
+3. No alarm (code 0) when both conditions are good
+4. Signal strength alarm takes precedence when signal is weak regardless of satellite count
+*end* role assistant
+start role remark
+Validation SUCCESS!
+*end* role remark

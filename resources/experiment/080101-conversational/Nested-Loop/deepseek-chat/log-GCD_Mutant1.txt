@@ -3,7 +3,7 @@ Please generate an FSF for the program below:
 ```
 public class GCD_Mutant1 {
 	public static int gcd(int num1, int num2){
-		int result = 1;
+		int TBFVResult = 1;
 		if(0 > num1){
 			num1 = -num1
 		}
@@ -22,10 +22,10 @@ public class GCD_Mutant1 {
 		}
 		for (int i = 1; i <= num1 && i <= num2; i++) {
             if (num1 % i == 0 && num2 % i == 0) {
-        		result = i;
+        		TBFVResult = i;
 			}
         }
-		return result + 1; //Mutant: Return result + 1 instead of result
+		return TBFVResult + 1; //Mutant: Return TBFVResult + 1 instead of TBFVResult
 	}
 }
 
@@ -40,7 +40,7 @@ T2: (num1 == 0 && num2 != 0) || (num1 != 0 && num2 == 0)
 D2: return_value == (num1 > num2 ? num1 : num2)
 
 T3: num1 != 0 && num2 != 0 && num1 % i == 0 && num2 % i == 0
-D3: return_value == result + 1
+D3: return_value == TBFVResult + 1
 
 T4: num1 != 0 && num2 != 0 && (num1 % i != 0 || num2 % i != 0)
 D4: return_value == 1

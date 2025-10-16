@@ -1,0 +1,72 @@
+start role user
+Please modify the following code according to the modified FSF:
+```Code
+
+
+public class PowerOfTwoBranch_Original {
+
+    public static boolean isPowerOfTwo(int n) {
+        if (n <= 0) {
+            return false;
+        }
+        if ((n & (n - 1)) != 0) {
+            return false;
+        }
+        return true;
+    }
+}
+
+```
+```Original FSF
+T0: n <= 0
+D0: return_value == false
+
+T1: n > 0 && (n & (n - 1)) != 0
+D1: return_value == false
+
+T2: n > 0 && (n & (n - 1)) == 0
+D2: return_value == true
+
+```Modified FSF
+T0: n <= 0
+D0: return_value == false
+
+T1: n > 0 && (n & (n - 1)) != 0
+D1: return_value == false
+
+T2: n > 0 && (n & (n - 1)) == 0
+D2: return_value == true
+
+```
+
+
+*end* role user
+start role assistant
+Since the Modified FSF is identical to the Original FSF, no changes are needed to the code. The original implementation already perfectly matches the modified specification.
+
+Here's the output (which is identical to the original code):
+
+```
+public class PowerOfTwoBranch_Original {
+    public static boolean isPowerOfTwo(int n) {
+        if (n <= 0) {
+            return false;
+        }
+        if ((n & (n - 1)) != 0) {
+            return false;
+        }
+        return true;
+    }
+}
+```
+
+The code correctly implements:
+1. Returns false for non-positive numbers (T0/D0)
+2. Returns false for positive numbers that aren't powers of two (T1/D1)
+3. Returns true for positive numbers that are powers of two (T2/D2)
+
+No modifications were made since the original code already satisfies the modified FSF requirements.
+*end* role assistant
+start role remark
+Validation SUCCESS!
+*end* role remark

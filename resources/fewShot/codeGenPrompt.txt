@@ -12,23 +12,30 @@ As a program behavior analyst，you are required to modify a given java program 
     a. The original FSF expression describes the overall semantics of original code.
     b. The modified FSF expression is based on the original FSF expression, which undergoes some modifications to express a different semantics.
 4. Your task is to modify the original code so that it conforms to the modified FSF expression.
-5. Do the least modification to the original code, and ensure that the modified code is syntactically correct and can be compiled successfully.
-6. Your output must strictly follow the format below：
+5. Your output must strictly follow the format below：
 
 ```
-public class className {
+public class className_Modified {
     public static int funcName(type v1,...){
         ...(function body)
     }
 }
 ```
+6. Here are some laws to follow when generating the modified code:
+    a. The function name and class name should be the same as the original code, but with "_Modified" appended to the class name.
+    b. The function signature should remain the same as the original code.
+    c. The function body should be modified according to the modified FSF expression.
+    d. Do the least modification to the original code
+    e. Do not presumptuously simplify the code, such as using library functions to replace a few lines of code or using ternary operators instead of if-structure code.
+
+
 *end* role system
 
 start role user
 Please modify the following code according to the modified FSF:
 
 ```Original code
-public class Abs {
+public class Abs_Original {
     public static int Abs(int num) {
         if (num < 0)
             return -num;
@@ -55,7 +62,7 @@ D2: return_value == -num
 
 start role assistant
 ```
-public class Abs {
+public class Abs_Modified {
     public static int Abs(int num) {
         if (num < 0)
             return num;
@@ -70,7 +77,7 @@ start role user
 Please modify the following code according to the modified FSF:
 
 ``Original Code
-public class CanWinNim {
+public class CanWinNim_Original {
 
     public static boolean canWinNim(int n) {
         return n % 4 != 0;
@@ -95,7 +102,7 @@ D2: return_value == false
 *end* role user
 start role assistant
 ```
-public class CanWinNim_Mutant1 {
+public class CanWinNim_Modified {
     public static boolean canWinNim(int n) {
         return n % 4 == 0;
     }
@@ -107,22 +114,22 @@ start role user
 Please modify the following code according to the modified FSF:
 
 ``Original Code
-public class ChangeCase {
+public class ChangeCase_Original {
 
     public static char changeCase(char c) {
-        char result = ' ';
+        char TBFVResult = ' ';
         if (c > 'z') {
-            result = c;
+            TBFVResult = c;
         } else if (c >= 'a') {
-            result = (char) (c - 'a' + 'A');
+            TBFVResult = (char) (c - 'a' + 'A');
         } else if (c > 'Z') {
-            result = c;
+            TBFVResult = c;
         } else if (c >= 'A') {
-            result = (char) (c - 'A' + 'a');
+            TBFVResult = (char) (c - 'A' + 'a');
         } else {
-            result = c;
+            TBFVResult = c;
         }
-        return result;
+        return TBFVResult;
     }
 }
 ```
@@ -162,22 +169,22 @@ D5: return_value == c
 *end* role user
 start role assistant
 ```
-public class ChangeCase {
+public class ChangeCase_Modified {
 
     public static char changeCase(char c) {
-        char result = ' ';
+        char TBFVResult = ' ';
         if (c > 'z') {
-            result = c;
+            TBFVResult = c;
         } else if (c >= 'a') {
-            result = (char) ('a' - 'A' + c);
+            TBFVResult = (char) ('a' - 'A' + c);
         } else if (c > 'Z') {
-            result = c;
+            TBFVResult = c;
         } else if (c >= 'A') {
-            result = (char) (c - 'A' + 'a');
+            TBFVResult = (char) (c - 'A' + 'a');
         } else {
-            result = c;
+            TBFVResult = c;
         }
-        return result;
+        return TBFVResult;
     }
 }
 ```
@@ -187,7 +194,7 @@ start role user
 Please modify the following code according to the modified FSF:
 
 ``Original Code
-public class AddLoop {
+public class AddLoop_Original {
     public static int AddLoop(int x, int y) {
         int sum = x;
         if (y > 0) {
@@ -231,7 +238,7 @@ D3: return_value == y
 *end* role user
 start role assistant
 ```
-public class AddLoopFor {
+public class AddLoopFor_Modified {
     public static int addLoop(int x, int y) {
         int sum = y;
         if (x > 0) {

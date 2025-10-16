@@ -1,0 +1,330 @@
+START ORIGINAL CODE
+
+public class IsCommonMultipleBranch_Original {
+
+    public static boolean isCommonMultiple(int a, int b, int m) {
+        if (m % a != 0) {
+            return false;
+        }
+        if (m % b != 0) {
+            return false;
+        }
+        return true;
+    }
+}
+
+*END* ORIGINAL CODE
+START ORIGINAL FSF
+T1: a == 0 || b == 0
+D1: Exception
+T2: (a != 0 && b != 0) && (m % a != 0 || m % b != 0)
+D2: return_value == false
+T3: (a != 0 && b != 0) && (m % a == 0 && m % b == 0)
+D3: return_value == true
+*END* ORIGINAL FSF
+START MODIFIED FSF
+T1: (a == 0 || b == 0) || ((a != 0 && b != 0) && (m % a == 0 && m % b == 0))
+D1: Exception
+T2: (a != 0 && b != 0) && (m % a != 0 || m % b != 0)
+D2: return_value == false
+*END* MODIFIED FSF
+START ORIGINAL CODE
+
+public class IsCommonMultipleBranch_Original {
+
+    public static boolean isCommonMultiple(int a, int b, int m) {
+        if (m % a != 0) {
+            return false;
+        }
+        if (m % b != 0) {
+            return false;
+        }
+        return true;
+    }
+}
+
+*END* ORIGINAL CODE
+START ORIGINAL FSF
+T1: a == 0 || b == 0
+D1: Exception
+T2: (a != 0 && b != 0) && (m % a != 0 || m % b != 0)
+D2: return_value == false
+T3: (a != 0 && b != 0) && (m % a == 0 && m % b == 0)
+D3: return_value == true
+*END* ORIGINAL FSF
+START MODIFIED FSF
+T1: a == 0 || b == 0
+D1: Exception
+T2: ((a != 0 && b != 0) && (m % a != 0 || m % b != 0)) || ((a != 0 && b != 0) && (m % a == 0 && m % b == 0))
+D2: return_value == false
+*END* MODIFIED FSF
+START ORIGINAL CODE
+
+public class IsCommonMultipleBranch_Original {
+
+    public static boolean isCommonMultiple(int a, int b, int m) {
+        if (m % a != 0) {
+            return false;
+        }
+        if (m % b != 0) {
+            return false;
+        }
+        return true;
+    }
+}
+
+*END* ORIGINAL CODE
+START ORIGINAL FSF
+T1: a == 0 || b == 0
+D1: Exception
+T2: (a != 0 && b != 0) && (m % a != 0 || m % b != 0)
+D2: return_value == false
+T3: (a != 0 && b != 0) && (m % a == 0 && m % b == 0)
+D3: return_value == true
+*END* ORIGINAL FSF
+START MODIFIED FSF
+T1: (a == 0 || b == 0) || ((a != 0 && b != 0) && (m % a == 0 && m % b == 0))
+D1: Exception
+T2: (a != 0 && b != 0) && (m % a != 0 || m % b != 0)
+D2: return_value == false
+*END* MODIFIED FSF
+START ORIGINAL CODE
+
+public class IsCommonMultipleBranch_Original {
+
+    public static boolean isCommonMultiple(int a, int b, int m) {
+        if (m % a != 0) {
+            return false;
+        }
+        if (m % b != 0) {
+            return false;
+        }
+        return true;
+    }
+}
+
+*END* ORIGINAL CODE
+START ORIGINAL FSF
+T1: a == 0 || b == 0
+D1: Exception
+T2: (a != 0 && b != 0) && (m % a != 0 || m % b != 0)
+D2: return_value == false
+T3: (a != 0 && b != 0) && (m % a == 0 && m % b == 0)
+D3: return_value == true
+*END* ORIGINAL FSF
+START MODIFIED FSF
+T1: (a != 0 && b != 0) && (m % a != 0 || m % b != 0)
+D1: return_value == false
+T2: ((a != 0 && b != 0) && (m % a == 0 && m % b == 0)) || (a == 0 || b == 0)
+D2: return_value == true
+*END* MODIFIED FSF
+START ORIGINAL CODE
+
+public class IsCommonMultipleBranch_Original {
+
+    public static boolean isCommonMultiple(int a, int b, int m) {
+        if (m % a != 0) {
+            return false;
+        }
+        if (m % b != 0) {
+            return false;
+        }
+        return true;
+    }
+}
+
+*END* ORIGINAL CODE
+START ORIGINAL FSF
+T1: a == 0 || b == 0
+D1: Exception
+T2: (a != 0 && b != 0) && (m % a != 0 || m % b != 0)
+D2: return_value == false
+T3: (a != 0 && b != 0) && (m % a == 0 && m % b == 0)
+D3: return_value == true
+*END* ORIGINAL FSF
+START MODIFIED FSF
+T1: a == 0 || b == 0
+D1: Exception
+T2: ((a != 0 && b != 0) && (m % a != 0 || m % b != 0)) || ((a != 0 && b != 0) && (m % a == 0 && m % b == 0))
+D2: return_value == false
+*END* MODIFIED FSF
+START ORIGINAL CODE
+
+public class IsCommonMultipleBranch_Original {
+
+    public static boolean isCommonMultiple(int a, int b, int m) {
+        if (m % a != 0) {
+            return false;
+        }
+        if (m % b != 0) {
+            return false;
+        }
+        return true;
+    }
+}
+
+*END* ORIGINAL CODE
+START ORIGINAL FSF
+T1: a == 0 || b == 0
+D1: Exception
+T2: (a != 0 && b != 0) && (m % a != 0 || m % b != 0)
+D2: return_value == false
+T3: (a != 0 && b != 0) && (m % a == 0 && m % b == 0)
+D3: return_value == true
+*END* ORIGINAL FSF
+START MODIFIED FSF
+T1: (a != 0 && b != 0) && (m % a != 0 || m % b != 0)
+D1: return_value == false
+T2: ((a != 0 && b != 0) && (m % a == 0 && m % b == 0)) || (a == 0 || b == 0)
+D2: return_value == true
+*END* MODIFIED FSF
+START ORIGINAL CODE
+
+public class IsCommonMultipleBranch_Original {
+
+    public static boolean isCommonMultiple(int a, int b, int m) {
+        if (m % a != 0) {
+            return false;
+        }
+        if (m % b != 0) {
+            return false;
+        }
+        return true;
+    }
+}
+
+*END* ORIGINAL CODE
+START ORIGINAL FSF
+T1: a == 0 || b == 0
+D1: Exception
+T2: (a != 0 && b != 0) && (m % a != 0 || m % b != 0)
+D2: return_value == false
+T3: (a != 0 && b != 0) && (m % a == 0 && m % b == 0)
+D3: return_value == true
+*END* ORIGINAL FSF
+START MODIFIED FSF
+T1: (a != 0 && b != 0) && (m % a != 0 || m % b != 0)
+D1: return_value == false
+T2: ((a != 0 && b != 0) && (m % a == 0 && m % b == 0)) || (a == 0 || b == 0)
+D2: return_value == true
+*END* MODIFIED FSF
+START ORIGINAL CODE
+
+public class IsCommonMultipleBranch_Original {
+
+    public static boolean isCommonMultiple(int a, int b, int m) {
+        if (m % a != 0) {
+            return false;
+        }
+        if (m % b != 0) {
+            return false;
+        }
+        return true;
+    }
+}
+
+*END* ORIGINAL CODE
+START ORIGINAL FSF
+T1: a == 0 || b == 0
+D1: Exception
+T2: (a != 0 && b != 0) && (m % a != 0 || m % b != 0)
+D2: return_value == false
+T3: (a != 0 && b != 0) && (m % a == 0 && m % b == 0)
+D3: return_value == true
+*END* ORIGINAL FSF
+START MODIFIED FSF
+T1: a == 0 || b == 0
+D1: Exception
+T2: ((a != 0 && b != 0) && (m % a == 0 && m % b == 0)) || ((a != 0 && b != 0) && (m % a != 0 || m % b != 0))
+D2: return_value == true
+*END* MODIFIED FSF
+START ORIGINAL CODE
+
+public class IsCommonMultipleBranch_Original {
+
+    public static boolean isCommonMultiple(int a, int b, int m) {
+        if (m % a != 0) {
+            return false;
+        }
+        if (m % b != 0) {
+            return false;
+        }
+        return true;
+    }
+}
+
+*END* ORIGINAL CODE
+START ORIGINAL FSF
+T1: a == 0 || b == 0
+D1: Exception
+T2: (a != 0 && b != 0) && (m % a != 0 || m % b != 0)
+D2: return_value == false
+T3: (a != 0 && b != 0) && (m % a == 0 && m % b == 0)
+D3: return_value == true
+*END* ORIGINAL FSF
+START MODIFIED FSF
+T1: (a == 0 || b == 0) || ((a != 0 && b != 0) && (m % a != 0 || m % b != 0))
+D1: Exception
+T2: (a != 0 && b != 0) && (m % a == 0 && m % b == 0)
+D2: return_value == true
+*END* MODIFIED FSF
+START ORIGINAL CODE
+
+public class IsCommonMultipleBranch_Original {
+
+    public static boolean isCommonMultiple(int a, int b, int m) {
+        if (m % a != 0) {
+            return false;
+        }
+        if (m % b != 0) {
+            return false;
+        }
+        return true;
+    }
+}
+
+*END* ORIGINAL CODE
+START ORIGINAL FSF
+T1: a == 0 || b == 0
+D1: Exception
+T2: (a != 0 && b != 0) && (m % a != 0 || m % b != 0)
+D2: return_value == false
+T3: (a != 0 && b != 0) && (m % a == 0 && m % b == 0)
+D3: return_value == true
+*END* ORIGINAL FSF
+START MODIFIED FSF
+T1: a == 0 || b == 0
+D1: Exception
+T2: ((a != 0 && b != 0) && (m % a == 0 && m % b == 0)) || ((a != 0 && b != 0) && (m % a != 0 || m % b != 0))
+D2: return_value == true
+*END* MODIFIED FSF
+START ORIGINAL CODE
+
+public class IsCommonMultipleBranch_Original {
+
+    public static boolean isCommonMultiple(int a, int b, int m) {
+        if (m % a != 0) {
+            return false;
+        }
+        if (m % b != 0) {
+            return false;
+        }
+        return true;
+    }
+}
+
+*END* ORIGINAL CODE
+START ORIGINAL FSF
+T1: a == 0 || b == 0
+D1: Exception
+T2: (a != 0 && b != 0) && (m % a != 0 || m % b != 0)
+D2: return_value == false
+T3: (a != 0 && b != 0) && (m % a == 0 && m % b == 0)
+D3: return_value == true
+*END* ORIGINAL FSF
+START MODIFIED FSF
+T1: (a != 0 && b != 0) && (m % a != 0 || m % b != 0)
+D1: return_value == false
+T2: ((a != 0 && b != 0) && (m % a == 0 && m % b == 0)) || (a == 0 || b == 0)
+D2: return_value == true
+*END* MODIFIED FSF

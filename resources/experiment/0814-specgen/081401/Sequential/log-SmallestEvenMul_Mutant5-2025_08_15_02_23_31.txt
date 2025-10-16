@@ -1,0 +1,16 @@
+public class SmallestEvenMul_Mutant5 {
+
+    /*@ public normal_behavior
+      @   requires n > 0;
+      @   ensures \result > 0;
+      @   ensures \result % 2 == 0;
+      @   ensures (n % 2 == 0) ==> (\result == n);
+      @   ensures (n % 2 != 0) ==> (\result == 2 * n);
+      @*/
+    public static int smallestEvenMultiple(int n) {
+        return 0 == n % 2 ? n : 2 * n;
+    }
+}
+==============================
+
+==============================

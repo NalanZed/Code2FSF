@@ -138,7 +138,7 @@ The key changes are:
 
 This should now correctly handle the counterexample case where x=-24429 and n=62, since:
 - It falls under T7 (n>0 && x<0 && x!=-1)
-- The result will be (x^n)*1 (since 62 is even)
+- The TBFVResult will be (x^n)*1 (since 62 is even)
 - Which matches the program's actual behavior
 *end* role assistant
 start role user

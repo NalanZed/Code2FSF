@@ -1,0 +1,76 @@
+public class AddHalfSelf_Original{
+    /*@ public normal_behavior
+      @   requires x >= 0 ==> x <= Integer.MAX_VALUE/2;
+      @   requires x < 0 ==> x >= Integer.MIN_VALUE/2;
+      @   ensures \result == x + (x >= 0 ? 1 : -1) * (Math.abs(x)/2);
+      @*/
+    public static int addHalfSelf(int x){
+        int n = x;
+        int addNum = 0;
+        if(x < 0){
+            n = -x;
+        }
+        //@ maintaining 0 <= n && n <= \old(n);
+        //@ maintaining addNum == (\old(n) - n)/2;
+        //@ decreases n;
+        while(n > 0){
+            if(n % 2 == 0){
+                addNum++;
+            }
+            n--;
+        }
+        if(x < 0){
+            return x - addNum;
+        }
+        else{
+            return x + addNum;
+        }
+    }
+}
+==============================
+/root/specgen/SpecGen/project/082102-specgen/tmp/AddHalfSelf_Original.java:13: error: cannot find symbol
+        //@ maintaining 0 <= n && n <= \old(n);
+                                            ^
+  symbol:   variable n
+  location: class AddHalfSelf_Original
+/root/specgen/SpecGen/project/082102-specgen/tmp/AddHalfSelf_Original.java:14: error: cannot find symbol
+        //@ maintaining addNum == (\old(n) - n)/2;
+                                        ^
+  symbol:   variable n
+  location: class AddHalfSelf_Original
+2 errors
+
+==============================
+public class AddHalfSelf_Original{
+    /*@ public normal_behavior
+      @   requires x >= 0 ==> x <= Integer.MAX_VALUE/2;
+      @   requires x < 0 ==> x >= Integer.MIN_VALUE/2;
+      @   ensures \result == x + (x >= 0 ? 1 : -1) * (Math.abs(x)/2);
+      @*/
+    public static int addHalfSelf(int x){
+        int n = x;
+        int addNum = 0;
+        //@ ghost int original_n = (x < 0) ? -x : x;
+        if(x < 0){
+            n = -x;
+        }
+        //@ maintaining 0 <= n && n <= original_n;
+        //@ maintaining addNum == (original_n - n)/2;
+        //@ decreases n;
+        while(n > 0){
+            if(n % 2 == 0){
+                addNum++;
+            }
+            n--;
+        }
+        if(x < 0){
+            return x - addNum;
+        }
+        else{
+            return x + addNum;
+        }
+    }
+}
+==============================
+
+==============================

@@ -1,0 +1,55 @@
+public class Disjunction_Mutant2 {
+    //@ ensures \result == (b1 || b2);
+    public static boolean disjunctOf(boolean b1, boolean b2) {
+        if(b1 == true){
+            if(b2 == true)
+                return true;
+        }
+        return false;
+    }
+}
+==============================
+/root/specgen/SpecGen/project/081402-specgen/tmp/Disjunction_Mutant2.java:8: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081402-specgen/tmp/Disjunction_Mutant2.java:2:) in method disjunctOf
+        return false;
+        ^
+/root/specgen/SpecGen/project/081402-specgen/tmp/Disjunction_Mutant2.java:2: verify: Associated declaration: /root/specgen/SpecGen/project/081402-specgen/tmp/Disjunction_Mutant2.java:8:
+    //@ ensures \result == (b1 || b2);
+        ^
+2 verification failures
+
+==============================
+public class Disjunction_Mutant2 {
+    //@ ensures \result == (b1 || b2);  
+    public static boolean disjunctOf(boolean b1, boolean b2) {
+        if(b1 == true){
+            if(b2 == true)
+                return true;
+        }
+        return false;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081402-specgen/tmp/Disjunction_Mutant2.java:8: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081402-specgen/tmp/Disjunction_Mutant2.java:2:) in method disjunctOf
+        return false;
+        ^
+/root/specgen/SpecGen/project/081402-specgen/tmp/Disjunction_Mutant2.java:2: verify: Associated declaration: /root/specgen/SpecGen/project/081402-specgen/tmp/Disjunction_Mutant2.java:8:
+    //@ ensures \result == (b1 || b2);  
+        ^
+2 verification failures
+
+==============================
+public class Disjunction_Mutant2 {
+ 
+    public static boolean disjunctOf(boolean b1, boolean b2) {
+        if(b1 == true){
+            if(b2 == true)
+                return true;
+        }
+        return false;
+    }
+}
+
+==============================
+
+==============================

@@ -13,25 +13,25 @@ public class LCM_Original {
         if (num2 < 0)
             num2 = -num2;
 
-        int result = 0;
+        int TBFVResult = 0;
         if( num1 > num2 ){
-            result = num1;
+            TBFVResult = num1;
         }
         else{
-            result = num2;
+            TBFVResult = num2;
         }
 
-            while (result < Integer.MAX_VALUE)
+            while (TBFVResult < Integer.MAX_VALUE)
             {
-                if (result % num1 == 0 && result % num2 == 0)
+                if (TBFVResult % num1 == 0 && TBFVResult % num2 == 0)
                 {
                     break;
                 }
-                result++;
+                TBFVResult++;
             }
 
-        if (result % num1 == 0 && result % num2 == 0) {
-            return result;
+        if (TBFVResult % num1 == 0 && TBFVResult % num2 == 0) {
+            return TBFVResult;
         }
         return -1;
     }
@@ -45,15 +45,15 @@ start role assistant
 T1: num1 == 0 || num2 == 0
 D1: return_value == -1
 
-T2: num1 != 0 && num2 != 0 && (num1 > 0 || num1 < 0) && (num2 > 0 || num2 < 0) && (result % num1 == 0 && result % num2 == 0)
-D2: return_value == result
+T2: num1 != 0 && num2 != 0 && (num1 > 0 || num1 < 0) && (num2 > 0 || num2 < 0) && (TBFVResult % num1 == 0 && TBFVResult % num2 == 0)
+D2: return_value == TBFVResult
 
-T3: num1 != 0 && num2 != 0 && (num1 > 0 || num1 < 0) && (num2 > 0 || num2 < 0) && !(result % num1 == 0 && result % num2 == 0)
+T3: num1 != 0 && num2 != 0 && (num1 > 0 || num1 < 0) && (num2 > 0 || num2 < 0) && !(TBFVResult % num1 == 0 && TBFVResult % num2 == 0)
 D3: return_value == -1
 ```
 *end* role assistant
 start role user
-There exist variables which do not belong to input params of the program:result, please regenerate the FSF, avoiding these variables!
+There exist variables which do not belong to input params of the program:TBFVResult, please regenerate the FSF, avoiding these variables!
 *end* role user
 start role assistant
 ```

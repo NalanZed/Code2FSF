@@ -1,0 +1,160 @@
+public class PowerOfTwoBranch_Mutant4 {
+
+    //@ requires true;
+    //@ ensures \result == (n > 0 && (n & (n - 1)) == 0);
+    public static boolean isPowerOfTwo(int n) {
+        if (n <= 0) {
+            //@ assert n <= 0;
+            return false;
+        }
+        if ((n & (n - 1)) != 0) {
+            //@ assert n > 0 && (n & (n - 1)) != 0;
+            return true;
+        }
+        //@ assert n > 0 && (n & (n - 1)) == 0;
+        return true;
+    }
+}
+==============================
+/root/specgen/SpecGen/project/081402-specgen/tmp/PowerOfTwoBranch_Mutant4.java:12: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081402-specgen/tmp/PowerOfTwoBranch_Mutant4.java:4:) in method isPowerOfTwo
+            return true;
+            ^
+/root/specgen/SpecGen/project/081402-specgen/tmp/PowerOfTwoBranch_Mutant4.java:4: verify: Associated declaration: /root/specgen/SpecGen/project/081402-specgen/tmp/PowerOfTwoBranch_Mutant4.java:12:
+    //@ ensures \result == (n > 0 && (n & (n - 1)) == 0);
+        ^
+2 verification failures
+
+==============================
+public class PowerOfTwoBranch_Mutant4 {
+
+    //@ requires true;
+    //@ ensures \result == (n > 0 && (n & (n - 1)) == 0);  
+    public static boolean isPowerOfTwo(int n) {
+        if (n <= 0) {
+            //@ assert n <= 0;
+            return false;
+        }
+        if ((n & (n - 1)) != 0) {
+            //@ assert n > 0 && (n & (n - 1)) != 0;
+            return true;
+        }
+        //@ assert n > 0 && (n & (n - 1)) == 0;
+        return true;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081402-specgen/tmp/PowerOfTwoBranch_Mutant4.java:12: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081402-specgen/tmp/PowerOfTwoBranch_Mutant4.java:4:) in method isPowerOfTwo
+            return true;
+            ^
+/root/specgen/SpecGen/project/081402-specgen/tmp/PowerOfTwoBranch_Mutant4.java:4: verify: Associated declaration: /root/specgen/SpecGen/project/081402-specgen/tmp/PowerOfTwoBranch_Mutant4.java:12:
+    //@ ensures \result == (n > 0 && (n & (n - 1)) == 0);  
+        ^
+2 verification failures
+
+==============================
+public class PowerOfTwoBranch_Mutant4 {
+
+    //@ requires true;
+    //@ ensures \result == (n >= 0 && (n & (n - 1)) == 0);  
+    public static boolean isPowerOfTwo(int n) {
+        if (n <= 0) {
+            //@ assert n <= 0;
+            return false;
+        }
+        if ((n & (n - 1)) != 0) {
+            //@ assert n > 0 && (n & (n - 1)) != 0;
+            return true;
+        }
+        //@ assert n > 0 && (n & (n - 1)) == 0;
+        return true;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081402-specgen/tmp/PowerOfTwoBranch_Mutant4.java:8: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081402-specgen/tmp/PowerOfTwoBranch_Mutant4.java:4:) in method isPowerOfTwo
+            return false;
+            ^
+/root/specgen/SpecGen/project/081402-specgen/tmp/PowerOfTwoBranch_Mutant4.java:4: verify: Associated declaration: /root/specgen/SpecGen/project/081402-specgen/tmp/PowerOfTwoBranch_Mutant4.java:8:
+    //@ ensures \result == (n >= 0 && (n & (n - 1)) == 0);  
+        ^
+2 verification failures
+
+==============================
+public class PowerOfTwoBranch_Mutant4 {
+
+    //@ requires true;
+    //@ ensures \result == (n > 0 && (n & (n + 1)) == 0);  
+    public static boolean isPowerOfTwo(int n) {
+        if (n <= 0) {
+            //@ assert n <= 0;
+            return false;
+        }
+        if ((n & (n - 1)) != 0) {
+            //@ assert n > 0 && (n & (n - 1)) != 0;
+            return true;
+        }
+        //@ assert n > 0 && (n & (n - 1)) == 0;
+        return true;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081402-specgen/tmp/PowerOfTwoBranch_Mutant4.java:12: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081402-specgen/tmp/PowerOfTwoBranch_Mutant4.java:4:) in method isPowerOfTwo
+            return true;
+            ^
+/root/specgen/SpecGen/project/081402-specgen/tmp/PowerOfTwoBranch_Mutant4.java:4: verify: Associated declaration: /root/specgen/SpecGen/project/081402-specgen/tmp/PowerOfTwoBranch_Mutant4.java:12:
+    //@ ensures \result == (n > 0 && (n & (n + 1)) == 0);  
+        ^
+2 verification failures
+
+==============================
+public class PowerOfTwoBranch_Mutant4 {
+
+    //@ requires true;
+    //@ ensures \result == (n >= 0 && (n & (n + 1)) == 0);  
+    public static boolean isPowerOfTwo(int n) {
+        if (n <= 0) {
+            //@ assert n <= 0;
+            return false;
+        }
+        if ((n & (n - 1)) != 0) {
+            //@ assert n > 0 && (n & (n - 1)) != 0;
+            return true;
+        }
+        //@ assert n > 0 && (n & (n - 1)) == 0;
+        return true;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081402-specgen/tmp/PowerOfTwoBranch_Mutant4.java:8: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081402-specgen/tmp/PowerOfTwoBranch_Mutant4.java:4:) in method isPowerOfTwo
+            return false;
+            ^
+/root/specgen/SpecGen/project/081402-specgen/tmp/PowerOfTwoBranch_Mutant4.java:4: verify: Associated declaration: /root/specgen/SpecGen/project/081402-specgen/tmp/PowerOfTwoBranch_Mutant4.java:8:
+    //@ ensures \result == (n >= 0 && (n & (n + 1)) == 0);  
+        ^
+2 verification failures
+
+==============================
+public class PowerOfTwoBranch_Mutant4 {
+
+    //@ requires true;
+ 
+    public static boolean isPowerOfTwo(int n) {
+        if (n <= 0) {
+            //@ assert n <= 0;
+            return false;
+        }
+        if ((n & (n - 1)) != 0) {
+            //@ assert n > 0 && (n & (n - 1)) != 0;
+            return true;
+        }
+        //@ assert n > 0 && (n & (n - 1)) == 0;
+        return true;
+    }
+}
+
+==============================
+
+==============================

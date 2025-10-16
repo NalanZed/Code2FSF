@@ -1,0 +1,82 @@
+start role user
+Please modify the following code according to the modified FSF:
+```Code
+
+
+public class AddLoop_Original {
+    public static int AddLoop(int x, int y) {
+        int sum = x;
+        if (y > 0) {
+            int n = y;
+            while (n > 0) {
+                sum = sum + 1;
+                n = n - 1;
+            }
+        } else {
+            int n = -y;
+            while (n > 0) {
+                sum = sum - 1;
+                n = n - 1;
+            }
+        }
+        return sum;
+    }
+}
+
+```
+```Original FSF
+T0: y > 0
+D0: sum == x + y
+
+T1: y < 0
+D1: sum == x + y
+
+T2: y == 0
+D2: sum == x
+
+```Modified FSF
+T0: y > 0
+D0: sum == x
+
+T1: y < 0
+D1: sum == x + y
+
+T2: y == 0
+D2: sum == x + y
+
+```
+
+
+*end* role user
+start role assistant
+```
+public class AddLoop_Modified {
+    public static int AddLoop(int x, int y) {
+        int sum = x;
+        if (y > 0) {
+            // Do nothing when y is positive (sum remains x)
+        } else {
+            int n = -y;
+            while (n > 0) {
+                sum = sum - 1;
+                n = n - 1;
+            }
+        }
+        return sum;
+    }
+}
+```
+
+The modified version:
+1. Keeps the original behavior when y ≤ 0 (both negative and zero cases)
+2. Removes the addition logic when y > 0, so sum remains equal to x
+3. Matches the modified FSF requirements:
+   - When y > 0: returns x (D0)
+   - When y < 0: returns x + y (D1)
+   - When y == 0: returns x + y (which equals x) (D2)
+
+The changes are minimal, just removing the addition logic in the y > 0 case while preserving all other functionality.
+*end* role assistant
+start role remark
+Validation SUCCESS!
+*end* role remark

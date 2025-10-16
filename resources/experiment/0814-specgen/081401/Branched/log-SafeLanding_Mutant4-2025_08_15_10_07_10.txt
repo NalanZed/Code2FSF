@@ -1,0 +1,55 @@
+public class SafeLanding_Mutant4 {
+    //@ ensures \result == (height <= 5 && speed <= 3 && tilt <= 10);
+    public static boolean safeLanding(int height, int speed, int tilt) {
+        boolean safe = true;
+        //@ maintaining safe == (\old(safe) && height <= 5 && speed <= 3 && tilt <= 10);
+        if (height > 5) {
+            safe = false;
+        }
+        //@ maintaining safe == (\old(safe) && height <= 5 && speed <= 3 && tilt <= 10);
+        if (speed > 3) {
+            safe = false;
+        }
+        //@ maintaining safe == (\old(safe) && height <= 5 && speed <= 3 && tilt <= 10);
+        if (tilt > 10) {
+            safe = false;
+        }
+        return safe;
+    }
+}
+==============================
+/root/specgen/SpecGen/project/081401-specgen/tmp/SafeLanding_Mutant4.java:5: error: Loop specifications must immediately precede a loop statement
+        //@ maintaining safe == (\old(safe) && height <= 5 && speed <= 3 && tilt <= 10);
+            ^
+/root/specgen/SpecGen/project/081401-specgen/tmp/SafeLanding_Mutant4.java:9: error: Loop specifications must immediately precede a loop statement
+        //@ maintaining safe == (\old(safe) && height <= 5 && speed <= 3 && tilt <= 10);
+            ^
+/root/specgen/SpecGen/project/081401-specgen/tmp/SafeLanding_Mutant4.java:13: error: Loop specifications must immediately precede a loop statement
+        //@ maintaining safe == (\old(safe) && height <= 5 && speed <= 3 && tilt <= 10);
+            ^
+3 errors
+
+==============================
+public class SafeLanding_Mutant4 {
+    //@ ensures \result == (height <= 5 && speed <= 3 && tilt <= 10);
+    public static boolean safeLanding(int height, int speed, int tilt) {
+        boolean safe = true;
+        //@ assume safe == true;
+        if (height > 5) {
+            safe = false;
+        }
+        //@ assert safe == (height <= 5);
+        if (speed > 3) {
+            safe = false;
+        }
+        //@ assert safe == (height <= 5 && speed <= 3);
+        if (tilt > 10) {
+            safe = false;
+        }
+        //@ assert safe == (height <= 5 && speed <= 3 && tilt <= 10);
+        return safe;
+    }
+}
+==============================
+
+==============================

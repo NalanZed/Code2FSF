@@ -1,0 +1,74 @@
+public class PowerOfTwo_Mutant1 {
+    /*@ requires true;
+      @ ensures \result == (n >= 0 && (n & (n - 1)) == 0);
+      @ ensures \result <==> (n == 0 || 
+      @                      (\exists int k; k >= 0; n == (1 << k)));
+      @*/
+    public static boolean isPowerOfTwo(int n) {
+        return n >= 0 && (n & (n - 1)) == 0;
+    }
+}
+==============================
+/root/specgen/SpecGen/project/081401-specgen/tmp/PowerOfTwo_Mutant1.java:8: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081401-specgen/tmp/PowerOfTwo_Mutant1.java:4:) in method isPowerOfTwo
+        return n >= 0 && (n & (n - 1)) == 0;
+        ^
+/root/specgen/SpecGen/project/081401-specgen/tmp/PowerOfTwo_Mutant1.java:4: verify: Associated declaration: /root/specgen/SpecGen/project/081401-specgen/tmp/PowerOfTwo_Mutant1.java:8:
+      @ ensures \result <==> (n == 0 || 
+        ^
+2 verification failures
+
+==============================
+public class PowerOfTwo_Mutant1 {
+    /*@ requires true;
+      @ ensures \result == (n >= 0 && (n & (n - 1)) == 0);
+      @ ensures \result <==> (n == 0 ||   
+      @                      (\exists int k; k >= 0; n == (1 << k)));
+      @*/
+    public static boolean isPowerOfTwo(int n) {
+        return n >= 0 && (n & (n - 1)) == 0;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081401-specgen/tmp/PowerOfTwo_Mutant1.java:8: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081401-specgen/tmp/PowerOfTwo_Mutant1.java:4:) in method isPowerOfTwo
+        return n >= 0 && (n & (n - 1)) == 0;
+        ^
+/root/specgen/SpecGen/project/081401-specgen/tmp/PowerOfTwo_Mutant1.java:4: verify: Associated declaration: /root/specgen/SpecGen/project/081401-specgen/tmp/PowerOfTwo_Mutant1.java:8:
+      @ ensures \result <==> (n == 0 ||   
+        ^
+2 verification failures
+
+==============================
+public class PowerOfTwo_Mutant1 {
+    /*@ requires true;
+      @ ensures \result == (n >= 0 && (n & (n - 1)) == 0);
+ 
+      @                      (\exists int k; k >= 0; n == (1 << k)));
+      @*/
+    public static boolean isPowerOfTwo(int n) {
+        return n >= 0 && (n & (n - 1)) == 0;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081401-specgen/tmp/PowerOfTwo_Mutant1.java:5: error: illegal start of type
+      @                      (\exists int k; k >= 0; n == (1 << k)));
+                             ^
+/root/specgen/SpecGen/project/081401-specgen/tmp/PowerOfTwo_Mutant1.java:5: error: Token \exists is not a type
+      @                      (\exists int k; k >= 0; n == (1 << k)));
+                              ^
+/root/specgen/SpecGen/project/081401-specgen/tmp/PowerOfTwo_Mutant1.java:5: error: ',', ')', or '[' expected
+      @                      (\exists int k; k >= 0; n == (1 << k)));
+                                           ^
+/root/specgen/SpecGen/project/081401-specgen/tmp/PowerOfTwo_Mutant1.java:5: error: <identifier> expected
+      @                      (\exists int k; k >= 0; n == (1 << k)));
+                                              ^
+/root/specgen/SpecGen/project/081401-specgen/tmp/PowerOfTwo_Mutant1.java:5: error: <identifier> expected
+      @                      (\exists int k; k >= 0; n == (1 << k)));
+                                                      ^
+/root/specgen/SpecGen/project/081401-specgen/tmp/PowerOfTwo_Mutant1.java:5: error: <identifier> expected
+      @                      (\exists int k; k >= 0; n == (1 << k)));
+                                                                 ^
+6 errors
+
+==============================

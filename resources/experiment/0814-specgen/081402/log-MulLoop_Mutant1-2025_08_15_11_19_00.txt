@@ -1,0 +1,26 @@
+public class MulLoop_Mutant1 {
+    //@ requires Integer.MIN_VALUE < a * b && a * b < Integer.MAX_VALUE;
+    //@ ensures \result == 1 + (a * b);  // Note: This reflects the mutant behavior (initial res=1)
+    public static int mulLoop(int a, int b) {
+        int res = 1; // changed initialization from 0 to 1
+        if (b >= 0) {
+            //@ maintaining 0 <= i && i <= b;
+            //@ maintaining res == 1 + (a * i);  // Adjusted for mutant initialization
+            //@ decreases b - i;
+            for(int i = 0; i < b; i++) {
+                res = res + a;
+            }
+        } else {
+            //@ maintaining 0 <= i && i <= -b;
+            //@ maintaining res == 1 - (a * i);  // Adjusted for mutant initialization
+            //@ decreases (-b) - i;
+            for(int i = 0; i < -b; i++) {
+                res = res - a;
+            }
+        }
+        return res;
+    }
+}
+==============================
+
+==============================

@@ -1,0 +1,13 @@
+public class Disjunction_Mutant5 {
+    //@ ensures \result == true;  // Note: This method always returns true (mutant behavior)
+    public static boolean disjunctOf(boolean b1, boolean b2) {
+        if(b1 == true)
+            return true;
+        if(b2 == true)
+            return true;
+        return true;
+    }
+}
+==============================
+
+==============================

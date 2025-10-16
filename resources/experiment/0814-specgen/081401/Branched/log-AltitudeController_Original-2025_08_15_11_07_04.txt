@@ -1,0 +1,282 @@
+public class AltitudeController_Original {
+    /*@ requires true;
+      @ ensures \result == (targetHeight - currentHeight > 30 ? 5 : 
+      @                   (targetHeight - currentHeight < -30 ? -5 :
+      @                   (targetHeight - currentHeight > 20 ? 3 :
+      @                   (targetHeight - currentHeight < -20 ? -3 :
+      @                   (targetHeight - currentHeight > 10 ? 2 :
+      @                   (targetHeight - currentHeight < -10 ? -2 :
+      @                   targetHeight - currentHeight)))));
+      @ ensures (targetHeight - currentHeight > 30) ==> \result == 5;
+      @ ensures (targetHeight - currentHeight < -30) ==> \result == -5;
+      @ ensures (targetHeight - currentHeight > 20 && targetHeight - currentHeight <= 30) ==> \result == 3;
+      @ ensures (targetHeight - currentHeight < -20 && targetHeight - currentHeight >= -30) ==> \result == -3;
+      @ ensures (targetHeight - currentHeight > 10 && targetHeight - currentHeight <= 20) ==> \result == 2;
+      @ ensures (targetHeight - currentHeight < -10 && targetHeight - currentHeight >= -20) ==> \result == -2;
+      @ ensures (targetHeight - currentHeight >= -10 && targetHeight - currentHeight <= 10) ==> \result == targetHeight - currentHeight;
+      @*/
+    public static int altitudeController(int currentHeight, int targetHeight) {
+        int error = targetHeight - currentHeight;
+        int absError = 0;
+        absError = error < 0 ? -error : error;
+        int controlSignal = 0;
+        if (absError > 30) {
+            controlSignal = error > 0 ? 5 : -5;
+        } else if (absError > 20) {
+            controlSignal = error > 0 ? 3 : -3;
+        } else if (absError > 10) {
+            controlSignal = error > 0 ? 2 : -2;
+        } else {
+            controlSignal = error;
+        }
+        return controlSignal;
+    }
+}
+==============================
+/root/specgen/SpecGen/project/081401-specgen/tmp/AltitudeController_Original.java:9: error: ')' expected
+      @                   targetHeight - currentHeight)))));
+                                                           ^
+1 error
+
+==============================
+public class AltitudeController_Original {
+    /*@ requires true;
+      @ ensures \result == (targetHeight - currentHeight > 30 ? 5 : 
+      @                   (targetHeight - currentHeight < -30 ? -5 :
+      @                   (targetHeight - currentHeight > 20 ? 3 :
+      @                   (targetHeight - currentHeight < -20 ? -3 :
+      @                   (targetHeight - currentHeight > 10 ? 2 :
+      @                   (targetHeight - currentHeight < -10 ? -2 :
+      @                   (targetHeight - currentHeight))))));
+      @ ensures (targetHeight - currentHeight > 30) ==> \result == 5;
+      @ ensures (targetHeight - currentHeight < -30) ==> \result == -5;
+      @ ensures (targetHeight - currentHeight > 20 && targetHeight - currentHeight <= 30) ==> \result == 3;
+      @ ensures (targetHeight - currentHeight < -20 && targetHeight - currentHeight >= -30) ==> \result == -3;
+      @ ensures (targetHeight - currentHeight > 10 && targetHeight - currentHeight <= 20) ==> \result == 2;
+      @ ensures (targetHeight - currentHeight < -10 && targetHeight - currentHeight >= -20) ==> \result == -2;
+      @ ensures (targetHeight - currentHeight >= -10 && targetHeight - currentHeight <= 10) ==> \result == targetHeight - currentHeight;
+      @*/
+    public static int altitudeController(int currentHeight, int targetHeight) {
+        int error = targetHeight - currentHeight;
+        int absError = 0;
+        absError = error < 0 ? -error : error;
+        int controlSignal = 0;
+        if (absError > 30) {
+            controlSignal = error > 0 ? 5 : -5;
+        } else if (absError > 20) {
+            controlSignal = error > 0 ? 3 : -3;
+        } else if (absError > 10) {
+            controlSignal = error > 0 ? 2 : -2;
+        } else {
+            controlSignal = error;
+        }
+        return controlSignal;
+    }
+}
+==============================
+/root/specgen/SpecGen/project/081401-specgen/tmp/AltitudeController_Original.java:9: error: ')' expected
+      @                   (targetHeight - currentHeight))))));
+                                                             ^
+1 error
+
+==============================
+public class AltitudeController_Original {
+    /*@ requires true;
+      @ ensures \result == (absError > 30 ? (error > 0 ? 5 : -5) :
+      @                   (absError > 20 ? (error > 0 ? 3 : -3) :
+      @                   (absError > 10 ? (error > 0 ? 2 : -2) :
+      @                   error)));
+      @ ensures (absError > 30 && error > 0) ==> \result == 5;
+      @ ensures (absError > 30 && error < 0) ==> \result == -5;
+      @ ensures (absError > 20 && absError <= 30 && error > 0) ==> \result == 3;
+      @ ensures (absError > 20 && absError <= 30 && error < 0) ==> \result == -3;
+      @ ensures (absError > 10 && absError <= 20 && error > 0) ==> \result == 2;
+      @ ensures (absError > 10 && absError <= 20 && error < 0) ==> \result == -2;
+      @ ensures (absError <= 10) ==> \result == error;
+      @*/
+    public static int altitudeController(int currentHeight, int targetHeight) {
+        int error = targetHeight - currentHeight;
+        int absError = 0;
+        absError = error < 0 ? -error : error;
+        int controlSignal = 0;
+        if (absError > 30) {
+            controlSignal = error > 0 ? 5 : -5;
+        } else if (absError > 20) {
+            controlSignal = error > 0 ? 3 : -3;
+        } else if (absError > 10) {
+            controlSignal = error > 0 ? 2 : -2;
+        } else {
+            controlSignal = error;
+        }
+        return controlSignal;
+    }
+}
+==============================
+/root/specgen/SpecGen/project/081401-specgen/tmp/AltitudeController_Original.java:3: error: cannot find symbol
+      @ ensures \result == (absError > 30 ? (error > 0 ? 5 : -5) :
+                            ^
+  symbol:   variable absError
+  location: class AltitudeController_Original
+/root/specgen/SpecGen/project/081401-specgen/tmp/AltitudeController_Original.java:3: error: cannot find symbol
+      @ ensures \result == (absError > 30 ? (error > 0 ? 5 : -5) :
+                                             ^
+  symbol:   variable error
+  location: class AltitudeController_Original
+/root/specgen/SpecGen/project/081401-specgen/tmp/AltitudeController_Original.java:4: error: cannot find symbol
+      @                   (absError > 20 ? (error > 0 ? 3 : -3) :
+                           ^
+  symbol:   variable absError
+  location: class AltitudeController_Original
+/root/specgen/SpecGen/project/081401-specgen/tmp/AltitudeController_Original.java:4: error: cannot find symbol
+      @                   (absError > 20 ? (error > 0 ? 3 : -3) :
+                                            ^
+  symbol:   variable error
+  location: class AltitudeController_Original
+/root/specgen/SpecGen/project/081401-specgen/tmp/AltitudeController_Original.java:5: error: cannot find symbol
+      @                   (absError > 10 ? (error > 0 ? 2 : -2) :
+                           ^
+  symbol:   variable absError
+  location: class AltitudeController_Original
+/root/specgen/SpecGen/project/081401-specgen/tmp/AltitudeController_Original.java:5: error: cannot find symbol
+      @                   (absError > 10 ? (error > 0 ? 2 : -2) :
+                                            ^
+  symbol:   variable error
+  location: class AltitudeController_Original
+/root/specgen/SpecGen/project/081401-specgen/tmp/AltitudeController_Original.java:6: error: cannot find symbol
+      @                   error)));
+                          ^
+  symbol:   variable error
+  location: class AltitudeController_Original
+/root/specgen/SpecGen/project/081401-specgen/tmp/AltitudeController_Original.java:7: error: cannot find symbol
+      @ ensures (absError > 30 && error > 0) ==> \result == 5;
+                 ^
+  symbol:   variable absError
+  location: class AltitudeController_Original
+/root/specgen/SpecGen/project/081401-specgen/tmp/AltitudeController_Original.java:7: error: cannot find symbol
+      @ ensures (absError > 30 && error > 0) ==> \result == 5;
+                                  ^
+  symbol:   variable error
+  location: class AltitudeController_Original
+/root/specgen/SpecGen/project/081401-specgen/tmp/AltitudeController_Original.java:8: error: cannot find symbol
+      @ ensures (absError > 30 && error < 0) ==> \result == -5;
+                 ^
+  symbol:   variable absError
+  location: class AltitudeController_Original
+/root/specgen/SpecGen/project/081401-specgen/tmp/AltitudeController_Original.java:8: error: cannot find symbol
+      @ ensures (absError > 30 && error < 0) ==> \result == -5;
+                                  ^
+  symbol:   variable error
+  location: class AltitudeController_Original
+/root/specgen/SpecGen/project/081401-specgen/tmp/AltitudeController_Original.java:9: error: cannot find symbol
+      @ ensures (absError > 20 && absError <= 30 && error > 0) ==> \result == 3;
+                 ^
+  symbol:   variable absError
+  location: class AltitudeController_Original
+/root/specgen/SpecGen/project/081401-specgen/tmp/AltitudeController_Original.java:9: error: cannot find symbol
+      @ ensures (absError > 20 && absError <= 30 && error > 0) ==> \result == 3;
+                                  ^
+  symbol:   variable absError
+  location: class AltitudeController_Original
+/root/specgen/SpecGen/project/081401-specgen/tmp/AltitudeController_Original.java:9: error: cannot find symbol
+      @ ensures (absError > 20 && absError <= 30 && error > 0) ==> \result == 3;
+                                                    ^
+  symbol:   variable error
+  location: class AltitudeController_Original
+/root/specgen/SpecGen/project/081401-specgen/tmp/AltitudeController_Original.java:10: error: cannot find symbol
+      @ ensures (absError > 20 && absError <= 30 && error < 0) ==> \result == -3;
+                 ^
+  symbol:   variable absError
+  location: class AltitudeController_Original
+/root/specgen/SpecGen/project/081401-specgen/tmp/AltitudeController_Original.java:10: error: cannot find symbol
+      @ ensures (absError > 20 && absError <= 30 && error < 0) ==> \result == -3;
+                                  ^
+  symbol:   variable absError
+  location: class AltitudeController_Original
+/root/specgen/SpecGen/project/081401-specgen/tmp/AltitudeController_Original.java:10: error: cannot find symbol
+      @ ensures (absError > 20 && absError <= 30 && error < 0) ==> \result == -3;
+                                                    ^
+  symbol:   variable error
+  location: class AltitudeController_Original
+/root/specgen/SpecGen/project/081401-specgen/tmp/AltitudeController_Original.java:11: error: cannot find symbol
+      @ ensures (absError > 10 && absError <= 20 && error > 0) ==> \result == 2;
+                 ^
+  symbol:   variable absError
+  location: class AltitudeController_Original
+/root/specgen/SpecGen/project/081401-specgen/tmp/AltitudeController_Original.java:11: error: cannot find symbol
+      @ ensures (absError > 10 && absError <= 20 && error > 0) ==> \result == 2;
+                                  ^
+  symbol:   variable absError
+  location: class AltitudeController_Original
+/root/specgen/SpecGen/project/081401-specgen/tmp/AltitudeController_Original.java:11: error: cannot find symbol
+      @ ensures (absError > 10 && absError <= 20 && error > 0) ==> \result == 2;
+                                                    ^
+  symbol:   variable error
+  location: class AltitudeController_Original
+/root/specgen/SpecGen/project/081401-specgen/tmp/AltitudeController_Original.java:12: error: cannot find symbol
+      @ ensures (absError > 10 && absError <= 20 && error < 0) ==> \result == -2;
+                 ^
+  symbol:   variable absError
+  location: class AltitudeController_Original
+/root/specgen/SpecGen/project/081401-specgen/tmp/AltitudeController_Original.java:12: error: cannot find symbol
+      @ ensures (absError > 10 && absError <= 20 && error < 0) ==> \result == -2;
+                                  ^
+  symbol:   variable absError
+  location: class AltitudeController_Original
+/root/specgen/SpecGen/project/081401-specgen/tmp/AltitudeController_Original.java:12: error: cannot find symbol
+      @ ensures (absError > 10 && absError <= 20 && error < 0) ==> \result == -2;
+                                                    ^
+  symbol:   variable error
+  location: class AltitudeController_Original
+/root/specgen/SpecGen/project/081401-specgen/tmp/AltitudeController_Original.java:13: error: cannot find symbol
+      @ ensures (absError <= 10) ==> \result == error;
+                 ^
+  symbol:   variable absError
+  location: class AltitudeController_Original
+/root/specgen/SpecGen/project/081401-specgen/tmp/AltitudeController_Original.java:13: error: cannot find symbol
+      @ ensures (absError <= 10) ==> \result == error;
+                                                ^
+  symbol:   variable error
+  location: class AltitudeController_Original
+25 errors
+
+==============================
+public class AltitudeController_Original {
+    /*@ requires true;
+      @ ensures \result == (Math.abs(targetHeight - currentHeight) > 30 ? 
+      @                   (targetHeight > currentHeight ? 5 : -5) :
+      @                   (Math.abs(targetHeight - currentHeight) > 20 ? 
+      @                   (targetHeight > currentHeight ? 3 : -3) :
+      @                   (Math.abs(targetHeight - currentHeight) > 10 ? 
+      @                   (targetHeight > currentHeight ? 2 : -2) :
+      @                   (targetHeight - currentHeight))));
+      @ ensures (Math.abs(targetHeight - currentHeight) > 30 && targetHeight > currentHeight) ==> \result == 5;
+      @ ensures (Math.abs(targetHeight - currentHeight) > 30 && targetHeight < currentHeight) ==> \result == -5;
+      @ ensures (Math.abs(targetHeight - currentHeight) > 20 && Math.abs(targetHeight - currentHeight) <= 30 && 
+      @          targetHeight > currentHeight) ==> \result == 3;
+      @ ensures (Math.abs(targetHeight - currentHeight) > 20 && Math.abs(targetHeight - currentHeight) <= 30 && 
+      @          targetHeight < currentHeight) ==> \result == -3;
+      @ ensures (Math.abs(targetHeight - currentHeight) > 10 && Math.abs(targetHeight - currentHeight) <= 20 && 
+      @          targetHeight > currentHeight) ==> \result == 2;
+      @ ensures (Math.abs(targetHeight - currentHeight) > 10 && Math.abs(targetHeight - currentHeight) <= 20 && 
+      @          targetHeight < currentHeight) ==> \result == -2;
+      @ ensures (Math.abs(targetHeight - currentHeight) <= 10) ==> \result == (targetHeight - currentHeight);
+      @*/
+    public static int altitudeController(int currentHeight, int targetHeight) {
+        int error = targetHeight - currentHeight;
+        int absError = Math.abs(error);
+        int controlSignal = 0;
+        if (absError > 30) {
+            controlSignal = error > 0 ? 5 : -5;
+        } else if (absError > 20) {
+            controlSignal = error > 0 ? 3 : -3;
+        } else if (absError > 10) {
+            controlSignal = error > 0 ? 2 : -2;
+        } else {
+            controlSignal = error;
+        }
+        return controlSignal;
+    }
+}
+==============================
+
+==============================

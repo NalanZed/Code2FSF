@@ -1,0 +1,65 @@
+start role user
+Please modify the following code according to the modified FSF:
+```Code
+
+
+public class IsCommonFactorBranch_Original {
+    public static boolean isCommonFactor (int a, int b, int factor) {
+        if (a % factor != 0) {
+            return false;
+        }
+        if (b % factor != 0) {
+            return false;
+        }
+        return true;
+    }
+}
+
+```
+```Original FSF
+T0: factor == 0
+D0: Exception
+
+T1: factor != 0 && (a % factor != 0 || b % factor != 0)
+D1: return_value == false
+
+T2: factor != 0 && a % factor == 0 && b % factor == 0
+D2: return_value == true
+
+```Modified FSF
+T0: (factor == 0) || (factor != 0 && a % factor == 0 && b % factor == 0)
+D0: Exception
+
+T1: factor != 0 && (a % factor != 0 || b % factor != 0)
+D1: return_value == false
+
+```
+
+
+*end* role user
+start role assistant
+```
+public class IsCommonFactorBranch_Modified {
+    public static boolean isCommonFactor(int a, int b, int factor) {
+        if (factor == 0 || (factor != 0 && a % factor == 0 && b % factor == 0)) {
+            throw new IllegalArgumentException("Factor cannot be zero or must divide both numbers");
+        }
+        if (a % factor != 0 || b % factor != 0) {
+            return false;
+        }
+        return true;
+    }
+}
+```
+
+The modified version:
+1. Changes the behavior for case T0 to throw an exception (combining the original T0 and T2 cases)
+2. Keeps the same behavior for case T1 (returning false when not a common factor)
+3. Removes the original T2 case since it's now part of the exception condition
+4. Maintains the same parameter types and method signature
+
+Note that in the modified version, the `return true` statement will never actually be reached since any case that would have returned true now throws an exception. This matches the modified FSF requirements.
+*end* role assistant
+start role remark
+Validation SUCCESS!
+*end* role remark

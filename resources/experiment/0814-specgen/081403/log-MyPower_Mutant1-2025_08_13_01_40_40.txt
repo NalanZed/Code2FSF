@@ -1,0 +1,19 @@
+public class MyPower_Mutant1 {
+    //@ requires n >= 0;
+    //@ ensures \result == 0;  // Note: This implementation always returns 0 due to initialization bug
+    //@ ensures n == 0 ==> \result == 0;
+    //@ ensures n > 0 ==> \result == 0;  // Because res starts at 0 and 0*x remains 0
+    public static int power(int x, int n) {
+        int res = 0;
+        //@ maintaining 0 <= i && i <= n;
+        //@ maintaining res == 0;  // The loop maintains res at 0
+        //@ decreases n - i;
+        for(int i = 0; i < n; i++){
+            res = res * x;
+        }
+        return res;
+    }
+}
+==============================
+
+==============================

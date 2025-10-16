@@ -1,0 +1,8 @@
+experimentName: 081105-evolution
+model: deepseek-chat
+category: MERGE_TD
+total number: 38
+success number: 35
+success rate: 92.1%
+failed number: 0
+exception number: 3

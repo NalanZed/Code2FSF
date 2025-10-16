@@ -1,0 +1,40 @@
+public class Calculator_Mutant4 {
+    /*@ requires operator == '+' ==> (Integer.MIN_VALUE <= num1 + num2 && num1 + num2 <= Integer.MAX_VALUE);
+      @ requires operator == '-' ==> (Integer.MIN_VALUE <= num1 - num2 && num1 - num2 <= Integer.MAX_VALUE);
+      @ requires operator == '*' ==> (Integer.MIN_VALUE <= num1 * num2 && num1 * num2 <= Integer.MAX_VALUE);
+      @ requires (operator == '/' || operator == '%') ==> num2 != 0;
+      @ ensures (operator == '+') ==> \result == num1 + num2;
+      @ ensures (operator == '-') ==> \result == num1 - num2;
+      @ ensures (operator == '*') ==> \result == num1 * num2;
+      @ ensures (operator == '/') ==> \result == num1 % num2;  // Note: Mutation from / to %
+      @ ensures (operator == '%') ==> \result == num1 % num2;
+      @ ensures !(operator == '+' || operator == '-' || operator == '*' || 
+      @          operator == '/' || operator == '%') ==> \result == -1;
+      @*/
+    public static int calculate(int num1, int num2, char operator) {
+        int output;
+        switch(operator) {
+            case '+':
+                output = num1 + num2;
+                break;
+            case '-':
+                output = num1 - num2;
+                break;
+            case '*':
+                output = num1 * num2;
+                break;
+            case '/':
+                output = num1 % num2; //mutated / with %
+                break;
+            case '%':
+                output = num1 % num2;
+                break;
+            default:
+                return -1;
+        }
+        return output;
+    }
+}
+==============================
+
+==============================

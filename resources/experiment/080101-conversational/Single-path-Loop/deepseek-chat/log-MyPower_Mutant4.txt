@@ -29,7 +29,7 @@ start role user
 Under T :n < 0，specifically when the variables are assigned like the main method showing: public static void main(String[] args) {
 int x = 96;
 int n = -56;
-    int result = MyPower_Mutant4.power(x, n);
+    int TBFVResult = MyPower_Mutant4.power(x, n);
 }No exception was thrown by the program. Think again and regenerate
 *end* role user
 start role assistant
@@ -261,7 +261,7 @@ D7: return_value == (iterative product of x multiplied (n+1) times) // May overf
 
 Key corrections:
 1. Changed the description of T7's D7 to reflect the actual computation rather than mathematical exponentiation
-2. Acknowledged that the result is the iterative product which may overflow
+2. Acknowledged that the TBFVResult is the iterative product which may overflow
 3. All other cases remain accurate as previously verified
 4. Conditions remain mutually exclusive and complete
 

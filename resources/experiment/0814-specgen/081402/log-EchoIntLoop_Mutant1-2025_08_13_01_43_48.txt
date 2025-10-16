@@ -1,0 +1,20 @@
+public class EchoIntLoop_Mutant1 {
+    /*@ public normal_behavior
+      @ requires x >= 0;
+      @ ensures \result == x + 1;
+      @ assignable \nothing;
+      @*/
+    public static int echo(int x) {
+        int res = 0;
+        //@ maintaining 0 <= i && i <= x + 1;
+        //@ maintaining res == i;
+        //@ decreases x - i;
+        for(int i = 0; i <= x; i++) {
+            res = res + 1;
+        }
+        return res;
+    }
+}
+==============================
+
+==============================

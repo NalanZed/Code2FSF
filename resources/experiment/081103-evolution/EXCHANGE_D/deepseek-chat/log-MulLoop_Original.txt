@@ -1,0 +1,79 @@
+start role user
+Please modify the following code according to the modified FSF:
+```Code
+
+
+public class MulLoop_Original {
+
+	public static int mulLoop(int a, int b) {
+        int res = 0;
+        if (b >= 0) {
+            for(int i = 0; i < b; i++) {
+                res = res + a;
+            }
+        } else {
+            for(int i = 0; i < -b; i++) {
+                res = res - a;
+            }
+        }
+        return res;
+    }
+
+}
+
+```
+```Original FSF
+T0: b == 0
+D0: res == 0
+
+T1: b > 0
+D1: res == a * b
+
+T2: b < 0
+D2: res == a * b
+
+```Modified FSF
+T0: b == 0
+D0: res == a * b
+
+T1: b > 0
+D1: res == 0
+
+T2: b < 0
+D2: res == a * b
+
+```
+
+
+*end* role user
+start role assistant
+```
+public class MulLoop_Modified {
+
+    public static int mulLoop(int a, int b) {
+        int res = 0;
+        if (b == 0) {
+            res = a * b;
+        } else if (b > 0) {
+            res = 0;
+        } else {
+            for(int i = 0; i < -b; i++) {
+                res = res - a;
+            }
+        }
+        return res;
+    }
+
+}
+```
+
+Key changes made:
+1. Kept the original structure but modified the behavior for different conditions
+2. For T0 (b == 0), changed to directly return a * b (which will be 0)
+3. For T1 (b > 0), simply return 0 instead of doing the multiplication loop
+4. For T2 (b < 0), kept the original negative multiplication logic
+5. Maintained the same method signature and overall structure while changing only the necessary parts to match the modified FSF
+*end* role assistant
+start role remark
+Validation SUCCESS!
+*end* role remark

@@ -1,0 +1,17 @@
+public class DivisionOverflow_Mutant4 {
+    //@ requires denom != 0;
+    //@ requires nom != Integer.MIN_VALUE || denom != -1; // Prevent overflow case
+    //@ ensures \result == nom / denom;
+    //@ signals (ArithmeticException) denom == 0;
+    public static int division_test_fail_overflow(int nom, int denom) {
+        //~should_fail
+        if (denom != 0) { //add a check for denominator to be non-zero
+            int tmp = nom / denom;
+            return tmp;
+        }
+        return 0;
+    }
+}
+==============================
+
+==============================

@@ -1,0 +1,8 @@
+experimentName: 081112-evolution
+model: deepseek-chat
+category: EXCHANGE_D
+total number: 35
+success number: 35
+success rate: 100.0%
+failed number: 0
+exception number: 0

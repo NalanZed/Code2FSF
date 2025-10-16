@@ -1,0 +1,13 @@
+public class IsCommonFactor_Original {
+    /*@ public normal_behavior
+      @   requires factor != 0;
+      @   ensures \result <==> (a % factor == 0 && b % factor == 0);
+      @   ensures \result == (a % factor == 0 && b % factor == 0);
+      @*/
+    public static boolean isCommonFactor(int a, int b, int factor) {
+        return a % factor == 0 && b % factor == 0;
+    }
+}
+==============================
+
+==============================

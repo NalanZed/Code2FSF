@@ -1,0 +1,8 @@
+experimentName: tset
+model: deepseek-chat
+category: test
+total number: 17
+success number: 16
+success rate: 94.11%
+failed number: 1
+exception number: 0

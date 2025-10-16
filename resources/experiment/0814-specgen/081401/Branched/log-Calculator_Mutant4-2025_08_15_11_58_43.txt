@@ -1,0 +1,212 @@
+public class Calculator_Mutant4 {
+    //@ requires operator == '+' || operator == '-' || operator == '*' || operator == '/' || operator == '%';
+    //@ ensures operator == '+' ==> \result == num1 + num2;
+    //@ ensures operator == '-' ==> \result == num1 - num2;
+    //@ ensures operator == '*' ==> \result == num1 * num2;
+    //@ ensures operator == '/' ==> \result == num1 % num2;  // Note: This is the mutated version
+    //@ ensures operator == '%' ==> \result == num1 % num2;
+    //@ ensures !(operator == '+' || operator == '-' || operator == '*' || operator == '/' || operator == '%') ==> \result == -1;
+    //@ ensures num2 != 0 || (operator != '/' && operator != '%') || \result == -1;
+    public static int calculate(int num1, int num2, char operator) {
+        int output;
+        switch(operator) {
+            case '+':
+                output = num1 + num2;
+                break;
+            case '-':
+                output = num1 - num2;
+                break;
+            case '*':
+                output = num1 * num2;
+                break;
+            case '/':
+                output = num1 % num2; //mutated / with %
+                break;
+            case '%':
+                output = num1 % num2;
+                break;
+            default:
+                return -1;
+        }
+        return output;
+    }
+}
+==============================
+/root/specgen/SpecGen/project/081401-specgen/tmp/Calculator_Mutant4.java:26: verify: The prover cannot establish an assertion (PossiblyDivideByZero) in method calculate
+                output = num1 % num2;
+                              ^
+1 verification failure
+
+==============================
+public class Calculator_Mutant4 {
+    //@ requires operator == '+' || operator == '-' || operator == '*' || operator == '/' || operator == '%';
+    //@ requires operator == '/' || operator == '%' ==> num2 != 0;
+    //@ ensures operator == '+' ==> \result == num1 + num2;
+    //@ ensures operator == '-' ==> \result == num1 - num2;
+    //@ ensures operator == '*' ==> \result == num1 * num2;
+    //@ ensures operator == '/' ==> \result == num1 % num2;  // Note: This is the mutated version
+    //@ ensures operator == '%' ==> \result == num1 % num2;
+    //@ ensures !(operator == '+' || operator == '-' || operator == '*' || operator == '/' || operator == '%') ==> \result == -1;
+    //@ ensures num2 != 0 || (operator != '/' && operator != '%') || \result == -1;
+    public static int calculate(int num1, int num2, char operator) {
+        int output;
+        switch(operator) {
+            case '+':
+                output = num1 + num2;
+                break;
+            case '-':
+                output = num1 - num2;
+                break;
+            case '*':
+                output = num1 * num2;
+                break;
+            case '/':
+                output = num1 % num2; //mutated / with %
+                break;
+            case '%':
+                output = num1 % num2;
+                break;
+            default:
+                return -1;
+        }
+        return output;
+    }
+}
+==============================
+/root/specgen/SpecGen/project/081401-specgen/tmp/Calculator_Mutant4.java:32: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081401-specgen/tmp/Calculator_Mutant4.java:5:) in method calculate
+        return output;
+        ^
+/root/specgen/SpecGen/project/081401-specgen/tmp/Calculator_Mutant4.java:5: verify: Associated declaration: /root/specgen/SpecGen/project/081401-specgen/tmp/Calculator_Mutant4.java:32:
+    //@ ensures operator == '-' ==> \result == num1 - num2;
+        ^
+2 verification failures
+
+==============================
+public class Calculator_Mutant4 {
+    //@ requires operator == '+' || operator == '-' || operator == '*' || operator == '/' || operator == '%';
+    //@ requires operator == '/' || operator == '%' ==> num2 != 0;
+    //@ ensures operator == '+' ==> \result == num1 + num2;
+    //@ ensures operator == '-' ==> \result == num1 - num2;  
+    //@ ensures operator == '*' ==> \result == num1 * num2;
+    //@ ensures operator == '/' ==> \result == num1 % num2;  // Note: This is the mutated version
+    //@ ensures operator == '%' ==> \result == num1 % num2;
+    //@ ensures !(operator == '+' || operator == '-' || operator == '*' || operator == '/' || operator == '%') ==> \result == -1;
+    //@ ensures num2 != 0 || (operator != '/' && operator != '%') || \result == -1;
+    public static int calculate(int num1, int num2, char operator) {
+        int output;
+        switch(operator) {
+            case '+':
+                output = num1 + num2;
+                break;
+            case '-':
+                output = num1 - num2;
+                break;
+            case '*':
+                output = num1 * num2;
+                break;
+            case '/':
+                output = num1 % num2; //mutated / with %
+                break;
+            case '%':
+                output = num1 % num2;
+                break;
+            default:
+                return -1;
+        }
+        return output;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081401-specgen/tmp/Calculator_Mutant4.java:32: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081401-specgen/tmp/Calculator_Mutant4.java:5:) in method calculate
+        return output;
+        ^
+/root/specgen/SpecGen/project/081401-specgen/tmp/Calculator_Mutant4.java:5: verify: Associated declaration: /root/specgen/SpecGen/project/081401-specgen/tmp/Calculator_Mutant4.java:32:
+    //@ ensures operator == '-' ==> \result == num1 - num2;  
+        ^
+2 verification failures
+
+==============================
+public class Calculator_Mutant4 {
+    //@ requires operator == '+' || operator == '-' || operator == '*' || operator == '/' || operator == '%';
+    //@ requires operator == '/' || operator == '%' ==> num2 != 0;
+    //@ ensures operator == '+' ==> \result == num1 + num2;
+    //@ ensures operator == '-' ==> \result == num1 + num2;  
+    //@ ensures operator == '*' ==> \result == num1 * num2;
+    //@ ensures operator == '/' ==> \result == num1 % num2;  // Note: This is the mutated version
+    //@ ensures operator == '%' ==> \result == num1 % num2;
+    //@ ensures !(operator == '+' || operator == '-' || operator == '*' || operator == '/' || operator == '%') ==> \result == -1;
+    //@ ensures num2 != 0 || (operator != '/' && operator != '%') || \result == -1;
+    public static int calculate(int num1, int num2, char operator) {
+        int output;
+        switch(operator) {
+            case '+':
+                output = num1 + num2;
+                break;
+            case '-':
+                output = num1 - num2;
+                break;
+            case '*':
+                output = num1 * num2;
+                break;
+            case '/':
+                output = num1 % num2; //mutated / with %
+                break;
+            case '%':
+                output = num1 % num2;
+                break;
+            default:
+                return -1;
+        }
+        return output;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081401-specgen/tmp/Calculator_Mutant4.java:32: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081401-specgen/tmp/Calculator_Mutant4.java:5:) in method calculate
+        return output;
+        ^
+/root/specgen/SpecGen/project/081401-specgen/tmp/Calculator_Mutant4.java:5: verify: Associated declaration: /root/specgen/SpecGen/project/081401-specgen/tmp/Calculator_Mutant4.java:32:
+    //@ ensures operator == '-' ==> \result == num1 + num2;  
+        ^
+2 verification failures
+
+==============================
+public class Calculator_Mutant4 {
+    //@ requires operator == '+' || operator == '-' || operator == '*' || operator == '/' || operator == '%';
+    //@ requires operator == '/' || operator == '%' ==> num2 != 0;
+    //@ ensures operator == '+' ==> \result == num1 + num2;
+ 
+    //@ ensures operator == '*' ==> \result == num1 * num2;
+    //@ ensures operator == '/' ==> \result == num1 % num2;  // Note: This is the mutated version
+    //@ ensures operator == '%' ==> \result == num1 % num2;
+    //@ ensures !(operator == '+' || operator == '-' || operator == '*' || operator == '/' || operator == '%') ==> \result == -1;
+    //@ ensures num2 != 0 || (operator != '/' && operator != '%') || \result == -1;
+    public static int calculate(int num1, int num2, char operator) {
+        int output;
+        switch(operator) {
+            case '+':
+                output = num1 + num2;
+                break;
+            case '-':
+                output = num1 - num2;
+                break;
+            case '*':
+                output = num1 * num2;
+                break;
+            case '/':
+                output = num1 % num2; //mutated / with %
+                break;
+            case '%':
+                output = num1 % num2;
+                break;
+            default:
+                return -1;
+        }
+        return output;
+    }
+}
+
+==============================
+
+==============================

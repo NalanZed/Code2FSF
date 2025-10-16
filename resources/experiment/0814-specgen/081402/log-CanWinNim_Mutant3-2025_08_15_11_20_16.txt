@@ -1,0 +1,9 @@
+public class CanWinNim_Mutant3 {
+    //@ ensures \result == (n % 5 != 0);
+    public static boolean canWinNim(int n) {
+        return n % 5 != 0;   // Change 4 to 5
+    }
+}
+==============================
+
+==============================

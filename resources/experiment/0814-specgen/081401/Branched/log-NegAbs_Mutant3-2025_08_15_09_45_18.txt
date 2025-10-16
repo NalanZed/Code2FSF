@@ -1,0 +1,14 @@
+public class NegAbs_Mutant3 {
+    //@ ensures \result <= 0;
+    //@ ensures num < 0 ==> \result == -num;
+    //@ ensures num >= 0 ==> \result == -num;  // Note: This reflects the bug in the implementation
+    public static int negAbs(int num) {
+        if (num < 0)
+            return -num;
+        else
+            return -num;
+    }
+}
+==============================
+
+==============================

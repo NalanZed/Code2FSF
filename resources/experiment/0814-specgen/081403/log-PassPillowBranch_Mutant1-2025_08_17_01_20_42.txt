@@ -1,0 +1,68 @@
+public class PassPillowBranch_Mutant1 {
+    //@ requires n >= 2;
+    //@ requires time >= 0;
+    //@ ensures 1 <= \result && \result <= n;
+    //@ ensures \result == (time % (2*(n-1)) < n) ? 
+    //@                   (time % (2*(n-1)) + 1) : 
+    //@                   (2*n - (time % (2*(n-1))) - 1;
+    public static int passPillow(int n, int time) {
+        time = time % (n + 1) * 2; // changed subtraction to addition
+        if (time < n) {
+            //@ assert time + 1 >= 1 && time + 1 <= n;
+            return time + 1;
+        }
+        //@ assert n * 2 - time - 1 >= 1 && n * 2 - time - 1 <= n;
+        return n * 2 - time - 1;
+    }
+}
+==============================
+/root/specgen/SpecGen/project/081403-specgen/tmp/PassPillowBranch_Mutant1.java:7: error: ')' expected
+    //@                   (2*n - (time % (2*(n-1))) - 1;
+                                                       ^
+1 error
+
+==============================
+public class PassPillowBranch_Mutant1 {
+    //@ requires n >= 2;
+    //@ requires time >= 0;
+    //@ ensures 1 <= \result && \result <= n;
+    //@ ensures \result == (time % (2*(n-1)) < n ? 
+    //@                     (time % (2*(n-1)) + 1) : 
+    //@                     (2*n - (time % (2*(n-1))) - 1);
+    public static int passPillow(int n, int time) {
+        time = time % (n + 1) * 2; // changed subtraction to addition
+        if (time < n) {
+            //@ assert time + 1 >= 1 && time + 1 <= n;
+            return time + 1;
+        }
+        //@ assert n * 2 - time - 1 >= 1 && n * 2 - time - 1 <= n;
+        return n * 2 - time - 1;
+    }
+}
+==============================
+/root/specgen/SpecGen/project/081403-specgen/tmp/PassPillowBranch_Mutant1.java:7: error: ')' expected
+    //@                     (2*n - (time % (2*(n-1))) - 1);
+                                                          ^
+1 error
+
+==============================
+public class PassPillowBranch_Mutant1 {
+    //@ requires n >= 2;
+    //@ requires time >= 0;
+    //@ ensures 1 <= \result && \result <= n;
+    //@ ensures \result == (time % (2*(n-1)) < n ? 
+    //@                     (time % (2*(n-1)) + 1) : 
+    //@                     (2*n - (time % (2*(n-1))) - 1));
+    public static int passPillow(int n, int time) {
+        time = time % (n + 1) * 2; // changed subtraction to addition
+        if (time < n) {
+            //@ assert time + 1 >= 1 && time + 1 <= n;
+            return time + 1;
+        }
+        //@ assert n * 2 - time - 1 >= 1 && n * 2 - time - 1 <= n;
+        return n * 2 - time - 1;
+    }
+}
+==============================
+
+==============================

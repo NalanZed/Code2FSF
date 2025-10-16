@@ -1,0 +1,51 @@
+start role user
+Please modify the following code according to the modified FSF:
+```Code
+
+
+public class IsCommonMultiple_Original {
+
+    public static boolean isCommonMultiple(int a, int b, int m) {
+        return m % a == 0 && m % b == 0;
+    }
+}
+
+```
+```Original FSF
+T0: a != 0 && b != 0 && m % a == 0 && m % b == 0
+D0: return_value == true
+
+T1: a != 0 && b != 0 && (m % a != 0 || m % b != 0)
+D1: return_value == false
+
+T2: a == 0 || b == 0
+D2: Exception
+
+```Modified FSF
+T0: a != 0 && b != 0 && m % a == 0 && m % b == 0
+D0: return_value == true
+
+T1: (a == 0 || b == 0) || (a != 0 && b != 0 && (m % a != 0 || m % b != 0))
+D1: Exception
+
+```
+
+
+*end* role user
+start role assistant
+```
+public class IsCommonMultiple_Modified {
+
+    public static boolean isCommonMultiple(int a, int b, int m) {
+        if (a != 0 && b != 0 && m % a == 0 && m % b == 0) {
+            return true;
+        } else {
+            throw new RuntimeException("Exception");
+        }
+    }
+}
+```
+*end* role assistant
+start role remark
+Validation SUCCESS!
+*end* role remark

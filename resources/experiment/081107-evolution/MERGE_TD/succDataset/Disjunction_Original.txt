@@ -1,0 +1,324 @@
+START ORIGINAL CODE
+
+public class Disjunction_Original {
+    public static boolean disjunctOf(boolean b1, boolean b2) {
+        if(b1 == true)
+            return true;
+        if(b2 == true)
+            return true;
+        return false;
+    }
+}
+
+*END* ORIGINAL CODE
+START ORIGINAL FSF
+T1: b1 == true
+D1: return_value == true
+T2: b1 == false && b2 == true
+D2: return_value == true
+T3: b1 == false && b2 == false
+D3: return_value == false
+*END* ORIGINAL FSF
+START MODIFIED FSF
+T1: (b1 == true) || (b1 == false && b2 == true)
+D1: return_value == true
+T2: b1 == false && b2 == false
+D2: return_value == false
+*END* MODIFIED FSF
+START ORIGINAL CODE
+
+public class Disjunction_Original {
+    public static boolean disjunctOf(boolean b1, boolean b2) {
+        if(b1 == true)
+            return true;
+        if(b2 == true)
+            return true;
+        return false;
+    }
+}
+
+*END* ORIGINAL CODE
+START ORIGINAL FSF
+T1: b1 == true
+D1: return_value == true
+T2: b1 == false && b2 == true
+D2: return_value == true
+T3: b1 == false && b2 == false
+D3: return_value == false
+*END* ORIGINAL FSF
+START MODIFIED FSF
+T1: b1 == false && b2 == true
+D1: return_value == true
+T2: (b1 == false && b2 == false) || (b1 == true)
+D2: return_value == false
+*END* MODIFIED FSF
+START ORIGINAL CODE
+
+public class Disjunction_Original {
+    public static boolean disjunctOf(boolean b1, boolean b2) {
+        if(b1 == true)
+            return true;
+        if(b2 == true)
+            return true;
+        return false;
+    }
+}
+
+*END* ORIGINAL CODE
+START ORIGINAL FSF
+T1: b1 == true
+D1: return_value == true
+T2: b1 == false && b2 == true
+D2: return_value == true
+T3: b1 == false && b2 == false
+D3: return_value == false
+*END* ORIGINAL FSF
+START MODIFIED FSF
+T1: b1 == false && b2 == true
+D1: return_value == true
+T2: (b1 == false && b2 == false) || (b1 == true)
+D2: return_value == false
+*END* MODIFIED FSF
+START ORIGINAL CODE
+
+public class Disjunction_Original {
+    public static boolean disjunctOf(boolean b1, boolean b2) {
+        if(b1 == true)
+            return true;
+        if(b2 == true)
+            return true;
+        return false;
+    }
+}
+
+*END* ORIGINAL CODE
+START ORIGINAL FSF
+T1: b1 == true
+D1: return_value == true
+T2: b1 == false && b2 == true
+D2: return_value == true
+T3: b1 == false && b2 == false
+D3: return_value == false
+*END* ORIGINAL FSF
+START MODIFIED FSF
+T1: b1 == true
+D1: return_value == true
+T2: (b1 == false && b2 == true) || (b1 == false && b2 == false)
+D2: return_value == true
+*END* MODIFIED FSF
+START ORIGINAL CODE
+
+public class Disjunction_Original {
+    public static boolean disjunctOf(boolean b1, boolean b2) {
+        if(b1 == true)
+            return true;
+        if(b2 == true)
+            return true;
+        return false;
+    }
+}
+
+*END* ORIGINAL CODE
+START ORIGINAL FSF
+T1: b1 == true
+D1: return_value == true
+T2: b1 == false && b2 == true
+D2: return_value == true
+T3: b1 == false && b2 == false
+D3: return_value == false
+*END* ORIGINAL FSF
+START MODIFIED FSF
+T1: (b1 == true) || (b1 == false && b2 == false)
+D1: return_value == true
+T2: b1 == false && b2 == true
+D2: return_value == true
+*END* MODIFIED FSF
+START ORIGINAL CODE
+
+public class Disjunction_Original {
+    public static boolean disjunctOf(boolean b1, boolean b2) {
+        if(b1 == true)
+            return true;
+        if(b2 == true)
+            return true;
+        return false;
+    }
+}
+
+*END* ORIGINAL CODE
+START ORIGINAL FSF
+T1: b1 == true
+D1: return_value == true
+T2: b1 == false && b2 == true
+D2: return_value == true
+T3: b1 == false && b2 == false
+D3: return_value == false
+*END* ORIGINAL FSF
+START MODIFIED FSF
+T1: (b1 == true) || (b1 == false && b2 == false)
+D1: return_value == true
+T2: b1 == false && b2 == true
+D2: return_value == true
+*END* MODIFIED FSF
+START ORIGINAL CODE
+
+public class Disjunction_Original {
+    public static boolean disjunctOf(boolean b1, boolean b2) {
+        if(b1 == true)
+            return true;
+        if(b2 == true)
+            return true;
+        return false;
+    }
+}
+
+*END* ORIGINAL CODE
+START ORIGINAL FSF
+T1: b1 == true
+D1: return_value == true
+T2: b1 == false && b2 == true
+D2: return_value == true
+T3: b1 == false && b2 == false
+D3: return_value == false
+*END* ORIGINAL FSF
+START MODIFIED FSF
+T1: (b1 == true) || (b1 == false && b2 == false)
+D1: return_value == true
+T2: b1 == false && b2 == true
+D2: return_value == true
+*END* MODIFIED FSF
+START ORIGINAL CODE
+
+public class Disjunction_Original {
+    public static boolean disjunctOf(boolean b1, boolean b2) {
+        if(b1 == true)
+            return true;
+        if(b2 == true)
+            return true;
+        return false;
+    }
+}
+
+*END* ORIGINAL CODE
+START ORIGINAL FSF
+T1: b1 == true
+D1: return_value == true
+T2: b1 == false && b2 == true
+D2: return_value == true
+T3: b1 == false && b2 == false
+D3: return_value == false
+*END* ORIGINAL FSF
+START MODIFIED FSF
+T1: b1 == true
+D1: return_value == true
+T2: (b1 == false && b2 == false) || (b1 == false && b2 == true)
+D2: return_value == false
+*END* MODIFIED FSF
+START ORIGINAL CODE
+
+public class Disjunction_Original {
+    public static boolean disjunctOf(boolean b1, boolean b2) {
+        if(b1 == true)
+            return true;
+        if(b2 == true)
+            return true;
+        return false;
+    }
+}
+
+*END* ORIGINAL CODE
+START ORIGINAL FSF
+T1: b1 == true
+D1: return_value == true
+T2: b1 == false && b2 == true
+D2: return_value == true
+T3: b1 == false && b2 == false
+D3: return_value == false
+*END* ORIGINAL FSF
+START MODIFIED FSF
+T1: b1 == true
+D1: return_value == true
+T2: (b1 == false && b2 == true) || (b1 == false && b2 == false)
+D2: return_value == true
+*END* MODIFIED FSF
+START ORIGINAL CODE
+
+public class Disjunction_Original {
+    public static boolean disjunctOf(boolean b1, boolean b2) {
+        if(b1 == true)
+            return true;
+        if(b2 == true)
+            return true;
+        return false;
+    }
+}
+
+*END* ORIGINAL CODE
+START ORIGINAL FSF
+T1: b1 == true
+D1: return_value == true
+T2: b1 == false && b2 == true
+D2: return_value == true
+T3: b1 == false && b2 == false
+D3: return_value == false
+*END* ORIGINAL FSF
+START MODIFIED FSF
+T1: (b1 == false && b2 == true) || (b1 == true)
+D1: return_value == true
+T2: b1 == false && b2 == false
+D2: return_value == false
+*END* MODIFIED FSF
+START ORIGINAL CODE
+
+public class Disjunction_Original {
+    public static boolean disjunctOf(boolean b1, boolean b2) {
+        if(b1 == true)
+            return true;
+        if(b2 == true)
+            return true;
+        return false;
+    }
+}
+
+*END* ORIGINAL CODE
+START ORIGINAL FSF
+T1: b1 == true
+D1: return_value == true
+T2: b1 == false && b2 == true
+D2: return_value == true
+T3: b1 == false && b2 == false
+D3: return_value == false
+*END* ORIGINAL FSF
+START MODIFIED FSF
+T1: b1 == true
+D1: return_value == true
+T2: (b1 == false && b2 == false) || (b1 == false && b2 == true)
+D2: return_value == false
+*END* MODIFIED FSF
+START ORIGINAL CODE
+
+public class Disjunction_Original {
+    public static boolean disjunctOf(boolean b1, boolean b2) {
+        if(b1 == true)
+            return true;
+        if(b2 == true)
+            return true;
+        return false;
+    }
+}
+
+*END* ORIGINAL CODE
+START ORIGINAL FSF
+T1: b1 == true
+D1: return_value == true
+T2: b1 == false && b2 == true
+D2: return_value == true
+T3: b1 == false && b2 == false
+D3: return_value == false
+*END* ORIGINAL FSF
+START MODIFIED FSF
+T1: b1 == true
+D1: return_value == true
+T2: (b1 == false && b2 == false) || (b1 == false && b2 == true)
+D2: return_value == false
+*END* MODIFIED FSF

@@ -1,0 +1,3 @@
+Total rounds: 38
+Valid Files: 37
+Average Conversational Rounds: 1.027027027027027

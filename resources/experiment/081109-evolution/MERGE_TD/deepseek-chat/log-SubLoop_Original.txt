@@ -1,0 +1,82 @@
+start role user
+Please modify the following code according to the modified FSF:
+```Code
+
+
+public class SubLoop_Original {
+    public static int subLoop(int x, int y) {
+        int sum = x;
+        if (y > 0) {
+            int n = y;
+            while (n > 0) {
+                sum = sum - 1;
+                n = n - 1;
+            }
+        } else {
+            int n = -y;
+            while (n > 0) {
+                sum = sum + 1;
+                n = n - 1;
+            }
+        }
+        return sum;
+    }
+}
+
+```
+```Original FSF
+T0: y > 0
+D0: sum == x - y
+
+T1: y < 0
+D1: sum == x + (-y)
+
+T2: y == 0
+D2: sum == x
+
+```Modified FSF
+T0: y > 0
+D0: sum == x - y
+
+T1: (y < 0) || (y == 0)
+D1: sum == x + (-y)
+
+```
+
+
+*end* role user
+start role assistant
+```
+public class SubLoop_Modified {
+    public static int subLoop(int x, int y) {
+        int sum = x;
+        if (y > 0) {
+            int n = y;
+            while (n > 0) {
+                sum = sum - 1;
+                n = n - 1;
+            }
+        } else {
+            int n = -y;
+            while (n > 0) {
+                sum = sum + 1;
+                n = n - 1;
+            }
+        }
+        return sum;
+    }
+}
+```
+
+The modified code remains the same as the original because:
+1. The original T0 case (y > 0) remains unchanged in the modified FSF
+2. The original T1 and T2 cases (y < 0 and y == 0) have been combined in the modified FSF, but their behavior was already identical in the original code (both add the absolute value of y to x)
+3. The implementation already satisfies the modified FSF requirements without any changes
+
+The code correctly handles all cases:
+- When y > 0: subtracts y from x (matches D0)
+- When y ≤ 0: adds |y| to x (matches D1)
+*end* role assistant
+start role remark
+Validation SUCCESS!
+*end* role remark

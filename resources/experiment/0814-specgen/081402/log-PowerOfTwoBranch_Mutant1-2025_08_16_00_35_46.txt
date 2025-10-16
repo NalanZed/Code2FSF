@@ -1,0 +1,83 @@
+public class PowerOfTwoBranch_Mutant1 {
+
+    /*@ public normal_behavior
+      @   ensures \result == (n > 0 && (n & (n - 1)) == 0);
+      @   ensures n <= 0 ==> \result == false;
+      @   ensures n > 0 ==> \result == ((n & (n - 1)) == 0);
+      @*/
+    public static boolean isPowerOfTwo(int n) {
+        if (n < 0) {
+            //@ assert n < 0 && \result == false;
+            return false;
+        }
+        if ((n & (n - 1)) != 0) {
+            //@ assert n >= 0 && (n & (n - 1)) != 0 && \result == false;
+            return false;
+        }
+        //@ assert n > 0 && (n & (n - 1)) == 0 && \result == true;
+        return true;
+    }
+}
+==============================
+/root/specgen/SpecGen/project/081402-specgen/tmp/PowerOfTwoBranch_Mutant1.java:10: error: A \result expression may not be in a assert clause
+            //@ assert n < 0 && \result == false;
+                                 ^
+/root/specgen/SpecGen/project/081402-specgen/tmp/PowerOfTwoBranch_Mutant1.java:14: error: A \result expression may not be in a assert clause
+            //@ assert n >= 0 && (n & (n - 1)) != 0 && \result == false;
+                                                        ^
+/root/specgen/SpecGen/project/081402-specgen/tmp/PowerOfTwoBranch_Mutant1.java:17: error: A \result expression may not be in a assert clause
+        //@ assert n > 0 && (n & (n - 1)) == 0 && \result == true;
+                                                   ^
+3 errors
+
+==============================
+public class PowerOfTwoBranch_Mutant1 {
+
+    /*@ public normal_behavior
+      @   ensures \result == (n > 0 && (n & (n - 1)) == 0);
+      @   ensures n <= 0 ==> \result == false;
+      @   ensures n > 0 ==> \result == ((n & (n - 1)) == 0);
+      @*/
+    public static boolean isPowerOfTwo(int n) {
+        if (n < 0) {
+            //@ assert n < 0;
+            return false;
+        }
+        if ((n & (n - 1)) != 0) {
+            //@ assert n >= 0 && (n & (n - 1)) != 0;
+            return false;
+        }
+        //@ assert n > 0 && (n & (n - 1)) == 0;
+        return true;
+    }
+}
+==============================
+/root/specgen/SpecGen/project/081402-specgen/tmp/PowerOfTwoBranch_Mutant1.java:17: verify: The prover cannot establish an assertion (Assert) in method isPowerOfTwo
+        //@ assert n > 0 && (n & (n - 1)) == 0;
+            ^
+1 verification failure
+
+==============================
+public class PowerOfTwoBranch_Mutant1 {
+
+    /*@ public normal_behavior
+      @   ensures \result == (n > 0 && (n & (n - 1)) == 0);
+      @   ensures n <= 0 ==> \result == false;
+      @   ensures n > 0 ==> \result == ((n & (n - 1)) == 0);
+      @*/
+    public static boolean isPowerOfTwo(int n) {
+        if (n < 0) {
+            //@ assert n < 0;
+            return false;
+        }
+        if ((n & (n - 1)) != 0) {
+            //@ assert n >= 0 && (n & (n - 1)) != 0;
+            return false;
+        }
+        //@ assume n > 0 && (n & (n - 1)) == 0;
+        return true;
+    }
+}
+==============================
+
+==============================

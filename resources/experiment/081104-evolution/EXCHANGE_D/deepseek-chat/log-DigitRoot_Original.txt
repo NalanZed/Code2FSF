@@ -1,0 +1,64 @@
+start role user
+Please modify the following code according to the modified FSF:
+```Code
+
+
+public class DigitRoot_Original {
+
+    public static int function(int num) {
+        while (num >= 10) {
+            int sum = 0;
+            while (num > 0) {
+                sum = sum + (num % 10);
+                num = num / 10;
+            }
+            num = sum;
+        }
+        return num;
+    }
+}
+
+```
+```Original FSF
+T0: num < 10
+D0: return_value == num
+
+T1: num >= 10
+D1: return_value == num % 9 || return_value == 9
+
+```Modified FSF
+T0: num < 10
+D0: return_value == num % 9 || return_value == 9
+
+T1: num >= 10
+D1: return_value == num
+
+```
+
+
+*end* role user
+start role assistant
+```
+public class DigitRoot_Modified {
+
+    public static int function(int num) {
+        if (num < 10) {
+            return num % 9 == 0 ? 9 : num % 9;
+        } else {
+            return num;
+        }
+    }
+}
+```
+
+Explanation:
+1. The original code calculates the digital root (repeated sum of digits until single digit is obtained)
+2. The modified FSF requires:
+   - For numbers < 10: return num%9 (or 9 if num%9 is 0)
+   - For numbers >=10: return the number itself
+3. The modified code directly implements this logic without any loops since we don't need the digit summing behavior anymore
+4. The ternary operator handles the special case where num%9 is 0 (should return 9)
+*end* role assistant
+start role remark
+Validation SUCCESS!
+*end* role remark

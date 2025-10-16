@@ -1,0 +1,21 @@
+public class SmallestEvenMulBranch_Mutant3 {
+
+    /*@ public normal_behavior
+      @   requires n > 0;
+      @   ensures \result > 0;
+      @   ensures \result % 2 == 0;
+      @   ensures (n % 2 != 0) ==> \result == n * 2;
+      @   ensures (n % 2 == 0) ==> \result == n;
+      @*/
+    public static int smallestEvenMultiple(int n) {
+        if (n % 2 != 0) {
+            //@ assert n % 2 != 0;
+            return n * 2;
+        }
+        //@ assert n % 2 == 0;
+        return n;
+    }
+}
+==============================
+
+==============================

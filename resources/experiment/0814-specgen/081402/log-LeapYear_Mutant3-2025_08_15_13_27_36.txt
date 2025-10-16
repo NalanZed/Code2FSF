@@ -1,0 +1,44 @@
+public class LeapYear_Mutant3 {
+    //@ ensures \result == ((year % 4 == 0) && ((year % 100 != 0) || (year % 400 != 0));
+    public static boolean isLeapYear(int year) {
+        boolean leap = false;
+        if (year % 4 == 0) {
+            if (year % 100 == 0) {
+                if (year % 400 == 0)
+                    leap = false;
+                else
+                    leap = true;
+            } else
+                leap = true;
+        } else
+            leap = false;
+        return leap;
+    }
+}
+==============================
+/root/specgen/SpecGen/project/081402-specgen/tmp/LeapYear_Mutant3.java:2: error: ')' expected
+    //@ ensures \result == ((year % 4 == 0) && ((year % 100 != 0) || (year % 400 != 0));
+                                                                                       ^
+1 error
+
+==============================
+public class LeapYear_Mutant3 {
+    //@ ensures \result == ((year % 4 == 0) && ((year % 100 != 0) || (year % 400 != 0)));
+    public static boolean isLeapYear(int year) {
+        boolean leap = false;
+        if (year % 4 == 0) {
+            if (year % 100 == 0) {
+                if (year % 400 == 0)
+                    leap = false;
+                else
+                    leap = true;
+            } else
+                leap = true;
+        } else
+            leap = false;
+        return leap;
+    }
+}
+==============================
+
+==============================

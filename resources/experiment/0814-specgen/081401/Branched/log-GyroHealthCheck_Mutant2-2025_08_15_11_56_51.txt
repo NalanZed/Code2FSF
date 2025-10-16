@@ -1,0 +1,98 @@
+public class GyroHealthCheck_Mutant2 {
+    /*@ public normal_behavior
+      @   ensures \result == 1 <==> 
+      @           (x - y > 10 || y - z > 10 || 
+      @           (x - z < 0 ? z - x : x - z) > 10);
+      @   ensures \result == 0 <==> 
+      @           (x - y <= 10 && y - z <= 10 && 
+      @           (x - z < 0 ? z - x : x - z) <= 10);
+      @*/
+    public static int gyroHealthCheck(int x, int y, int z) {
+        int diffXY = x - y;
+        int diffYZ = y - z;
+        int diffXZ = x - z;
+        if (diffXZ < 0) diffXZ = -diffXZ;
+        int alarm = 0;
+        if (diffXY > 10 || diffYZ > 10 || diffXZ > 10) {
+            alarm = 1;
+        }
+        return alarm;
+    }
+}
+==============================
+/root/specgen/SpecGen/project/081401-specgen/tmp/GyroHealthCheck_Mutant2.java:19: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081401-specgen/tmp/GyroHealthCheck_Mutant2.java:3:) in method gyroHealthCheck
+        return alarm;
+        ^
+/root/specgen/SpecGen/project/081401-specgen/tmp/GyroHealthCheck_Mutant2.java:3: verify: Associated declaration: /root/specgen/SpecGen/project/081401-specgen/tmp/GyroHealthCheck_Mutant2.java:19:
+      @   ensures \result == 1 <==> 
+          ^
+2 verification failures
+
+==============================
+public class GyroHealthCheck_Mutant2 {
+    /*@ public normal_behavior
+      @   ensures \result == 1 <==>   
+      @           (x - y > 10 || y - z > 10 || 
+      @           (x - z < 0 ? z - x : x - z) > 10);
+      @   ensures \result == 0 <==> 
+      @           (x - y <= 10 && y - z <= 10 && 
+      @           (x - z < 0 ? z - x : x - z) <= 10);
+      @*/
+    public static int gyroHealthCheck(int x, int y, int z) {
+        int diffXY = x - y;
+        int diffYZ = y - z;
+        int diffXZ = x - z;
+        if (diffXZ < 0) diffXZ = -diffXZ;
+        int alarm = 0;
+        if (diffXY > 10 || diffYZ > 10 || diffXZ > 10) {
+            alarm = 1;
+        }
+        return alarm;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081401-specgen/tmp/GyroHealthCheck_Mutant2.java:19: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081401-specgen/tmp/GyroHealthCheck_Mutant2.java:3:) in method gyroHealthCheck
+        return alarm;
+        ^
+/root/specgen/SpecGen/project/081401-specgen/tmp/GyroHealthCheck_Mutant2.java:3: verify: Associated declaration: /root/specgen/SpecGen/project/081401-specgen/tmp/GyroHealthCheck_Mutant2.java:19:
+      @   ensures \result == 1 <==>   
+          ^
+2 verification failures
+
+==============================
+public class GyroHealthCheck_Mutant2 {
+    /*@ public normal_behavior
+ 
+      @           (x - y > 10 || y - z > 10 || 
+      @           (x - z < 0 ? z - x : x - z) > 10);
+      @   ensures \result == 0 <==> 
+      @           (x - y <= 10 && y - z <= 10 && 
+      @           (x - z < 0 ? z - x : x - z) <= 10);
+      @*/
+    public static int gyroHealthCheck(int x, int y, int z) {
+        int diffXY = x - y;
+        int diffYZ = y - z;
+        int diffXZ = x - z;
+        if (diffXZ < 0) diffXZ = -diffXZ;
+        int alarm = 0;
+        if (diffXY > 10 || diffYZ > 10 || diffXZ > 10) {
+            alarm = 1;
+        }
+        return alarm;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081401-specgen/tmp/GyroHealthCheck_Mutant2.java:4: error: illegal start of type
+      @           (x - y > 10 || y - z > 10 || 
+                  ^
+/root/specgen/SpecGen/project/081401-specgen/tmp/GyroHealthCheck_Mutant2.java:4: error: <identifier> expected
+      @           (x - y > 10 || y - z > 10 || 
+                    ^
+/root/specgen/SpecGen/project/081401-specgen/tmp/GyroHealthCheck_Mutant2.java:5: error: ';' expected
+      @           (x - z < 0 ? z - x : x - z) > 10);
+                                             ^
+3 errors
+
+==============================

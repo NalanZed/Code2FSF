@@ -131,7 +131,7 @@ T6: n < 0
 D6: return_value == 1
 ```
 
-Note that for T5, we describe the behavior without using Math.pow() by stating that the result is x multiplied by itself n times. This accurately represents the program's behavior while avoiding function calls in the FSF expressions.
+Note that for T5, we describe the behavior without using Math.pow() by stating that the TBFVResult is x multiplied by itself n times. This accurately represents the program's behavior while avoiding function calls in the FSF expressions.
 *end* role assistant
 start role user
 Some errors merged while verifyingT: n > 0 && x == -1	D: return_value == (n % 2 == 0 ? 1 : -1), z3验证器验证过程中报错：
@@ -270,7 +270,7 @@ T6: n > 0 && x != 0 && x != 1 && x != -1 && no_overflow(x, n)
 D6: return_value == x^n
 
 T7: n > 0 && x != 0 && x != 1 && x != -1 && !no_overflow(x, n)
-D7: return_value == (computed result with overflow)
+D7: return_value == (computed TBFVResult with overflow)
 
 T8: n < 0
 D8: return_value == 1
@@ -397,7 +397,7 @@ D7: return_value == 1
 
 Key changes:
 1. Removed all informal descriptions and undefined variables
-2. For T6/D6, used "computed_power_result" to represent the actual computation result without specifying the mathematical operation
+2. For T6/D6, used "computed_power_result" to represent the actual computation TBFVResult without specifying the mathematical operation
 3. Split the x=-1 case into two separate conditions for even/odd n
 4. All conditions are mutually exclusive and use only input variables
 5. Complete coverage of all input cases
@@ -475,7 +475,7 @@ D7: return_value == 1
 ```
 
 Key changes:
-1. For T6/D6, since we cannot formally specify the exact power computation without introducing new variables, we use `true` to indicate the method will compute some result
+1. For T6/D6, since we cannot formally specify the exact power computation without introducing new variables, we use `true` to indicate the method will compute some TBFVResult
 2. All other cases are precisely specified using only input variables and return_value
 3. Maintained complete coverage and mutual exclusivity
 4. Followed all original requirements strictly:

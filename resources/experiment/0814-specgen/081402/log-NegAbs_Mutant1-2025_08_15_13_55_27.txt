@@ -1,0 +1,16 @@
+public class NegAbs_Mutant1 {
+    /*@ requires num != Integer.MIN_VALUE;
+      @ ensures \result <= 0;
+      @ ensures (num <= 0 ==> \result == num) && 
+      @         (num > 0 ==> \result == -num);
+      @*/
+    public static int negAbs(int num) {
+        if (num <= 0)
+            return num;
+        else
+            return -num;
+    }
+}
+==============================
+
+==============================

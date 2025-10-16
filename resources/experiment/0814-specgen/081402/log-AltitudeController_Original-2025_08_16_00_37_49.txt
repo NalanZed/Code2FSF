@@ -1,0 +1,96 @@
+public class AltitudeController_Original {
+    //@ ensures \result == (error > 30 ? (error > 0 ? 5 : -5) : 
+    //@                   (error > 20 ? (error > 0 ? 3 : -3) : 
+    //@                   (error > 10 ? (error > 0 ? 2 : -2) : error)));
+    //@ ensures \result == 0 <==> currentHeight == targetHeight;
+    //@ ensures (currentHeight < targetHeight) ==> \result > 0;
+    //@ ensures (currentHeight > targetHeight) ==> \result < 0;
+    //@ ensures Math.abs(\result) <= 5;
+    public static int altitudeController(int currentHeight, int targetHeight) {
+        int error = targetHeight - currentHeight;
+        int absError = 0;
+        absError = error < 0 ? -error : error;
+        int controlSignal = 0;
+        if (absError > 30) {
+            controlSignal = error > 0 ? 5 : -5;
+        } else if (absError > 20) {
+            controlSignal = error > 0 ? 3 : -3;
+        } else if (absError > 10) {
+            controlSignal = error > 0 ? 2 : -2;
+        } else {
+            controlSignal = error;
+        }
+        return controlSignal;
+    }
+}
+==============================
+/root/specgen/SpecGen/project/081402-specgen/tmp/AltitudeController_Original.java:2: error: cannot find symbol
+    //@ ensures \result == (error > 30 ? (error > 0 ? 5 : -5) : 
+                            ^
+  symbol:   variable error
+  location: class AltitudeController_Original
+/root/specgen/SpecGen/project/081402-specgen/tmp/AltitudeController_Original.java:2: error: cannot find symbol
+    //@ ensures \result == (error > 30 ? (error > 0 ? 5 : -5) : 
+                                          ^
+  symbol:   variable error
+  location: class AltitudeController_Original
+/root/specgen/SpecGen/project/081402-specgen/tmp/AltitudeController_Original.java:3: error: cannot find symbol
+    //@                   (error > 20 ? (error > 0 ? 3 : -3) : 
+                           ^
+  symbol:   variable error
+  location: class AltitudeController_Original
+/root/specgen/SpecGen/project/081402-specgen/tmp/AltitudeController_Original.java:3: error: cannot find symbol
+    //@                   (error > 20 ? (error > 0 ? 3 : -3) : 
+                                         ^
+  symbol:   variable error
+  location: class AltitudeController_Original
+/root/specgen/SpecGen/project/081402-specgen/tmp/AltitudeController_Original.java:4: error: cannot find symbol
+    //@                   (error > 10 ? (error > 0 ? 2 : -2) : error)));
+                           ^
+  symbol:   variable error
+  location: class AltitudeController_Original
+/root/specgen/SpecGen/project/081402-specgen/tmp/AltitudeController_Original.java:4: error: cannot find symbol
+    //@                   (error > 10 ? (error > 0 ? 2 : -2) : error)));
+                                         ^
+  symbol:   variable error
+  location: class AltitudeController_Original
+/root/specgen/SpecGen/project/081402-specgen/tmp/AltitudeController_Original.java:4: error: cannot find symbol
+    //@                   (error > 10 ? (error > 0 ? 2 : -2) : error)));
+                                                               ^
+  symbol:   variable error
+  location: class AltitudeController_Original
+7 errors
+
+==============================
+public class AltitudeController_Original {
+    //@ ensures \result == (targetHeight - currentHeight > 30 ? 5 : 
+    //@                     targetHeight - currentHeight < -30 ? -5 :
+    //@                     targetHeight - currentHeight > 20 ? 3 :
+    //@                     targetHeight - currentHeight < -20 ? -3 :
+    //@                     targetHeight - currentHeight > 10 ? 2 :
+    //@                     targetHeight - currentHeight < -10 ? -2 :
+    //@                     targetHeight - currentHeight);
+    //@ ensures \result == 0 <==> currentHeight == targetHeight;
+    //@ ensures (currentHeight < targetHeight) ==> \result > 0;
+    //@ ensures (currentHeight > targetHeight) ==> \result < 0;
+    //@ ensures Math.abs(\result) <= 5;
+    public static int altitudeController(int currentHeight, int targetHeight) {
+        int error = targetHeight - currentHeight;
+        int absError = 0;
+        absError = error < 0 ? -error : error;
+        int controlSignal = 0;
+        if (absError > 30) {
+            controlSignal = error > 0 ? 5 : -5;
+        } else if (absError > 20) {
+            controlSignal = error > 0 ? 3 : -3;
+        } else if (absError > 10) {
+            controlSignal = error > 0 ? 2 : -2;
+        } else {
+            controlSignal = error;
+        }
+        return controlSignal;
+    }
+}
+==============================
+
+==============================

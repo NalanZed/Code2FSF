@@ -1,0 +1,81 @@
+start role user
+Please modify the following code according to the modified FSF:
+```Code
+
+
+public class AddLoopFor_Original {
+    public static int addLoop(int x, int y) {
+        int sum = y;
+        if (x > 0) {
+            int n = 0;
+            for(n = x; n > 0; ) {
+                sum = sum + 1;
+                n = n - 1;
+            }
+        } else {
+            int n = 0;
+            for(n = -x; n > 0; ) {
+                sum = sum - 1;
+                n = n - 1;
+            }
+        }
+        return sum;
+    }
+}
+
+```
+```Original FSF
+T0: x > 0
+D0: sum == y + x
+
+T1: x < 0
+D1: sum == y + x
+
+T2: x == 0
+D2: sum == y
+
+```Modified FSF
+T0: x > 0
+D0: sum == y + x
+
+T1: x < 0
+D1: sum == y
+
+T2: x == 0
+D2: sum == y + x
+
+```
+
+
+*end* role user
+start role assistant
+```
+public class AddLoopFor_Modified {
+    public static int addLoop(int x, int y) {
+        int sum = y;
+        if (x > 0) {
+            int n = 0;
+            for(n = x; n > 0; ) {
+                sum = sum + 1;
+                n = n - 1;
+            }
+        } else if (x == 0) {
+            sum = sum + x;  // This line is redundant but maintains the structure
+        }
+        // For x < 0, we just keep sum = y (no modification needed)
+        return sum;
+    }
+}
+```
+
+The modified code:
+1. Keeps the original behavior for x > 0 (T0 case)
+2. For x < 0 (T1 case), we don't modify sum at all (just return y)
+3. For x == 0 (T2 case), we keep the structure but the operation sum = sum + x is effectively a no-op since x is 0
+4. The code maintains all the original control flow structure while implementing the new requirements
+
+Note that the else branch for x < 0 is now implicit (we do nothing), which satisfies D1 where sum == y when x < 0.
+*end* role assistant
+start role remark
+Validation SUCCESS!
+*end* role remark

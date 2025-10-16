@@ -1,0 +1,48 @@
+start role user
+Please modify the following code according to the modified FSF:
+```Code
+
+public class EchoIntLoop_Original {
+    public static int echo(int x) {
+        int res = 0;
+        for(int i = 0; i < x; i++) {
+            res = res + 1;
+        }
+        return res;
+    }
+}
+```
+```Original FSF
+T0: x <= 0
+D0: res == 0
+
+T1: x > 0
+D1: res == x
+
+```Modified FSF
+T0: x < 0
+D0: res == 0
+
+T1: x >= 0
+D1: res == x
+
+```
+
+
+*end* role user
+start role assistant
+```
+public class EchoIntLoop_Modified {
+    public static int echo(int x) {
+        int res = 0;
+        for(int i = 0; i < x; i++) {
+            res = res + 1;
+        }
+        return res;
+    }
+}
+```
+*end* role assistant
+start role remark
+Validation SUCCESS!
+*end* role remark

@@ -4,15 +4,15 @@ Please generate an FSF for the program below:
 public class ChangeCase_Mutant1 {
 
     public static char changeCase(char c) {
-        char result = ' ';
+        char TBFVResult = ' ';
         if (c < 'a') {
-            result = c;
+            TBFVResult = c;
         } else if (c >= 'z') {
-            result = (char) (c - 'a' + 'A');
+            TBFVResult = (char) (c - 'a' + 'A');
         } else {
-            result = 'c';
+            TBFVResult = 'c';
         }
-        return result;
+        return TBFVResult;
     }
 }
 
@@ -21,13 +21,13 @@ public class ChangeCase_Mutant1 {
 start role assistant
 ```
 T1: c < 'a'
-D1: result == c
+D1: TBFVResult == c
 
 T2: c >= 'z'
-D2: result == c - 'a' + 'A'
+D2: TBFVResult == c - 'a' + 'A'
 
 T3: c >= 'a' && c < 'z'
-D3: result == 'c'
+D3: TBFVResult == 'c'
 ```
 *end* role assistant
 start role remark

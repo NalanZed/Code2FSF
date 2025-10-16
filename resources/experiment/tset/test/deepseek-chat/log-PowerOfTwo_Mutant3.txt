@@ -1,0 +1,12 @@
+start role user
+Please generate an FSF for the program below:
+```
+public class PowerOfTwo_Mutant3 {
+
+    public static boolean isPowerOfTwo(int n) {
+        return n > 1 && (n & (n - 1)) == 0;
+    }
+}
+
+```
+*end* role user

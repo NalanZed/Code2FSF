@@ -1,0 +1,56 @@
+start role user
+Please modify the following code according to the modified FSF:
+```Code
+
+
+public class DigitRoot_Original {
+
+    public static int function(int num) {
+        while (num >= 10) {
+            int sum = 0;
+            while (num > 0) {
+                sum = sum + (num % 10);
+                num = num / 10;
+            }
+            num = sum;
+        }
+        return num;
+    }
+}
+
+```
+```Original FSF
+T0: num < 10
+D0: return_value == num
+
+T1: num >= 10
+D1: return_value == num % 9 || return_value == 9
+
+```Modified FSF
+T0: num < 10
+D0: return_value == num % 9 || return_value == 9
+
+T1: num >= 10
+D1: return_value == num
+
+```
+
+
+*end* role user
+start role assistant
+```
+public class DigitRoot_Modified {
+
+    public static int function(int num) {
+        if (num < 10) {
+            return num % 9 == 0 ? 9 : num % 9;
+        } else {
+            return num;
+        }
+    }
+}
+```
+*end* role assistant
+start role remark
+Validation SUCCESS!
+*end* role remark

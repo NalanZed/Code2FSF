@@ -1,0 +1,82 @@
+start role user
+Please modify the following code according to the modified FSF:
+```Code
+
+
+public class AddLoop_Original {
+    public static int AddLoop(int x, int y) {
+        int sum = x;
+        if (y > 0) {
+            int n = y;
+            while (n > 0) {
+                sum = sum + 1;
+                n = n - 1;
+            }
+        } else {
+            int n = -y;
+            while (n > 0) {
+                sum = sum - 1;
+                n = n - 1;
+            }
+        }
+        return sum;
+    }
+}
+
+```
+```Original FSF
+T0: y > 0
+D0: sum == x + y
+
+T1: y < 0
+D1: sum == x + y
+
+T2: y == 0
+D2: sum == x
+
+```Modified FSF
+T0: y > 0
+D0: sum == x
+
+T1: y < 0
+D1: sum == x + y
+
+T2: y == 0
+D2: sum == x + y
+
+```
+
+
+*end* role user
+start role assistant
+```
+public class AddLoop_Modified {
+    public static int AddLoop(int x, int y) {
+        int sum = x;
+        if (y > 0) {
+            // Do nothing (sum remains x)
+        } else {
+            int n = -y;
+            while (n > 0) {
+                sum = sum - 1;
+                n = n - 1;
+            }
+        }
+        return sum;
+    }
+}
+```
+
+The modified code:
+1. Keeps the original behavior when y ≤ 0 (adding y to x)
+2. Removes the addition when y > 0 (just returns x)
+3. Maintains all the original structure and variable names
+4. Preserves the loop-based approach for negative y values
+5. Matches exactly the modified FSF requirements where:
+   - When y > 0: returns x (D0)
+   - When y < 0: returns x + y (D1)
+   - When y == 0: returns x + y (which equals x) (D2)
+*end* role assistant
+start role remark
+Validation SUCCESS!
+*end* role remark

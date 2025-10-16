@@ -1,0 +1,18 @@
+public class Abs_Mutant1 {
+
+    //@ ensures num >= 0 ==> \result == num;
+    //@ ensures num < 0 ==> \result == -num;
+    public static int Abs(int num) {
+        return num;
+    }
+}
+==============================
+/root/specgen/SpecGen/project/081402-specgen/tmp/Abs_Mutant1.java:6: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081402-specgen/tmp/Abs_Mutant1.java:4:) in method Abs
+        return num;
+        ^
+/root/specgen/SpecGen/project/081402-specgen/tmp/Abs_Mutant1.java:4: verify: Associated declaration: /root/specgen/SpecGen/project/081402-specgen/tmp/Abs_Mutant1.java:6:
+    //@ ensures num < 0 ==> \result == -num;
+        ^
+2 verification failures
+
+==============================

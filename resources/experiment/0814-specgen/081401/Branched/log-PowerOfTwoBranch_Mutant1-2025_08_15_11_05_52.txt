@@ -1,0 +1,48 @@
+public class PowerOfTwoBranch_Mutant1 {
+
+    /*@ requires true;
+      @ ensures \result == (\exists int k; k >= 0; n == (1 << k));
+      @ pure
+      @*/
+    public static boolean isPowerOfTwo(int n) {
+        if (n < 0) {
+            //@ assert n < 0 ==> !(\exists int k; k >= 0; n == (1 << k));
+            return false;
+        }
+        if ((n & (n - 1)) != 0) {
+            //@ assert (n & (n - 1)) != 0 ==> !(\exists int k; k >= 0; n == (1 << k));
+            return false;
+        }
+        //@ assert n >= 0 && (n & (n - 1)) == 0 ==> (\exists int k; k >= 0; n == (1 << k));
+        return true;
+    }
+}
+==============================
+/root/specgen/SpecGen/project/081401-specgen/tmp/PowerOfTwoBranch_Mutant1.java:9: verify: The prover cannot establish an assertion (Assert) in method isPowerOfTwo
+            //@ assert n < 0 ==> !(\exists int k; k >= 0; n == (1 << k));
+                ^
+1 verification failure
+
+==============================
+public class PowerOfTwoBranch_Mutant1 {
+
+    /*@ requires true;
+      @ ensures \result == (n > 0 && (n & (n - 1)) == 0);
+      @ pure
+      @*/
+    public static boolean isPowerOfTwo(int n) {
+        if (n <= 0) {
+            //@ assert n <= 0 ==> !(n > 0 && (n & (n - 1)) == 0);
+            return false;
+        }
+        if ((n & (n - 1)) != 0) {
+            //@ assert (n & (n - 1)) != 0 ==> !(n > 0 && (n & (n - 1)) == 0);
+            return false;
+        }
+        //@ assert n > 0 && (n & (n - 1)) == 0;
+        return true;
+    }
+}
+==============================
+
+==============================

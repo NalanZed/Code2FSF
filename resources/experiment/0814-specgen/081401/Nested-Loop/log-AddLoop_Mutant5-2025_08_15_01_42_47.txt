@@ -1,0 +1,344 @@
+public class AddLoop_Mutant5 {
+    //@ ensures \result == x + y;
+    public static int AddLoop(int x, int y) {
+        int sum = x;
+        if (y > 0) {
+            int n = y;
+            //@ maintaining sum == x + (y - n);
+            //@ maintaining n >= 0;
+            //@ decreases n;
+            while (n >= 0) {
+                sum = sum + 1;
+                n = n - 1;
+            }
+        } else {
+            int n = -y;
+            //@ maintaining sum == x - (-y - n);
+            //@ maintaining n >= 0;
+            //@ decreases n;
+            while (n >= 0) {
+                sum = sum - 1;
+                n = n - 1;
+            }
+        }
+        return sum;
+    }
+}
+==============================
+/root/specgen/SpecGen/project/081401-specgen/tmp/AddLoop_Mutant5.java:8: verify: The prover cannot establish an assertion (LoopInvariant) in method AddLoop
+            //@ maintaining n >= 0;
+                ^
+1 verification failure
+
+==============================
+public class AddLoop_Mutant5 {
+    //@ ensures \result == x + y;
+    public static int AddLoop(int x, int y) {
+        int sum = x;
+        if (y > 0) {
+            int n = y;
+            //@ maintaining sum == x + (y - n);
+            //@ maintaining n > 0;  
+            //@ decreases n;
+            while (n >= 0) {
+                sum = sum + 1;
+                n = n - 1;
+            }
+        } else {
+            int n = -y;
+            //@ maintaining sum == x - (-y - n);
+            //@ maintaining n >= 0;
+            //@ decreases n;
+            while (n >= 0) {
+                sum = sum - 1;
+                n = n - 1;
+            }
+        }
+        return sum;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081401-specgen/tmp/AddLoop_Mutant5.java:8: verify: The prover cannot establish an assertion (LoopInvariant) in method AddLoop
+            //@ maintaining n > 0;  
+                ^
+1 verification failure
+
+==============================
+public class AddLoop_Mutant5 {
+    //@ ensures \result == x + y;
+    public static int AddLoop(int x, int y) {
+        int sum = x;
+        if (y > 0) {
+            int n = y;
+            //@ maintaining sum == x + (y - n);
+            //@ maintaining n >= 0;  
+            //@ decreases n;
+            while (n >= 0) {
+                sum = sum + 1;
+                n = n - 1;
+            }
+        } else {
+            int n = -y;
+            //@ maintaining sum == x - (-y - n);
+            //@ maintaining n >= 0;
+            //@ decreases n;
+            while (n >= 0) {
+                sum = sum - 1;
+                n = n - 1;
+            }
+        }
+        return sum;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081401-specgen/tmp/AddLoop_Mutant5.java:8: verify: The prover cannot establish an assertion (LoopInvariant) in method AddLoop
+            //@ maintaining n >= 0;  
+                ^
+1 verification failure
+
+==============================
+public class AddLoop_Mutant5 {
+    //@ ensures \result == x + y;
+    public static int AddLoop(int x, int y) {
+        int sum = x;
+        if (y > 0) {
+            int n = y;
+            //@ maintaining sum == x + (y - n);
+            //@ maintaining n + 1 >= 0;  
+            //@ decreases n;
+            while (n >= 0) {
+                sum = sum + 1;
+                n = n - 1;
+            }
+        } else {
+            int n = -y;
+            //@ maintaining sum == x - (-y - n);
+            //@ maintaining n >= 0;
+            //@ decreases n;
+            while (n >= 0) {
+                sum = sum - 1;
+                n = n - 1;
+            }
+        }
+        return sum;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081401-specgen/tmp/AddLoop_Mutant5.java:24: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081401-specgen/tmp/AddLoop_Mutant5.java:2:) in method AddLoop
+        return sum;
+        ^
+/root/specgen/SpecGen/project/081401-specgen/tmp/AddLoop_Mutant5.java:2: verify: Associated declaration: /root/specgen/SpecGen/project/081401-specgen/tmp/AddLoop_Mutant5.java:24:
+    //@ ensures \result == x + y;
+        ^
+2 verification failures
+
+==============================
+public class AddLoop_Mutant5 {
+    //@ ensures \result == x + y;  
+    public static int AddLoop(int x, int y) {
+        int sum = x;
+        if (y > 0) {
+            int n = y;
+            //@ maintaining sum == x + (y - n);
+            //@ maintaining n + 1 >= 0;  
+            //@ decreases n;
+            while (n >= 0) {
+                sum = sum + 1;
+                n = n - 1;
+            }
+        } else {
+            int n = -y;
+            //@ maintaining sum == x - (-y - n);
+            //@ maintaining n >= 0;
+            //@ decreases n;
+            while (n >= 0) {
+                sum = sum - 1;
+                n = n - 1;
+            }
+        }
+        return sum;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081401-specgen/tmp/AddLoop_Mutant5.java:24: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081401-specgen/tmp/AddLoop_Mutant5.java:2:) in method AddLoop
+        return sum;
+        ^
+/root/specgen/SpecGen/project/081401-specgen/tmp/AddLoop_Mutant5.java:2: verify: Associated declaration: /root/specgen/SpecGen/project/081401-specgen/tmp/AddLoop_Mutant5.java:24:
+    //@ ensures \result == x + y;  
+        ^
+2 verification failures
+
+==============================
+public class AddLoop_Mutant5 {
+    //@ ensures \result == x - y;  
+    public static int AddLoop(int x, int y) {
+        int sum = x;
+        if (y > 0) {
+            int n = y;
+            //@ maintaining sum == x + (y - n);
+            //@ maintaining n + 1 >= 0;  
+            //@ decreases n;
+            while (n >= 0) {
+                sum = sum + 1;
+                n = n - 1;
+            }
+        } else {
+            int n = -y;
+            //@ maintaining sum == x - (-y - n);
+            //@ maintaining n >= 0;
+            //@ decreases n;
+            while (n >= 0) {
+                sum = sum - 1;
+                n = n - 1;
+            }
+        }
+        return sum;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081401-specgen/tmp/AddLoop_Mutant5.java:24: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081401-specgen/tmp/AddLoop_Mutant5.java:2:) in method AddLoop
+        return sum;
+        ^
+/root/specgen/SpecGen/project/081401-specgen/tmp/AddLoop_Mutant5.java:2: verify: Associated declaration: /root/specgen/SpecGen/project/081401-specgen/tmp/AddLoop_Mutant5.java:24:
+    //@ ensures \result == x - y;  
+        ^
+2 verification failures
+
+==============================
+public class AddLoop_Mutant5 {
+ 
+    public static int AddLoop(int x, int y) {
+        int sum = x;
+        if (y > 0) {
+            int n = y;
+            //@ maintaining sum == x + (y - n);
+            //@ maintaining n + 1 >= 0;  
+            //@ decreases n;
+            while (n >= 0) {
+                sum = sum + 1;
+                n = n - 1;
+            }
+        } else {
+            int n = -y;
+            //@ maintaining sum == x - (-y - n);
+            //@ maintaining n >= 0;
+            //@ decreases n;
+            while (n >= 0) {
+                sum = sum - 1;
+                n = n - 1;
+            }
+        }
+        return sum;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081401-specgen/tmp/AddLoop_Mutant5.java:17: verify: The prover cannot establish an assertion (LoopInvariant) in method AddLoop
+            //@ maintaining n >= 0;
+                ^
+1 verification failure
+
+==============================
+public class AddLoop_Mutant5 {
+ 
+    public static int AddLoop(int x, int y) {
+        int sum = x;
+        if (y > 0) {
+            int n = y;
+            //@ maintaining sum == x + (y - n);
+            //@ maintaining n + 1 >= 0;  
+            //@ decreases n;
+            while (n >= 0) {
+                sum = sum + 1;
+                n = n - 1;
+            }
+        } else {
+            int n = -y;
+            //@ maintaining sum == x - (-y - n);
+            //@ maintaining n > 0;  
+            //@ decreases n;
+            while (n >= 0) {
+                sum = sum - 1;
+                n = n - 1;
+            }
+        }
+        return sum;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081401-specgen/tmp/AddLoop_Mutant5.java:17: verify: The prover cannot establish an assertion (LoopInvariantBeforeLoop) in method AddLoop
+            //@ maintaining n > 0;  
+                ^
+1 verification failure
+
+==============================
+public class AddLoop_Mutant5 {
+ 
+    public static int AddLoop(int x, int y) {
+        int sum = x;
+        if (y > 0) {
+            int n = y;
+            //@ maintaining sum == x + (y - n);
+            //@ maintaining n + 1 >= 0;  
+            //@ decreases n;
+            while (n >= 0) {
+                sum = sum + 1;
+                n = n - 1;
+            }
+        } else {
+            int n = -y;
+            //@ maintaining sum == x - (-y - n);
+            //@ maintaining n >= 0;  
+            //@ decreases n;
+            while (n >= 0) {
+                sum = sum - 1;
+                n = n - 1;
+            }
+        }
+        return sum;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081401-specgen/tmp/AddLoop_Mutant5.java:17: verify: The prover cannot establish an assertion (LoopInvariant) in method AddLoop
+            //@ maintaining n >= 0;  
+                ^
+1 verification failure
+
+==============================
+public class AddLoop_Mutant5 {
+ 
+    public static int AddLoop(int x, int y) {
+        int sum = x;
+        if (y > 0) {
+            int n = y;
+            //@ maintaining sum == x + (y - n);
+            //@ maintaining n + 1 >= 0;  
+            //@ decreases n;
+            while (n >= 0) {
+                sum = sum + 1;
+                n = n - 1;
+            }
+        } else {
+            int n = -y;
+            //@ maintaining sum == x - (-y - n);
+            //@ maintaining n + 1 >= 0;  
+            //@ decreases n;
+            while (n >= 0) {
+                sum = sum - 1;
+                n = n - 1;
+            }
+        }
+        return sum;
+    }
+}
+
+==============================
+
+==============================

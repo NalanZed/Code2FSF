@@ -1,0 +1,421 @@
+public class MyPower_Mutant2 {
+    //@ requires n >= 0;
+    //@ ensures \result == (\product int i; 1 <= i && i <= n; x);
+    public static int power(int x, int n) {
+        int res = 1;
+        //@ maintaining 1 <= i && i <= n + 1;
+        //@ maintaining res == (\product int j; 1 <= j && j < i; x);
+        //@ decreases n - i;
+        for(int i = 1; i <= n; i++){
+            res = res * x;
+        }
+        return res;
+    }
+}
+==============================
+/root/specgen/SpecGen/project/081401-specgen/tmp/MyPower_Mutant2.java:7: verify: The prover cannot establish an assertion (LoopInvariantBeforeLoop) in method power
+        //@ maintaining res == (\product int j; 1 <= j && j < i; x);
+            ^
+1 verification failure
+
+==============================
+public class MyPower_Mutant2 {
+    //@ requires n >= 0;
+    //@ ensures \result == (\product int i; 1 <= i && i <= n; x);
+    public static int power(int x, int n) {
+        int res = 1;
+        //@ maintaining 1 <= i && i <= n + 1;
+        //@ maintaining res == (\product int j; 1 < j && j < i; x);  
+        //@ decreases n - i;
+        for(int i = 1; i <= n; i++){
+            res = res * x;
+        }
+        return res;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081401-specgen/tmp/MyPower_Mutant2.java:7: verify: The prover cannot establish an assertion (LoopInvariantBeforeLoop) in method power
+        //@ maintaining res == (\product int j; 1 < j && j < i; x);  
+            ^
+1 verification failure
+
+==============================
+public class MyPower_Mutant2 {
+    //@ requires n >= 0;
+    //@ ensures \result == (\product int i; 1 <= i && i <= n; x);
+    public static int power(int x, int n) {
+        int res = 1;
+        //@ maintaining 1 <= i && i <= n + 1;
+        //@ maintaining res == (\product int j; 1 < j && j <= i; x);  
+        //@ decreases n - i;
+        for(int i = 1; i <= n; i++){
+            res = res * x;
+        }
+        return res;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081401-specgen/tmp/MyPower_Mutant2.java:7: verify: The prover cannot establish an assertion (LoopInvariantBeforeLoop) in method power
+        //@ maintaining res == (\product int j; 1 < j && j <= i; x);  
+            ^
+1 verification failure
+
+==============================
+public class MyPower_Mutant2 {
+    //@ requires n >= 0;
+    //@ ensures \result == (\product int i; 1 <= i && i <= n; x);
+    public static int power(int x, int n) {
+        int res = 1;
+        //@ maintaining 1 <= i && i <= n + 1;
+        //@ maintaining res == (\product int j; 1 <= j && j < i; x);  
+        //@ decreases n - i;
+        for(int i = 1; i <= n; i++){
+            res = res * x;
+        }
+        return res;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081401-specgen/tmp/MyPower_Mutant2.java:7: verify: The prover cannot establish an assertion (LoopInvariantBeforeLoop) in method power
+        //@ maintaining res == (\product int j; 1 <= j && j < i; x);  
+            ^
+1 verification failure
+
+==============================
+public class MyPower_Mutant2 {
+    //@ requires n >= 0;
+    //@ ensures \result == (\product int i; 1 <= i && i <= n; x);
+    public static int power(int x, int n) {
+        int res = 1;
+        //@ maintaining 1 <= i && i <= n + 1;
+        //@ maintaining res == (\product int j; 1 <= j && j <= i; x);  
+        //@ decreases n - i;
+        for(int i = 1; i <= n; i++){
+            res = res * x;
+        }
+        return res;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081401-specgen/tmp/MyPower_Mutant2.java:7: verify: The prover cannot establish an assertion (LoopInvariantBeforeLoop) in method power
+        //@ maintaining res == (\product int j; 1 <= j && j <= i; x);  
+            ^
+1 verification failure
+
+==============================
+public class MyPower_Mutant2 {
+    //@ requires n >= 0;
+    //@ ensures \result == (\product int i; 1 <= i && i <= n; x);
+    public static int power(int x, int n) {
+        int res = 1;
+        //@ maintaining 1 <= i && i <= n + 1;
+        //@ maintaining res == (\product int j; 1 - 1 <= j && j < i; x);  
+        //@ decreases n - i;
+        for(int i = 1; i <= n; i++){
+            res = res * x;
+        }
+        return res;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081401-specgen/tmp/MyPower_Mutant2.java:7: verify: The prover cannot establish an assertion (LoopInvariantBeforeLoop) in method power
+        //@ maintaining res == (\product int j; 1 - 1 <= j && j < i; x);  
+            ^
+1 verification failure
+
+==============================
+public class MyPower_Mutant2 {
+    //@ requires n >= 0;
+    //@ ensures \result == (\product int i; 1 <= i && i <= n; x);
+    public static int power(int x, int n) {
+        int res = 1;
+        //@ maintaining 1 <= i && i <= n + 1;
+        //@ maintaining res == (\product int j; 1 - 1 <= j && j <= i; x);  
+        //@ decreases n - i;
+        for(int i = 1; i <= n; i++){
+            res = res * x;
+        }
+        return res;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081401-specgen/tmp/MyPower_Mutant2.java:7: verify: The prover cannot establish an assertion (LoopInvariantBeforeLoop) in method power
+        //@ maintaining res == (\product int j; 1 - 1 <= j && j <= i; x);  
+            ^
+1 verification failure
+
+==============================
+public class MyPower_Mutant2 {
+    //@ requires n >= 0;
+    //@ ensures \result == (\product int i; 1 <= i && i <= n; x);
+    public static int power(int x, int n) {
+        int res = 1;
+        //@ maintaining 1 <= i && i <= n + 1;
+ 
+        //@ decreases n - i;
+        for(int i = 1; i <= n; i++){
+            res = res * x;
+        }
+        return res;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081401-specgen/tmp/MyPower_Mutant2.java:12: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081401-specgen/tmp/MyPower_Mutant2.java:3:) in method power
+        return res;
+        ^
+/root/specgen/SpecGen/project/081401-specgen/tmp/MyPower_Mutant2.java:3: verify: Associated declaration: /root/specgen/SpecGen/project/081401-specgen/tmp/MyPower_Mutant2.java:12:
+    //@ ensures \result == (\product int i; 1 <= i && i <= n; x);
+        ^
+2 verification failures
+
+==============================
+public class MyPower_Mutant2 {
+    //@ requires n >= 0;
+    //@ ensures \result == (\product int i; 1 < i && i < n; x);  
+    public static int power(int x, int n) {
+        int res = 1;
+        //@ maintaining 1 <= i && i <= n + 1;
+ 
+        //@ decreases n - i;
+        for(int i = 1; i <= n; i++){
+            res = res * x;
+        }
+        return res;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081401-specgen/tmp/MyPower_Mutant2.java:12: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081401-specgen/tmp/MyPower_Mutant2.java:3:) in method power
+        return res;
+        ^
+/root/specgen/SpecGen/project/081401-specgen/tmp/MyPower_Mutant2.java:3: verify: Associated declaration: /root/specgen/SpecGen/project/081401-specgen/tmp/MyPower_Mutant2.java:12:
+    //@ ensures \result == (\product int i; 1 < i && i < n; x);  
+        ^
+2 verification failures
+
+==============================
+public class MyPower_Mutant2 {
+    //@ requires n >= 0;
+    //@ ensures \result == (\product int i; 1 < i && i <= n; x);  
+    public static int power(int x, int n) {
+        int res = 1;
+        //@ maintaining 1 <= i && i <= n + 1;
+ 
+        //@ decreases n - i;
+        for(int i = 1; i <= n; i++){
+            res = res * x;
+        }
+        return res;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081401-specgen/tmp/MyPower_Mutant2.java:12: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081401-specgen/tmp/MyPower_Mutant2.java:3:) in method power
+        return res;
+        ^
+/root/specgen/SpecGen/project/081401-specgen/tmp/MyPower_Mutant2.java:3: verify: Associated declaration: /root/specgen/SpecGen/project/081401-specgen/tmp/MyPower_Mutant2.java:12:
+    //@ ensures \result == (\product int i; 1 < i && i <= n; x);  
+        ^
+2 verification failures
+
+==============================
+public class MyPower_Mutant2 {
+    //@ requires n >= 0;
+    //@ ensures \result == (\product int i; 1 < i && i - 1 <= n; x);  
+    public static int power(int x, int n) {
+        int res = 1;
+        //@ maintaining 1 <= i && i <= n + 1;
+ 
+        //@ decreases n - i;
+        for(int i = 1; i <= n; i++){
+            res = res * x;
+        }
+        return res;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081401-specgen/tmp/MyPower_Mutant2.java:12: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081401-specgen/tmp/MyPower_Mutant2.java:3:) in method power
+        return res;
+        ^
+/root/specgen/SpecGen/project/081401-specgen/tmp/MyPower_Mutant2.java:3: verify: Associated declaration: /root/specgen/SpecGen/project/081401-specgen/tmp/MyPower_Mutant2.java:12:
+    //@ ensures \result == (\product int i; 1 < i && i - 1 <= n; x);  
+        ^
+2 verification failures
+
+==============================
+public class MyPower_Mutant2 {
+    //@ requires n >= 0;
+    //@ ensures \result == (\product int i; 1 <= i && i < n; x);  
+    public static int power(int x, int n) {
+        int res = 1;
+        //@ maintaining 1 <= i && i <= n + 1;
+ 
+        //@ decreases n - i;
+        for(int i = 1; i <= n; i++){
+            res = res * x;
+        }
+        return res;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081401-specgen/tmp/MyPower_Mutant2.java:12: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081401-specgen/tmp/MyPower_Mutant2.java:3:) in method power
+        return res;
+        ^
+/root/specgen/SpecGen/project/081401-specgen/tmp/MyPower_Mutant2.java:3: verify: Associated declaration: /root/specgen/SpecGen/project/081401-specgen/tmp/MyPower_Mutant2.java:12:
+    //@ ensures \result == (\product int i; 1 <= i && i < n; x);  
+        ^
+2 verification failures
+
+==============================
+public class MyPower_Mutant2 {
+    //@ requires n >= 0;
+    //@ ensures \result == (\product int i; 1 <= i && i <= n; x);  
+    public static int power(int x, int n) {
+        int res = 1;
+        //@ maintaining 1 <= i && i <= n + 1;
+ 
+        //@ decreases n - i;
+        for(int i = 1; i <= n; i++){
+            res = res * x;
+        }
+        return res;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081401-specgen/tmp/MyPower_Mutant2.java:12: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081401-specgen/tmp/MyPower_Mutant2.java:3:) in method power
+        return res;
+        ^
+/root/specgen/SpecGen/project/081401-specgen/tmp/MyPower_Mutant2.java:3: verify: Associated declaration: /root/specgen/SpecGen/project/081401-specgen/tmp/MyPower_Mutant2.java:12:
+    //@ ensures \result == (\product int i; 1 <= i && i <= n; x);  
+        ^
+2 verification failures
+
+==============================
+public class MyPower_Mutant2 {
+    //@ requires n >= 0;
+    //@ ensures \result == (\product int i; 1 <= i && i - 1 <= n; x);  
+    public static int power(int x, int n) {
+        int res = 1;
+        //@ maintaining 1 <= i && i <= n + 1;
+ 
+        //@ decreases n - i;
+        for(int i = 1; i <= n; i++){
+            res = res * x;
+        }
+        return res;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081401-specgen/tmp/MyPower_Mutant2.java:12: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081401-specgen/tmp/MyPower_Mutant2.java:3:) in method power
+        return res;
+        ^
+/root/specgen/SpecGen/project/081401-specgen/tmp/MyPower_Mutant2.java:3: verify: Associated declaration: /root/specgen/SpecGen/project/081401-specgen/tmp/MyPower_Mutant2.java:12:
+    //@ ensures \result == (\product int i; 1 <= i && i - 1 <= n; x);  
+        ^
+2 verification failures
+
+==============================
+public class MyPower_Mutant2 {
+    //@ requires n >= 0;
+    //@ ensures \result == (\product int i; 1 - 1 <= i && i < n; x);  
+    public static int power(int x, int n) {
+        int res = 1;
+        //@ maintaining 1 <= i && i <= n + 1;
+ 
+        //@ decreases n - i;
+        for(int i = 1; i <= n; i++){
+            res = res * x;
+        }
+        return res;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081401-specgen/tmp/MyPower_Mutant2.java:12: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081401-specgen/tmp/MyPower_Mutant2.java:3:) in method power
+        return res;
+        ^
+/root/specgen/SpecGen/project/081401-specgen/tmp/MyPower_Mutant2.java:3: verify: Associated declaration: /root/specgen/SpecGen/project/081401-specgen/tmp/MyPower_Mutant2.java:12:
+    //@ ensures \result == (\product int i; 1 - 1 <= i && i < n; x);  
+        ^
+2 verification failures
+
+==============================
+public class MyPower_Mutant2 {
+    //@ requires n >= 0;
+    //@ ensures \result == (\product int i; 1 - 1 <= i && i <= n; x);  
+    public static int power(int x, int n) {
+        int res = 1;
+        //@ maintaining 1 <= i && i <= n + 1;
+ 
+        //@ decreases n - i;
+        for(int i = 1; i <= n; i++){
+            res = res * x;
+        }
+        return res;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081401-specgen/tmp/MyPower_Mutant2.java:12: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081401-specgen/tmp/MyPower_Mutant2.java:3:) in method power
+        return res;
+        ^
+/root/specgen/SpecGen/project/081401-specgen/tmp/MyPower_Mutant2.java:3: verify: Associated declaration: /root/specgen/SpecGen/project/081401-specgen/tmp/MyPower_Mutant2.java:12:
+    //@ ensures \result == (\product int i; 1 - 1 <= i && i <= n; x);  
+        ^
+2 verification failures
+
+==============================
+public class MyPower_Mutant2 {
+    //@ requires n >= 0;
+    //@ ensures \result == (\product int i; 1 - 1 <= i && i - 1 <= n; x);  
+    public static int power(int x, int n) {
+        int res = 1;
+        //@ maintaining 1 <= i && i <= n + 1;
+ 
+        //@ decreases n - i;
+        for(int i = 1; i <= n; i++){
+            res = res * x;
+        }
+        return res;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081401-specgen/tmp/MyPower_Mutant2.java:12: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081401-specgen/tmp/MyPower_Mutant2.java:3:) in method power
+        return res;
+        ^
+/root/specgen/SpecGen/project/081401-specgen/tmp/MyPower_Mutant2.java:3: verify: Associated declaration: /root/specgen/SpecGen/project/081401-specgen/tmp/MyPower_Mutant2.java:12:
+    //@ ensures \result == (\product int i; 1 - 1 <= i && i - 1 <= n; x);  
+        ^
+2 verification failures
+
+==============================
+public class MyPower_Mutant2 {
+    //@ requires n >= 0;
+ 
+    public static int power(int x, int n) {
+        int res = 1;
+        //@ maintaining 1 <= i && i <= n + 1;
+ 
+        //@ decreases n - i;
+        for(int i = 1; i <= n; i++){
+            res = res * x;
+        }
+        return res;
+    }
+}
+
+==============================
+
+==============================

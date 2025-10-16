@@ -1,0 +1,80 @@
+public class DivisionOverflow_Mutant3 {
+    //@ requires denom != 0;
+    //@ requires nom != Integer.MAX_VALUE; // Prevent overflow when adding 1
+    //@ ensures \result == (nom + 1) / denom;
+    //@ signals (ArithmeticException) denom == 0;
+    //@ signals (ArithmeticException) nom == Integer.MAX_VALUE;
+    public static int division_test_fail_overflow(int nom, int denom) {
+        int tmp = (nom+1) / denom; // modifying nom by adding 1
+        return tmp;
+    }
+}
+==============================
+/root/specgen/SpecGen/project/081403-specgen/tmp/DivisionOverflow_Mutant3.java:9: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081403-specgen/tmp/DivisionOverflow_Mutant3.java:4:) in method division_test_fail_overflow
+        return tmp;
+        ^
+/root/specgen/SpecGen/project/081403-specgen/tmp/DivisionOverflow_Mutant3.java:4: verify: Associated declaration: /root/specgen/SpecGen/project/081403-specgen/tmp/DivisionOverflow_Mutant3.java:9:
+    //@ ensures \result == (nom + 1) / denom;
+        ^
+2 verification failures
+
+==============================
+public class DivisionOverflow_Mutant3 {
+    //@ requires denom != 0;
+    //@ requires nom != Integer.MAX_VALUE; // Prevent overflow when adding 1
+    //@ ensures \result == (nom + 1) / denom;  
+    //@ signals (ArithmeticException) denom == 0;
+    //@ signals (ArithmeticException) nom == Integer.MAX_VALUE;
+    public static int division_test_fail_overflow(int nom, int denom) {
+        int tmp = (nom+1) / denom; // modifying nom by adding 1
+        return tmp;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081403-specgen/tmp/DivisionOverflow_Mutant3.java:9: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081403-specgen/tmp/DivisionOverflow_Mutant3.java:4:) in method division_test_fail_overflow
+        return tmp;
+        ^
+/root/specgen/SpecGen/project/081403-specgen/tmp/DivisionOverflow_Mutant3.java:4: verify: Associated declaration: /root/specgen/SpecGen/project/081403-specgen/tmp/DivisionOverflow_Mutant3.java:9:
+    //@ ensures \result == (nom + 1) / denom;  
+        ^
+2 verification failures
+
+==============================
+public class DivisionOverflow_Mutant3 {
+    //@ requires denom != 0;
+    //@ requires nom != Integer.MAX_VALUE; // Prevent overflow when adding 1
+    //@ ensures \result == (nom - 1) / denom;  
+    //@ signals (ArithmeticException) denom == 0;
+    //@ signals (ArithmeticException) nom == Integer.MAX_VALUE;
+    public static int division_test_fail_overflow(int nom, int denom) {
+        int tmp = (nom+1) / denom; // modifying nom by adding 1
+        return tmp;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081403-specgen/tmp/DivisionOverflow_Mutant3.java:9: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081403-specgen/tmp/DivisionOverflow_Mutant3.java:4:) in method division_test_fail_overflow
+        return tmp;
+        ^
+/root/specgen/SpecGen/project/081403-specgen/tmp/DivisionOverflow_Mutant3.java:4: verify: Associated declaration: /root/specgen/SpecGen/project/081403-specgen/tmp/DivisionOverflow_Mutant3.java:9:
+    //@ ensures \result == (nom - 1) / denom;  
+        ^
+2 verification failures
+
+==============================
+public class DivisionOverflow_Mutant3 {
+    //@ requires denom != 0;
+    //@ requires nom != Integer.MAX_VALUE; // Prevent overflow when adding 1
+ 
+    //@ signals (ArithmeticException) denom == 0;
+    //@ signals (ArithmeticException) nom == Integer.MAX_VALUE;
+    public static int division_test_fail_overflow(int nom, int denom) {
+        int tmp = (nom+1) / denom; // modifying nom by adding 1
+        return tmp;
+    }
+}
+
+==============================
+
+==============================

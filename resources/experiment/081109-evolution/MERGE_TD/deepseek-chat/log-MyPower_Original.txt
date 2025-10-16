@@ -1,0 +1,61 @@
+start role user
+Please modify the following code according to the modified FSF:
+```Code
+
+
+public class MyPower_Original {
+    public static int power(int x, int n) {
+        int res = 1;
+        for(int i = 0; i < n; i++){
+	        res = res * x;
+        }
+        return res;
+    }
+}
+
+```
+```Original FSF
+T0: n == 0
+D0: return_value == 1
+
+T1: n > 0
+D1: return_value == x ** n
+
+T2: n < 0
+D2: return_value == 1
+
+```Modified FSF
+T0: (n == 0) || (n < 0)
+D0: return_value == 1
+
+T1: n > 0
+D1: return_value == x ** n
+
+```
+
+
+*end* role user
+start role assistant
+```
+public class MyPower_Modified {
+    public static int power(int x, int n) {
+        int res = 1;
+        if (n > 0) {
+            for(int i = 0; i < n; i++){
+                res = res * x;
+            }
+        }
+        return res;
+    }
+}
+```
+
+The modification:
+1. Kept the original functionality for positive exponents (n > 0)
+2. Simplified the cases for n == 0 and n < 0 by removing the redundant else clause since both cases should return 1
+3. The loop now only executes when n > 0, otherwise it returns 1 immediately
+4. Maintained the same code structure and avoided any optimizations or simplifications beyond what was required by the modified FSF
+*end* role assistant
+start role remark
+Validation SUCCESS!
+*end* role remark

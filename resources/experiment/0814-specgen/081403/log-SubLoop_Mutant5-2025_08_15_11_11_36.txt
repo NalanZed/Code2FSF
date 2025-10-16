@@ -1,0 +1,30 @@
+public class SubLoop_Mutant5 {
+    //@ ensures y > 0 ==> \result == x;
+    //@ ensures y <= 0 ==> \result == x + (-y);
+    public static int subLoop(int x, int y) {
+        int sum = x;
+        if (y > 0) {
+            int n = 0;
+            //@ maintaining n >= 0;
+            //@ maintaining sum == x - (0 - n);
+            //@ decreases n;
+            while (n > 0) {
+                sum = sum - 1;
+                n = n - 1;
+            }
+        } else {
+            int n = -y;
+            //@ maintaining n >= 0;
+            //@ maintaining sum == x + (-y - n);
+            //@ decreases n;
+            while (n > 0) {
+                sum = sum + 1;
+                n = n - 1;
+            }
+        }
+        return sum;
+    }
+}
+==============================
+
+==============================

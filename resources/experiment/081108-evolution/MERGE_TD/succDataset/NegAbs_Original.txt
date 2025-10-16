@@ -1,0 +1,184 @@
+START ORIGINAL CODE
+
+public class NegAbs_Original {
+
+    public static int negAbs(int num) {
+        if (num < 0)
+            return num;
+        else
+            return -num;
+    }
+}
+
+*END* ORIGINAL CODE
+START ORIGINAL FSF
+T1: num < 0
+D1: return_value == num
+T2: num >= 0
+D2: return_value == -num
+*END* ORIGINAL FSF
+START MODIFIED FSF
+T1: (num < 0) || (num >= 0)
+D1: return_value == num
+*END* MODIFIED FSF
+START ORIGINAL CODE
+
+public class NegAbs_Original {
+
+    public static int negAbs(int num) {
+        if (num < 0)
+            return num;
+        else
+            return -num;
+    }
+}
+
+*END* ORIGINAL CODE
+START ORIGINAL FSF
+T1: num < 0
+D1: return_value == num
+T2: num >= 0
+D2: return_value == -num
+*END* ORIGINAL FSF
+START MODIFIED FSF
+T1: (num >= 0) || (num < 0)
+D1: return_value == -num
+*END* MODIFIED FSF
+START ORIGINAL CODE
+
+public class NegAbs_Original {
+
+    public static int negAbs(int num) {
+        if (num < 0)
+            return num;
+        else
+            return -num;
+    }
+}
+
+*END* ORIGINAL CODE
+START ORIGINAL FSF
+T1: num < 0
+D1: return_value == num
+T2: num >= 0
+D2: return_value == -num
+*END* ORIGINAL FSF
+START MODIFIED FSF
+T1: (num >= 0) || (num < 0)
+D1: return_value == -num
+*END* MODIFIED FSF
+START ORIGINAL CODE
+
+public class NegAbs_Original {
+
+    public static int negAbs(int num) {
+        if (num < 0)
+            return num;
+        else
+            return -num;
+    }
+}
+
+*END* ORIGINAL CODE
+START ORIGINAL FSF
+T1: num < 0
+D1: return_value == num
+T2: num >= 0
+D2: return_value == -num
+*END* ORIGINAL FSF
+START MODIFIED FSF
+T1: (num >= 0) || (num < 0)
+D1: return_value == -num
+*END* MODIFIED FSF
+START ORIGINAL CODE
+
+public class NegAbs_Original {
+
+    public static int negAbs(int num) {
+        if (num < 0)
+            return num;
+        else
+            return -num;
+    }
+}
+
+*END* ORIGINAL CODE
+START ORIGINAL FSF
+T1: num < 0
+D1: return_value == num
+T2: num >= 0
+D2: return_value == -num
+*END* ORIGINAL FSF
+START MODIFIED FSF
+T1: (num >= 0) || (num < 0)
+D1: return_value == -num
+*END* MODIFIED FSF
+START ORIGINAL CODE
+
+public class NegAbs_Original {
+
+    public static int negAbs(int num) {
+        if (num < 0)
+            return num;
+        else
+            return -num;
+    }
+}
+
+*END* ORIGINAL CODE
+START ORIGINAL FSF
+T1: num < 0
+D1: return_value == num
+T2: num >= 0
+D2: return_value == -num
+*END* ORIGINAL FSF
+START MODIFIED FSF
+T1: (num < 0) || (num >= 0)
+D1: return_value == num
+*END* MODIFIED FSF
+START ORIGINAL CODE
+
+public class NegAbs_Original {
+
+    public static int negAbs(int num) {
+        if (num < 0)
+            return num;
+        else
+            return -num;
+    }
+}
+
+*END* ORIGINAL CODE
+START ORIGINAL FSF
+T1: num < 0
+D1: return_value == num
+T2: num >= 0
+D2: return_value == -num
+*END* ORIGINAL FSF
+START MODIFIED FSF
+T1: (num >= 0) || (num < 0)
+D1: return_value == -num
+*END* MODIFIED FSF
+START ORIGINAL CODE
+
+public class NegAbs_Original {
+
+    public static int negAbs(int num) {
+        if (num < 0)
+            return num;
+        else
+            return -num;
+    }
+}
+
+*END* ORIGINAL CODE
+START ORIGINAL FSF
+T1: num < 0
+D1: return_value == num
+T2: num >= 0
+D2: return_value == -num
+*END* ORIGINAL FSF
+START MODIFIED FSF
+T1: (num < 0) || (num >= 0)
+D1: return_value == num
+*END* MODIFIED FSF

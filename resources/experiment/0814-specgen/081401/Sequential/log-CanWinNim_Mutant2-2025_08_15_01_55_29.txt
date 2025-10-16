@@ -1,0 +1,11 @@
+public class CanWinNim_Mutant2 {
+    //@ requires n >= 0;
+    //@ ensures \result <==> n % 3 != 0;
+    //@ ensures !\result <==> n % 3 == 0;
+    public static /*@ pure @*/ boolean canWinNim(int n) {
+        return n % 3 != 0;   // Change 4 to 3
+    }
+}
+==============================
+
+==============================

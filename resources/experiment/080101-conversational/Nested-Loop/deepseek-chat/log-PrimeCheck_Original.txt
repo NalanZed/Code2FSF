@@ -82,7 +82,7 @@ D4: return_value == (forall i in [3..a/2], a % i != 0)
 Key improvements:
 1. Removed complex quantifiers (exists/forall) from T conditions
 2. Made all T conditions mutually exclusive and only using input variables
-3. Simplified D4 to directly express the prime check result
+3. Simplified D4 to directly express the prime check TBFVResult
 4. Ensured complete coverage of all input cases
 5. Removed redundant conditions while maintaining correctness
 6. Strictly followed the required format without additional explanations

@@ -33,7 +33,7 @@ public class ModelPrompt {
 
     }
 
-    public static ModelPrompt generateCode2FSFPrompt(String model,String codeFilePath) throws IOException {
+    public static ModelPrompt initCode2FSFPrompt(String model, String codeFilePath) throws IOException {
         ModelPrompt mp = new ModelPrompt();
         mp.model = model;
 
@@ -57,7 +57,6 @@ public class ModelPrompt {
         if(Files.exists(Path.of(LogManager.codePath2LogPath(codeFilePath,model)))) {
             Files.delete(Path.of(LogManager.codePath2LogPath(codeFilePath,model)));
         }
-        LogManager.appendMessage(codeFilePath,message,model);
         return mp;
     }
 
@@ -89,7 +88,8 @@ public class ModelPrompt {
 
         //记录日志
         this.codePath = codeFilePath;
-        LogManager.appendMessage(codePath,message,model);
+        String logPath = LogManager.codePath2LogPath(codeFilePath, model);
+        LogManager.appendMessage(logPath,message);
 
     }
 

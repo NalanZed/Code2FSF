@@ -1,0 +1,13 @@
+public class DivisionOverflow_Mutant2 {
+    //@ requires denom != -1;
+    //@ requires denom + 1 != 0;
+    //@ requires nom != Integer.MIN_VALUE || denom + 1 != -1; // Prevent overflow case: -2147483648 / -1
+    //@ ensures \result == nom / (denom + 1);
+    public static int division_test_fail_overflow(int nom, int denom) {
+        int tmp = nom / (denom+1); // modifying denom by adding 1
+        return tmp;
+    }
+}
+==============================
+
+==============================

@@ -1,0 +1,15 @@
+public class Abs_Mutant2 {
+
+    //@ ensures num < 0 ==> \result == num;
+    //@ ensures num >= 0 ==> \result == num;
+    //@ ensures \result == num;  // This is the actual (incorrect) behavior of the method
+    public static int Abs(int num) {
+        if (num < 0)
+            return num;
+        else
+            return num;
+    }
+}
+==============================
+
+==============================

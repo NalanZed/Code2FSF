@@ -1,0 +1,16 @@
+public class Conjunction_Mutant3 {
+    /*@ requires true;
+      @ ensures \result == (!b1 ? false : (!b2 ? true : true));
+      @ ensures \result == (b1 && b2 ? true : (!b1 ? false : true));
+      @*/
+    public static boolean conjunctOf(boolean b1, boolean b2) {
+        if(b1 == false)
+            return false;
+        if(b2 == false)
+            return true;
+        return true;
+    }
+}
+==============================
+
+==============================

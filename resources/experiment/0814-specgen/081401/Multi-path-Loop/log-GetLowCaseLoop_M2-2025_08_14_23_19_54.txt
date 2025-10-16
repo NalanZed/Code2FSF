@@ -1,0 +1,100 @@
+public class GetLowCaseLoop {
+    //@ requires 'A' <= c <= 'F';
+    //@ ensures \result == 0 <==> (c < 'A' || c > 'F');
+    //@ ensures 'a' <= \result <= 'f';
+    //@ ensures \result == c - 'A' + 'a';
+    public static char getLowCase(char c) {
+        if(c < 'A' || c > 'F') {
+            return 0;
+        }
+        char t = 'f';
+        //@ maintaining 'a' <= t <= 'f';
+        //@ maintaining (\forall char x; t < x <= 'f'; x != c - 'A' + 'a');
+        //@ decreases t - 'a';
+        while(t >= 'a' && t != c - 'A' + 'a') {
+            t--;
+        }
+        return t;
+    }
+}
+==============================
+/root/specgen/SpecGen/project/081401-specgen/tmp/GetLowCaseLoop_M2.java:1: error: class GetLowCaseLoop is public, should be declared in a file named GetLowCaseLoop.java
+public class GetLowCaseLoop {
+       ^
+1 error
+
+==============================
+public class GetLowCaseLoop {
+    //@ requires 'A' <= c && c <= 'F';
+    //@ ensures \result == 0 <==> (c < 'A' || c > 'F');
+    //@ ensures ('a' <= \result && \result <= 'f') || \result == 0;
+    //@ ensures \result != 0 ==> \result == (char)(c - 'A' + 'a');
+    public static char getLowCase(char c) {
+        if(c < 'A' || c > 'F') {
+            return 0;
+        }
+        char t = 'f';
+        //@ maintaining 'a' <= t && t <= 'f';
+        //@ maintaining (\forall char x; t < x && x <= 'f'; x != (char)(c - 'A' + 'a'));
+        //@ decreases t - 'a';
+        while(t >= 'a' && t != (char)(c - 'A' + 'a')) {
+            t--;
+        }
+        return t;
+    }
+}
+==============================
+/root/specgen/SpecGen/project/081401-specgen/tmp/GetLowCaseLoop_M2.java:1: error: class GetLowCaseLoop is public, should be declared in a file named GetLowCaseLoop.java
+public class GetLowCaseLoop {
+       ^
+1 error
+
+==============================
+public class GetLowCaseLoop {
+    //@ requires 'A' <= c && c <= 'F';
+    //@ ensures \result == 0 <==> (c < 'A' || c > 'F');
+    //@ ensures ('a' <= \result && \result <= 'f') || \result == 0;
+    //@ ensures \result != 0 ==> \result == (char)(c - 'A' + 'a');
+    public static char getLowCase(char c) {
+        if(c < 'A' || c > 'F') {
+            return 0;
+        }
+        char t = 'f';
+        //@ maintaining 'a' <= t && t <= 'f';
+        //@ maintaining (\forall char x; t < x && x <= 'f'; x != (char)(c - 'A' + 'a'));
+        //@ decreases t - 'a';
+        while(t >= 'a' && t != (char)(c - 'A' + 'a')) {
+            t--;
+        }
+        return t;
+    }
+}
+==============================
+/root/specgen/SpecGen/project/081401-specgen/tmp/GetLowCaseLoop_M2.java:1: error: class GetLowCaseLoop is public, should be declared in a file named GetLowCaseLoop.java
+public class GetLowCaseLoop {
+       ^
+1 error
+
+==============================
+class GetLowCaseLoop {
+    //@ requires 'A' <= c && c <= 'F';
+    //@ ensures \result == 0 <==> (c < 'A' || c > 'F');
+    //@ ensures ('a' <= \result && \result <= 'f') || \result == 0;
+    //@ ensures \result != 0 ==> \result == (char)(c - 'A' + 'a');
+    public static char getLowCase(char c) {
+        if(c < 'A' || c > 'F') {
+            return 0;
+        }
+        char t = 'f';
+        //@ maintaining 'a' <= t && t <= 'f';
+        //@ maintaining (\forall char x; t < x && x <= 'f'; x != (char)(c - 'A' + 'a'));
+        //@ decreases t - 'a';
+        while(t >= 'a' && t != (char)(c - 'A' + 'a')) {
+            t--;
+        }
+        return t;
+    }
+}
+==============================
+
+==============================

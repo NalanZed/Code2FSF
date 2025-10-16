@@ -1,0 +1,148 @@
+public class SubLoop_Mutant2 {
+    //@ requires y >= 0 ==> x - y >= Integer.MIN_VALUE;
+    //@ requires y < 0 ==> x - (-y) >= Integer.MIN_VALUE;
+    //@ ensures \result == x - y;
+    public static int subLoop(int x, int y) {
+        int sum = x;
+        if (y > 0) {
+            int n = y;
+            //@ maintaining sum == x - (y - n);
+            //@ maintaining n >= 0;
+            //@ decreases n;
+            while (n > 0) {
+                sum = sum - 1;
+                n = n - 1;
+            }
+        } else {
+            int n = -y;
+            //@ maintaining sum == x - (-y - n);
+            //@ maintaining n >= 0;
+            //@ decreases n;
+            while (n > 0) {
+                sum = sum - 1;
+                n = n - 1;
+            }
+        }
+        return sum;
+    }
+}
+==============================
+/root/specgen/SpecGen/project/081402-specgen/tmp/SubLoop_Mutant2.java:26: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081402-specgen/tmp/SubLoop_Mutant2.java:4:) in method subLoop
+        return sum;
+        ^
+/root/specgen/SpecGen/project/081402-specgen/tmp/SubLoop_Mutant2.java:4: verify: Associated declaration: /root/specgen/SpecGen/project/081402-specgen/tmp/SubLoop_Mutant2.java:26:
+    //@ ensures \result == x - y;
+        ^
+2 verification failures
+
+==============================
+public class SubLoop_Mutant2 {
+    //@ requires y >= 0 ==> x - y >= Integer.MIN_VALUE;
+    //@ requires y < 0 ==> x - (-y) >= Integer.MIN_VALUE;
+    //@ ensures \result == x - y;  
+    public static int subLoop(int x, int y) {
+        int sum = x;
+        if (y > 0) {
+            int n = y;
+            //@ maintaining sum == x - (y - n);
+            //@ maintaining n >= 0;
+            //@ decreases n;
+            while (n > 0) {
+                sum = sum - 1;
+                n = n - 1;
+            }
+        } else {
+            int n = -y;
+            //@ maintaining sum == x - (-y - n);
+            //@ maintaining n >= 0;
+            //@ decreases n;
+            while (n > 0) {
+                sum = sum - 1;
+                n = n - 1;
+            }
+        }
+        return sum;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081402-specgen/tmp/SubLoop_Mutant2.java:26: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081402-specgen/tmp/SubLoop_Mutant2.java:4:) in method subLoop
+        return sum;
+        ^
+/root/specgen/SpecGen/project/081402-specgen/tmp/SubLoop_Mutant2.java:4: verify: Associated declaration: /root/specgen/SpecGen/project/081402-specgen/tmp/SubLoop_Mutant2.java:26:
+    //@ ensures \result == x - y;  
+        ^
+2 verification failures
+
+==============================
+public class SubLoop_Mutant2 {
+    //@ requires y >= 0 ==> x - y >= Integer.MIN_VALUE;
+    //@ requires y < 0 ==> x - (-y) >= Integer.MIN_VALUE;
+    //@ ensures \result == x + y;  
+    public static int subLoop(int x, int y) {
+        int sum = x;
+        if (y > 0) {
+            int n = y;
+            //@ maintaining sum == x - (y - n);
+            //@ maintaining n >= 0;
+            //@ decreases n;
+            while (n > 0) {
+                sum = sum - 1;
+                n = n - 1;
+            }
+        } else {
+            int n = -y;
+            //@ maintaining sum == x - (-y - n);
+            //@ maintaining n >= 0;
+            //@ decreases n;
+            while (n > 0) {
+                sum = sum - 1;
+                n = n - 1;
+            }
+        }
+        return sum;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081402-specgen/tmp/SubLoop_Mutant2.java:26: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081402-specgen/tmp/SubLoop_Mutant2.java:4:) in method subLoop
+        return sum;
+        ^
+/root/specgen/SpecGen/project/081402-specgen/tmp/SubLoop_Mutant2.java:4: verify: Associated declaration: /root/specgen/SpecGen/project/081402-specgen/tmp/SubLoop_Mutant2.java:26:
+    //@ ensures \result == x + y;  
+        ^
+2 verification failures
+
+==============================
+public class SubLoop_Mutant2 {
+    //@ requires y >= 0 ==> x - y >= Integer.MIN_VALUE;
+    //@ requires y < 0 ==> x - (-y) >= Integer.MIN_VALUE;
+ 
+    public static int subLoop(int x, int y) {
+        int sum = x;
+        if (y > 0) {
+            int n = y;
+            //@ maintaining sum == x - (y - n);
+            //@ maintaining n >= 0;
+            //@ decreases n;
+            while (n > 0) {
+                sum = sum - 1;
+                n = n - 1;
+            }
+        } else {
+            int n = -y;
+            //@ maintaining sum == x - (-y - n);
+            //@ maintaining n >= 0;
+            //@ decreases n;
+            while (n > 0) {
+                sum = sum - 1;
+                n = n - 1;
+            }
+        }
+        return sum;
+    }
+}
+
+==============================
+
+==============================

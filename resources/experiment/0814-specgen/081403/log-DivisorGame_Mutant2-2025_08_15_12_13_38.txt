@@ -1,0 +1,160 @@
+public class DivisorGame_Mutant2 {
+    /*@ requires n >= 1;
+      @ ensures \result == (n % 2 != 0);
+      @ ensures \result <==> !(\exists int x; 1 <= x && x < n; n % x == 0);
+      @ pure
+      @*/
+    public static boolean divisorGame(int n) {
+        return n % 2 != 0;
+    }
+}
+==============================
+/root/specgen/SpecGen/project/081403-specgen/tmp/DivisorGame_Mutant2.java:8: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081403-specgen/tmp/DivisorGame_Mutant2.java:4:) in method divisorGame
+        return n % 2 != 0;
+        ^
+/root/specgen/SpecGen/project/081403-specgen/tmp/DivisorGame_Mutant2.java:4: verify: Associated declaration: /root/specgen/SpecGen/project/081403-specgen/tmp/DivisorGame_Mutant2.java:8:
+      @ ensures \result <==> !(\exists int x; 1 <= x && x < n; n % x == 0);
+        ^
+2 verification failures
+
+==============================
+public class DivisorGame_Mutant2 {
+    /*@ requires n >= 1;
+      @ ensures \result == (n % 2 != 0);
+      @ ensures \result <==> !(\exists int x; 1 < x && x < n; n % x == 0);  
+      @ pure
+      @*/
+    public static boolean divisorGame(int n) {
+        return n % 2 != 0;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081403-specgen/tmp/DivisorGame_Mutant2.java:8: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081403-specgen/tmp/DivisorGame_Mutant2.java:4:) in method divisorGame
+        return n % 2 != 0;
+        ^
+/root/specgen/SpecGen/project/081403-specgen/tmp/DivisorGame_Mutant2.java:4: verify: Associated declaration: /root/specgen/SpecGen/project/081403-specgen/tmp/DivisorGame_Mutant2.java:8:
+      @ ensures \result <==> !(\exists int x; 1 < x && x < n; n % x == 0);  
+        ^
+2 verification failures
+
+==============================
+public class DivisorGame_Mutant2 {
+    /*@ requires n >= 1;
+      @ ensures \result == (n % 2 != 0);
+      @ ensures \result <==> !(\exists int x; 1 < x && x <= n; n % x == 0);  
+      @ pure
+      @*/
+    public static boolean divisorGame(int n) {
+        return n % 2 != 0;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081403-specgen/tmp/DivisorGame_Mutant2.java:8: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081403-specgen/tmp/DivisorGame_Mutant2.java:4:) in method divisorGame
+        return n % 2 != 0;
+        ^
+/root/specgen/SpecGen/project/081403-specgen/tmp/DivisorGame_Mutant2.java:4: verify: Associated declaration: /root/specgen/SpecGen/project/081403-specgen/tmp/DivisorGame_Mutant2.java:8:
+      @ ensures \result <==> !(\exists int x; 1 < x && x <= n; n % x == 0);  
+        ^
+2 verification failures
+
+==============================
+public class DivisorGame_Mutant2 {
+    /*@ requires n >= 1;
+      @ ensures \result == (n % 2 != 0);
+      @ ensures \result <==> !(\exists int x; 1 <= x && x < n; n % x == 0);  
+      @ pure
+      @*/
+    public static boolean divisorGame(int n) {
+        return n % 2 != 0;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081403-specgen/tmp/DivisorGame_Mutant2.java:8: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081403-specgen/tmp/DivisorGame_Mutant2.java:4:) in method divisorGame
+        return n % 2 != 0;
+        ^
+/root/specgen/SpecGen/project/081403-specgen/tmp/DivisorGame_Mutant2.java:4: verify: Associated declaration: /root/specgen/SpecGen/project/081403-specgen/tmp/DivisorGame_Mutant2.java:8:
+      @ ensures \result <==> !(\exists int x; 1 <= x && x < n; n % x == 0);  
+        ^
+2 verification failures
+
+==============================
+public class DivisorGame_Mutant2 {
+    /*@ requires n >= 1;
+      @ ensures \result == (n % 2 != 0);
+      @ ensures \result <==> !(\exists int x; 1 <= x && x <= n; n % x == 0);  
+      @ pure
+      @*/
+    public static boolean divisorGame(int n) {
+        return n % 2 != 0;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081403-specgen/tmp/DivisorGame_Mutant2.java:8: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081403-specgen/tmp/DivisorGame_Mutant2.java:4:) in method divisorGame
+        return n % 2 != 0;
+        ^
+/root/specgen/SpecGen/project/081403-specgen/tmp/DivisorGame_Mutant2.java:4: verify: Associated declaration: /root/specgen/SpecGen/project/081403-specgen/tmp/DivisorGame_Mutant2.java:8:
+      @ ensures \result <==> !(\exists int x; 1 <= x && x <= n; n % x == 0);  
+        ^
+2 verification failures
+
+==============================
+public class DivisorGame_Mutant2 {
+    /*@ requires n >= 1;
+      @ ensures \result == (n % 2 != 0);
+      @ ensures \result <==> !(\exists int x; 1 - 1 <= x && x < n; n % x == 0);  
+      @ pure
+      @*/
+    public static boolean divisorGame(int n) {
+        return n % 2 != 0;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081403-specgen/tmp/DivisorGame_Mutant2.java:8: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081403-specgen/tmp/DivisorGame_Mutant2.java:4:) in method divisorGame
+        return n % 2 != 0;
+        ^
+/root/specgen/SpecGen/project/081403-specgen/tmp/DivisorGame_Mutant2.java:4: verify: Associated declaration: /root/specgen/SpecGen/project/081403-specgen/tmp/DivisorGame_Mutant2.java:8:
+      @ ensures \result <==> !(\exists int x; 1 - 1 <= x && x < n; n % x == 0);  
+        ^
+2 verification failures
+
+==============================
+public class DivisorGame_Mutant2 {
+    /*@ requires n >= 1;
+      @ ensures \result == (n % 2 != 0);
+      @ ensures \result <==> !(\exists int x; 1 - 1 <= x && x <= n; n % x == 0);  
+      @ pure
+      @*/
+    public static boolean divisorGame(int n) {
+        return n % 2 != 0;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081403-specgen/tmp/DivisorGame_Mutant2.java:8: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081403-specgen/tmp/DivisorGame_Mutant2.java:4:) in method divisorGame
+        return n % 2 != 0;
+        ^
+/root/specgen/SpecGen/project/081403-specgen/tmp/DivisorGame_Mutant2.java:4: verify: Associated declaration: /root/specgen/SpecGen/project/081403-specgen/tmp/DivisorGame_Mutant2.java:8:
+      @ ensures \result <==> !(\exists int x; 1 - 1 <= x && x <= n; n % x == 0);  
+        ^
+2 verification failures
+
+==============================
+public class DivisorGame_Mutant2 {
+    /*@ requires n >= 1;
+      @ ensures \result == (n % 2 != 0);
+      @ ensures \result <==> !(\forall int x; 1 < x && x < n; n % x == 0);  
+      @ pure
+      @*/
+    public static boolean divisorGame(int n) {
+        return n % 2 != 0;
+    }
+}
+
+==============================
+
+==============================

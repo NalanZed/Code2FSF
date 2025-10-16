@@ -1,0 +1,20 @@
+public class GetUpCaseLoop_Mutant2 {
+    //@ ensures ('a' <= c && c <= 'z') ==> \result == (char)(c - 'a' + 'A');
+    //@ ensures !('a' <= c && c <= 'z') ==> \result == 0;
+    public static char getUpCase(char c) {
+        if(c < 'a' || c > 'z') {
+            return 0;
+        }
+        char t = 'Z';
+        //@ maintaining 'A' <= t && t <= 'Z';
+        //@ maintaining (\forall char ch; t < ch && ch <= 'Z'; ch != (char)(c - 'a' + 'A'));
+        //@ decreases t - 'A';
+        while(t >= 'A' && t != c - 'a' + 'A') {
+            t--;
+        }
+        return t;
+    }
+}
+==============================
+
+==============================

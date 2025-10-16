@@ -1,0 +1,66 @@
+start role user
+Please modify the following code according to the modified FSF:
+```Code
+
+
+public class SafeLanding_Original {
+    public static int safeLanding(int height, int speed, int tilt) {
+        int safe = 1;
+        if (height > 5) {
+            safe = 0;
+        }
+        if (speed > 3) {
+            safe = 0;
+        }
+        if (tilt > 10) {
+            safe = 0;
+        }
+        return safe;
+    }
+}
+
+```
+```Original FSF
+T0: height <= 5 && speed <= 3 && tilt <= 10
+D0: safe == 1
+
+T1: height > 5 || speed > 3 || tilt > 10
+D1: safe == 0
+
+```Modified FSF
+T0: height <= 5 && speed <= 3 && tilt <= 10
+D0: safe == 0
+
+T1: height > 5 || speed > 3 || tilt > 10
+D1: safe == 1
+
+```
+
+
+*end* role user
+start role assistant
+```
+public class SafeLanding_Modified {
+    public static int safeLanding(int height, int speed, int tilt) {
+        int safe = 0;
+        if (height > 5 || speed > 3 || tilt > 10) {
+            safe = 1;
+        }
+        return safe;
+    }
+}
+```
+
+The modified code:
+1. Initializes `safe` to 0 instead of 1
+2. Uses a single if condition to check if any parameter exceeds its threshold
+3. Sets `safe` to 1 when any threshold is exceeded
+4. Returns the inverted safety status compared to the original code
+
+This matches the modified FSF where:
+- All parameters within limits (T0) returns 0
+- Any parameter out of limits (T1) returns 1
+*end* role assistant
+start role remark
+Validation SUCCESS!
+*end* role remark

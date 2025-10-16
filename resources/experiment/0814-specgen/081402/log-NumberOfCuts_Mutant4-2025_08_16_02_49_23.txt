@@ -1,0 +1,19 @@
+public class NumberOfCuts_Mutant4 {
+
+    //@ requires n >= 0;
+    //@ ensures n == 2 ==> \result == 0;
+    //@ ensures n != 2 && n % 2 == 0 ==> \result == n / 2;
+    //@ ensures n % 2 != 0 ==> \result == n;
+    public static int numberOfCuts(int n) {
+        if (n == 2) { // mutated line
+            return 0; 
+        }
+        if (n % 2 == 0) {
+            return n / 2;
+        }
+        return n;
+    }
+}
+==============================
+
+==============================

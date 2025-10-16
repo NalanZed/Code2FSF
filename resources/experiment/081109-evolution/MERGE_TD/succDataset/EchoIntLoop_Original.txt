@@ -1,0 +1,207 @@
+START ORIGINAL CODE
+
+public class EchoIntLoop_Original {
+    public static int echo(int x) {
+        int res = 0;
+        for(int i = 0; i < x; i++) {
+            res = res + 1;
+        }
+        return res;
+    }
+}
+
+*END* ORIGINAL CODE
+START ORIGINAL FSF
+T1: x <= 0
+D1: res == 0
+T2: x > 0
+D2: res == x
+*END* ORIGINAL FSF
+START MODIFIED FSF
+T1: (x <= 0) || (x > 0)
+D1: res == 0
+*END* MODIFIED FSF
+START ORIGINAL CODE
+
+public class EchoIntLoop_Original {
+    public static int echo(int x) {
+        int res = 0;
+        for(int i = 0; i < x; i++) {
+            res = res + 1;
+        }
+        return res;
+    }
+}
+
+*END* ORIGINAL CODE
+START ORIGINAL FSF
+T1: x <= 0
+D1: res == 0
+T2: x > 0
+D2: res == x
+*END* ORIGINAL FSF
+START MODIFIED FSF
+T1: (x <= 0) || (x > 0)
+D1: res == 0
+*END* MODIFIED FSF
+START ORIGINAL CODE
+
+public class EchoIntLoop_Original {
+    public static int echo(int x) {
+        int res = 0;
+        for(int i = 0; i < x; i++) {
+            res = res + 1;
+        }
+        return res;
+    }
+}
+
+*END* ORIGINAL CODE
+START ORIGINAL FSF
+T1: x <= 0
+D1: res == 0
+T2: x > 0
+D2: res == x
+*END* ORIGINAL FSF
+START MODIFIED FSF
+T1: (x > 0) || (x <= 0)
+D1: res == x
+*END* MODIFIED FSF
+START ORIGINAL CODE
+
+public class EchoIntLoop_Original {
+    public static int echo(int x) {
+        int res = 0;
+        for(int i = 0; i < x; i++) {
+            res = res + 1;
+        }
+        return res;
+    }
+}
+
+*END* ORIGINAL CODE
+START ORIGINAL FSF
+T1: x <= 0
+D1: res == 0
+T2: x > 0
+D2: res == x
+*END* ORIGINAL FSF
+START MODIFIED FSF
+T1: (x <= 0) || (x > 0)
+D1: res == 0
+*END* MODIFIED FSF
+START ORIGINAL CODE
+
+public class EchoIntLoop_Original {
+    public static int echo(int x) {
+        int res = 0;
+        for(int i = 0; i < x; i++) {
+            res = res + 1;
+        }
+        return res;
+    }
+}
+
+*END* ORIGINAL CODE
+START ORIGINAL FSF
+T1: x <= 0
+D1: res == 0
+T2: x > 0
+D2: res == x
+*END* ORIGINAL FSF
+START MODIFIED FSF
+T1: (x > 0) || (x <= 0)
+D1: res == x
+*END* MODIFIED FSF
+START ORIGINAL CODE
+
+public class EchoIntLoop_Original {
+    public static int echo(int x) {
+        int res = 0;
+        for(int i = 0; i < x; i++) {
+            res = res + 1;
+        }
+        return res;
+    }
+}
+
+*END* ORIGINAL CODE
+START ORIGINAL FSF
+T1: x <= 0
+D1: res == 0
+T2: x > 0
+D2: res == x
+*END* ORIGINAL FSF
+START MODIFIED FSF
+T1: (x > 0) || (x <= 0)
+D1: res == x
+*END* MODIFIED FSF
+START ORIGINAL CODE
+
+public class EchoIntLoop_Original {
+    public static int echo(int x) {
+        int res = 0;
+        for(int i = 0; i < x; i++) {
+            res = res + 1;
+        }
+        return res;
+    }
+}
+
+*END* ORIGINAL CODE
+START ORIGINAL FSF
+T1: x <= 0
+D1: res == 0
+T2: x > 0
+D2: res == x
+*END* ORIGINAL FSF
+START MODIFIED FSF
+T1: (x > 0) || (x <= 0)
+D1: res == x
+*END* MODIFIED FSF
+START ORIGINAL CODE
+
+public class EchoIntLoop_Original {
+    public static int echo(int x) {
+        int res = 0;
+        for(int i = 0; i < x; i++) {
+            res = res + 1;
+        }
+        return res;
+    }
+}
+
+*END* ORIGINAL CODE
+START ORIGINAL FSF
+T1: x <= 0
+D1: res == 0
+T2: x > 0
+D2: res == x
+*END* ORIGINAL FSF
+START MODIFIED FSF
+T1: (x > 0) || (x <= 0)
+D1: res == x
+*END* MODIFIED FSF
+START ORIGINAL CODE
+
+public class EchoIntLoop_Original {
+    public static int echo(int x) {
+        int res = 0;
+        for(int i = 0; i < x; i++) {
+            res = res + 1;
+        }
+        return res;
+    }
+}
+
+*END* ORIGINAL CODE
+START ORIGINAL FSF
+T1: x <= 0
+D1: res == 0
+T2: x > 0
+D2: res == x
+*END* ORIGINAL FSF
+START MODIFIED FSF
+T1: (x > 0) || (x <= 0)
+D1: res == x
+*END* MODIFIED FSF

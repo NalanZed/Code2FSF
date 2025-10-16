@@ -1,0 +1,61 @@
+start role user
+Please modify the following code according to the modified FSF:
+```Code
+
+
+public class IsCommonMultiple_Original {
+
+    public static boolean isCommonMultiple(int a, int b, int m) {
+        return m % a == 0 && m % b == 0;
+    }
+}
+
+```
+```Original FSF
+T0: a != 0 && b != 0 && m % a == 0 && m % b == 0
+D0: return_value == true
+
+T1: a != 0 && b != 0 && (m % a != 0 || m % b != 0)
+D1: return_value == false
+
+T2: a == 0 || b == 0
+D2: Exception
+
+```Modified FSF
+T0: a != 0 && b != 0 && m % a == 0 && m % b == 0
+D0: return_value == true
+
+T1: (a == 0 || b == 0) || (a != 0 && b != 0 && (m % a != 0 || m % b != 0))
+D1: Exception
+
+```
+
+
+*end* role user
+start role assistant
+```
+public class IsCommonMultiple_Modified {
+    public static boolean isCommonMultiple(int a, int b, int m) {
+        if (a == 0 || b == 0) {
+            throw new ArithmeticException("Division by zero");
+        }
+        if (m % a == 0 && m % b == 0) {
+            return true;
+        }
+        throw new ArithmeticException("Not a common multiple");
+    }
+}
+```
+
+The modified code:
+1. First checks for division by zero cases (a == 0 or b == 0) and throws an exception immediately
+2. Then checks if m is a common multiple of a and b, returning true if it is
+3. Otherwise throws an exception indicating it's not a common multiple
+
+This matches the modified FSF where:
+- T0 case returns true when m is a common multiple of non-zero a and b
+- All other cases (including division by zero or not being a common multiple) throw exceptions
+*end* role assistant
+start role remark
+Validation SUCCESS!
+*end* role remark

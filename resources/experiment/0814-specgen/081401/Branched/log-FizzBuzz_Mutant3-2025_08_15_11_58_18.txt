@@ -1,0 +1,20 @@
+public class FizzBuzz_Mutant3 {
+    //@ requires n >= 0;
+    //@ ensures \result == 0 ==> (n % 2 != 0 && n % 5 != 0);
+    //@ ensures \result == 3 ==> (n % 2 == 0 && n % 5 != 0);
+    //@ ensures \result == 5 ==> (n % 2 != 0 && n % 5 == 0);
+    //@ ensures \result == 8 ==> (n % 2 == 0 && n % 5 == 0);
+    public static int fizzBuzz(int n) {
+        int res = 0;
+        if (n % 2 == 0) { // changed from 3 to 2
+            res += 3;
+        }
+        if (n % 5 == 0) {
+            res += 5;
+        }
+        return res;
+    }
+}
+==============================
+
+==============================

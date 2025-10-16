@@ -1,0 +1,390 @@
+START ORIGINAL CODE
+
+public class LeapYear_Original {
+
+    public static boolean isLeapYear(int year) {
+        boolean leap = false;
+        if (year % 4 == 0) {
+            if (year % 100 == 0) {
+                if (year % 400 == 0)
+                    leap = true;
+                else
+                    leap = false;
+            } else
+                leap = true;
+        } else
+            leap = false;
+        return leap;
+    }
+}
+
+*END* ORIGINAL CODE
+START ORIGINAL FSF
+T1: year % 400 == 0
+D1: leap == true
+T2: year % 100 == 0 && year % 400 != 0
+D2: leap == false
+T3: year % 4 == 0 && year % 100 != 0
+D3: leap == true
+T4: year % 4 != 0
+D4: leap == false
+*END* ORIGINAL FSF
+START MODIFIED FSF
+T1: (year % 400 == 0) || (year % 100 == 0 && year % 400 != 0)
+D1: leap == true
+T2: year % 4 == 0 && year % 100 != 0
+D2: leap == true
+T3: year % 4 != 0
+D3: leap == false
+*END* MODIFIED FSF
+START ORIGINAL CODE
+
+public class LeapYear_Original {
+
+    public static boolean isLeapYear(int year) {
+        boolean leap = false;
+        if (year % 4 == 0) {
+            if (year % 100 == 0) {
+                if (year % 400 == 0)
+                    leap = true;
+                else
+                    leap = false;
+            } else
+                leap = true;
+        } else
+            leap = false;
+        return leap;
+    }
+}
+
+*END* ORIGINAL CODE
+START ORIGINAL FSF
+T1: year % 400 == 0
+D1: leap == true
+T2: year % 100 == 0 && year % 400 != 0
+D2: leap == false
+T3: year % 4 == 0 && year % 100 != 0
+D3: leap == true
+T4: year % 4 != 0
+D4: leap == false
+*END* ORIGINAL FSF
+START MODIFIED FSF
+T1: (year % 400 == 0) || (year % 4 != 0)
+D1: leap == true
+T2: year % 100 == 0 && year % 400 != 0
+D2: leap == false
+T3: year % 4 == 0 && year % 100 != 0
+D3: leap == true
+*END* MODIFIED FSF
+START ORIGINAL CODE
+
+public class LeapYear_Original {
+
+    public static boolean isLeapYear(int year) {
+        boolean leap = false;
+        if (year % 4 == 0) {
+            if (year % 100 == 0) {
+                if (year % 400 == 0)
+                    leap = true;
+                else
+                    leap = false;
+            } else
+                leap = true;
+        } else
+            leap = false;
+        return leap;
+    }
+}
+
+*END* ORIGINAL CODE
+START ORIGINAL FSF
+T1: year % 400 == 0
+D1: leap == true
+T2: year % 100 == 0 && year % 400 != 0
+D2: leap == false
+T3: year % 4 == 0 && year % 100 != 0
+D3: leap == true
+T4: year % 4 != 0
+D4: leap == false
+*END* ORIGINAL FSF
+START MODIFIED FSF
+T1: year % 100 == 0 && year % 400 != 0
+D1: leap == false
+T2: (year % 4 == 0 && year % 100 != 0) || (year % 400 == 0)
+D2: leap == true
+T3: year % 4 != 0
+D3: leap == false
+*END* MODIFIED FSF
+START ORIGINAL CODE
+
+public class LeapYear_Original {
+
+    public static boolean isLeapYear(int year) {
+        boolean leap = false;
+        if (year % 4 == 0) {
+            if (year % 100 == 0) {
+                if (year % 400 == 0)
+                    leap = true;
+                else
+                    leap = false;
+            } else
+                leap = true;
+        } else
+            leap = false;
+        return leap;
+    }
+}
+
+*END* ORIGINAL CODE
+START ORIGINAL FSF
+T1: year % 400 == 0
+D1: leap == true
+T2: year % 100 == 0 && year % 400 != 0
+D2: leap == false
+T3: year % 4 == 0 && year % 100 != 0
+D3: leap == true
+T4: year % 4 != 0
+D4: leap == false
+*END* ORIGINAL FSF
+START MODIFIED FSF
+T1: (year % 400 == 0) || (year % 4 != 0)
+D1: leap == true
+T2: year % 100 == 0 && year % 400 != 0
+D2: leap == false
+T3: year % 4 == 0 && year % 100 != 0
+D3: leap == true
+*END* MODIFIED FSF
+START ORIGINAL CODE
+
+public class LeapYear_Original {
+
+    public static boolean isLeapYear(int year) {
+        boolean leap = false;
+        if (year % 4 == 0) {
+            if (year % 100 == 0) {
+                if (year % 400 == 0)
+                    leap = true;
+                else
+                    leap = false;
+            } else
+                leap = true;
+        } else
+            leap = false;
+        return leap;
+    }
+}
+
+*END* ORIGINAL CODE
+START ORIGINAL FSF
+T1: year % 400 == 0
+D1: leap == true
+T2: year % 100 == 0 && year % 400 != 0
+D2: leap == false
+T3: year % 4 == 0 && year % 100 != 0
+D3: leap == true
+T4: year % 4 != 0
+D4: leap == false
+*END* ORIGINAL FSF
+START MODIFIED FSF
+T1: year % 400 == 0
+D1: leap == true
+T2: year % 100 == 0 && year % 400 != 0
+D2: leap == false
+T3: (year % 4 != 0) || (year % 4 == 0 && year % 100 != 0)
+D3: leap == false
+*END* MODIFIED FSF
+START ORIGINAL CODE
+
+public class LeapYear_Original {
+
+    public static boolean isLeapYear(int year) {
+        boolean leap = false;
+        if (year % 4 == 0) {
+            if (year % 100 == 0) {
+                if (year % 400 == 0)
+                    leap = true;
+                else
+                    leap = false;
+            } else
+                leap = true;
+        } else
+            leap = false;
+        return leap;
+    }
+}
+
+*END* ORIGINAL CODE
+START ORIGINAL FSF
+T1: year % 400 == 0
+D1: leap == true
+T2: year % 100 == 0 && year % 400 != 0
+D2: leap == false
+T3: year % 4 == 0 && year % 100 != 0
+D3: leap == true
+T4: year % 4 != 0
+D4: leap == false
+*END* ORIGINAL FSF
+START MODIFIED FSF
+T1: (year % 400 == 0) || (year % 4 == 0 && year % 100 != 0)
+D1: leap == true
+T2: year % 100 == 0 && year % 400 != 0
+D2: leap == false
+T3: year % 4 != 0
+D3: leap == false
+*END* MODIFIED FSF
+START ORIGINAL CODE
+
+public class LeapYear_Original {
+
+    public static boolean isLeapYear(int year) {
+        boolean leap = false;
+        if (year % 4 == 0) {
+            if (year % 100 == 0) {
+                if (year % 400 == 0)
+                    leap = true;
+                else
+                    leap = false;
+            } else
+                leap = true;
+        } else
+            leap = false;
+        return leap;
+    }
+}
+
+*END* ORIGINAL CODE
+START ORIGINAL FSF
+T1: year % 400 == 0
+D1: leap == true
+T2: year % 100 == 0 && year % 400 != 0
+D2: leap == false
+T3: year % 4 == 0 && year % 100 != 0
+D3: leap == true
+T4: year % 4 != 0
+D4: leap == false
+*END* ORIGINAL FSF
+START MODIFIED FSF
+T1: (year % 400 == 0) || (year % 4 == 0 && year % 100 != 0)
+D1: leap == true
+T2: year % 100 == 0 && year % 400 != 0
+D2: leap == false
+T3: year % 4 != 0
+D3: leap == false
+*END* MODIFIED FSF
+START ORIGINAL CODE
+
+public class LeapYear_Original {
+
+    public static boolean isLeapYear(int year) {
+        boolean leap = false;
+        if (year % 4 == 0) {
+            if (year % 100 == 0) {
+                if (year % 400 == 0)
+                    leap = true;
+                else
+                    leap = false;
+            } else
+                leap = true;
+        } else
+            leap = false;
+        return leap;
+    }
+}
+
+*END* ORIGINAL CODE
+START ORIGINAL FSF
+T1: year % 400 == 0
+D1: leap == true
+T2: year % 100 == 0 && year % 400 != 0
+D2: leap == false
+T3: year % 4 == 0 && year % 100 != 0
+D3: leap == true
+T4: year % 4 != 0
+D4: leap == false
+*END* ORIGINAL FSF
+START MODIFIED FSF
+T1: (year % 400 == 0) || (year % 4 != 0)
+D1: leap == true
+T2: year % 100 == 0 && year % 400 != 0
+D2: leap == false
+T3: year % 4 == 0 && year % 100 != 0
+D3: leap == true
+*END* MODIFIED FSF
+START ORIGINAL CODE
+
+public class LeapYear_Original {
+
+    public static boolean isLeapYear(int year) {
+        boolean leap = false;
+        if (year % 4 == 0) {
+            if (year % 100 == 0) {
+                if (year % 400 == 0)
+                    leap = true;
+                else
+                    leap = false;
+            } else
+                leap = true;
+        } else
+            leap = false;
+        return leap;
+    }
+}
+
+*END* ORIGINAL CODE
+START ORIGINAL FSF
+T1: year % 400 == 0
+D1: leap == true
+T2: year % 100 == 0 && year % 400 != 0
+D2: leap == false
+T3: year % 4 == 0 && year % 100 != 0
+D3: leap == true
+T4: year % 4 != 0
+D4: leap == false
+*END* ORIGINAL FSF
+START MODIFIED FSF
+T1: year % 400 == 0
+D1: leap == true
+T2: (year % 4 == 0 && year % 100 != 0) || (year % 100 == 0 && year % 400 != 0)
+D2: leap == true
+T3: year % 4 != 0
+D3: leap == false
+*END* MODIFIED FSF
+START ORIGINAL CODE
+
+public class LeapYear_Original {
+
+    public static boolean isLeapYear(int year) {
+        boolean leap = false;
+        if (year % 4 == 0) {
+            if (year % 100 == 0) {
+                if (year % 400 == 0)
+                    leap = true;
+                else
+                    leap = false;
+            } else
+                leap = true;
+        } else
+            leap = false;
+        return leap;
+    }
+}
+
+*END* ORIGINAL CODE
+START ORIGINAL FSF
+T1: year % 400 == 0
+D1: leap == true
+T2: year % 100 == 0 && year % 400 != 0
+D2: leap == false
+T3: year % 4 == 0 && year % 100 != 0
+D3: leap == true
+T4: year % 4 != 0
+D4: leap == false
+*END* ORIGINAL FSF
+START MODIFIED FSF
+T1: year % 400 == 0
+D1: leap == true
+T2: year % 100 == 0 && year % 400 != 0
+D2: leap == false
+T3: (year % 4 != 0) || (year % 4 == 0 && year % 100 != 0)
+D3: leap == false
+*END* MODIFIED FSF

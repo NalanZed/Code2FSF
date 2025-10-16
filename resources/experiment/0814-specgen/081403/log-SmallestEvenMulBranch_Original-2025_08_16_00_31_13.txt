@@ -1,0 +1,289 @@
+public class SmallestEvenMulBranch_Original {
+
+    /*@ public normal_behavior
+      @   requires n >= 1;
+      @   ensures \result == (n % 2 == 0 ? n : 2 * n);
+      @   ensures \result % 2 == 0;
+      @   ensures \result >= n;
+      @   ensures (\forall int k; k >= n && k % 2 == 0; \result <= k);
+      @*/
+    public static int smallestEvenMultiple(int n) {
+        if (n % 2 == 0) {
+            return n;
+        }
+        return 2 * n;
+    }
+}
+==============================
+/root/specgen/SpecGen/project/081403-specgen/tmp/SmallestEvenMulBranch_Original.java:14: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081403-specgen/tmp/SmallestEvenMulBranch_Original.java:8:) in method smallestEvenMultiple
+        return 2 * n;
+        ^
+/root/specgen/SpecGen/project/081403-specgen/tmp/SmallestEvenMulBranch_Original.java:8: verify: Associated declaration: /root/specgen/SpecGen/project/081403-specgen/tmp/SmallestEvenMulBranch_Original.java:14:
+      @   ensures (\forall int k; k >= n && k % 2 == 0; \result <= k);
+          ^
+2 verification failures
+
+==============================
+public class SmallestEvenMulBranch_Original {
+
+    /*@ public normal_behavior
+      @   requires n >= 1;
+      @   ensures \result == (n % 2 == 0 ? n : 2 * n);
+      @   ensures \result % 2 == 0;
+      @   ensures \result >= n;
+      @   ensures (\forall int k; k > n && k % 2 == 0; \result < k);  
+      @*/
+    public static int smallestEvenMultiple(int n) {
+        if (n % 2 == 0) {
+            return n;
+        }
+        return 2 * n;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081403-specgen/tmp/SmallestEvenMulBranch_Original.java:14: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081403-specgen/tmp/SmallestEvenMulBranch_Original.java:8:) in method smallestEvenMultiple
+        return 2 * n;
+        ^
+/root/specgen/SpecGen/project/081403-specgen/tmp/SmallestEvenMulBranch_Original.java:8: verify: Associated declaration: /root/specgen/SpecGen/project/081403-specgen/tmp/SmallestEvenMulBranch_Original.java:14:
+      @   ensures (\forall int k; k > n && k % 2 == 0; \result < k);  
+          ^
+2 verification failures
+
+==============================
+public class SmallestEvenMulBranch_Original {
+
+    /*@ public normal_behavior
+      @   requires n >= 1;
+      @   ensures \result == (n % 2 == 0 ? n : 2 * n);
+      @   ensures \result % 2 == 0;
+      @   ensures \result >= n;
+      @   ensures (\forall int k; k > n && k % 2 == 0; \result <= k);  
+      @*/
+    public static int smallestEvenMultiple(int n) {
+        if (n % 2 == 0) {
+            return n;
+        }
+        return 2 * n;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081403-specgen/tmp/SmallestEvenMulBranch_Original.java:14: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081403-specgen/tmp/SmallestEvenMulBranch_Original.java:8:) in method smallestEvenMultiple
+        return 2 * n;
+        ^
+/root/specgen/SpecGen/project/081403-specgen/tmp/SmallestEvenMulBranch_Original.java:8: verify: Associated declaration: /root/specgen/SpecGen/project/081403-specgen/tmp/SmallestEvenMulBranch_Original.java:14:
+      @   ensures (\forall int k; k > n && k % 2 == 0; \result <= k);  
+          ^
+2 verification failures
+
+==============================
+public class SmallestEvenMulBranch_Original {
+
+    /*@ public normal_behavior
+      @   requires n >= 1;
+      @   ensures \result == (n % 2 == 0 ? n : 2 * n);
+      @   ensures \result % 2 == 0;
+      @   ensures \result >= n;
+      @   ensures (\forall int k; k > n && k % 2 == 0; \result - 1 <= k);  
+      @*/
+    public static int smallestEvenMultiple(int n) {
+        if (n % 2 == 0) {
+            return n;
+        }
+        return 2 * n;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081403-specgen/tmp/SmallestEvenMulBranch_Original.java:14: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081403-specgen/tmp/SmallestEvenMulBranch_Original.java:8:) in method smallestEvenMultiple
+        return 2 * n;
+        ^
+/root/specgen/SpecGen/project/081403-specgen/tmp/SmallestEvenMulBranch_Original.java:8: verify: Associated declaration: /root/specgen/SpecGen/project/081403-specgen/tmp/SmallestEvenMulBranch_Original.java:14:
+      @   ensures (\forall int k; k > n && k % 2 == 0; \result - 1 <= k);  
+          ^
+2 verification failures
+
+==============================
+public class SmallestEvenMulBranch_Original {
+
+    /*@ public normal_behavior
+      @   requires n >= 1;
+      @   ensures \result == (n % 2 == 0 ? n : 2 * n);
+      @   ensures \result % 2 == 0;
+      @   ensures \result >= n;
+      @   ensures (\forall int k; k >= n && k % 2 == 0; \result < k);  
+      @*/
+    public static int smallestEvenMultiple(int n) {
+        if (n % 2 == 0) {
+            return n;
+        }
+        return 2 * n;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081403-specgen/tmp/SmallestEvenMulBranch_Original.java:12: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081403-specgen/tmp/SmallestEvenMulBranch_Original.java:8:) in method smallestEvenMultiple
+            return n;
+            ^
+/root/specgen/SpecGen/project/081403-specgen/tmp/SmallestEvenMulBranch_Original.java:8: verify: Associated declaration: /root/specgen/SpecGen/project/081403-specgen/tmp/SmallestEvenMulBranch_Original.java:12:
+      @   ensures (\forall int k; k >= n && k % 2 == 0; \result < k);  
+          ^
+2 verification failures
+
+==============================
+public class SmallestEvenMulBranch_Original {
+
+    /*@ public normal_behavior
+      @   requires n >= 1;
+      @   ensures \result == (n % 2 == 0 ? n : 2 * n);
+      @   ensures \result % 2 == 0;
+      @   ensures \result >= n;
+      @   ensures (\forall int k; k >= n && k % 2 == 0; \result <= k);  
+      @*/
+    public static int smallestEvenMultiple(int n) {
+        if (n % 2 == 0) {
+            return n;
+        }
+        return 2 * n;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081403-specgen/tmp/SmallestEvenMulBranch_Original.java:14: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081403-specgen/tmp/SmallestEvenMulBranch_Original.java:8:) in method smallestEvenMultiple
+        return 2 * n;
+        ^
+/root/specgen/SpecGen/project/081403-specgen/tmp/SmallestEvenMulBranch_Original.java:8: verify: Associated declaration: /root/specgen/SpecGen/project/081403-specgen/tmp/SmallestEvenMulBranch_Original.java:14:
+      @   ensures (\forall int k; k >= n && k % 2 == 0; \result <= k);  
+          ^
+2 verification failures
+
+==============================
+public class SmallestEvenMulBranch_Original {
+
+    /*@ public normal_behavior
+      @   requires n >= 1;
+      @   ensures \result == (n % 2 == 0 ? n : 2 * n);
+      @   ensures \result % 2 == 0;
+      @   ensures \result >= n;
+      @   ensures (\forall int k; k >= n && k % 2 == 0; \result - 1 <= k);  
+      @*/
+    public static int smallestEvenMultiple(int n) {
+        if (n % 2 == 0) {
+            return n;
+        }
+        return 2 * n;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081403-specgen/tmp/SmallestEvenMulBranch_Original.java:14: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081403-specgen/tmp/SmallestEvenMulBranch_Original.java:8:) in method smallestEvenMultiple
+        return 2 * n;
+        ^
+/root/specgen/SpecGen/project/081403-specgen/tmp/SmallestEvenMulBranch_Original.java:8: verify: Associated declaration: /root/specgen/SpecGen/project/081403-specgen/tmp/SmallestEvenMulBranch_Original.java:14:
+      @   ensures (\forall int k; k >= n && k % 2 == 0; \result - 1 <= k);  
+          ^
+2 verification failures
+
+==============================
+public class SmallestEvenMulBranch_Original {
+
+    /*@ public normal_behavior
+      @   requires n >= 1;
+      @   ensures \result == (n % 2 == 0 ? n : 2 * n);
+      @   ensures \result % 2 == 0;
+      @   ensures \result >= n;
+      @   ensures (\forall int k; k + 1 >= n && k % 2 == 0; \result < k);  
+      @*/
+    public static int smallestEvenMultiple(int n) {
+        if (n % 2 == 0) {
+            return n;
+        }
+        return 2 * n;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081403-specgen/tmp/SmallestEvenMulBranch_Original.java:12: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081403-specgen/tmp/SmallestEvenMulBranch_Original.java:8:) in method smallestEvenMultiple
+            return n;
+            ^
+/root/specgen/SpecGen/project/081403-specgen/tmp/SmallestEvenMulBranch_Original.java:8: verify: Associated declaration: /root/specgen/SpecGen/project/081403-specgen/tmp/SmallestEvenMulBranch_Original.java:12:
+      @   ensures (\forall int k; k + 1 >= n && k % 2 == 0; \result < k);  
+          ^
+2 verification failures
+
+==============================
+public class SmallestEvenMulBranch_Original {
+
+    /*@ public normal_behavior
+      @   requires n >= 1;
+      @   ensures \result == (n % 2 == 0 ? n : 2 * n);
+      @   ensures \result % 2 == 0;
+      @   ensures \result >= n;
+      @   ensures (\forall int k; k + 1 >= n && k % 2 == 0; \result <= k);  
+      @*/
+    public static int smallestEvenMultiple(int n) {
+        if (n % 2 == 0) {
+            return n;
+        }
+        return 2 * n;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081403-specgen/tmp/SmallestEvenMulBranch_Original.java:14: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081403-specgen/tmp/SmallestEvenMulBranch_Original.java:8:) in method smallestEvenMultiple
+        return 2 * n;
+        ^
+/root/specgen/SpecGen/project/081403-specgen/tmp/SmallestEvenMulBranch_Original.java:8: verify: Associated declaration: /root/specgen/SpecGen/project/081403-specgen/tmp/SmallestEvenMulBranch_Original.java:14:
+      @   ensures (\forall int k; k + 1 >= n && k % 2 == 0; \result <= k);  
+          ^
+2 verification failures
+
+==============================
+public class SmallestEvenMulBranch_Original {
+
+    /*@ public normal_behavior
+      @   requires n >= 1;
+      @   ensures \result == (n % 2 == 0 ? n : 2 * n);
+      @   ensures \result % 2 == 0;
+      @   ensures \result >= n;
+      @   ensures (\forall int k; k + 1 >= n && k % 2 == 0; \result - 1 <= k);  
+      @*/
+    public static int smallestEvenMultiple(int n) {
+        if (n % 2 == 0) {
+            return n;
+        }
+        return 2 * n;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081403-specgen/tmp/SmallestEvenMulBranch_Original.java:14: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081403-specgen/tmp/SmallestEvenMulBranch_Original.java:8:) in method smallestEvenMultiple
+        return 2 * n;
+        ^
+/root/specgen/SpecGen/project/081403-specgen/tmp/SmallestEvenMulBranch_Original.java:8: verify: Associated declaration: /root/specgen/SpecGen/project/081403-specgen/tmp/SmallestEvenMulBranch_Original.java:14:
+      @   ensures (\forall int k; k + 1 >= n && k % 2 == 0; \result - 1 <= k);  
+          ^
+2 verification failures
+
+==============================
+public class SmallestEvenMulBranch_Original {
+
+    /*@ public normal_behavior
+      @   requires n >= 1;
+      @   ensures \result == (n % 2 == 0 ? n : 2 * n);
+      @   ensures \result % 2 == 0;
+      @   ensures \result >= n;
+      @   ensures (\exists int k; k > n && k % 2 == 0; \result < k);  
+      @*/
+    public static int smallestEvenMultiple(int n) {
+        if (n % 2 == 0) {
+            return n;
+        }
+        return 2 * n;
+    }
+}
+
+==============================
+
+==============================

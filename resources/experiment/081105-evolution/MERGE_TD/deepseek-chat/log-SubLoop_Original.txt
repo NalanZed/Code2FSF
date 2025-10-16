@@ -1,0 +1,79 @@
+start role user
+Please modify the following code according to the modified FSF:
+```Code
+
+
+public class SubLoop_Original {
+    public static int subLoop(int x, int y) {
+        int sum = x;
+        if (y > 0) {
+            int n = y;
+            while (n > 0) {
+                sum = sum - 1;
+                n = n - 1;
+            }
+        } else {
+            int n = -y;
+            while (n > 0) {
+                sum = sum + 1;
+                n = n - 1;
+            }
+        }
+        return sum;
+    }
+}
+
+```
+```Original FSF
+T0: y > 0
+D0: sum == x - y
+
+T1: y < 0
+D1: sum == x + (-y)
+
+T2: y == 0
+D2: sum == x
+
+```Modified FSF
+T0: y > 0
+D0: sum == x - y
+
+T1: (y < 0) || (y == 0)
+D1: sum == x + (-y)
+
+```
+
+
+*end* role user
+start role assistant
+```
+public class SubLoop_Modified {
+    public static int subLoop(int x, int y) {
+        int sum = x;
+        if (y > 0) {
+            int n = y;
+            while (n > 0) {
+                sum = sum - 1;
+                n = n - 1;
+            }
+        } else {
+            int n = -y;
+            while (n > 0) {
+                sum = sum + 1;
+                n = n - 1;
+            }
+        }
+        return sum;
+    }
+}
+```
+
+Wait, I notice that the modified FSF combines cases T1 and T2 from the original FSF, but the behavior is actually the same as the original code since when y == 0, -y is also 0, so x + (-y) equals x. Therefore, no actual code modification is needed - the original code already satisfies the modified FSF.
+
+The modified FSF just simplifies the specification by combining two cases where the behavior is identical (when y is negative or zero), but the implementation doesn't need to change. The code already correctly implements both the original and modified FSFs.
+
+If you'd like me to make any stylistic changes or if there's something I'm misunderstanding about the requirements, please let me know.
+*end* role assistant
+start role remark
+Validation SUCCESS!
+*end* role remark

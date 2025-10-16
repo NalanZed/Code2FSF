@@ -1,0 +1,92 @@
+public class PassPillowBranch_Mutant1 {
+    /*@ requires n > 1 && time >= 0;
+      @ ensures \result >= 1 && \result <= n;
+      @ ensures time % ((n + 1) * 2) < n ==> \result == (time % ((n + 1) * 2)) + 1;
+      @ ensures time % ((n + 1) * 2) >= n ==> \result == n * 2 - (time % ((n + 1) * 2)) - 1;
+      @*/
+    public static int passPillow(int n, int time) {
+        time = time % (n + 1) * 2; // changed subtraction to addition
+        if (time < n) {
+            return time + 1;
+        }
+        return n * 2 - time - 1;
+    }
+}
+==============================
+/root/specgen/SpecGen/project/081402-specgen/tmp/PassPillowBranch_Mutant1.java:10: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081402-specgen/tmp/PassPillowBranch_Mutant1.java:5:) in method passPillow
+            return time + 1;
+            ^
+/root/specgen/SpecGen/project/081402-specgen/tmp/PassPillowBranch_Mutant1.java:5: verify: Associated declaration: /root/specgen/SpecGen/project/081402-specgen/tmp/PassPillowBranch_Mutant1.java:10:
+      @ ensures time % ((n + 1) * 2) >= n ==> \result == n * 2 - (time % ((n + 1) * 2)) - 1;
+        ^
+2 verification failures
+
+==============================
+public class PassPillowBranch_Mutant1 {
+    /*@ requires n > 1 && time >= 0;
+      @ ensures \result >= 1 && \result <= n;
+      @ ensures time % ((n + 1) * 2) < n ==> \result == (time % ((n + 1) * 2)) + 1;
+      @ ensures time % ((n + 1) * 2) > n ==> \result == n * 2 - (time % ((n + 1) * 2)) - 1;  
+      @*/
+    public static int passPillow(int n, int time) {
+        time = time % (n + 1) * 2; // changed subtraction to addition
+        if (time < n) {
+            return time + 1;
+        }
+        return n * 2 - time - 1;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081402-specgen/tmp/PassPillowBranch_Mutant1.java:10: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081402-specgen/tmp/PassPillowBranch_Mutant1.java:5:) in method passPillow
+            return time + 1;
+            ^
+/root/specgen/SpecGen/project/081402-specgen/tmp/PassPillowBranch_Mutant1.java:5: verify: Associated declaration: /root/specgen/SpecGen/project/081402-specgen/tmp/PassPillowBranch_Mutant1.java:10:
+      @ ensures time % ((n + 1) * 2) > n ==> \result == n * 2 - (time % ((n + 1) * 2)) - 1;  
+        ^
+2 verification failures
+
+==============================
+public class PassPillowBranch_Mutant1 {
+    /*@ requires n > 1 && time >= 0;
+      @ ensures \result >= 1 && \result <= n;
+      @ ensures time % ((n + 1) * 2) < n ==> \result == (time % ((n + 1) * 2)) + 1;
+      @ ensures time % ((n + 1) * 2) >= n ==> \result == n * 2 - (time % ((n + 1) * 2)) - 1;  
+      @*/
+    public static int passPillow(int n, int time) {
+        time = time % (n + 1) * 2; // changed subtraction to addition
+        if (time < n) {
+            return time + 1;
+        }
+        return n * 2 - time - 1;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081402-specgen/tmp/PassPillowBranch_Mutant1.java:10: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081402-specgen/tmp/PassPillowBranch_Mutant1.java:5:) in method passPillow
+            return time + 1;
+            ^
+/root/specgen/SpecGen/project/081402-specgen/tmp/PassPillowBranch_Mutant1.java:5: verify: Associated declaration: /root/specgen/SpecGen/project/081402-specgen/tmp/PassPillowBranch_Mutant1.java:10:
+      @ ensures time % ((n + 1) * 2) >= n ==> \result == n * 2 - (time % ((n + 1) * 2)) - 1;  
+        ^
+2 verification failures
+
+==============================
+public class PassPillowBranch_Mutant1 {
+    /*@ requires n > 1 && time >= 0;
+      @ ensures \result >= 1 && \result <= n;
+      @ ensures time % ((n + 1) * 2) < n ==> \result == (time % ((n + 1) * 2)) + 1;
+      @ ensures time % ((n + 1) * 2) + 1 >= n ==> \result == n * 2 - (time % ((n + 1) * 2)) - 1;  
+      @*/
+    public static int passPillow(int n, int time) {
+        time = time % (n + 1) * 2; // changed subtraction to addition
+        if (time < n) {
+            return time + 1;
+        }
+        return n * 2 - time - 1;
+    }
+}
+
+==============================
+
+==============================

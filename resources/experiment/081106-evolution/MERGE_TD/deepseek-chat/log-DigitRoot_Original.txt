@@ -1,0 +1,56 @@
+start role user
+Please modify the following code according to the modified FSF:
+```Code
+
+
+public class DigitRoot_Original {
+
+    public static int function(int num) {
+        while (num >= 10) {
+            int sum = 0;
+            while (num > 0) {
+                sum = sum + (num % 10);
+                num = num / 10;
+            }
+            num = sum;
+        }
+        return num;
+    }
+}
+
+```
+```Original FSF
+T0: num < 10
+D0: return_value == num
+
+T1: num >= 10
+D1: return_value == num % 9 || return_value == 9
+
+```Modified FSF
+T0: (num >= 10) || (num < 10)
+D0: return_value == num % 9 || return_value == 9
+
+```
+
+
+*end* role user
+start role assistant
+```
+public class DigitRoot_Modified {
+    public static int function(int num) {
+        if (num == 0) return 0;
+        int result = num % 9;
+        return result == 0 ? 9 : result;
+    }
+}
+```
+
+The modified code:
+1. Removes the while loops since we can compute the digital root directly using modulo operation
+2. Handles the special case when num is 0 (returns 0)
+3. For other numbers, computes num % 9 and returns 9 if the result is 0 (which handles the case when num is a multiple of 9)
+4. Matches the modified FSF which requires the same behavior (num % 9 or 9) for all input values (both <10 and >=10)
+*end* role assistant
+start role remark
+Validation SUCCESS!
+*end* role remark

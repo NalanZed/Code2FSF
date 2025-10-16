@@ -1,0 +1,61 @@
+start role user
+Please modify the following code according to the modified FSF:
+```Code
+
+
+public class IsCommonMultiple_Original {
+
+    public static boolean isCommonMultiple(int a, int b, int m) {
+        return m % a == 0 && m % b == 0;
+    }
+}
+
+```
+```Original FSF
+T0: a != 0 && b != 0 && m % a == 0 && m % b == 0
+D0: return_value == true
+
+T1: a != 0 && b != 0 && (m % a != 0 || m % b != 0)
+D1: return_value == false
+
+T2: a == 0 || b == 0
+D2: Exception
+
+```Modified FSF
+T0: a != 0 && b != 0 && m % a == 0 && m % b == 0
+D0: return_value == true
+
+T1: (a == 0 || b == 0) || (a != 0 && b != 0 && (m % a != 0 || m % b != 0))
+D1: Exception
+
+```
+
+
+*end* role user
+start role assistant
+```
+public class IsCommonMultiple_Modified {
+    public static boolean isCommonMultiple(int a, int b, int m) {
+        if (a == 0 || b == 0) {
+            throw new IllegalArgumentException("a and b must not be zero");
+        }
+        if (m % a == 0 && m % b == 0) {
+            return true;
+        }
+        throw new IllegalArgumentException("m is not a common multiple");
+    }
+}
+```
+
+The modified version:
+1. First checks for zero values (a or b) and throws an exception immediately if found
+2. Only returns true if m is a common multiple of both a and b
+3. Otherwise throws an exception (covering both cases where either a or b is zero, or where m is not a common multiple)
+
+This matches the modified FSF where:
+- T0 remains the same (returns true when m is common multiple)
+- All other cases now throw exceptions (T1 in modified FSF)
+*end* role assistant
+start role remark
+Validation SUCCESS!
+*end* role remark

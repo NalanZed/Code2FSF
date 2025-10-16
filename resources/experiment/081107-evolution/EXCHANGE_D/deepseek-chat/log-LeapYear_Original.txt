@@ -1,0 +1,83 @@
+start role user
+Please modify the following code according to the modified FSF:
+```Code
+
+
+public class LeapYear_Original {
+
+    public static boolean isLeapYear(int year) {
+        boolean leap = false;
+        if (year % 4 == 0) {
+            if (year % 100 == 0) {
+                if (year % 400 == 0)
+                    leap = true;
+                else
+                    leap = false;
+            } else
+                leap = true;
+        } else
+            leap = false;
+        return leap;
+    }
+}
+
+```
+```Original FSF
+T0: year % 400 == 0
+D0: leap == true
+
+T1: year % 100 == 0 && year % 400 != 0
+D1: leap == false
+
+T2: year % 4 == 0 && year % 100 != 0
+D2: leap == true
+
+T3: year % 4 != 0
+D3: leap == false
+
+```Modified FSF
+T0: year % 400 == 0
+D0: leap == true
+
+T1: year % 100 == 0 && year % 400 != 0
+D1: leap == false
+
+T2: year % 4 == 0 && year % 100 != 0
+D2: leap == true
+
+T3: year % 4 != 0
+D3: leap == false
+
+```
+
+
+*end* role user
+start role assistant
+The modified FSF is identical to the original FSF, so no changes are needed to the code. The original code already correctly implements the specified behavior for determining leap years.
+
+Here's the code (unchanged from original since requirements didn't change):
+
+```
+public class LeapYear_Original {
+    public static boolean isLeapYear(int year) {
+        boolean leap = false;
+        if (year % 4 == 0) {
+            if (year % 100 == 0) {
+                if (year % 400 == 0)
+                    leap = true;
+                else
+                    leap = false;
+            } else
+                leap = true;
+        } else
+            leap = false;
+        return leap;
+    }
+}
+```
+
+If you meant to provide different modified FSF conditions, please provide them and I'll adjust the code accordingly. The current modified FSF matches exactly with the original FSF, so the original implementation already satisfies it perfectly.
+*end* role assistant
+start role remark
+Validation SUCCESS!
+*end* role remark

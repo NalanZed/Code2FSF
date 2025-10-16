@@ -1,0 +1,64 @@
+public class IsCommonFactorBranch_Mutant3 {
+    //@ requires factor != 0;
+    //@ ensures \result <==> (a % factor == 0 && b % factor == 0);
+    public static boolean isCommonFactor (int a, int b, int factor) {
+        if (a % factor != 1) {
+            return false;
+        }
+        if (b % factor != 1) {
+            return false;
+        }
+        return true;
+    }
+}
+==============================
+/root/specgen/SpecGen/project/081402-specgen/tmp/IsCommonFactorBranch_Mutant3.java:6: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081402-specgen/tmp/IsCommonFactorBranch_Mutant3.java:3:) in method isCommonFactor
+            return false;
+            ^
+/root/specgen/SpecGen/project/081402-specgen/tmp/IsCommonFactorBranch_Mutant3.java:3: verify: Associated declaration: /root/specgen/SpecGen/project/081402-specgen/tmp/IsCommonFactorBranch_Mutant3.java:6:
+    //@ ensures \result <==> (a % factor == 0 && b % factor == 0);
+        ^
+2 verification failures
+
+==============================
+public class IsCommonFactorBranch_Mutant3 {
+    //@ requires factor != 0;
+    //@ ensures \result <==> (a % factor == 0 && b % factor == 0);  
+    public static boolean isCommonFactor (int a, int b, int factor) {
+        if (a % factor != 1) {
+            return false;
+        }
+        if (b % factor != 1) {
+            return false;
+        }
+        return true;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081402-specgen/tmp/IsCommonFactorBranch_Mutant3.java:6: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081402-specgen/tmp/IsCommonFactorBranch_Mutant3.java:3:) in method isCommonFactor
+            return false;
+            ^
+/root/specgen/SpecGen/project/081402-specgen/tmp/IsCommonFactorBranch_Mutant3.java:3: verify: Associated declaration: /root/specgen/SpecGen/project/081402-specgen/tmp/IsCommonFactorBranch_Mutant3.java:6:
+    //@ ensures \result <==> (a % factor == 0 && b % factor == 0);  
+        ^
+2 verification failures
+
+==============================
+public class IsCommonFactorBranch_Mutant3 {
+    //@ requires factor != 0;
+ 
+    public static boolean isCommonFactor (int a, int b, int factor) {
+        if (a % factor != 1) {
+            return false;
+        }
+        if (b % factor != 1) {
+            return false;
+        }
+        return true;
+    }
+}
+
+==============================
+
+==============================

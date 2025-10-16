@@ -1,0 +1,47 @@
+start role user
+Please modify the following code according to the modified FSF:
+```Code
+
+
+public class SmallestEvenMulBranch_Original {
+
+    public static int smallestEvenMultiple(int n) {
+        if (n % 2 == 0) {
+            return n;
+        }
+        return 2 * n;
+    }
+}
+
+```
+```Original FSF
+T0: n % 2 == 0
+D0: return_value == n
+
+T1: n % 2 != 0
+D1: return_value == 2 * n
+
+```Modified FSF
+T0: (n % 2 == 0) || (n % 2 != 0)
+D0: return_value == n
+
+```
+
+
+*end* role user
+start role assistant
+```
+public class SmallestEvenMulBranch_Modified {
+
+    public static int smallestEvenMultiple(int n) {
+        if (n % 2 == 0) {
+            return n;
+        }
+        return n;
+    }
+}
+```
+*end* role assistant
+start role remark
+Validation SUCCESS!
+*end* role remark

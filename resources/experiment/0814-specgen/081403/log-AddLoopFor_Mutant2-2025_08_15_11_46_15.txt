@@ -1,0 +1,3160 @@
+public class AddLoopFor_Mutant2 {
+    /*@ public normal_behavior
+      @ requires Integer.MIN_VALUE <= x + y && x + y <= Integer.MAX_VALUE;
+      @ ensures \result == x + y;
+      @ assignable \strictly_nothing;
+      @*/
+    public static int addLoop(int x, int y) {
+        int sum = y;
+        if (x > 0) {
+            int n = 0;
+            //@ maintaining sum == y + (x - n) && 0 <= n && n <= x;
+            //@ maintaining n % 2 == x % 2;
+            //@ decreases n;
+            for(n = x; n > 0; ) {
+                sum = sum + 1;
+                n = n - 2;
+            }
+        } else {
+            int n = 0;
+            //@ maintaining sum == y - (-x - n) && 0 <= n && n <= -x;
+            //@ maintaining n % 2 == (-x) % 2;
+            //@ decreases n;
+            for(n = -x; n > 0; ) {
+                sum = sum - 1;
+                n = n - 2;
+            }
+        }
+        return sum;
+    }
+}
+==============================
+/root/specgen/SpecGen/project/081403-specgen/tmp/AddLoopFor_Mutant2.java:5: error: This backslash token is unknown: \strictly_nothing
+      @ assignable \strictly_nothing;
+                   ^
+/root/specgen/SpecGen/project/081403-specgen/tmp/AddLoopFor_Mutant2.java:5: error: Use \nothing to denote an empty list of locations in an assignable clause
+      @ assignable \strictly_nothing;
+                                    ^
+2 errors
+
+==============================
+public class AddLoopFor_Mutant2 {
+    /*@ public normal_behavior
+      @ requires Integer.MIN_VALUE <= x + y && x + y <= Integer.MAX_VALUE;
+      @ ensures \result == x + y;
+      @ assignable \nothing;
+      @*/
+    public static int addLoop(int x, int y) {
+        int sum = y;
+        if (x > 0) {
+            int n = 0;
+            //@ maintaining sum == y + (x - n) && 0 <= n && n <= x;
+            //@ maintaining n % 2 == x % 2;
+            //@ decreases n;
+            for(n = x; n > 0; ) {
+                sum = sum + 1;
+                n = n - 2;
+            }
+        } else {
+            int n = 0;
+            //@ maintaining sum == y - (-x - n) && 0 <= n && n <= -x;
+            //@ maintaining n % 2 == (-x) % 2;
+            //@ decreases n;
+            for(n = -x; n > 0; ) {
+                sum = sum - 1;
+                n = n - 2;
+            }
+        }
+        return sum;
+    }
+}
+==============================
+/root/specgen/SpecGen/project/081403-specgen/tmp/AddLoopFor_Mutant2.java:11: verify: The prover cannot establish an assertion (LoopInvariant) in method addLoop
+            //@ maintaining sum == y + (x - n) && 0 <= n && n <= x;
+                ^
+1 verification failure
+
+==============================
+public class AddLoopFor_Mutant2 {
+    /*@ public normal_behavior
+      @ requires Integer.MIN_VALUE <= x + y && x + y <= Integer.MAX_VALUE;
+      @ ensures \result == x + y;
+      @ assignable \nothing;
+      @*/
+    public static int addLoop(int x, int y) {
+        int sum = y;
+        if (x > 0) {
+            int n = 0;
+            //@ maintaining sum == y + (x - n) && 0 < n && n < x;  
+            //@ maintaining n % 2 == x % 2;
+            //@ decreases n;
+            for(n = x; n > 0; ) {
+                sum = sum + 1;
+                n = n - 2;
+            }
+        } else {
+            int n = 0;
+            //@ maintaining sum == y - (-x - n) && 0 <= n && n <= -x;
+            //@ maintaining n % 2 == (-x) % 2;
+            //@ decreases n;
+            for(n = -x; n > 0; ) {
+                sum = sum - 1;
+                n = n - 2;
+            }
+        }
+        return sum;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081403-specgen/tmp/AddLoopFor_Mutant2.java:11: verify: The prover cannot establish an assertion (LoopInvariantBeforeLoop) in method addLoop
+            //@ maintaining sum == y + (x - n) && 0 < n && n < x;  
+                ^
+1 verification failure
+
+==============================
+public class AddLoopFor_Mutant2 {
+    /*@ public normal_behavior
+      @ requires Integer.MIN_VALUE <= x + y && x + y <= Integer.MAX_VALUE;
+      @ ensures \result == x + y;
+      @ assignable \nothing;
+      @*/
+    public static int addLoop(int x, int y) {
+        int sum = y;
+        if (x > 0) {
+            int n = 0;
+            //@ maintaining sum == y + (x - n) && 0 < n && n <= x;  
+            //@ maintaining n % 2 == x % 2;
+            //@ decreases n;
+            for(n = x; n > 0; ) {
+                sum = sum + 1;
+                n = n - 2;
+            }
+        } else {
+            int n = 0;
+            //@ maintaining sum == y - (-x - n) && 0 <= n && n <= -x;
+            //@ maintaining n % 2 == (-x) % 2;
+            //@ decreases n;
+            for(n = -x; n > 0; ) {
+                sum = sum - 1;
+                n = n - 2;
+            }
+        }
+        return sum;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081403-specgen/tmp/AddLoopFor_Mutant2.java:11: verify: The prover cannot establish an assertion (LoopInvariant) in method addLoop
+            //@ maintaining sum == y + (x - n) && 0 < n && n <= x;  
+                ^
+1 verification failure
+
+==============================
+public class AddLoopFor_Mutant2 {
+    /*@ public normal_behavior
+      @ requires Integer.MIN_VALUE <= x + y && x + y <= Integer.MAX_VALUE;
+      @ ensures \result == x + y;
+      @ assignable \nothing;
+      @*/
+    public static int addLoop(int x, int y) {
+        int sum = y;
+        if (x > 0) {
+            int n = 0;
+            //@ maintaining sum == y + (x - n) && 0 < n && n - 1 <= x;  
+            //@ maintaining n % 2 == x % 2;
+            //@ decreases n;
+            for(n = x; n > 0; ) {
+                sum = sum + 1;
+                n = n - 2;
+            }
+        } else {
+            int n = 0;
+            //@ maintaining sum == y - (-x - n) && 0 <= n && n <= -x;
+            //@ maintaining n % 2 == (-x) % 2;
+            //@ decreases n;
+            for(n = -x; n > 0; ) {
+                sum = sum - 1;
+                n = n - 2;
+            }
+        }
+        return sum;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081403-specgen/tmp/AddLoopFor_Mutant2.java:11: verify: The prover cannot establish an assertion (LoopInvariant) in method addLoop
+            //@ maintaining sum == y + (x - n) && 0 < n && n - 1 <= x;  
+                ^
+1 verification failure
+
+==============================
+public class AddLoopFor_Mutant2 {
+    /*@ public normal_behavior
+      @ requires Integer.MIN_VALUE <= x + y && x + y <= Integer.MAX_VALUE;
+      @ ensures \result == x + y;
+      @ assignable \nothing;
+      @*/
+    public static int addLoop(int x, int y) {
+        int sum = y;
+        if (x > 0) {
+            int n = 0;
+            //@ maintaining sum == y + (x - n) && 0 <= n && n < x;  
+            //@ maintaining n % 2 == x % 2;
+            //@ decreases n;
+            for(n = x; n > 0; ) {
+                sum = sum + 1;
+                n = n - 2;
+            }
+        } else {
+            int n = 0;
+            //@ maintaining sum == y - (-x - n) && 0 <= n && n <= -x;
+            //@ maintaining n % 2 == (-x) % 2;
+            //@ decreases n;
+            for(n = -x; n > 0; ) {
+                sum = sum - 1;
+                n = n - 2;
+            }
+        }
+        return sum;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081403-specgen/tmp/AddLoopFor_Mutant2.java:11: verify: The prover cannot establish an assertion (LoopInvariantBeforeLoop) in method addLoop
+            //@ maintaining sum == y + (x - n) && 0 <= n && n < x;  
+                ^
+1 verification failure
+
+==============================
+public class AddLoopFor_Mutant2 {
+    /*@ public normal_behavior
+      @ requires Integer.MIN_VALUE <= x + y && x + y <= Integer.MAX_VALUE;
+      @ ensures \result == x + y;
+      @ assignable \nothing;
+      @*/
+    public static int addLoop(int x, int y) {
+        int sum = y;
+        if (x > 0) {
+            int n = 0;
+            //@ maintaining sum == y + (x - n) && 0 <= n && n <= x;  
+            //@ maintaining n % 2 == x % 2;
+            //@ decreases n;
+            for(n = x; n > 0; ) {
+                sum = sum + 1;
+                n = n - 2;
+            }
+        } else {
+            int n = 0;
+            //@ maintaining sum == y - (-x - n) && 0 <= n && n <= -x;
+            //@ maintaining n % 2 == (-x) % 2;
+            //@ decreases n;
+            for(n = -x; n > 0; ) {
+                sum = sum - 1;
+                n = n - 2;
+            }
+        }
+        return sum;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081403-specgen/tmp/AddLoopFor_Mutant2.java:11: verify: The prover cannot establish an assertion (LoopInvariant) in method addLoop
+            //@ maintaining sum == y + (x - n) && 0 <= n && n <= x;  
+                ^
+1 verification failure
+
+==============================
+public class AddLoopFor_Mutant2 {
+    /*@ public normal_behavior
+      @ requires Integer.MIN_VALUE <= x + y && x + y <= Integer.MAX_VALUE;
+      @ ensures \result == x + y;
+      @ assignable \nothing;
+      @*/
+    public static int addLoop(int x, int y) {
+        int sum = y;
+        if (x > 0) {
+            int n = 0;
+            //@ maintaining sum == y + (x - n) && 0 <= n && n - 1 <= x;  
+            //@ maintaining n % 2 == x % 2;
+            //@ decreases n;
+            for(n = x; n > 0; ) {
+                sum = sum + 1;
+                n = n - 2;
+            }
+        } else {
+            int n = 0;
+            //@ maintaining sum == y - (-x - n) && 0 <= n && n <= -x;
+            //@ maintaining n % 2 == (-x) % 2;
+            //@ decreases n;
+            for(n = -x; n > 0; ) {
+                sum = sum - 1;
+                n = n - 2;
+            }
+        }
+        return sum;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081403-specgen/tmp/AddLoopFor_Mutant2.java:11: verify: The prover cannot establish an assertion (LoopInvariant) in method addLoop
+            //@ maintaining sum == y + (x - n) && 0 <= n && n - 1 <= x;  
+                ^
+1 verification failure
+
+==============================
+public class AddLoopFor_Mutant2 {
+    /*@ public normal_behavior
+      @ requires Integer.MIN_VALUE <= x + y && x + y <= Integer.MAX_VALUE;
+      @ ensures \result == x + y;
+      @ assignable \nothing;
+      @*/
+    public static int addLoop(int x, int y) {
+        int sum = y;
+        if (x > 0) {
+            int n = 0;
+            //@ maintaining sum == y + (x - n) && 0 - 1 <= n && n < x;  
+            //@ maintaining n % 2 == x % 2;
+            //@ decreases n;
+            for(n = x; n > 0; ) {
+                sum = sum + 1;
+                n = n - 2;
+            }
+        } else {
+            int n = 0;
+            //@ maintaining sum == y - (-x - n) && 0 <= n && n <= -x;
+            //@ maintaining n % 2 == (-x) % 2;
+            //@ decreases n;
+            for(n = -x; n > 0; ) {
+                sum = sum - 1;
+                n = n - 2;
+            }
+        }
+        return sum;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081403-specgen/tmp/AddLoopFor_Mutant2.java:11: verify: The prover cannot establish an assertion (LoopInvariantBeforeLoop) in method addLoop
+            //@ maintaining sum == y + (x - n) && 0 - 1 <= n && n < x;  
+                ^
+1 verification failure
+
+==============================
+public class AddLoopFor_Mutant2 {
+    /*@ public normal_behavior
+      @ requires Integer.MIN_VALUE <= x + y && x + y <= Integer.MAX_VALUE;
+      @ ensures \result == x + y;
+      @ assignable \nothing;
+      @*/
+    public static int addLoop(int x, int y) {
+        int sum = y;
+        if (x > 0) {
+            int n = 0;
+            //@ maintaining sum == y + (x - n) && 0 - 1 <= n && n <= x;  
+            //@ maintaining n % 2 == x % 2;
+            //@ decreases n;
+            for(n = x; n > 0; ) {
+                sum = sum + 1;
+                n = n - 2;
+            }
+        } else {
+            int n = 0;
+            //@ maintaining sum == y - (-x - n) && 0 <= n && n <= -x;
+            //@ maintaining n % 2 == (-x) % 2;
+            //@ decreases n;
+            for(n = -x; n > 0; ) {
+                sum = sum - 1;
+                n = n - 2;
+            }
+        }
+        return sum;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081403-specgen/tmp/AddLoopFor_Mutant2.java:11: verify: The prover cannot establish an assertion (LoopInvariant) in method addLoop
+            //@ maintaining sum == y + (x - n) && 0 - 1 <= n && n <= x;  
+                ^
+1 verification failure
+
+==============================
+public class AddLoopFor_Mutant2 {
+    /*@ public normal_behavior
+      @ requires Integer.MIN_VALUE <= x + y && x + y <= Integer.MAX_VALUE;
+      @ ensures \result == x + y;
+      @ assignable \nothing;
+      @*/
+    public static int addLoop(int x, int y) {
+        int sum = y;
+        if (x > 0) {
+            int n = 0;
+            //@ maintaining sum == y + (x - n) && 0 - 1 <= n && n - 1 <= x;  
+            //@ maintaining n % 2 == x % 2;
+            //@ decreases n;
+            for(n = x; n > 0; ) {
+                sum = sum + 1;
+                n = n - 2;
+            }
+        } else {
+            int n = 0;
+            //@ maintaining sum == y - (-x - n) && 0 <= n && n <= -x;
+            //@ maintaining n % 2 == (-x) % 2;
+            //@ decreases n;
+            for(n = -x; n > 0; ) {
+                sum = sum - 1;
+                n = n - 2;
+            }
+        }
+        return sum;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081403-specgen/tmp/AddLoopFor_Mutant2.java:11: verify: The prover cannot establish an assertion (LoopInvariant) in method addLoop
+            //@ maintaining sum == y + (x - n) && 0 - 1 <= n && n - 1 <= x;  
+                ^
+1 verification failure
+
+==============================
+public class AddLoopFor_Mutant2 {
+    /*@ public normal_behavior
+      @ requires Integer.MIN_VALUE <= x + y && x + y <= Integer.MAX_VALUE;
+      @ ensures \result == x + y;
+      @ assignable \nothing;
+      @*/
+    public static int addLoop(int x, int y) {
+        int sum = y;
+        if (x > 0) {
+            int n = 0;
+            //@ maintaining sum == y + (x + n) && 0 < n && n < x;  
+            //@ maintaining n % 2 == x % 2;
+            //@ decreases n;
+            for(n = x; n > 0; ) {
+                sum = sum + 1;
+                n = n - 2;
+            }
+        } else {
+            int n = 0;
+            //@ maintaining sum == y - (-x - n) && 0 <= n && n <= -x;
+            //@ maintaining n % 2 == (-x) % 2;
+            //@ decreases n;
+            for(n = -x; n > 0; ) {
+                sum = sum - 1;
+                n = n - 2;
+            }
+        }
+        return sum;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081403-specgen/tmp/AddLoopFor_Mutant2.java:11: verify: The prover cannot establish an assertion (LoopInvariantBeforeLoop) in method addLoop
+            //@ maintaining sum == y + (x + n) && 0 < n && n < x;  
+                ^
+1 verification failure
+
+==============================
+public class AddLoopFor_Mutant2 {
+    /*@ public normal_behavior
+      @ requires Integer.MIN_VALUE <= x + y && x + y <= Integer.MAX_VALUE;
+      @ ensures \result == x + y;
+      @ assignable \nothing;
+      @*/
+    public static int addLoop(int x, int y) {
+        int sum = y;
+        if (x > 0) {
+            int n = 0;
+            //@ maintaining sum == y + (x + n) && 0 < n && n <= x;  
+            //@ maintaining n % 2 == x % 2;
+            //@ decreases n;
+            for(n = x; n > 0; ) {
+                sum = sum + 1;
+                n = n - 2;
+            }
+        } else {
+            int n = 0;
+            //@ maintaining sum == y - (-x - n) && 0 <= n && n <= -x;
+            //@ maintaining n % 2 == (-x) % 2;
+            //@ decreases n;
+            for(n = -x; n > 0; ) {
+                sum = sum - 1;
+                n = n - 2;
+            }
+        }
+        return sum;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081403-specgen/tmp/AddLoopFor_Mutant2.java:11: verify: The prover cannot establish an assertion (LoopInvariantBeforeLoop) in method addLoop
+            //@ maintaining sum == y + (x + n) && 0 < n && n <= x;  
+                ^
+1 verification failure
+
+==============================
+public class AddLoopFor_Mutant2 {
+    /*@ public normal_behavior
+      @ requires Integer.MIN_VALUE <= x + y && x + y <= Integer.MAX_VALUE;
+      @ ensures \result == x + y;
+      @ assignable \nothing;
+      @*/
+    public static int addLoop(int x, int y) {
+        int sum = y;
+        if (x > 0) {
+            int n = 0;
+            //@ maintaining sum == y + (x + n) && 0 < n && n - 1 <= x;  
+            //@ maintaining n % 2 == x % 2;
+            //@ decreases n;
+            for(n = x; n > 0; ) {
+                sum = sum + 1;
+                n = n - 2;
+            }
+        } else {
+            int n = 0;
+            //@ maintaining sum == y - (-x - n) && 0 <= n && n <= -x;
+            //@ maintaining n % 2 == (-x) % 2;
+            //@ decreases n;
+            for(n = -x; n > 0; ) {
+                sum = sum - 1;
+                n = n - 2;
+            }
+        }
+        return sum;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081403-specgen/tmp/AddLoopFor_Mutant2.java:11: verify: The prover cannot establish an assertion (LoopInvariantBeforeLoop) in method addLoop
+            //@ maintaining sum == y + (x + n) && 0 < n && n - 1 <= x;  
+                ^
+1 verification failure
+
+==============================
+public class AddLoopFor_Mutant2 {
+    /*@ public normal_behavior
+      @ requires Integer.MIN_VALUE <= x + y && x + y <= Integer.MAX_VALUE;
+      @ ensures \result == x + y;
+      @ assignable \nothing;
+      @*/
+    public static int addLoop(int x, int y) {
+        int sum = y;
+        if (x > 0) {
+            int n = 0;
+            //@ maintaining sum == y + (x + n) && 0 <= n && n < x;  
+            //@ maintaining n % 2 == x % 2;
+            //@ decreases n;
+            for(n = x; n > 0; ) {
+                sum = sum + 1;
+                n = n - 2;
+            }
+        } else {
+            int n = 0;
+            //@ maintaining sum == y - (-x - n) && 0 <= n && n <= -x;
+            //@ maintaining n % 2 == (-x) % 2;
+            //@ decreases n;
+            for(n = -x; n > 0; ) {
+                sum = sum - 1;
+                n = n - 2;
+            }
+        }
+        return sum;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081403-specgen/tmp/AddLoopFor_Mutant2.java:11: verify: The prover cannot establish an assertion (LoopInvariantBeforeLoop) in method addLoop
+            //@ maintaining sum == y + (x + n) && 0 <= n && n < x;  
+                ^
+1 verification failure
+
+==============================
+public class AddLoopFor_Mutant2 {
+    /*@ public normal_behavior
+      @ requires Integer.MIN_VALUE <= x + y && x + y <= Integer.MAX_VALUE;
+      @ ensures \result == x + y;
+      @ assignable \nothing;
+      @*/
+    public static int addLoop(int x, int y) {
+        int sum = y;
+        if (x > 0) {
+            int n = 0;
+            //@ maintaining sum == y + (x + n) && 0 <= n && n <= x;  
+            //@ maintaining n % 2 == x % 2;
+            //@ decreases n;
+            for(n = x; n > 0; ) {
+                sum = sum + 1;
+                n = n - 2;
+            }
+        } else {
+            int n = 0;
+            //@ maintaining sum == y - (-x - n) && 0 <= n && n <= -x;
+            //@ maintaining n % 2 == (-x) % 2;
+            //@ decreases n;
+            for(n = -x; n > 0; ) {
+                sum = sum - 1;
+                n = n - 2;
+            }
+        }
+        return sum;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081403-specgen/tmp/AddLoopFor_Mutant2.java:11: verify: The prover cannot establish an assertion (LoopInvariantBeforeLoop) in method addLoop
+            //@ maintaining sum == y + (x + n) && 0 <= n && n <= x;  
+                ^
+1 verification failure
+
+==============================
+public class AddLoopFor_Mutant2 {
+    /*@ public normal_behavior
+      @ requires Integer.MIN_VALUE <= x + y && x + y <= Integer.MAX_VALUE;
+      @ ensures \result == x + y;
+      @ assignable \nothing;
+      @*/
+    public static int addLoop(int x, int y) {
+        int sum = y;
+        if (x > 0) {
+            int n = 0;
+            //@ maintaining sum == y + (x + n) && 0 <= n && n - 1 <= x;  
+            //@ maintaining n % 2 == x % 2;
+            //@ decreases n;
+            for(n = x; n > 0; ) {
+                sum = sum + 1;
+                n = n - 2;
+            }
+        } else {
+            int n = 0;
+            //@ maintaining sum == y - (-x - n) && 0 <= n && n <= -x;
+            //@ maintaining n % 2 == (-x) % 2;
+            //@ decreases n;
+            for(n = -x; n > 0; ) {
+                sum = sum - 1;
+                n = n - 2;
+            }
+        }
+        return sum;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081403-specgen/tmp/AddLoopFor_Mutant2.java:11: verify: The prover cannot establish an assertion (LoopInvariantBeforeLoop) in method addLoop
+            //@ maintaining sum == y + (x + n) && 0 <= n && n - 1 <= x;  
+                ^
+1 verification failure
+
+==============================
+public class AddLoopFor_Mutant2 {
+    /*@ public normal_behavior
+      @ requires Integer.MIN_VALUE <= x + y && x + y <= Integer.MAX_VALUE;
+      @ ensures \result == x + y;
+      @ assignable \nothing;
+      @*/
+    public static int addLoop(int x, int y) {
+        int sum = y;
+        if (x > 0) {
+            int n = 0;
+            //@ maintaining sum == y + (x + n) && 0 - 1 <= n && n < x;  
+            //@ maintaining n % 2 == x % 2;
+            //@ decreases n;
+            for(n = x; n > 0; ) {
+                sum = sum + 1;
+                n = n - 2;
+            }
+        } else {
+            int n = 0;
+            //@ maintaining sum == y - (-x - n) && 0 <= n && n <= -x;
+            //@ maintaining n % 2 == (-x) % 2;
+            //@ decreases n;
+            for(n = -x; n > 0; ) {
+                sum = sum - 1;
+                n = n - 2;
+            }
+        }
+        return sum;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081403-specgen/tmp/AddLoopFor_Mutant2.java:11: verify: The prover cannot establish an assertion (LoopInvariantBeforeLoop) in method addLoop
+            //@ maintaining sum == y + (x + n) && 0 - 1 <= n && n < x;  
+                ^
+1 verification failure
+
+==============================
+public class AddLoopFor_Mutant2 {
+    /*@ public normal_behavior
+      @ requires Integer.MIN_VALUE <= x + y && x + y <= Integer.MAX_VALUE;
+      @ ensures \result == x + y;
+      @ assignable \nothing;
+      @*/
+    public static int addLoop(int x, int y) {
+        int sum = y;
+        if (x > 0) {
+            int n = 0;
+            //@ maintaining sum == y + (x + n) && 0 - 1 <= n && n <= x;  
+            //@ maintaining n % 2 == x % 2;
+            //@ decreases n;
+            for(n = x; n > 0; ) {
+                sum = sum + 1;
+                n = n - 2;
+            }
+        } else {
+            int n = 0;
+            //@ maintaining sum == y - (-x - n) && 0 <= n && n <= -x;
+            //@ maintaining n % 2 == (-x) % 2;
+            //@ decreases n;
+            for(n = -x; n > 0; ) {
+                sum = sum - 1;
+                n = n - 2;
+            }
+        }
+        return sum;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081403-specgen/tmp/AddLoopFor_Mutant2.java:11: verify: The prover cannot establish an assertion (LoopInvariantBeforeLoop) in method addLoop
+            //@ maintaining sum == y + (x + n) && 0 - 1 <= n && n <= x;  
+                ^
+1 verification failure
+
+==============================
+public class AddLoopFor_Mutant2 {
+    /*@ public normal_behavior
+      @ requires Integer.MIN_VALUE <= x + y && x + y <= Integer.MAX_VALUE;
+      @ ensures \result == x + y;
+      @ assignable \nothing;
+      @*/
+    public static int addLoop(int x, int y) {
+        int sum = y;
+        if (x > 0) {
+            int n = 0;
+            //@ maintaining sum == y + (x + n) && 0 - 1 <= n && n - 1 <= x;  
+            //@ maintaining n % 2 == x % 2;
+            //@ decreases n;
+            for(n = x; n > 0; ) {
+                sum = sum + 1;
+                n = n - 2;
+            }
+        } else {
+            int n = 0;
+            //@ maintaining sum == y - (-x - n) && 0 <= n && n <= -x;
+            //@ maintaining n % 2 == (-x) % 2;
+            //@ decreases n;
+            for(n = -x; n > 0; ) {
+                sum = sum - 1;
+                n = n - 2;
+            }
+        }
+        return sum;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081403-specgen/tmp/AddLoopFor_Mutant2.java:11: verify: The prover cannot establish an assertion (LoopInvariantBeforeLoop) in method addLoop
+            //@ maintaining sum == y + (x + n) && 0 - 1 <= n && n - 1 <= x;  
+                ^
+1 verification failure
+
+==============================
+public class AddLoopFor_Mutant2 {
+    /*@ public normal_behavior
+      @ requires Integer.MIN_VALUE <= x + y && x + y <= Integer.MAX_VALUE;
+      @ ensures \result == x + y;
+      @ assignable \nothing;
+      @*/
+    public static int addLoop(int x, int y) {
+        int sum = y;
+        if (x > 0) {
+            int n = 0;
+            //@ maintaining sum == y - (x + n) && 0 < n && n < x;  
+            //@ maintaining n % 2 == x % 2;
+            //@ decreases n;
+            for(n = x; n > 0; ) {
+                sum = sum + 1;
+                n = n - 2;
+            }
+        } else {
+            int n = 0;
+            //@ maintaining sum == y - (-x - n) && 0 <= n && n <= -x;
+            //@ maintaining n % 2 == (-x) % 2;
+            //@ decreases n;
+            for(n = -x; n > 0; ) {
+                sum = sum - 1;
+                n = n - 2;
+            }
+        }
+        return sum;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081403-specgen/tmp/AddLoopFor_Mutant2.java:11: verify: The prover cannot establish an assertion (LoopInvariantBeforeLoop) in method addLoop
+            //@ maintaining sum == y - (x + n) && 0 < n && n < x;  
+                ^
+1 verification failure
+
+==============================
+public class AddLoopFor_Mutant2 {
+    /*@ public normal_behavior
+      @ requires Integer.MIN_VALUE <= x + y && x + y <= Integer.MAX_VALUE;
+      @ ensures \result == x + y;
+      @ assignable \nothing;
+      @*/
+    public static int addLoop(int x, int y) {
+        int sum = y;
+        if (x > 0) {
+            int n = 0;
+            //@ maintaining sum == y - (x + n) && 0 < n && n <= x;  
+            //@ maintaining n % 2 == x % 2;
+            //@ decreases n;
+            for(n = x; n > 0; ) {
+                sum = sum + 1;
+                n = n - 2;
+            }
+        } else {
+            int n = 0;
+            //@ maintaining sum == y - (-x - n) && 0 <= n && n <= -x;
+            //@ maintaining n % 2 == (-x) % 2;
+            //@ decreases n;
+            for(n = -x; n > 0; ) {
+                sum = sum - 1;
+                n = n - 2;
+            }
+        }
+        return sum;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081403-specgen/tmp/AddLoopFor_Mutant2.java:11: verify: The prover cannot establish an assertion (LoopInvariantBeforeLoop) in method addLoop
+            //@ maintaining sum == y - (x + n) && 0 < n && n <= x;  
+                ^
+1 verification failure
+
+==============================
+public class AddLoopFor_Mutant2 {
+    /*@ public normal_behavior
+      @ requires Integer.MIN_VALUE <= x + y && x + y <= Integer.MAX_VALUE;
+      @ ensures \result == x + y;
+      @ assignable \nothing;
+      @*/
+    public static int addLoop(int x, int y) {
+        int sum = y;
+        if (x > 0) {
+            int n = 0;
+            //@ maintaining sum == y - (x + n) && 0 < n && n - 1 <= x;  
+            //@ maintaining n % 2 == x % 2;
+            //@ decreases n;
+            for(n = x; n > 0; ) {
+                sum = sum + 1;
+                n = n - 2;
+            }
+        } else {
+            int n = 0;
+            //@ maintaining sum == y - (-x - n) && 0 <= n && n <= -x;
+            //@ maintaining n % 2 == (-x) % 2;
+            //@ decreases n;
+            for(n = -x; n > 0; ) {
+                sum = sum - 1;
+                n = n - 2;
+            }
+        }
+        return sum;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081403-specgen/tmp/AddLoopFor_Mutant2.java:11: verify: The prover cannot establish an assertion (LoopInvariantBeforeLoop) in method addLoop
+            //@ maintaining sum == y - (x + n) && 0 < n && n - 1 <= x;  
+                ^
+1 verification failure
+
+==============================
+public class AddLoopFor_Mutant2 {
+    /*@ public normal_behavior
+      @ requires Integer.MIN_VALUE <= x + y && x + y <= Integer.MAX_VALUE;
+      @ ensures \result == x + y;
+      @ assignable \nothing;
+      @*/
+    public static int addLoop(int x, int y) {
+        int sum = y;
+        if (x > 0) {
+            int n = 0;
+            //@ maintaining sum == y - (x + n) && 0 <= n && n < x;  
+            //@ maintaining n % 2 == x % 2;
+            //@ decreases n;
+            for(n = x; n > 0; ) {
+                sum = sum + 1;
+                n = n - 2;
+            }
+        } else {
+            int n = 0;
+            //@ maintaining sum == y - (-x - n) && 0 <= n && n <= -x;
+            //@ maintaining n % 2 == (-x) % 2;
+            //@ decreases n;
+            for(n = -x; n > 0; ) {
+                sum = sum - 1;
+                n = n - 2;
+            }
+        }
+        return sum;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081403-specgen/tmp/AddLoopFor_Mutant2.java:11: verify: The prover cannot establish an assertion (LoopInvariantBeforeLoop) in method addLoop
+            //@ maintaining sum == y - (x + n) && 0 <= n && n < x;  
+                ^
+1 verification failure
+
+==============================
+public class AddLoopFor_Mutant2 {
+    /*@ public normal_behavior
+      @ requires Integer.MIN_VALUE <= x + y && x + y <= Integer.MAX_VALUE;
+      @ ensures \result == x + y;
+      @ assignable \nothing;
+      @*/
+    public static int addLoop(int x, int y) {
+        int sum = y;
+        if (x > 0) {
+            int n = 0;
+            //@ maintaining sum == y - (x + n) && 0 <= n && n <= x;  
+            //@ maintaining n % 2 == x % 2;
+            //@ decreases n;
+            for(n = x; n > 0; ) {
+                sum = sum + 1;
+                n = n - 2;
+            }
+        } else {
+            int n = 0;
+            //@ maintaining sum == y - (-x - n) && 0 <= n && n <= -x;
+            //@ maintaining n % 2 == (-x) % 2;
+            //@ decreases n;
+            for(n = -x; n > 0; ) {
+                sum = sum - 1;
+                n = n - 2;
+            }
+        }
+        return sum;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081403-specgen/tmp/AddLoopFor_Mutant2.java:11: verify: The prover cannot establish an assertion (LoopInvariantBeforeLoop) in method addLoop
+            //@ maintaining sum == y - (x + n) && 0 <= n && n <= x;  
+                ^
+1 verification failure
+
+==============================
+public class AddLoopFor_Mutant2 {
+    /*@ public normal_behavior
+      @ requires Integer.MIN_VALUE <= x + y && x + y <= Integer.MAX_VALUE;
+      @ ensures \result == x + y;
+      @ assignable \nothing;
+      @*/
+    public static int addLoop(int x, int y) {
+        int sum = y;
+        if (x > 0) {
+            int n = 0;
+            //@ maintaining sum == y - (x + n) && 0 <= n && n - 1 <= x;  
+            //@ maintaining n % 2 == x % 2;
+            //@ decreases n;
+            for(n = x; n > 0; ) {
+                sum = sum + 1;
+                n = n - 2;
+            }
+        } else {
+            int n = 0;
+            //@ maintaining sum == y - (-x - n) && 0 <= n && n <= -x;
+            //@ maintaining n % 2 == (-x) % 2;
+            //@ decreases n;
+            for(n = -x; n > 0; ) {
+                sum = sum - 1;
+                n = n - 2;
+            }
+        }
+        return sum;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081403-specgen/tmp/AddLoopFor_Mutant2.java:11: verify: The prover cannot establish an assertion (LoopInvariantBeforeLoop) in method addLoop
+            //@ maintaining sum == y - (x + n) && 0 <= n && n - 1 <= x;  
+                ^
+1 verification failure
+
+==============================
+public class AddLoopFor_Mutant2 {
+    /*@ public normal_behavior
+      @ requires Integer.MIN_VALUE <= x + y && x + y <= Integer.MAX_VALUE;
+      @ ensures \result == x + y;
+      @ assignable \nothing;
+      @*/
+    public static int addLoop(int x, int y) {
+        int sum = y;
+        if (x > 0) {
+            int n = 0;
+            //@ maintaining sum == y - (x + n) && 0 - 1 <= n && n < x;  
+            //@ maintaining n % 2 == x % 2;
+            //@ decreases n;
+            for(n = x; n > 0; ) {
+                sum = sum + 1;
+                n = n - 2;
+            }
+        } else {
+            int n = 0;
+            //@ maintaining sum == y - (-x - n) && 0 <= n && n <= -x;
+            //@ maintaining n % 2 == (-x) % 2;
+            //@ decreases n;
+            for(n = -x; n > 0; ) {
+                sum = sum - 1;
+                n = n - 2;
+            }
+        }
+        return sum;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081403-specgen/tmp/AddLoopFor_Mutant2.java:11: verify: The prover cannot establish an assertion (LoopInvariantBeforeLoop) in method addLoop
+            //@ maintaining sum == y - (x + n) && 0 - 1 <= n && n < x;  
+                ^
+1 verification failure
+
+==============================
+public class AddLoopFor_Mutant2 {
+    /*@ public normal_behavior
+      @ requires Integer.MIN_VALUE <= x + y && x + y <= Integer.MAX_VALUE;
+      @ ensures \result == x + y;
+      @ assignable \nothing;
+      @*/
+    public static int addLoop(int x, int y) {
+        int sum = y;
+        if (x > 0) {
+            int n = 0;
+            //@ maintaining sum == y - (x + n) && 0 - 1 <= n && n <= x;  
+            //@ maintaining n % 2 == x % 2;
+            //@ decreases n;
+            for(n = x; n > 0; ) {
+                sum = sum + 1;
+                n = n - 2;
+            }
+        } else {
+            int n = 0;
+            //@ maintaining sum == y - (-x - n) && 0 <= n && n <= -x;
+            //@ maintaining n % 2 == (-x) % 2;
+            //@ decreases n;
+            for(n = -x; n > 0; ) {
+                sum = sum - 1;
+                n = n - 2;
+            }
+        }
+        return sum;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081403-specgen/tmp/AddLoopFor_Mutant2.java:11: verify: The prover cannot establish an assertion (LoopInvariantBeforeLoop) in method addLoop
+            //@ maintaining sum == y - (x + n) && 0 - 1 <= n && n <= x;  
+                ^
+1 verification failure
+
+==============================
+public class AddLoopFor_Mutant2 {
+    /*@ public normal_behavior
+      @ requires Integer.MIN_VALUE <= x + y && x + y <= Integer.MAX_VALUE;
+      @ ensures \result == x + y;
+      @ assignable \nothing;
+      @*/
+    public static int addLoop(int x, int y) {
+        int sum = y;
+        if (x > 0) {
+            int n = 0;
+            //@ maintaining sum == y - (x + n) && 0 - 1 <= n && n - 1 <= x;  
+            //@ maintaining n % 2 == x % 2;
+            //@ decreases n;
+            for(n = x; n > 0; ) {
+                sum = sum + 1;
+                n = n - 2;
+            }
+        } else {
+            int n = 0;
+            //@ maintaining sum == y - (-x - n) && 0 <= n && n <= -x;
+            //@ maintaining n % 2 == (-x) % 2;
+            //@ decreases n;
+            for(n = -x; n > 0; ) {
+                sum = sum - 1;
+                n = n - 2;
+            }
+        }
+        return sum;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081403-specgen/tmp/AddLoopFor_Mutant2.java:11: verify: The prover cannot establish an assertion (LoopInvariantBeforeLoop) in method addLoop
+            //@ maintaining sum == y - (x + n) && 0 - 1 <= n && n - 1 <= x;  
+                ^
+1 verification failure
+
+==============================
+public class AddLoopFor_Mutant2 {
+    /*@ public normal_behavior
+      @ requires Integer.MIN_VALUE <= x + y && x + y <= Integer.MAX_VALUE;
+      @ ensures \result == x + y;
+      @ assignable \nothing;
+      @*/
+    public static int addLoop(int x, int y) {
+        int sum = y;
+        if (x > 0) {
+            int n = 0;
+            //@ maintaining sum == y - (x - n) && 0 < n && n < x;  
+            //@ maintaining n % 2 == x % 2;
+            //@ decreases n;
+            for(n = x; n > 0; ) {
+                sum = sum + 1;
+                n = n - 2;
+            }
+        } else {
+            int n = 0;
+            //@ maintaining sum == y - (-x - n) && 0 <= n && n <= -x;
+            //@ maintaining n % 2 == (-x) % 2;
+            //@ decreases n;
+            for(n = -x; n > 0; ) {
+                sum = sum - 1;
+                n = n - 2;
+            }
+        }
+        return sum;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081403-specgen/tmp/AddLoopFor_Mutant2.java:11: verify: The prover cannot establish an assertion (LoopInvariantBeforeLoop) in method addLoop
+            //@ maintaining sum == y - (x - n) && 0 < n && n < x;  
+                ^
+1 verification failure
+
+==============================
+public class AddLoopFor_Mutant2 {
+    /*@ public normal_behavior
+      @ requires Integer.MIN_VALUE <= x + y && x + y <= Integer.MAX_VALUE;
+      @ ensures \result == x + y;
+      @ assignable \nothing;
+      @*/
+    public static int addLoop(int x, int y) {
+        int sum = y;
+        if (x > 0) {
+            int n = 0;
+            //@ maintaining sum == y - (x - n) && 0 < n && n <= x;  
+            //@ maintaining n % 2 == x % 2;
+            //@ decreases n;
+            for(n = x; n > 0; ) {
+                sum = sum + 1;
+                n = n - 2;
+            }
+        } else {
+            int n = 0;
+            //@ maintaining sum == y - (-x - n) && 0 <= n && n <= -x;
+            //@ maintaining n % 2 == (-x) % 2;
+            //@ decreases n;
+            for(n = -x; n > 0; ) {
+                sum = sum - 1;
+                n = n - 2;
+            }
+        }
+        return sum;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081403-specgen/tmp/AddLoopFor_Mutant2.java:11: verify: The prover cannot establish an assertion (LoopInvariant) in method addLoop
+            //@ maintaining sum == y - (x - n) && 0 < n && n <= x;  
+                ^
+1 verification failure
+
+==============================
+public class AddLoopFor_Mutant2 {
+    /*@ public normal_behavior
+      @ requires Integer.MIN_VALUE <= x + y && x + y <= Integer.MAX_VALUE;
+      @ ensures \result == x + y;
+      @ assignable \nothing;
+      @*/
+    public static int addLoop(int x, int y) {
+        int sum = y;
+        if (x > 0) {
+            int n = 0;
+            //@ maintaining sum == y - (x - n) && 0 < n && n - 1 <= x;  
+            //@ maintaining n % 2 == x % 2;
+            //@ decreases n;
+            for(n = x; n > 0; ) {
+                sum = sum + 1;
+                n = n - 2;
+            }
+        } else {
+            int n = 0;
+            //@ maintaining sum == y - (-x - n) && 0 <= n && n <= -x;
+            //@ maintaining n % 2 == (-x) % 2;
+            //@ decreases n;
+            for(n = -x; n > 0; ) {
+                sum = sum - 1;
+                n = n - 2;
+            }
+        }
+        return sum;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081403-specgen/tmp/AddLoopFor_Mutant2.java:11: verify: The prover cannot establish an assertion (LoopInvariant) in method addLoop
+            //@ maintaining sum == y - (x - n) && 0 < n && n - 1 <= x;  
+                ^
+1 verification failure
+
+==============================
+public class AddLoopFor_Mutant2 {
+    /*@ public normal_behavior
+      @ requires Integer.MIN_VALUE <= x + y && x + y <= Integer.MAX_VALUE;
+      @ ensures \result == x + y;
+      @ assignable \nothing;
+      @*/
+    public static int addLoop(int x, int y) {
+        int sum = y;
+        if (x > 0) {
+            int n = 0;
+            //@ maintaining sum == y - (x - n) && 0 <= n && n < x;  
+            //@ maintaining n % 2 == x % 2;
+            //@ decreases n;
+            for(n = x; n > 0; ) {
+                sum = sum + 1;
+                n = n - 2;
+            }
+        } else {
+            int n = 0;
+            //@ maintaining sum == y - (-x - n) && 0 <= n && n <= -x;
+            //@ maintaining n % 2 == (-x) % 2;
+            //@ decreases n;
+            for(n = -x; n > 0; ) {
+                sum = sum - 1;
+                n = n - 2;
+            }
+        }
+        return sum;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081403-specgen/tmp/AddLoopFor_Mutant2.java:11: verify: The prover cannot establish an assertion (LoopInvariantBeforeLoop) in method addLoop
+            //@ maintaining sum == y - (x - n) && 0 <= n && n < x;  
+                ^
+1 verification failure
+
+==============================
+public class AddLoopFor_Mutant2 {
+    /*@ public normal_behavior
+      @ requires Integer.MIN_VALUE <= x + y && x + y <= Integer.MAX_VALUE;
+      @ ensures \result == x + y;
+      @ assignable \nothing;
+      @*/
+    public static int addLoop(int x, int y) {
+        int sum = y;
+        if (x > 0) {
+            int n = 0;
+            //@ maintaining sum == y - (x - n) && 0 <= n && n <= x;  
+            //@ maintaining n % 2 == x % 2;
+            //@ decreases n;
+            for(n = x; n > 0; ) {
+                sum = sum + 1;
+                n = n - 2;
+            }
+        } else {
+            int n = 0;
+            //@ maintaining sum == y - (-x - n) && 0 <= n && n <= -x;
+            //@ maintaining n % 2 == (-x) % 2;
+            //@ decreases n;
+            for(n = -x; n > 0; ) {
+                sum = sum - 1;
+                n = n - 2;
+            }
+        }
+        return sum;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081403-specgen/tmp/AddLoopFor_Mutant2.java:28: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081403-specgen/tmp/AddLoopFor_Mutant2.java:4:) in method addLoop
+        return sum;
+        ^
+/root/specgen/SpecGen/project/081403-specgen/tmp/AddLoopFor_Mutant2.java:4: verify: Associated declaration: /root/specgen/SpecGen/project/081403-specgen/tmp/AddLoopFor_Mutant2.java:28:
+      @ ensures \result == x + y;
+        ^
+2 verification failures
+
+==============================
+public class AddLoopFor_Mutant2 {
+    /*@ public normal_behavior
+      @ requires Integer.MIN_VALUE <= x + y && x + y <= Integer.MAX_VALUE;
+      @ ensures \result == x + y;  
+      @ assignable \nothing;
+      @*/
+    public static int addLoop(int x, int y) {
+        int sum = y;
+        if (x > 0) {
+            int n = 0;
+            //@ maintaining sum == y - (x - n) && 0 <= n && n <= x;  
+            //@ maintaining n % 2 == x % 2;
+            //@ decreases n;
+            for(n = x; n > 0; ) {
+                sum = sum + 1;
+                n = n - 2;
+            }
+        } else {
+            int n = 0;
+            //@ maintaining sum == y - (-x - n) && 0 <= n && n <= -x;
+            //@ maintaining n % 2 == (-x) % 2;
+            //@ decreases n;
+            for(n = -x; n > 0; ) {
+                sum = sum - 1;
+                n = n - 2;
+            }
+        }
+        return sum;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081403-specgen/tmp/AddLoopFor_Mutant2.java:28: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081403-specgen/tmp/AddLoopFor_Mutant2.java:4:) in method addLoop
+        return sum;
+        ^
+/root/specgen/SpecGen/project/081403-specgen/tmp/AddLoopFor_Mutant2.java:4: verify: Associated declaration: /root/specgen/SpecGen/project/081403-specgen/tmp/AddLoopFor_Mutant2.java:28:
+      @ ensures \result == x + y;  
+        ^
+2 verification failures
+
+==============================
+public class AddLoopFor_Mutant2 {
+    /*@ public normal_behavior
+      @ requires Integer.MIN_VALUE <= x + y && x + y <= Integer.MAX_VALUE;
+      @ ensures \result == x - y;  
+      @ assignable \nothing;
+      @*/
+    public static int addLoop(int x, int y) {
+        int sum = y;
+        if (x > 0) {
+            int n = 0;
+            //@ maintaining sum == y - (x - n) && 0 <= n && n <= x;  
+            //@ maintaining n % 2 == x % 2;
+            //@ decreases n;
+            for(n = x; n > 0; ) {
+                sum = sum + 1;
+                n = n - 2;
+            }
+        } else {
+            int n = 0;
+            //@ maintaining sum == y - (-x - n) && 0 <= n && n <= -x;
+            //@ maintaining n % 2 == (-x) % 2;
+            //@ decreases n;
+            for(n = -x; n > 0; ) {
+                sum = sum - 1;
+                n = n - 2;
+            }
+        }
+        return sum;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081403-specgen/tmp/AddLoopFor_Mutant2.java:28: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081403-specgen/tmp/AddLoopFor_Mutant2.java:4:) in method addLoop
+        return sum;
+        ^
+/root/specgen/SpecGen/project/081403-specgen/tmp/AddLoopFor_Mutant2.java:4: verify: Associated declaration: /root/specgen/SpecGen/project/081403-specgen/tmp/AddLoopFor_Mutant2.java:28:
+      @ ensures \result == x - y;  
+        ^
+2 verification failures
+
+==============================
+public class AddLoopFor_Mutant2 {
+    /*@ public normal_behavior
+      @ requires Integer.MIN_VALUE <= x + y && x + y <= Integer.MAX_VALUE;
+ 
+      @ assignable \nothing;
+      @*/
+    public static int addLoop(int x, int y) {
+        int sum = y;
+        if (x > 0) {
+            int n = 0;
+            //@ maintaining sum == y - (x - n) && 0 <= n && n <= x;  
+            //@ maintaining n % 2 == x % 2;
+            //@ decreases n;
+            for(n = x; n > 0; ) {
+                sum = sum + 1;
+                n = n - 2;
+            }
+        } else {
+            int n = 0;
+            //@ maintaining sum == y - (-x - n) && 0 <= n && n <= -x;
+            //@ maintaining n % 2 == (-x) % 2;
+            //@ decreases n;
+            for(n = -x; n > 0; ) {
+                sum = sum - 1;
+                n = n - 2;
+            }
+        }
+        return sum;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081403-specgen/tmp/AddLoopFor_Mutant2.java:11: verify: The prover cannot establish an assertion (LoopInvariant) in method addLoop
+            //@ maintaining sum == y - (x - n) && 0 <= n && n <= x;  
+                ^
+1 verification failure
+
+==============================
+public class AddLoopFor_Mutant2 {
+    /*@ public normal_behavior
+      @ requires Integer.MIN_VALUE <= x + y && x + y <= Integer.MAX_VALUE;
+ 
+      @ assignable \nothing;
+      @*/
+    public static int addLoop(int x, int y) {
+        int sum = y;
+        if (x > 0) {
+            int n = 0;
+            //@ maintaining sum == y - (x - n) && 0 <= n && n - 1 <= x;  
+            //@ maintaining n % 2 == x % 2;
+            //@ decreases n;
+            for(n = x; n > 0; ) {
+                sum = sum + 1;
+                n = n - 2;
+            }
+        } else {
+            int n = 0;
+            //@ maintaining sum == y - (-x - n) && 0 <= n && n <= -x;
+            //@ maintaining n % 2 == (-x) % 2;
+            //@ decreases n;
+            for(n = -x; n > 0; ) {
+                sum = sum - 1;
+                n = n - 2;
+            }
+        }
+        return sum;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081403-specgen/tmp/AddLoopFor_Mutant2.java:11: verify: The prover cannot establish an assertion (LoopInvariant) in method addLoop
+            //@ maintaining sum == y - (x - n) && 0 <= n && n - 1 <= x;  
+                ^
+1 verification failure
+
+==============================
+public class AddLoopFor_Mutant2 {
+    /*@ public normal_behavior
+      @ requires Integer.MIN_VALUE <= x + y && x + y <= Integer.MAX_VALUE;
+ 
+      @ assignable \nothing;
+      @*/
+    public static int addLoop(int x, int y) {
+        int sum = y;
+        if (x > 0) {
+            int n = 0;
+            //@ maintaining sum == y - (x - n) && 0 - 1 <= n && n < x;  
+            //@ maintaining n % 2 == x % 2;
+            //@ decreases n;
+            for(n = x; n > 0; ) {
+                sum = sum + 1;
+                n = n - 2;
+            }
+        } else {
+            int n = 0;
+            //@ maintaining sum == y - (-x - n) && 0 <= n && n <= -x;
+            //@ maintaining n % 2 == (-x) % 2;
+            //@ decreases n;
+            for(n = -x; n > 0; ) {
+                sum = sum - 1;
+                n = n - 2;
+            }
+        }
+        return sum;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081403-specgen/tmp/AddLoopFor_Mutant2.java:11: verify: The prover cannot establish an assertion (LoopInvariantBeforeLoop) in method addLoop
+            //@ maintaining sum == y - (x - n) && 0 - 1 <= n && n < x;  
+                ^
+1 verification failure
+
+==============================
+public class AddLoopFor_Mutant2 {
+    /*@ public normal_behavior
+      @ requires Integer.MIN_VALUE <= x + y && x + y <= Integer.MAX_VALUE;
+ 
+      @ assignable \nothing;
+      @*/
+    public static int addLoop(int x, int y) {
+        int sum = y;
+        if (x > 0) {
+            int n = 0;
+            //@ maintaining sum == y - (x - n) && 0 - 1 <= n && n <= x;  
+            //@ maintaining n % 2 == x % 2;
+            //@ decreases n;
+            for(n = x; n > 0; ) {
+                sum = sum + 1;
+                n = n - 2;
+            }
+        } else {
+            int n = 0;
+            //@ maintaining sum == y - (-x - n) && 0 <= n && n <= -x;
+            //@ maintaining n % 2 == (-x) % 2;
+            //@ decreases n;
+            for(n = -x; n > 0; ) {
+                sum = sum - 1;
+                n = n - 2;
+            }
+        }
+        return sum;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081403-specgen/tmp/AddLoopFor_Mutant2.java:11: verify: The prover cannot establish an assertion (LoopInvariant) in method addLoop
+            //@ maintaining sum == y - (x - n) && 0 - 1 <= n && n <= x;  
+                ^
+1 verification failure
+
+==============================
+public class AddLoopFor_Mutant2 {
+    /*@ public normal_behavior
+      @ requires Integer.MIN_VALUE <= x + y && x + y <= Integer.MAX_VALUE;
+ 
+      @ assignable \nothing;
+      @*/
+    public static int addLoop(int x, int y) {
+        int sum = y;
+        if (x > 0) {
+            int n = 0;
+            //@ maintaining sum == y - (x - n) && 0 - 1 <= n && n - 1 <= x;  
+            //@ maintaining n % 2 == x % 2;
+            //@ decreases n;
+            for(n = x; n > 0; ) {
+                sum = sum + 1;
+                n = n - 2;
+            }
+        } else {
+            int n = 0;
+            //@ maintaining sum == y - (-x - n) && 0 <= n && n <= -x;
+            //@ maintaining n % 2 == (-x) % 2;
+            //@ decreases n;
+            for(n = -x; n > 0; ) {
+                sum = sum - 1;
+                n = n - 2;
+            }
+        }
+        return sum;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081403-specgen/tmp/AddLoopFor_Mutant2.java:11: verify: The prover cannot establish an assertion (LoopInvariant) in method addLoop
+            //@ maintaining sum == y - (x - n) && 0 - 1 <= n && n - 1 <= x;  
+                ^
+1 verification failure
+
+==============================
+public class AddLoopFor_Mutant2 {
+    /*@ public normal_behavior
+      @ requires Integer.MIN_VALUE <= x + y && x + y <= Integer.MAX_VALUE;
+ 
+      @ assignable \nothing;
+      @*/
+    public static int addLoop(int x, int y) {
+        int sum = y;
+        if (x > 0) {
+            int n = 0;
+ 
+            //@ maintaining n % 2 == x % 2;
+            //@ decreases n;
+            for(n = x; n > 0; ) {
+                sum = sum + 1;
+                n = n - 2;
+            }
+        } else {
+            int n = 0;
+            //@ maintaining sum == y - (-x - n) && 0 <= n && n <= -x;
+            //@ maintaining n % 2 == (-x) % 2;
+            //@ decreases n;
+            for(n = -x; n > 0; ) {
+                sum = sum - 1;
+                n = n - 2;
+            }
+        }
+        return sum;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081403-specgen/tmp/AddLoopFor_Mutant2.java:12: verify: The prover cannot establish an assertion (LoopInvariant) in method addLoop
+            //@ maintaining n % 2 == x % 2;
+                ^
+1 verification failure
+
+==============================
+public class AddLoopFor_Mutant2 {
+    /*@ public normal_behavior
+      @ requires Integer.MIN_VALUE <= x + y && x + y <= Integer.MAX_VALUE;
+ 
+      @ assignable \nothing;
+      @*/
+    public static int addLoop(int x, int y) {
+        int sum = y;
+        if (x > 0) {
+            int n = 0;
+ 
+            //@ maintaining n % 2 == x % 2;  
+            //@ decreases n;
+            for(n = x; n > 0; ) {
+                sum = sum + 1;
+                n = n - 2;
+            }
+        } else {
+            int n = 0;
+            //@ maintaining sum == y - (-x - n) && 0 <= n && n <= -x;
+            //@ maintaining n % 2 == (-x) % 2;
+            //@ decreases n;
+            for(n = -x; n > 0; ) {
+                sum = sum - 1;
+                n = n - 2;
+            }
+        }
+        return sum;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081403-specgen/tmp/AddLoopFor_Mutant2.java:12: verify: The prover cannot establish an assertion (LoopInvariant) in method addLoop
+            //@ maintaining n % 2 == x % 2;  
+                ^
+1 verification failure
+
+==============================
+public class AddLoopFor_Mutant2 {
+    /*@ public normal_behavior
+      @ requires Integer.MIN_VALUE <= x + y && x + y <= Integer.MAX_VALUE;
+ 
+      @ assignable \nothing;
+      @*/
+    public static int addLoop(int x, int y) {
+        int sum = y;
+        if (x > 0) {
+            int n = 0;
+ 
+ 
+            //@ decreases n;
+            for(n = x; n > 0; ) {
+                sum = sum + 1;
+                n = n - 2;
+            }
+        } else {
+            int n = 0;
+            //@ maintaining sum == y - (-x - n) && 0 <= n && n <= -x;
+            //@ maintaining n % 2 == (-x) % 2;
+            //@ decreases n;
+            for(n = -x; n > 0; ) {
+                sum = sum - 1;
+                n = n - 2;
+            }
+        }
+        return sum;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081403-specgen/tmp/AddLoopFor_Mutant2.java:20: verify: The prover cannot establish an assertion (LoopInvariant) in method addLoop
+            //@ maintaining sum == y - (-x - n) && 0 <= n && n <= -x;
+                ^
+1 verification failure
+
+==============================
+public class AddLoopFor_Mutant2 {
+    /*@ public normal_behavior
+      @ requires Integer.MIN_VALUE <= x + y && x + y <= Integer.MAX_VALUE;
+ 
+      @ assignable \nothing;
+      @*/
+    public static int addLoop(int x, int y) {
+        int sum = y;
+        if (x > 0) {
+            int n = 0;
+ 
+ 
+            //@ decreases n;
+            for(n = x; n > 0; ) {
+                sum = sum + 1;
+                n = n - 2;
+            }
+        } else {
+            int n = 0;
+            //@ maintaining sum == y - (-x - n) && 0 < n && n < -x;  
+            //@ maintaining n % 2 == (-x) % 2;
+            //@ decreases n;
+            for(n = -x; n > 0; ) {
+                sum = sum - 1;
+                n = n - 2;
+            }
+        }
+        return sum;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081403-specgen/tmp/AddLoopFor_Mutant2.java:20: verify: The prover cannot establish an assertion (LoopInvariantBeforeLoop) in method addLoop
+            //@ maintaining sum == y - (-x - n) && 0 < n && n < -x;  
+                ^
+1 verification failure
+
+==============================
+public class AddLoopFor_Mutant2 {
+    /*@ public normal_behavior
+      @ requires Integer.MIN_VALUE <= x + y && x + y <= Integer.MAX_VALUE;
+ 
+      @ assignable \nothing;
+      @*/
+    public static int addLoop(int x, int y) {
+        int sum = y;
+        if (x > 0) {
+            int n = 0;
+ 
+ 
+            //@ decreases n;
+            for(n = x; n > 0; ) {
+                sum = sum + 1;
+                n = n - 2;
+            }
+        } else {
+            int n = 0;
+            //@ maintaining sum == y - (-x - n) && 0 < n && n <= -x;  
+            //@ maintaining n % 2 == (-x) % 2;
+            //@ decreases n;
+            for(n = -x; n > 0; ) {
+                sum = sum - 1;
+                n = n - 2;
+            }
+        }
+        return sum;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081403-specgen/tmp/AddLoopFor_Mutant2.java:20: verify: The prover cannot establish an assertion (LoopInvariantBeforeLoop) in method addLoop
+            //@ maintaining sum == y - (-x - n) && 0 < n && n <= -x;  
+                ^
+1 verification failure
+
+==============================
+public class AddLoopFor_Mutant2 {
+    /*@ public normal_behavior
+      @ requires Integer.MIN_VALUE <= x + y && x + y <= Integer.MAX_VALUE;
+ 
+      @ assignable \nothing;
+      @*/
+    public static int addLoop(int x, int y) {
+        int sum = y;
+        if (x > 0) {
+            int n = 0;
+ 
+ 
+            //@ decreases n;
+            for(n = x; n > 0; ) {
+                sum = sum + 1;
+                n = n - 2;
+            }
+        } else {
+            int n = 0;
+            //@ maintaining sum == y - (-x - n) && 0 < n && n - 1 <= -x;  
+            //@ maintaining n % 2 == (-x) % 2;
+            //@ decreases n;
+            for(n = -x; n > 0; ) {
+                sum = sum - 1;
+                n = n - 2;
+            }
+        }
+        return sum;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081403-specgen/tmp/AddLoopFor_Mutant2.java:20: verify: The prover cannot establish an assertion (LoopInvariantBeforeLoop) in method addLoop
+            //@ maintaining sum == y - (-x - n) && 0 < n && n - 1 <= -x;  
+                ^
+1 verification failure
+
+==============================
+public class AddLoopFor_Mutant2 {
+    /*@ public normal_behavior
+      @ requires Integer.MIN_VALUE <= x + y && x + y <= Integer.MAX_VALUE;
+ 
+      @ assignable \nothing;
+      @*/
+    public static int addLoop(int x, int y) {
+        int sum = y;
+        if (x > 0) {
+            int n = 0;
+ 
+ 
+            //@ decreases n;
+            for(n = x; n > 0; ) {
+                sum = sum + 1;
+                n = n - 2;
+            }
+        } else {
+            int n = 0;
+            //@ maintaining sum == y - (-x - n) && 0 <= n && n < -x;  
+            //@ maintaining n % 2 == (-x) % 2;
+            //@ decreases n;
+            for(n = -x; n > 0; ) {
+                sum = sum - 1;
+                n = n - 2;
+            }
+        }
+        return sum;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081403-specgen/tmp/AddLoopFor_Mutant2.java:20: verify: The prover cannot establish an assertion (LoopInvariantBeforeLoop) in method addLoop
+            //@ maintaining sum == y - (-x - n) && 0 <= n && n < -x;  
+                ^
+1 verification failure
+
+==============================
+public class AddLoopFor_Mutant2 {
+    /*@ public normal_behavior
+      @ requires Integer.MIN_VALUE <= x + y && x + y <= Integer.MAX_VALUE;
+ 
+      @ assignable \nothing;
+      @*/
+    public static int addLoop(int x, int y) {
+        int sum = y;
+        if (x > 0) {
+            int n = 0;
+ 
+ 
+            //@ decreases n;
+            for(n = x; n > 0; ) {
+                sum = sum + 1;
+                n = n - 2;
+            }
+        } else {
+            int n = 0;
+            //@ maintaining sum == y - (-x - n) && 0 <= n && n <= -x;  
+            //@ maintaining n % 2 == (-x) % 2;
+            //@ decreases n;
+            for(n = -x; n > 0; ) {
+                sum = sum - 1;
+                n = n - 2;
+            }
+        }
+        return sum;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081403-specgen/tmp/AddLoopFor_Mutant2.java:20: verify: The prover cannot establish an assertion (LoopInvariant) in method addLoop
+            //@ maintaining sum == y - (-x - n) && 0 <= n && n <= -x;  
+                ^
+1 verification failure
+
+==============================
+public class AddLoopFor_Mutant2 {
+    /*@ public normal_behavior
+      @ requires Integer.MIN_VALUE <= x + y && x + y <= Integer.MAX_VALUE;
+ 
+      @ assignable \nothing;
+      @*/
+    public static int addLoop(int x, int y) {
+        int sum = y;
+        if (x > 0) {
+            int n = 0;
+ 
+ 
+            //@ decreases n;
+            for(n = x; n > 0; ) {
+                sum = sum + 1;
+                n = n - 2;
+            }
+        } else {
+            int n = 0;
+            //@ maintaining sum == y - (-x - n) && 0 <= n && n - 1 <= -x;  
+            //@ maintaining n % 2 == (-x) % 2;
+            //@ decreases n;
+            for(n = -x; n > 0; ) {
+                sum = sum - 1;
+                n = n - 2;
+            }
+        }
+        return sum;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081403-specgen/tmp/AddLoopFor_Mutant2.java:20: verify: The prover cannot establish an assertion (LoopInvariant) in method addLoop
+            //@ maintaining sum == y - (-x - n) && 0 <= n && n - 1 <= -x;  
+                ^
+1 verification failure
+
+==============================
+public class AddLoopFor_Mutant2 {
+    /*@ public normal_behavior
+      @ requires Integer.MIN_VALUE <= x + y && x + y <= Integer.MAX_VALUE;
+ 
+      @ assignable \nothing;
+      @*/
+    public static int addLoop(int x, int y) {
+        int sum = y;
+        if (x > 0) {
+            int n = 0;
+ 
+ 
+            //@ decreases n;
+            for(n = x; n > 0; ) {
+                sum = sum + 1;
+                n = n - 2;
+            }
+        } else {
+            int n = 0;
+            //@ maintaining sum == y - (-x - n) && 0 - 1 <= n && n < -x;  
+            //@ maintaining n % 2 == (-x) % 2;
+            //@ decreases n;
+            for(n = -x; n > 0; ) {
+                sum = sum - 1;
+                n = n - 2;
+            }
+        }
+        return sum;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081403-specgen/tmp/AddLoopFor_Mutant2.java:20: verify: The prover cannot establish an assertion (LoopInvariantBeforeLoop) in method addLoop
+            //@ maintaining sum == y - (-x - n) && 0 - 1 <= n && n < -x;  
+                ^
+1 verification failure
+
+==============================
+public class AddLoopFor_Mutant2 {
+    /*@ public normal_behavior
+      @ requires Integer.MIN_VALUE <= x + y && x + y <= Integer.MAX_VALUE;
+ 
+      @ assignable \nothing;
+      @*/
+    public static int addLoop(int x, int y) {
+        int sum = y;
+        if (x > 0) {
+            int n = 0;
+ 
+ 
+            //@ decreases n;
+            for(n = x; n > 0; ) {
+                sum = sum + 1;
+                n = n - 2;
+            }
+        } else {
+            int n = 0;
+            //@ maintaining sum == y - (-x - n) && 0 - 1 <= n && n <= -x;  
+            //@ maintaining n % 2 == (-x) % 2;
+            //@ decreases n;
+            for(n = -x; n > 0; ) {
+                sum = sum - 1;
+                n = n - 2;
+            }
+        }
+        return sum;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081403-specgen/tmp/AddLoopFor_Mutant2.java:20: verify: The prover cannot establish an assertion (LoopInvariant) in method addLoop
+            //@ maintaining sum == y - (-x - n) && 0 - 1 <= n && n <= -x;  
+                ^
+1 verification failure
+
+==============================
+public class AddLoopFor_Mutant2 {
+    /*@ public normal_behavior
+      @ requires Integer.MIN_VALUE <= x + y && x + y <= Integer.MAX_VALUE;
+ 
+      @ assignable \nothing;
+      @*/
+    public static int addLoop(int x, int y) {
+        int sum = y;
+        if (x > 0) {
+            int n = 0;
+ 
+ 
+            //@ decreases n;
+            for(n = x; n > 0; ) {
+                sum = sum + 1;
+                n = n - 2;
+            }
+        } else {
+            int n = 0;
+            //@ maintaining sum == y - (-x - n) && 0 - 1 <= n && n - 1 <= -x;  
+            //@ maintaining n % 2 == (-x) % 2;
+            //@ decreases n;
+            for(n = -x; n > 0; ) {
+                sum = sum - 1;
+                n = n - 2;
+            }
+        }
+        return sum;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081403-specgen/tmp/AddLoopFor_Mutant2.java:20: verify: The prover cannot establish an assertion (LoopInvariant) in method addLoop
+            //@ maintaining sum == y - (-x - n) && 0 - 1 <= n && n - 1 <= -x;  
+                ^
+1 verification failure
+
+==============================
+public class AddLoopFor_Mutant2 {
+    /*@ public normal_behavior
+      @ requires Integer.MIN_VALUE <= x + y && x + y <= Integer.MAX_VALUE;
+ 
+      @ assignable \nothing;
+      @*/
+    public static int addLoop(int x, int y) {
+        int sum = y;
+        if (x > 0) {
+            int n = 0;
+ 
+ 
+            //@ decreases n;
+            for(n = x; n > 0; ) {
+                sum = sum + 1;
+                n = n - 2;
+            }
+        } else {
+            int n = 0;
+            //@ maintaining sum == y + (-x + n) && 0 < n && n < -x;  
+            //@ maintaining n % 2 == (-x) % 2;
+            //@ decreases n;
+            for(n = -x; n > 0; ) {
+                sum = sum - 1;
+                n = n - 2;
+            }
+        }
+        return sum;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081403-specgen/tmp/AddLoopFor_Mutant2.java:20: verify: The prover cannot establish an assertion (LoopInvariantBeforeLoop) in method addLoop
+            //@ maintaining sum == y + (-x + n) && 0 < n && n < -x;  
+                ^
+1 verification failure
+
+==============================
+public class AddLoopFor_Mutant2 {
+    /*@ public normal_behavior
+      @ requires Integer.MIN_VALUE <= x + y && x + y <= Integer.MAX_VALUE;
+ 
+      @ assignable \nothing;
+      @*/
+    public static int addLoop(int x, int y) {
+        int sum = y;
+        if (x > 0) {
+            int n = 0;
+ 
+ 
+            //@ decreases n;
+            for(n = x; n > 0; ) {
+                sum = sum + 1;
+                n = n - 2;
+            }
+        } else {
+            int n = 0;
+            //@ maintaining sum == y + (-x + n) && 0 < n && n <= -x;  
+            //@ maintaining n % 2 == (-x) % 2;
+            //@ decreases n;
+            for(n = -x; n > 0; ) {
+                sum = sum - 1;
+                n = n - 2;
+            }
+        }
+        return sum;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081403-specgen/tmp/AddLoopFor_Mutant2.java:20: verify: The prover cannot establish an assertion (LoopInvariantBeforeLoop) in method addLoop
+            //@ maintaining sum == y + (-x + n) && 0 < n && n <= -x;  
+                ^
+1 verification failure
+
+==============================
+public class AddLoopFor_Mutant2 {
+    /*@ public normal_behavior
+      @ requires Integer.MIN_VALUE <= x + y && x + y <= Integer.MAX_VALUE;
+ 
+      @ assignable \nothing;
+      @*/
+    public static int addLoop(int x, int y) {
+        int sum = y;
+        if (x > 0) {
+            int n = 0;
+ 
+ 
+            //@ decreases n;
+            for(n = x; n > 0; ) {
+                sum = sum + 1;
+                n = n - 2;
+            }
+        } else {
+            int n = 0;
+            //@ maintaining sum == y + (-x + n) && 0 < n && n - 1 <= -x;  
+            //@ maintaining n % 2 == (-x) % 2;
+            //@ decreases n;
+            for(n = -x; n > 0; ) {
+                sum = sum - 1;
+                n = n - 2;
+            }
+        }
+        return sum;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081403-specgen/tmp/AddLoopFor_Mutant2.java:20: verify: The prover cannot establish an assertion (LoopInvariantBeforeLoop) in method addLoop
+            //@ maintaining sum == y + (-x + n) && 0 < n && n - 1 <= -x;  
+                ^
+1 verification failure
+
+==============================
+public class AddLoopFor_Mutant2 {
+    /*@ public normal_behavior
+      @ requires Integer.MIN_VALUE <= x + y && x + y <= Integer.MAX_VALUE;
+ 
+      @ assignable \nothing;
+      @*/
+    public static int addLoop(int x, int y) {
+        int sum = y;
+        if (x > 0) {
+            int n = 0;
+ 
+ 
+            //@ decreases n;
+            for(n = x; n > 0; ) {
+                sum = sum + 1;
+                n = n - 2;
+            }
+        } else {
+            int n = 0;
+            //@ maintaining sum == y + (-x + n) && 0 <= n && n < -x;  
+            //@ maintaining n % 2 == (-x) % 2;
+            //@ decreases n;
+            for(n = -x; n > 0; ) {
+                sum = sum - 1;
+                n = n - 2;
+            }
+        }
+        return sum;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081403-specgen/tmp/AddLoopFor_Mutant2.java:20: verify: The prover cannot establish an assertion (LoopInvariantBeforeLoop) in method addLoop
+            //@ maintaining sum == y + (-x + n) && 0 <= n && n < -x;  
+                ^
+1 verification failure
+
+==============================
+public class AddLoopFor_Mutant2 {
+    /*@ public normal_behavior
+      @ requires Integer.MIN_VALUE <= x + y && x + y <= Integer.MAX_VALUE;
+ 
+      @ assignable \nothing;
+      @*/
+    public static int addLoop(int x, int y) {
+        int sum = y;
+        if (x > 0) {
+            int n = 0;
+ 
+ 
+            //@ decreases n;
+            for(n = x; n > 0; ) {
+                sum = sum + 1;
+                n = n - 2;
+            }
+        } else {
+            int n = 0;
+            //@ maintaining sum == y + (-x + n) && 0 <= n && n <= -x;  
+            //@ maintaining n % 2 == (-x) % 2;
+            //@ decreases n;
+            for(n = -x; n > 0; ) {
+                sum = sum - 1;
+                n = n - 2;
+            }
+        }
+        return sum;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081403-specgen/tmp/AddLoopFor_Mutant2.java:20: verify: The prover cannot establish an assertion (LoopInvariantBeforeLoop) in method addLoop
+            //@ maintaining sum == y + (-x + n) && 0 <= n && n <= -x;  
+                ^
+1 verification failure
+
+==============================
+public class AddLoopFor_Mutant2 {
+    /*@ public normal_behavior
+      @ requires Integer.MIN_VALUE <= x + y && x + y <= Integer.MAX_VALUE;
+ 
+      @ assignable \nothing;
+      @*/
+    public static int addLoop(int x, int y) {
+        int sum = y;
+        if (x > 0) {
+            int n = 0;
+ 
+ 
+            //@ decreases n;
+            for(n = x; n > 0; ) {
+                sum = sum + 1;
+                n = n - 2;
+            }
+        } else {
+            int n = 0;
+            //@ maintaining sum == y + (-x + n) && 0 <= n && n - 1 <= -x;  
+            //@ maintaining n % 2 == (-x) % 2;
+            //@ decreases n;
+            for(n = -x; n > 0; ) {
+                sum = sum - 1;
+                n = n - 2;
+            }
+        }
+        return sum;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081403-specgen/tmp/AddLoopFor_Mutant2.java:20: verify: The prover cannot establish an assertion (LoopInvariantBeforeLoop) in method addLoop
+            //@ maintaining sum == y + (-x + n) && 0 <= n && n - 1 <= -x;  
+                ^
+1 verification failure
+
+==============================
+public class AddLoopFor_Mutant2 {
+    /*@ public normal_behavior
+      @ requires Integer.MIN_VALUE <= x + y && x + y <= Integer.MAX_VALUE;
+ 
+      @ assignable \nothing;
+      @*/
+    public static int addLoop(int x, int y) {
+        int sum = y;
+        if (x > 0) {
+            int n = 0;
+ 
+ 
+            //@ decreases n;
+            for(n = x; n > 0; ) {
+                sum = sum + 1;
+                n = n - 2;
+            }
+        } else {
+            int n = 0;
+            //@ maintaining sum == y + (-x + n) && 0 - 1 <= n && n < -x;  
+            //@ maintaining n % 2 == (-x) % 2;
+            //@ decreases n;
+            for(n = -x; n > 0; ) {
+                sum = sum - 1;
+                n = n - 2;
+            }
+        }
+        return sum;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081403-specgen/tmp/AddLoopFor_Mutant2.java:20: verify: The prover cannot establish an assertion (LoopInvariantBeforeLoop) in method addLoop
+            //@ maintaining sum == y + (-x + n) && 0 - 1 <= n && n < -x;  
+                ^
+1 verification failure
+
+==============================
+public class AddLoopFor_Mutant2 {
+    /*@ public normal_behavior
+      @ requires Integer.MIN_VALUE <= x + y && x + y <= Integer.MAX_VALUE;
+ 
+      @ assignable \nothing;
+      @*/
+    public static int addLoop(int x, int y) {
+        int sum = y;
+        if (x > 0) {
+            int n = 0;
+ 
+ 
+            //@ decreases n;
+            for(n = x; n > 0; ) {
+                sum = sum + 1;
+                n = n - 2;
+            }
+        } else {
+            int n = 0;
+            //@ maintaining sum == y + (-x + n) && 0 - 1 <= n && n <= -x;  
+            //@ maintaining n % 2 == (-x) % 2;
+            //@ decreases n;
+            for(n = -x; n > 0; ) {
+                sum = sum - 1;
+                n = n - 2;
+            }
+        }
+        return sum;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081403-specgen/tmp/AddLoopFor_Mutant2.java:20: verify: The prover cannot establish an assertion (LoopInvariantBeforeLoop) in method addLoop
+            //@ maintaining sum == y + (-x + n) && 0 - 1 <= n && n <= -x;  
+                ^
+1 verification failure
+
+==============================
+public class AddLoopFor_Mutant2 {
+    /*@ public normal_behavior
+      @ requires Integer.MIN_VALUE <= x + y && x + y <= Integer.MAX_VALUE;
+ 
+      @ assignable \nothing;
+      @*/
+    public static int addLoop(int x, int y) {
+        int sum = y;
+        if (x > 0) {
+            int n = 0;
+ 
+ 
+            //@ decreases n;
+            for(n = x; n > 0; ) {
+                sum = sum + 1;
+                n = n - 2;
+            }
+        } else {
+            int n = 0;
+            //@ maintaining sum == y + (-x + n) && 0 - 1 <= n && n - 1 <= -x;  
+            //@ maintaining n % 2 == (-x) % 2;
+            //@ decreases n;
+            for(n = -x; n > 0; ) {
+                sum = sum - 1;
+                n = n - 2;
+            }
+        }
+        return sum;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081403-specgen/tmp/AddLoopFor_Mutant2.java:20: verify: The prover cannot establish an assertion (LoopInvariantBeforeLoop) in method addLoop
+            //@ maintaining sum == y + (-x + n) && 0 - 1 <= n && n - 1 <= -x;  
+                ^
+1 verification failure
+
+==============================
+public class AddLoopFor_Mutant2 {
+    /*@ public normal_behavior
+      @ requires Integer.MIN_VALUE <= x + y && x + y <= Integer.MAX_VALUE;
+ 
+      @ assignable \nothing;
+      @*/
+    public static int addLoop(int x, int y) {
+        int sum = y;
+        if (x > 0) {
+            int n = 0;
+ 
+ 
+            //@ decreases n;
+            for(n = x; n > 0; ) {
+                sum = sum + 1;
+                n = n - 2;
+            }
+        } else {
+            int n = 0;
+            //@ maintaining sum == y + (-x - n) && 0 < n && n < -x;  
+            //@ maintaining n % 2 == (-x) % 2;
+            //@ decreases n;
+            for(n = -x; n > 0; ) {
+                sum = sum - 1;
+                n = n - 2;
+            }
+        }
+        return sum;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081403-specgen/tmp/AddLoopFor_Mutant2.java:20: verify: The prover cannot establish an assertion (LoopInvariantBeforeLoop) in method addLoop
+            //@ maintaining sum == y + (-x - n) && 0 < n && n < -x;  
+                ^
+1 verification failure
+
+==============================
+public class AddLoopFor_Mutant2 {
+    /*@ public normal_behavior
+      @ requires Integer.MIN_VALUE <= x + y && x + y <= Integer.MAX_VALUE;
+ 
+      @ assignable \nothing;
+      @*/
+    public static int addLoop(int x, int y) {
+        int sum = y;
+        if (x > 0) {
+            int n = 0;
+ 
+ 
+            //@ decreases n;
+            for(n = x; n > 0; ) {
+                sum = sum + 1;
+                n = n - 2;
+            }
+        } else {
+            int n = 0;
+            //@ maintaining sum == y + (-x - n) && 0 < n && n <= -x;  
+            //@ maintaining n % 2 == (-x) % 2;
+            //@ decreases n;
+            for(n = -x; n > 0; ) {
+                sum = sum - 1;
+                n = n - 2;
+            }
+        }
+        return sum;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081403-specgen/tmp/AddLoopFor_Mutant2.java:20: verify: The prover cannot establish an assertion (LoopInvariantBeforeLoop) in method addLoop
+            //@ maintaining sum == y + (-x - n) && 0 < n && n <= -x;  
+                ^
+1 verification failure
+
+==============================
+public class AddLoopFor_Mutant2 {
+    /*@ public normal_behavior
+      @ requires Integer.MIN_VALUE <= x + y && x + y <= Integer.MAX_VALUE;
+ 
+      @ assignable \nothing;
+      @*/
+    public static int addLoop(int x, int y) {
+        int sum = y;
+        if (x > 0) {
+            int n = 0;
+ 
+ 
+            //@ decreases n;
+            for(n = x; n > 0; ) {
+                sum = sum + 1;
+                n = n - 2;
+            }
+        } else {
+            int n = 0;
+            //@ maintaining sum == y + (-x - n) && 0 < n && n - 1 <= -x;  
+            //@ maintaining n % 2 == (-x) % 2;
+            //@ decreases n;
+            for(n = -x; n > 0; ) {
+                sum = sum - 1;
+                n = n - 2;
+            }
+        }
+        return sum;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081403-specgen/tmp/AddLoopFor_Mutant2.java:20: verify: The prover cannot establish an assertion (LoopInvariantBeforeLoop) in method addLoop
+            //@ maintaining sum == y + (-x - n) && 0 < n && n - 1 <= -x;  
+                ^
+1 verification failure
+
+==============================
+public class AddLoopFor_Mutant2 {
+    /*@ public normal_behavior
+      @ requires Integer.MIN_VALUE <= x + y && x + y <= Integer.MAX_VALUE;
+ 
+      @ assignable \nothing;
+      @*/
+    public static int addLoop(int x, int y) {
+        int sum = y;
+        if (x > 0) {
+            int n = 0;
+ 
+ 
+            //@ decreases n;
+            for(n = x; n > 0; ) {
+                sum = sum + 1;
+                n = n - 2;
+            }
+        } else {
+            int n = 0;
+            //@ maintaining sum == y + (-x - n) && 0 <= n && n < -x;  
+            //@ maintaining n % 2 == (-x) % 2;
+            //@ decreases n;
+            for(n = -x; n > 0; ) {
+                sum = sum - 1;
+                n = n - 2;
+            }
+        }
+        return sum;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081403-specgen/tmp/AddLoopFor_Mutant2.java:20: verify: The prover cannot establish an assertion (LoopInvariantBeforeLoop) in method addLoop
+            //@ maintaining sum == y + (-x - n) && 0 <= n && n < -x;  
+                ^
+1 verification failure
+
+==============================
+public class AddLoopFor_Mutant2 {
+    /*@ public normal_behavior
+      @ requires Integer.MIN_VALUE <= x + y && x + y <= Integer.MAX_VALUE;
+ 
+      @ assignable \nothing;
+      @*/
+    public static int addLoop(int x, int y) {
+        int sum = y;
+        if (x > 0) {
+            int n = 0;
+ 
+ 
+            //@ decreases n;
+            for(n = x; n > 0; ) {
+                sum = sum + 1;
+                n = n - 2;
+            }
+        } else {
+            int n = 0;
+            //@ maintaining sum == y + (-x - n) && 0 <= n && n <= -x;  
+            //@ maintaining n % 2 == (-x) % 2;
+            //@ decreases n;
+            for(n = -x; n > 0; ) {
+                sum = sum - 1;
+                n = n - 2;
+            }
+        }
+        return sum;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081403-specgen/tmp/AddLoopFor_Mutant2.java:20: verify: The prover cannot establish an assertion (LoopInvariant) in method addLoop
+            //@ maintaining sum == y + (-x - n) && 0 <= n && n <= -x;  
+                ^
+1 verification failure
+
+==============================
+public class AddLoopFor_Mutant2 {
+    /*@ public normal_behavior
+      @ requires Integer.MIN_VALUE <= x + y && x + y <= Integer.MAX_VALUE;
+ 
+      @ assignable \nothing;
+      @*/
+    public static int addLoop(int x, int y) {
+        int sum = y;
+        if (x > 0) {
+            int n = 0;
+ 
+ 
+            //@ decreases n;
+            for(n = x; n > 0; ) {
+                sum = sum + 1;
+                n = n - 2;
+            }
+        } else {
+            int n = 0;
+            //@ maintaining sum == y + (-x - n) && 0 <= n && n - 1 <= -x;  
+            //@ maintaining n % 2 == (-x) % 2;
+            //@ decreases n;
+            for(n = -x; n > 0; ) {
+                sum = sum - 1;
+                n = n - 2;
+            }
+        }
+        return sum;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081403-specgen/tmp/AddLoopFor_Mutant2.java:20: verify: The prover cannot establish an assertion (LoopInvariant) in method addLoop
+            //@ maintaining sum == y + (-x - n) && 0 <= n && n - 1 <= -x;  
+                ^
+1 verification failure
+
+==============================
+public class AddLoopFor_Mutant2 {
+    /*@ public normal_behavior
+      @ requires Integer.MIN_VALUE <= x + y && x + y <= Integer.MAX_VALUE;
+ 
+      @ assignable \nothing;
+      @*/
+    public static int addLoop(int x, int y) {
+        int sum = y;
+        if (x > 0) {
+            int n = 0;
+ 
+ 
+            //@ decreases n;
+            for(n = x; n > 0; ) {
+                sum = sum + 1;
+                n = n - 2;
+            }
+        } else {
+            int n = 0;
+            //@ maintaining sum == y + (-x - n) && 0 - 1 <= n && n < -x;  
+            //@ maintaining n % 2 == (-x) % 2;
+            //@ decreases n;
+            for(n = -x; n > 0; ) {
+                sum = sum - 1;
+                n = n - 2;
+            }
+        }
+        return sum;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081403-specgen/tmp/AddLoopFor_Mutant2.java:20: verify: The prover cannot establish an assertion (LoopInvariantBeforeLoop) in method addLoop
+            //@ maintaining sum == y + (-x - n) && 0 - 1 <= n && n < -x;  
+                ^
+1 verification failure
+
+==============================
+public class AddLoopFor_Mutant2 {
+    /*@ public normal_behavior
+      @ requires Integer.MIN_VALUE <= x + y && x + y <= Integer.MAX_VALUE;
+ 
+      @ assignable \nothing;
+      @*/
+    public static int addLoop(int x, int y) {
+        int sum = y;
+        if (x > 0) {
+            int n = 0;
+ 
+ 
+            //@ decreases n;
+            for(n = x; n > 0; ) {
+                sum = sum + 1;
+                n = n - 2;
+            }
+        } else {
+            int n = 0;
+            //@ maintaining sum == y + (-x - n) && 0 - 1 <= n && n <= -x;  
+            //@ maintaining n % 2 == (-x) % 2;
+            //@ decreases n;
+            for(n = -x; n > 0; ) {
+                sum = sum - 1;
+                n = n - 2;
+            }
+        }
+        return sum;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081403-specgen/tmp/AddLoopFor_Mutant2.java:20: verify: The prover cannot establish an assertion (LoopInvariant) in method addLoop
+            //@ maintaining sum == y + (-x - n) && 0 - 1 <= n && n <= -x;  
+                ^
+1 verification failure
+
+==============================
+public class AddLoopFor_Mutant2 {
+    /*@ public normal_behavior
+      @ requires Integer.MIN_VALUE <= x + y && x + y <= Integer.MAX_VALUE;
+ 
+      @ assignable \nothing;
+      @*/
+    public static int addLoop(int x, int y) {
+        int sum = y;
+        if (x > 0) {
+            int n = 0;
+ 
+ 
+            //@ decreases n;
+            for(n = x; n > 0; ) {
+                sum = sum + 1;
+                n = n - 2;
+            }
+        } else {
+            int n = 0;
+            //@ maintaining sum == y + (-x - n) && 0 - 1 <= n && n - 1 <= -x;  
+            //@ maintaining n % 2 == (-x) % 2;
+            //@ decreases n;
+            for(n = -x; n > 0; ) {
+                sum = sum - 1;
+                n = n - 2;
+            }
+        }
+        return sum;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081403-specgen/tmp/AddLoopFor_Mutant2.java:20: verify: The prover cannot establish an assertion (LoopInvariant) in method addLoop
+            //@ maintaining sum == y + (-x - n) && 0 - 1 <= n && n - 1 <= -x;  
+                ^
+1 verification failure
+
+==============================
+public class AddLoopFor_Mutant2 {
+    /*@ public normal_behavior
+      @ requires Integer.MIN_VALUE <= x + y && x + y <= Integer.MAX_VALUE;
+ 
+      @ assignable \nothing;
+      @*/
+    public static int addLoop(int x, int y) {
+        int sum = y;
+        if (x > 0) {
+            int n = 0;
+ 
+ 
+            //@ decreases n;
+            for(n = x; n > 0; ) {
+                sum = sum + 1;
+                n = n - 2;
+            }
+        } else {
+            int n = 0;
+            //@ maintaining sum == y - (-x + n) && 0 < n && n < -x;  
+            //@ maintaining n % 2 == (-x) % 2;
+            //@ decreases n;
+            for(n = -x; n > 0; ) {
+                sum = sum - 1;
+                n = n - 2;
+            }
+        }
+        return sum;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081403-specgen/tmp/AddLoopFor_Mutant2.java:20: verify: The prover cannot establish an assertion (LoopInvariantBeforeLoop) in method addLoop
+            //@ maintaining sum == y - (-x + n) && 0 < n && n < -x;  
+                ^
+1 verification failure
+
+==============================
+public class AddLoopFor_Mutant2 {
+    /*@ public normal_behavior
+      @ requires Integer.MIN_VALUE <= x + y && x + y <= Integer.MAX_VALUE;
+ 
+      @ assignable \nothing;
+      @*/
+    public static int addLoop(int x, int y) {
+        int sum = y;
+        if (x > 0) {
+            int n = 0;
+ 
+ 
+            //@ decreases n;
+            for(n = x; n > 0; ) {
+                sum = sum + 1;
+                n = n - 2;
+            }
+        } else {
+            int n = 0;
+            //@ maintaining sum == y - (-x + n) && 0 < n && n <= -x;  
+            //@ maintaining n % 2 == (-x) % 2;
+            //@ decreases n;
+            for(n = -x; n > 0; ) {
+                sum = sum - 1;
+                n = n - 2;
+            }
+        }
+        return sum;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081403-specgen/tmp/AddLoopFor_Mutant2.java:20: verify: The prover cannot establish an assertion (LoopInvariantBeforeLoop) in method addLoop
+            //@ maintaining sum == y - (-x + n) && 0 < n && n <= -x;  
+                ^
+1 verification failure
+
+==============================
+public class AddLoopFor_Mutant2 {
+    /*@ public normal_behavior
+      @ requires Integer.MIN_VALUE <= x + y && x + y <= Integer.MAX_VALUE;
+ 
+      @ assignable \nothing;
+      @*/
+    public static int addLoop(int x, int y) {
+        int sum = y;
+        if (x > 0) {
+            int n = 0;
+ 
+ 
+            //@ decreases n;
+            for(n = x; n > 0; ) {
+                sum = sum + 1;
+                n = n - 2;
+            }
+        } else {
+            int n = 0;
+            //@ maintaining sum == y - (-x + n) && 0 < n && n - 1 <= -x;  
+            //@ maintaining n % 2 == (-x) % 2;
+            //@ decreases n;
+            for(n = -x; n > 0; ) {
+                sum = sum - 1;
+                n = n - 2;
+            }
+        }
+        return sum;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081403-specgen/tmp/AddLoopFor_Mutant2.java:20: verify: The prover cannot establish an assertion (LoopInvariantBeforeLoop) in method addLoop
+            //@ maintaining sum == y - (-x + n) && 0 < n && n - 1 <= -x;  
+                ^
+1 verification failure
+
+==============================
+public class AddLoopFor_Mutant2 {
+    /*@ public normal_behavior
+      @ requires Integer.MIN_VALUE <= x + y && x + y <= Integer.MAX_VALUE;
+ 
+      @ assignable \nothing;
+      @*/
+    public static int addLoop(int x, int y) {
+        int sum = y;
+        if (x > 0) {
+            int n = 0;
+ 
+ 
+            //@ decreases n;
+            for(n = x; n > 0; ) {
+                sum = sum + 1;
+                n = n - 2;
+            }
+        } else {
+            int n = 0;
+            //@ maintaining sum == y - (-x + n) && 0 <= n && n < -x;  
+            //@ maintaining n % 2 == (-x) % 2;
+            //@ decreases n;
+            for(n = -x; n > 0; ) {
+                sum = sum - 1;
+                n = n - 2;
+            }
+        }
+        return sum;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081403-specgen/tmp/AddLoopFor_Mutant2.java:20: verify: The prover cannot establish an assertion (LoopInvariantBeforeLoop) in method addLoop
+            //@ maintaining sum == y - (-x + n) && 0 <= n && n < -x;  
+                ^
+1 verification failure
+
+==============================
+public class AddLoopFor_Mutant2 {
+    /*@ public normal_behavior
+      @ requires Integer.MIN_VALUE <= x + y && x + y <= Integer.MAX_VALUE;
+ 
+      @ assignable \nothing;
+      @*/
+    public static int addLoop(int x, int y) {
+        int sum = y;
+        if (x > 0) {
+            int n = 0;
+ 
+ 
+            //@ decreases n;
+            for(n = x; n > 0; ) {
+                sum = sum + 1;
+                n = n - 2;
+            }
+        } else {
+            int n = 0;
+            //@ maintaining sum == y - (-x + n) && 0 <= n && n <= -x;  
+            //@ maintaining n % 2 == (-x) % 2;
+            //@ decreases n;
+            for(n = -x; n > 0; ) {
+                sum = sum - 1;
+                n = n - 2;
+            }
+        }
+        return sum;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081403-specgen/tmp/AddLoopFor_Mutant2.java:20: verify: The prover cannot establish an assertion (LoopInvariantBeforeLoop) in method addLoop
+            //@ maintaining sum == y - (-x + n) && 0 <= n && n <= -x;  
+                ^
+1 verification failure
+
+==============================
+public class AddLoopFor_Mutant2 {
+    /*@ public normal_behavior
+      @ requires Integer.MIN_VALUE <= x + y && x + y <= Integer.MAX_VALUE;
+ 
+      @ assignable \nothing;
+      @*/
+    public static int addLoop(int x, int y) {
+        int sum = y;
+        if (x > 0) {
+            int n = 0;
+ 
+ 
+            //@ decreases n;
+            for(n = x; n > 0; ) {
+                sum = sum + 1;
+                n = n - 2;
+            }
+        } else {
+            int n = 0;
+            //@ maintaining sum == y - (-x + n) && 0 <= n && n - 1 <= -x;  
+            //@ maintaining n % 2 == (-x) % 2;
+            //@ decreases n;
+            for(n = -x; n > 0; ) {
+                sum = sum - 1;
+                n = n - 2;
+            }
+        }
+        return sum;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081403-specgen/tmp/AddLoopFor_Mutant2.java:20: verify: The prover cannot establish an assertion (LoopInvariantBeforeLoop) in method addLoop
+            //@ maintaining sum == y - (-x + n) && 0 <= n && n - 1 <= -x;  
+                ^
+1 verification failure
+
+==============================
+public class AddLoopFor_Mutant2 {
+    /*@ public normal_behavior
+      @ requires Integer.MIN_VALUE <= x + y && x + y <= Integer.MAX_VALUE;
+ 
+      @ assignable \nothing;
+      @*/
+    public static int addLoop(int x, int y) {
+        int sum = y;
+        if (x > 0) {
+            int n = 0;
+ 
+ 
+            //@ decreases n;
+            for(n = x; n > 0; ) {
+                sum = sum + 1;
+                n = n - 2;
+            }
+        } else {
+            int n = 0;
+            //@ maintaining sum == y - (-x + n) && 0 - 1 <= n && n < -x;  
+            //@ maintaining n % 2 == (-x) % 2;
+            //@ decreases n;
+            for(n = -x; n > 0; ) {
+                sum = sum - 1;
+                n = n - 2;
+            }
+        }
+        return sum;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081403-specgen/tmp/AddLoopFor_Mutant2.java:20: verify: The prover cannot establish an assertion (LoopInvariantBeforeLoop) in method addLoop
+            //@ maintaining sum == y - (-x + n) && 0 - 1 <= n && n < -x;  
+                ^
+1 verification failure
+
+==============================
+public class AddLoopFor_Mutant2 {
+    /*@ public normal_behavior
+      @ requires Integer.MIN_VALUE <= x + y && x + y <= Integer.MAX_VALUE;
+ 
+      @ assignable \nothing;
+      @*/
+    public static int addLoop(int x, int y) {
+        int sum = y;
+        if (x > 0) {
+            int n = 0;
+ 
+ 
+            //@ decreases n;
+            for(n = x; n > 0; ) {
+                sum = sum + 1;
+                n = n - 2;
+            }
+        } else {
+            int n = 0;
+            //@ maintaining sum == y - (-x + n) && 0 - 1 <= n && n <= -x;  
+            //@ maintaining n % 2 == (-x) % 2;
+            //@ decreases n;
+            for(n = -x; n > 0; ) {
+                sum = sum - 1;
+                n = n - 2;
+            }
+        }
+        return sum;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081403-specgen/tmp/AddLoopFor_Mutant2.java:20: verify: The prover cannot establish an assertion (LoopInvariantBeforeLoop) in method addLoop
+            //@ maintaining sum == y - (-x + n) && 0 - 1 <= n && n <= -x;  
+                ^
+1 verification failure
+
+==============================
+public class AddLoopFor_Mutant2 {
+    /*@ public normal_behavior
+      @ requires Integer.MIN_VALUE <= x + y && x + y <= Integer.MAX_VALUE;
+ 
+      @ assignable \nothing;
+      @*/
+    public static int addLoop(int x, int y) {
+        int sum = y;
+        if (x > 0) {
+            int n = 0;
+ 
+ 
+            //@ decreases n;
+            for(n = x; n > 0; ) {
+                sum = sum + 1;
+                n = n - 2;
+            }
+        } else {
+            int n = 0;
+            //@ maintaining sum == y - (-x + n) && 0 - 1 <= n && n - 1 <= -x;  
+            //@ maintaining n % 2 == (-x) % 2;
+            //@ decreases n;
+            for(n = -x; n > 0; ) {
+                sum = sum - 1;
+                n = n - 2;
+            }
+        }
+        return sum;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081403-specgen/tmp/AddLoopFor_Mutant2.java:20: verify: The prover cannot establish an assertion (LoopInvariantBeforeLoop) in method addLoop
+            //@ maintaining sum == y - (-x + n) && 0 - 1 <= n && n - 1 <= -x;  
+                ^
+1 verification failure
+
+==============================
+public class AddLoopFor_Mutant2 {
+    /*@ public normal_behavior
+      @ requires Integer.MIN_VALUE <= x + y && x + y <= Integer.MAX_VALUE;
+ 
+      @ assignable \nothing;
+      @*/
+    public static int addLoop(int x, int y) {
+        int sum = y;
+        if (x > 0) {
+            int n = 0;
+ 
+ 
+            //@ decreases n;
+            for(n = x; n > 0; ) {
+                sum = sum + 1;
+                n = n - 2;
+            }
+        } else {
+            int n = 0;
+ 
+            //@ maintaining n % 2 == (-x) % 2;
+            //@ decreases n;
+            for(n = -x; n > 0; ) {
+                sum = sum - 1;
+                n = n - 2;
+            }
+        }
+        return sum;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081403-specgen/tmp/AddLoopFor_Mutant2.java:21: verify: The prover cannot establish an assertion (LoopInvariant) in method addLoop
+            //@ maintaining n % 2 == (-x) % 2;
+                ^
+1 verification failure
+
+==============================
+public class AddLoopFor_Mutant2 {
+    /*@ public normal_behavior
+      @ requires Integer.MIN_VALUE <= x + y && x + y <= Integer.MAX_VALUE;
+ 
+      @ assignable \nothing;
+      @*/
+    public static int addLoop(int x, int y) {
+        int sum = y;
+        if (x > 0) {
+            int n = 0;
+ 
+ 
+            //@ decreases n;
+            for(n = x; n > 0; ) {
+                sum = sum + 1;
+                n = n - 2;
+            }
+        } else {
+            int n = 0;
+ 
+            //@ maintaining n % 2 == (-x) % 2;  
+            //@ decreases n;
+            for(n = -x; n > 0; ) {
+                sum = sum - 1;
+                n = n - 2;
+            }
+        }
+        return sum;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081403-specgen/tmp/AddLoopFor_Mutant2.java:21: verify: The prover cannot establish an assertion (LoopInvariant) in method addLoop
+            //@ maintaining n % 2 == (-x) % 2;  
+                ^
+1 verification failure
+
+==============================
+public class AddLoopFor_Mutant2 {
+    /*@ public normal_behavior
+      @ requires Integer.MIN_VALUE <= x + y && x + y <= Integer.MAX_VALUE;
+ 
+      @ assignable \nothing;
+      @*/
+    public static int addLoop(int x, int y) {
+        int sum = y;
+        if (x > 0) {
+            int n = 0;
+ 
+ 
+            //@ decreases n;
+            for(n = x; n > 0; ) {
+                sum = sum + 1;
+                n = n - 2;
+            }
+        } else {
+            int n = 0;
+ 
+ 
+            //@ decreases n;
+            for(n = -x; n > 0; ) {
+                sum = sum - 1;
+                n = n - 2;
+            }
+        }
+        return sum;
+    }
+}
+
+==============================
+
+==============================

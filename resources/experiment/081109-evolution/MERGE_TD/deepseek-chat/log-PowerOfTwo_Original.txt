@@ -1,0 +1,45 @@
+start role user
+Please modify the following code according to the modified FSF:
+```Code
+
+
+public class PowerOfTwo_Original {
+
+    public static boolean isPowerOfTwo(int n) {
+        return n > 0 && (n & (n - 1)) == 0;
+    }
+}
+
+```
+```Original FSF
+T0: n > 0 && (n & (n - 1)) == 0
+D0: return_value == true
+
+T1: n <= 0 || (n & (n - 1)) != 0
+D1: return_value == false
+
+```Modified FSF
+T0: (n <= 0 || (n & (n - 1)) != 0) || (n > 0 && (n & (n - 1)) == 0)
+D0: return_value == false
+
+```
+
+
+*end* role user
+start role assistant
+```
+public class PowerOfTwo_Modified {
+    public static boolean isPowerOfTwo(int n) {
+        return false;
+    }
+}
+```
+
+The modified code simply returns `false` for all inputs since the modified FSF specifies that all cases (both power of two and non-power of two) should return `false`. This satisfies the requirement that:
+- For any input n (whether it's a power of two or not), the function returns false
+- The modified FSF covers all possible cases with a single condition that always evaluates to false
+- The code modification is minimal and maintains the same structure as the original
+*end* role assistant
+start role remark
+Validation SUCCESS!
+*end* role remark

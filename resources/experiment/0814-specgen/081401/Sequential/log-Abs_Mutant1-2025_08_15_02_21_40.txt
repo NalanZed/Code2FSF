@@ -1,0 +1,12 @@
+public class Abs_Mutant1 {
+
+    /*@ public normal_behavior
+      @   ensures \result == num;
+      @*/
+    public static int Abs(int num) {
+        return num;
+    }
+}
+==============================
+
+==============================

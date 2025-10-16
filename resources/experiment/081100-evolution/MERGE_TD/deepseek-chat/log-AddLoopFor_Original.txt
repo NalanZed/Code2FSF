@@ -1,0 +1,75 @@
+start role user
+Please modify the following code according to the modified FSF:
+```Code
+
+
+public class AddLoopFor_Original {
+    public static int addLoop(int x, int y) {
+        int sum = y;
+        if (x > 0) {
+            int n = 0;
+            for(n = x; n > 0; ) {
+                sum = sum + 1;
+                n = n - 1;
+            }
+        } else {
+            int n = 0;
+            for(n = -x; n > 0; ) {
+                sum = sum - 1;
+                n = n - 1;
+            }
+        }
+        return sum;
+    }
+}
+
+```
+```Original FSF
+T0: x > 0
+D0: sum == y + x
+
+T1: x < 0
+D1: sum == y + x
+
+T2: x == 0
+D2: sum == y
+
+```Modified FSF
+T0: (x < 0) || (x > 0)
+D0: sum == y + x
+
+T1: x == 0
+D1: sum == y
+
+```
+
+
+*end* role user
+start role assistant
+```
+public class AddLoopFor_Modified {
+    public static int addLoop(int x, int y) {
+        int sum = y;
+        if (x != 0) {
+            if (x > 0) {
+                int n = 0;
+                for(n = x; n > 0; ) {
+                    sum = sum + 1;
+                    n = n - 1;
+                }
+            } else {
+                int n = 0;
+                for(n = -x; n > 0; ) {
+                    sum = sum - 1;
+                    n = n - 1;
+                }
+            }
+        }
+        return sum;
+    }
+}
+```
+*end* role assistant
+start role remark
+Validation SUCCESS!
+*end* role remark

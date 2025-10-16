@@ -1,0 +1,29 @@
+public class AddLoopFor_Mutant3 {
+    //@ requires Integer.MIN_VALUE/2 <= y + 2*x && y + 2*x <= Integer.MAX_VALUE/2;
+    //@ requires x != Integer.MIN_VALUE;
+    //@ ensures \result == y + 2*x;
+    public static int addLoop(int x, int y) {
+        int sum = y;
+        if (x > 0) {
+            int n = 0;
+            //@ maintaining sum == y + 2*(x - n) && 0 <= n && n <= x;
+            //@ decreases n;
+            for(n = x; n > 0; ) {
+                sum = sum + 2;
+                n = n - 1;
+            }
+        } else {
+            int n = 0;
+            //@ maintaining sum == y - 2*(-x - n) && 0 <= n && n <= -x;
+            //@ decreases n;
+            for(n = -x; n > 0; ) {
+                sum = sum - 2;
+                n = n - 1;
+            }
+        }
+        return sum;
+    }
+}
+==============================
+
+==============================

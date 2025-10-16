@@ -1,0 +1,17 @@
+public class EchoIntLoop_Mutant4 {
+    //@ requires x >= 0;
+    //@ ensures \result == 2 * x;
+    public static int echo(int x) {
+        int res = 0;
+        //@ maintaining res == 2 * i;
+        //@ maintaining 0 <= i && i <= x;
+        //@ decreases x - i;
+        for(int i = 0; i < x; i++) {
+            res = res + 2;
+        }
+        return res;
+    }
+}
+==============================
+
+==============================

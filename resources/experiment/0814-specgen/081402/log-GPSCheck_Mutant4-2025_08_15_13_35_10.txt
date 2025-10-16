@@ -1,0 +1,17 @@
+public class GPSCheck_Mutant4 {
+    //@ ensures \result == 1 <==> (satellites < 4 || signalStrength < 20);
+    //@ ensures \result == 0 <==> (satellites >= 4 && signalStrength >= 20);
+    public static int GPSCheck(int satellites, int signalStrength) {
+        int alarm = 0;
+        if (satellites < 4) {
+            alarm = 1;
+        }
+        if (signalStrength < 20) {
+            alarm = 1;
+        }
+        return alarm;
+    }
+}
+==============================
+
+==============================

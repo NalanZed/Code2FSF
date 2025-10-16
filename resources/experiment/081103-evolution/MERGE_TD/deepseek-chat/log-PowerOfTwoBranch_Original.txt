@@ -1,0 +1,69 @@
+start role user
+Please modify the following code according to the modified FSF:
+```Code
+
+
+public class PowerOfTwoBranch_Original {
+
+    public static boolean isPowerOfTwo(int n) {
+        if (n <= 0) {
+            return false;
+        }
+        if ((n & (n - 1)) != 0) {
+            return false;
+        }
+        return true;
+    }
+}
+
+```
+```Original FSF
+T0: n <= 0
+D0: return_value == false
+
+T1: n > 0 && (n & (n - 1)) != 0
+D1: return_value == false
+
+T2: n > 0 && (n & (n - 1)) == 0
+D2: return_value == true
+
+```Modified FSF
+T0: n <= 0
+D0: return_value == false
+
+T1: (n > 0 && (n & (n - 1)) == 0) || (n > 0 && (n & (n - 1)) != 0)
+D1: return_value == true
+
+```
+
+
+*end* role user
+start role assistant
+```
+public class PowerOfTwoBranch_Modified {
+    public static boolean isPowerOfTwo(int n) {
+        if (n <= 0) {
+            return false;
+        }
+        return true;
+    }
+}
+```
+
+Explanation:
+1. The original code had three conditions:
+   - Return false if n <= 0
+   - Return false if n is positive but not a power of two
+   - Return true if n is a power of two
+
+2. The modified FSF combines both positive cases (whether power of two or not) into a single case that returns true:
+   - Return false if n <= 0
+   - Return true if n > 0 (regardless of whether it's a power of two)
+
+3. The modified code simplifies to just checking the n <= 0 condition and returns true for all positive numbers, which matches the modified FSF requirements.
+
+4. The power-of-two check ((n & (n - 1)) != 0 is removed since it's no longer needed according to the modified specification.
+*end* role assistant
+start role remark
+Validation SUCCESS!
+*end* role remark

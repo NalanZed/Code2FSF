@@ -1,0 +1,61 @@
+public class SmallestEvenMul_Mutant4 {
+
+    //@ requires n > 0;
+    //@ ensures \result == (n % 2 == 0 ? n : 2*n);  // Correct specification
+    //@ ensures \result == 0;                       // Actual (incorrect) behavior
+    //@ ensures \result % 2 == 0;                   // Should be even
+    //@ ensures \result % n == 0;                   // Should be multiple of n
+    //@ ensures (\forall int k; k > 0 && k % 2 == 0 && k % n == 0; \result <= k); // Should be smallest
+    public static int smallestEvenMultiple(int n) {
+        return 0;
+    }
+}
+==============================
+/root/specgen/SpecGen/project/081401-specgen/tmp/SmallestEvenMul_Mutant4.java:10: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081401-specgen/tmp/SmallestEvenMul_Mutant4.java:4:) in method smallestEvenMultiple
+        return 0;
+        ^
+/root/specgen/SpecGen/project/081401-specgen/tmp/SmallestEvenMul_Mutant4.java:4: verify: Associated declaration: /root/specgen/SpecGen/project/081401-specgen/tmp/SmallestEvenMul_Mutant4.java:10:
+    //@ ensures \result == (n % 2 == 0 ? n : 2*n);  // Correct specification
+        ^
+2 verification failures
+
+==============================
+public class SmallestEvenMul_Mutant4 {
+
+    //@ requires n > 0;
+    //@ ensures \result == (n % 2 == 0 ? n : 2*n);  // Correct specification  
+    //@ ensures \result == 0;                       // Actual (incorrect) behavior
+    //@ ensures \result % 2 == 0;                   // Should be even
+    //@ ensures \result % n == 0;                   // Should be multiple of n
+    //@ ensures (\forall int k; k > 0 && k % 2 == 0 && k % n == 0; \result <= k); // Should be smallest
+    public static int smallestEvenMultiple(int n) {
+        return 0;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081401-specgen/tmp/SmallestEvenMul_Mutant4.java:10: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081401-specgen/tmp/SmallestEvenMul_Mutant4.java:4:) in method smallestEvenMultiple
+        return 0;
+        ^
+/root/specgen/SpecGen/project/081401-specgen/tmp/SmallestEvenMul_Mutant4.java:4: verify: Associated declaration: /root/specgen/SpecGen/project/081401-specgen/tmp/SmallestEvenMul_Mutant4.java:10:
+    //@ ensures \result == (n % 2 == 0 ? n : 2*n);  // Correct specification  
+        ^
+2 verification failures
+
+==============================
+public class SmallestEvenMul_Mutant4 {
+
+    //@ requires n > 0;
+ 
+    //@ ensures \result == 0;                       // Actual (incorrect) behavior
+    //@ ensures \result % 2 == 0;                   // Should be even
+    //@ ensures \result % n == 0;                   // Should be multiple of n
+    //@ ensures (\forall int k; k > 0 && k % 2 == 0 && k % n == 0; \result <= k); // Should be smallest
+    public static int smallestEvenMultiple(int n) {
+        return 0;
+    }
+}
+
+==============================
+
+==============================

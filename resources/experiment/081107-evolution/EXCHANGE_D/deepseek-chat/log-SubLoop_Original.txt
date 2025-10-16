@@ -1,0 +1,81 @@
+start role user
+Please modify the following code according to the modified FSF:
+```Code
+
+
+public class SubLoop_Original {
+    public static int subLoop(int x, int y) {
+        int sum = x;
+        if (y > 0) {
+            int n = y;
+            while (n > 0) {
+                sum = sum - 1;
+                n = n - 1;
+            }
+        } else {
+            int n = -y;
+            while (n > 0) {
+                sum = sum + 1;
+                n = n - 1;
+            }
+        }
+        return sum;
+    }
+}
+
+```
+```Original FSF
+T0: y > 0
+D0: sum == x - y
+
+T1: y < 0
+D1: sum == x + (-y)
+
+T2: y == 0
+D2: sum == x
+
+```Modified FSF
+T0: y > 0
+D0: sum == x
+
+T1: y < 0
+D1: sum == x + (-y)
+
+T2: y == 0
+D2: sum == x - y
+
+```
+
+
+*end* role user
+start role assistant
+```
+public class SubLoop_Modified {
+    public static int subLoop(int x, int y) {
+        int sum = x;
+        if (y > 0) {
+            // Don't subtract when y > 0 (modified behavior)
+        } else if (y < 0) {
+            int n = -y;
+            while (n > 0) {
+                sum = sum + 1;
+                n = n - 1;
+            }
+        } else { // y == 0
+            sum = sum - y;  // This will just return x since y is 0
+        }
+        return sum;
+    }
+}
+```
+
+The modified code:
+1. When y > 0, it now just returns x (doesn't subtract y)
+2. When y < 0, it still adds the absolute value of y (original behavior)
+3. When y == 0, it returns x (same as original, though the FSF shows x-y which equals x when y=0)
+
+I've made the minimal changes needed to match the modified FSF requirements while keeping the code structure similar to the original. The main change is removing the subtraction when y > 0.
+*end* role assistant
+start role remark
+Validation SUCCESS!
+*end* role remark

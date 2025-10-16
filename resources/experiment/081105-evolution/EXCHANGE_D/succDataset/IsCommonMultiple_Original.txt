@@ -1,0 +1,24 @@
+START ORIGINAL CODE
+
+public class IsCommonMultiple_Original {
+
+    public static boolean isCommonMultiple(int a, int b, int m) {
+        return m % a == 0 && m % b == 0;
+    }
+}
+
+*END* ORIGINAL CODE
+START ORIGINAL FSF
+T1: a != 0 && b != 0 && m % a == 0 && m % b == 0
+D1: return_value == true
+T2: a != 0 && b != 0 && (m % a != 0 || m % b != 0)
+D2: return_value == false
+T3: a == 0 || b == 0
+D3: Exception
+*END* ORIGINAL FSF
+START MODIFIED FSF
+T1: a != 0 && b != 0 && m % a == 0 && m % b == 0
+D1: return_value == true
+T2: (a == 0 || b == 0) || (a != 0 && b != 0 && (m % a != 0 || m % b != 0))
+D2: Exception
+*END* MODIFIED FSF

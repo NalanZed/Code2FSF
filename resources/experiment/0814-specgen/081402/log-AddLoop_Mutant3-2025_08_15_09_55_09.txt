@@ -1,0 +1,140 @@
+public class AddLoop_Mutant3 {
+    /*@ public normal_behavior
+      @   ensures \result == x + y;
+      @*/
+    public static int AddLoop(int x, int y) {
+        int sum = x;
+        if (y > 0) {
+            int n = y;
+            //@ maintaining sum == x + 2*(y - n) && n >= 0;
+            //@ decreases n;
+            while (n > 0) {
+                sum = sum + 2;
+                n = n - 1;
+            }
+        } else {
+            int n = -y;
+            //@ maintaining sum == x - (-y - n) && n >= 0;
+            //@ decreases n;
+            while (n > 0) {
+                sum = sum - 1;
+                n = n - 1;
+            }
+        }
+        return sum;
+    }
+}
+==============================
+/root/specgen/SpecGen/project/081402-specgen/tmp/AddLoop_Mutant3.java:24: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081402-specgen/tmp/AddLoop_Mutant3.java:3:) in method AddLoop
+        return sum;
+        ^
+/root/specgen/SpecGen/project/081402-specgen/tmp/AddLoop_Mutant3.java:3: verify: Associated declaration: /root/specgen/SpecGen/project/081402-specgen/tmp/AddLoop_Mutant3.java:24:
+      @   ensures \result == x + y;
+          ^
+2 verification failures
+
+==============================
+public class AddLoop_Mutant3 {
+    /*@ public normal_behavior
+      @   ensures \result == x + y;  
+      @*/
+    public static int AddLoop(int x, int y) {
+        int sum = x;
+        if (y > 0) {
+            int n = y;
+            //@ maintaining sum == x + 2*(y - n) && n >= 0;
+            //@ decreases n;
+            while (n > 0) {
+                sum = sum + 2;
+                n = n - 1;
+            }
+        } else {
+            int n = -y;
+            //@ maintaining sum == x - (-y - n) && n >= 0;
+            //@ decreases n;
+            while (n > 0) {
+                sum = sum - 1;
+                n = n - 1;
+            }
+        }
+        return sum;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081402-specgen/tmp/AddLoop_Mutant3.java:24: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081402-specgen/tmp/AddLoop_Mutant3.java:3:) in method AddLoop
+        return sum;
+        ^
+/root/specgen/SpecGen/project/081402-specgen/tmp/AddLoop_Mutant3.java:3: verify: Associated declaration: /root/specgen/SpecGen/project/081402-specgen/tmp/AddLoop_Mutant3.java:24:
+      @   ensures \result == x + y;  
+          ^
+2 verification failures
+
+==============================
+public class AddLoop_Mutant3 {
+    /*@ public normal_behavior
+      @   ensures \result == x - y;  
+      @*/
+    public static int AddLoop(int x, int y) {
+        int sum = x;
+        if (y > 0) {
+            int n = y;
+            //@ maintaining sum == x + 2*(y - n) && n >= 0;
+            //@ decreases n;
+            while (n > 0) {
+                sum = sum + 2;
+                n = n - 1;
+            }
+        } else {
+            int n = -y;
+            //@ maintaining sum == x - (-y - n) && n >= 0;
+            //@ decreases n;
+            while (n > 0) {
+                sum = sum - 1;
+                n = n - 1;
+            }
+        }
+        return sum;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081402-specgen/tmp/AddLoop_Mutant3.java:24: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081402-specgen/tmp/AddLoop_Mutant3.java:3:) in method AddLoop
+        return sum;
+        ^
+/root/specgen/SpecGen/project/081402-specgen/tmp/AddLoop_Mutant3.java:3: verify: Associated declaration: /root/specgen/SpecGen/project/081402-specgen/tmp/AddLoop_Mutant3.java:24:
+      @   ensures \result == x - y;  
+          ^
+2 verification failures
+
+==============================
+public class AddLoop_Mutant3 {
+    /*@ public normal_behavior
+ 
+      @*/
+    public static int AddLoop(int x, int y) {
+        int sum = x;
+        if (y > 0) {
+            int n = y;
+            //@ maintaining sum == x + 2*(y - n) && n >= 0;
+            //@ decreases n;
+            while (n > 0) {
+                sum = sum + 2;
+                n = n - 1;
+            }
+        } else {
+            int n = -y;
+            //@ maintaining sum == x - (-y - n) && n >= 0;
+            //@ decreases n;
+            while (n > 0) {
+                sum = sum - 1;
+                n = n - 1;
+            }
+        }
+        return sum;
+    }
+}
+
+==============================
+
+==============================

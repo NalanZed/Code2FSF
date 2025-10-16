@@ -1,0 +1,59 @@
+start role user
+Please modify the following code according to the modified FSF:
+```Code
+
+
+public class Abs_Original {
+
+    public static int Abs(int num) {
+        if (num < 0)
+            return -num;
+        else
+            return num;
+    }
+}
+
+```
+```Original FSF
+T0: num < 0
+D0: return_value == -num
+
+T1: num >= 0
+D1: return_value == num
+
+```Modified FSF
+T0: num < 0
+D0: return_value == num
+
+T1: num >= 0
+D1: return_value == -num
+
+```
+
+
+*end* role user
+start role assistant
+```
+public class Abs_Modified {
+    public static int Abs(int num) {
+        if (num < 0)
+            return num;
+        else
+            return -num;
+    }
+}
+```
+
+The modified code simply reverses the return values from the original implementation:
+1. When num < 0, it now returns the number directly (instead of its negation)
+2. When num >= 0, it now returns the negation of the number (instead of the number itself)
+
+This exactly matches the modified FSF requirements where:
+- For T0 (num < 0), the return value is num (D0)
+- For T1 (num >= 0), the return value is -num (D1)
+
+The modification is minimal and maintains the same control flow structure as the original code, just with inverted return values.
+*end* role assistant
+start role remark
+Validation SUCCESS!
+*end* role remark

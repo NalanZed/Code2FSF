@@ -26,6 +26,8 @@ def print_verification_timeout_result():
 def print_verification_unexpected_result():
     result = Result(-1,"","")
     print(f"result:" + result.to_json())
+def print_unknown_variable_result(unknown_variable: str):
+    result = Result(-1,unknown_variable,"")
 
 def get_class_name(java_code: str):
     match = re.search(r'class\s+(\w+)', java_code)
@@ -278,6 +280,7 @@ def java_expr_to_z3(expr_str, var_types: dict):
             elif node.id in {"char","int", "boolean","float", "double"}: #避免 Java 中的类型名被误认为变量
                 return ""
             else:
+                print_unknown_variable_result(f"Unknown variable : {node.id}")
                 raise ValueError(f"未知变量: {node.id}")
 
         def visit_Constant(self, node):

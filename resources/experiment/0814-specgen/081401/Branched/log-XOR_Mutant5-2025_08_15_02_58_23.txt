@@ -1,0 +1,25 @@
+public class XOR_Mutant5 {
+    //@ ensures \result <==> (b1 != b2);
+    //@ ensures \result == (b1 ? !b2 : b2);
+    public static /*@ pure @*/ boolean xor(boolean b1, boolean b2) {
+        if(b1 == true) {
+            if(b2 == true) {
+                return false;
+            }
+            else {
+                return b1;
+            }
+        }
+        else {
+            if(b2 == true) {
+                return b2;  // Note: This appears to be a bug - should return b2 (true) when b1 is false and b2 is true
+            }
+            else {
+                return false;
+            }
+        }
+    }
+}
+==============================
+
+==============================

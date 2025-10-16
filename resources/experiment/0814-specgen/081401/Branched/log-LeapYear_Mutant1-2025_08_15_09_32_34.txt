@@ -1,0 +1,21 @@
+public class LeapYear_Mutant1 {
+    //@ requires year >= 0;
+    //@ ensures \result == (year % 400 == 0 || (year % 4 == 0 && year % 100 != 0));
+    public static boolean isLeapYear(int year) {
+        boolean leap = true;
+        if (year % 4 == 0) {
+            if (year % 100 == 0) {
+                if (year % 400 == 0)
+                    leap = true;
+                else
+                    leap = false;
+            } else
+                leap = true;
+        } else
+            leap = false;
+        return leap;
+    }
+}
+==============================
+
+==============================

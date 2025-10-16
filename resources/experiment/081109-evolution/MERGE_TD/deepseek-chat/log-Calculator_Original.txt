@@ -1,0 +1,127 @@
+start role user
+Please modify the following code according to the modified FSF:
+```Code
+
+
+public class Calculator_Original {
+
+    public static int calculate(int num1, int num2, char operator) {
+        int output;
+        switch(operator) {
+            case '+':
+                output = num1 + num2;
+                break;
+            case '-':
+                output = num1 - num2;
+                break;
+            case '*':
+                output = num1 * num2;
+                break;
+            case '/':
+                output = num1 / num2;
+                break;
+            case '%':
+                output = num1 % num2;
+                break;
+            default:
+                return -1;
+        }
+        return output;
+    }
+}
+
+```
+```Original FSF
+T0: operator == '+'
+D0: output == num1 + num2
+
+T1: operator == '-'
+D1: output == num1 - num2
+
+T2: operator == '*'
+D2: output == num1 * num2
+
+T3: operator == '/' && num2 != 0
+D3: output == num1 / num2
+
+T4: operator == '/' && num2 == 0
+D4: Exception
+
+T5: operator == '%' && num2 != 0
+D5: output == num1 % num2
+
+T6: operator == '%' && num2 == 0
+D6: Exception
+
+T7: operator != '+' && operator != '-' && operator != '*' && operator != '/' && operator != '%'
+D7: return_value == -1
+
+```Modified FSF
+T0: operator == '+'
+D0: output == num1 + num2
+
+T1: operator == '-'
+D1: output == num1 - num2
+
+T2: (operator == '*') || (operator != '+' && operator != '-' && operator != '*' && operator != '/' && operator != '%')
+D2: output == num1 * num2
+
+T3: operator == '/' && num2 != 0
+D3: output == num1 / num2
+
+T4: operator == '/' && num2 == 0
+D4: Exception
+
+T5: operator == '%' && num2 != 0
+D5: output == num1 % num2
+
+T6: operator == '%' && num2 == 0
+D6: Exception
+
+```
+
+
+*end* role user
+start role assistant
+```
+public class Calculator_Modified {
+
+    public static int calculate(int num1, int num2, char operator) {
+        int output;
+        switch(operator) {
+            case '+':
+                output = num1 + num2;
+                break;
+            case '-':
+                output = num1 - num2;
+                break;
+            case '*':
+                default:  // Modified: default case now falls through to multiplication
+                output = num1 * num2;
+                break;
+            case '/':
+                output = num1 / num2;
+                break;
+            case '%':
+                output = num1 % num2;
+                break;
+        }
+        return output;
+    }
+}
+```
+
+Key changes made:
+1. Removed the explicit return -1 for invalid operators
+2. Changed the switch statement so that both '*' case and default case (invalid operators) now perform multiplication
+3. Maintained all other operations unchanged
+4. Note that division by zero and modulo zero cases will still throw exceptions as specified in the modified FSF (T4 and T6)
+
+The modified code satisfies the new FSF where:
+- Multiplication happens for both '*' operator and any other invalid operator
+- All other operations remain the same as original
+- Exception cases for division/modulo by zero are preserved
+*end* role assistant
+start role remark
+Validation SUCCESS!
+*end* role remark

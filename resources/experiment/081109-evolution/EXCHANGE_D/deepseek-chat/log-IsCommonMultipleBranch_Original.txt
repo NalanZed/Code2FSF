@@ -1,0 +1,67 @@
+start role user
+Please modify the following code according to the modified FSF:
+```Code
+
+
+public class IsCommonMultipleBranch_Original {
+
+    public static boolean isCommonMultiple(int a, int b, int m) {
+        if (m % a != 0) {
+            return false;
+        }
+        if (m % b != 0) {
+            return false;
+        }
+        return true;
+    }
+}
+
+```
+```Original FSF
+T0: a == 0 || b == 0
+D0: Exception
+
+T1: (a != 0 && b != 0) && (m % a != 0 || m % b != 0)
+D1: return_value == false
+
+T2: (a != 0 && b != 0) && (m % a == 0 && m % b == 0)
+D2: return_value == true
+
+```Modified FSF
+T0: a == 0 || b == 0
+D0: return_value == true
+
+T1: (a != 0 && b != 0) && (m % a != 0 || m % b != 0)
+D1: return_value == false
+
+T2: (a != 0 && b != 0) && (m % a == 0 && m % b == 0)
+D2: Exception
+
+```
+
+
+*end* role user
+start role assistant
+```
+public class IsCommonMultipleBranch_Modified {
+    public static boolean isCommonMultiple(int a, int b, int m) {
+        if (a == 0 || b == 0) {
+            return true;
+        }
+        if (m % a != 0 || m % b != 0) {
+            return false;
+        }
+        throw new RuntimeException("Exception case");
+    }
+}
+```
+
+The modified code:
+1. Handles the T0 case (a == 0 || b == 0) by returning true (D0)
+2. Maintains the same behavior for T1 case (returns false when not a common multiple)
+3. Throws an exception for T2 case (when it is a common multiple) as required by D2
+4. Preserves the original structure while implementing the modified requirements
+*end* role assistant
+start role remark
+Validation SUCCESS!
+*end* role remark

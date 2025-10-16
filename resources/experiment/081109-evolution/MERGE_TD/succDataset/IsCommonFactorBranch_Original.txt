@@ -1,0 +1,261 @@
+START ORIGINAL CODE
+
+public class IsCommonFactorBranch_Original {
+    public static boolean isCommonFactor (int a, int b, int factor) {
+        if (a % factor != 0) {
+            return false;
+        }
+        if (b % factor != 0) {
+            return false;
+        }
+        return true;
+    }
+}
+
+*END* ORIGINAL CODE
+START ORIGINAL FSF
+T1: factor == 0
+D1: Exception
+T2: factor != 0 && (a % factor != 0 || b % factor != 0)
+D2: return_value == false
+T3: factor != 0 && a % factor == 0 && b % factor == 0
+D3: return_value == true
+*END* ORIGINAL FSF
+START MODIFIED FSF
+T1: (factor == 0) || (factor != 0 && a % factor == 0 && b % factor == 0)
+D1: Exception
+T2: factor != 0 && (a % factor != 0 || b % factor != 0)
+D2: return_value == false
+*END* MODIFIED FSF
+START ORIGINAL CODE
+
+public class IsCommonFactorBranch_Original {
+    public static boolean isCommonFactor (int a, int b, int factor) {
+        if (a % factor != 0) {
+            return false;
+        }
+        if (b % factor != 0) {
+            return false;
+        }
+        return true;
+    }
+}
+
+*END* ORIGINAL CODE
+START ORIGINAL FSF
+T1: factor == 0
+D1: Exception
+T2: factor != 0 && (a % factor != 0 || b % factor != 0)
+D2: return_value == false
+T3: factor != 0 && a % factor == 0 && b % factor == 0
+D3: return_value == true
+*END* ORIGINAL FSF
+START MODIFIED FSF
+T1: (factor == 0) || (factor != 0 && (a % factor != 0 || b % factor != 0))
+D1: Exception
+T2: factor != 0 && a % factor == 0 && b % factor == 0
+D2: return_value == true
+*END* MODIFIED FSF
+START ORIGINAL CODE
+
+public class IsCommonFactorBranch_Original {
+    public static boolean isCommonFactor (int a, int b, int factor) {
+        if (a % factor != 0) {
+            return false;
+        }
+        if (b % factor != 0) {
+            return false;
+        }
+        return true;
+    }
+}
+
+*END* ORIGINAL CODE
+START ORIGINAL FSF
+T1: factor == 0
+D1: Exception
+T2: factor != 0 && (a % factor != 0 || b % factor != 0)
+D2: return_value == false
+T3: factor != 0 && a % factor == 0 && b % factor == 0
+D3: return_value == true
+*END* ORIGINAL FSF
+START MODIFIED FSF
+T1: (factor != 0 && (a % factor != 0 || b % factor != 0)) || (factor == 0)
+D1: return_value == false
+T2: factor != 0 && a % factor == 0 && b % factor == 0
+D2: return_value == true
+*END* MODIFIED FSF
+START ORIGINAL CODE
+
+public class IsCommonFactorBranch_Original {
+    public static boolean isCommonFactor (int a, int b, int factor) {
+        if (a % factor != 0) {
+            return false;
+        }
+        if (b % factor != 0) {
+            return false;
+        }
+        return true;
+    }
+}
+
+*END* ORIGINAL CODE
+START ORIGINAL FSF
+T1: factor == 0
+D1: Exception
+T2: factor != 0 && (a % factor != 0 || b % factor != 0)
+D2: return_value == false
+T3: factor != 0 && a % factor == 0 && b % factor == 0
+D3: return_value == true
+*END* ORIGINAL FSF
+START MODIFIED FSF
+T1: factor != 0 && (a % factor != 0 || b % factor != 0)
+D1: return_value == false
+T2: (factor != 0 && a % factor == 0 && b % factor == 0) || (factor == 0)
+D2: return_value == true
+*END* MODIFIED FSF
+START ORIGINAL CODE
+
+public class IsCommonFactorBranch_Original {
+    public static boolean isCommonFactor (int a, int b, int factor) {
+        if (a % factor != 0) {
+            return false;
+        }
+        if (b % factor != 0) {
+            return false;
+        }
+        return true;
+    }
+}
+
+*END* ORIGINAL CODE
+START ORIGINAL FSF
+T1: factor == 0
+D1: Exception
+T2: factor != 0 && (a % factor != 0 || b % factor != 0)
+D2: return_value == false
+T3: factor != 0 && a % factor == 0 && b % factor == 0
+D3: return_value == true
+*END* ORIGINAL FSF
+START MODIFIED FSF
+T1: (factor == 0) || (factor != 0 && a % factor == 0 && b % factor == 0)
+D1: Exception
+T2: factor != 0 && (a % factor != 0 || b % factor != 0)
+D2: return_value == false
+*END* MODIFIED FSF
+START ORIGINAL CODE
+
+public class IsCommonFactorBranch_Original {
+    public static boolean isCommonFactor (int a, int b, int factor) {
+        if (a % factor != 0) {
+            return false;
+        }
+        if (b % factor != 0) {
+            return false;
+        }
+        return true;
+    }
+}
+
+*END* ORIGINAL CODE
+START ORIGINAL FSF
+T1: factor == 0
+D1: Exception
+T2: factor != 0 && (a % factor != 0 || b % factor != 0)
+D2: return_value == false
+T3: factor != 0 && a % factor == 0 && b % factor == 0
+D3: return_value == true
+*END* ORIGINAL FSF
+START MODIFIED FSF
+T1: (factor == 0) || (factor != 0 && a % factor == 0 && b % factor == 0)
+D1: Exception
+T2: factor != 0 && (a % factor != 0 || b % factor != 0)
+D2: return_value == false
+*END* MODIFIED FSF
+START ORIGINAL CODE
+
+public class IsCommonFactorBranch_Original {
+    public static boolean isCommonFactor (int a, int b, int factor) {
+        if (a % factor != 0) {
+            return false;
+        }
+        if (b % factor != 0) {
+            return false;
+        }
+        return true;
+    }
+}
+
+*END* ORIGINAL CODE
+START ORIGINAL FSF
+T1: factor == 0
+D1: Exception
+T2: factor != 0 && (a % factor != 0 || b % factor != 0)
+D2: return_value == false
+T3: factor != 0 && a % factor == 0 && b % factor == 0
+D3: return_value == true
+*END* ORIGINAL FSF
+START MODIFIED FSF
+T1: factor == 0
+D1: Exception
+T2: (factor != 0 && a % factor == 0 && b % factor == 0) || (factor != 0 && (a % factor != 0 || b % factor != 0))
+D2: return_value == true
+*END* MODIFIED FSF
+START ORIGINAL CODE
+
+public class IsCommonFactorBranch_Original {
+    public static boolean isCommonFactor (int a, int b, int factor) {
+        if (a % factor != 0) {
+            return false;
+        }
+        if (b % factor != 0) {
+            return false;
+        }
+        return true;
+    }
+}
+
+*END* ORIGINAL CODE
+START ORIGINAL FSF
+T1: factor == 0
+D1: Exception
+T2: factor != 0 && (a % factor != 0 || b % factor != 0)
+D2: return_value == false
+T3: factor != 0 && a % factor == 0 && b % factor == 0
+D3: return_value == true
+*END* ORIGINAL FSF
+START MODIFIED FSF
+T1: (factor != 0 && (a % factor != 0 || b % factor != 0)) || (factor == 0)
+D1: return_value == false
+T2: factor != 0 && a % factor == 0 && b % factor == 0
+D2: return_value == true
+*END* MODIFIED FSF
+START ORIGINAL CODE
+
+public class IsCommonFactorBranch_Original {
+    public static boolean isCommonFactor (int a, int b, int factor) {
+        if (a % factor != 0) {
+            return false;
+        }
+        if (b % factor != 0) {
+            return false;
+        }
+        return true;
+    }
+}
+
+*END* ORIGINAL CODE
+START ORIGINAL FSF
+T1: factor == 0
+D1: Exception
+T2: factor != 0 && (a % factor != 0 || b % factor != 0)
+D2: return_value == false
+T3: factor != 0 && a % factor == 0 && b % factor == 0
+D3: return_value == true
+*END* ORIGINAL FSF
+START MODIFIED FSF
+T1: (factor == 0) || (factor != 0 && a % factor == 0 && b % factor == 0)
+D1: Exception
+T2: factor != 0 && (a % factor != 0 || b % factor != 0)
+D2: return_value == false
+*END* MODIFIED FSF

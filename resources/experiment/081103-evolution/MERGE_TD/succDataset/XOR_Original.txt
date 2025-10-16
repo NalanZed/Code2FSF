@@ -1,0 +1,42 @@
+START ORIGINAL CODE
+
+public class XOR_Original {
+    public static boolean xor(boolean b1, boolean b2) {
+        if(b1 == true) {
+            if(b2 == true) {
+                return false;
+            }
+            else {
+                return true;
+            }
+        }
+        else {
+            if(b2 == true) {
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
+    }
+}
+
+*END* ORIGINAL CODE
+START ORIGINAL FSF
+T1: b1 == true && b2 == true
+D1: return_value == false
+T2: b1 == true && b2 == false
+D2: return_value == true
+T3: b1 == false && b2 == true
+D3: return_value == true
+T4: b1 == false && b2 == false
+D4: return_value == false
+*END* ORIGINAL FSF
+START MODIFIED FSF
+T1: (b1 == true && b2 == true) || (b1 == true && b2 == false)
+D1: return_value == false
+T2: b1 == false && b2 == true
+D2: return_value == true
+T3: b1 == false && b2 == false
+D3: return_value == false
+*END* MODIFIED FSF

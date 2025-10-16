@@ -1,0 +1,152 @@
+public class PassPillowBranch_Original {
+
+    /*@ public normal_behavior
+      @ requires n >= 1;
+      @ requires time >= 0;
+      @ ensures \result >= 1 && \result <= n;
+      @ ensures time < (n - 1) * 2 ==> 
+      @     (time < n ==> \result == time + 1) && 
+      @     (time >= n ==> \result == n * 2 - time - 1);
+      @ ensures time >= (n - 1) * 2 ==> 
+      @     \result == passPillow(n, time % ((n - 1) * 2));
+      @ also
+      @ public exceptional_behavior
+      @ requires n < 1;
+      @ signals (IllegalArgumentException) true;
+      @*/
+    public static int passPillow(int n, int time) {
+        if(n - 1 < 0){
+            throw new IllegalArgumentException("n is less than 1");
+        }
+        time = time % ((n - 1) * 2);
+        if (time < n) {
+            return time + 1;
+        }
+        return n * 2 - time - 1;
+    }
+}
+==============================
+/root/specgen/SpecGen/project/081401-specgen/tmp/PassPillowBranch_Original.java:11: error: A catastrophic JML internal error occurred.  Please report the bug with as much information as you can.
+      @     \result == passPillow(n, time % ((n - 1) * 2));
+                                 ^
+  Reason: No logical function for method PassPillowBranch_Original.passPillow(n, time % ((n - 1) * 2)) passPillow(int,int)
+error: A catastrophic JML internal error occurred.  Please report the bug with as much information as you can.
+  Reason: Exception while collecting stats
+java.lang.NullPointerException: Cannot read field "type" because "rhs" is null
+	at jdk.compiler/org.jmlspecs.openjml.esc.JmlAssertionAdder.visitBinary(JmlAssertionAdder.java:13632)
+	at jdk.compiler/com.sun.tools.javac.tree.JCTree$JCBinary.accept(JCTree.java:2111)
+	at jdk.compiler/com.sun.tools.javac.tree.TreeScanner.scan(TreeScanner.java:49)
+	at jdk.compiler/org.jmlspecs.openjml.visitors.JmlTreeScanner.scan(JmlTreeScanner.java:70)
+	at jdk.compiler/org.jmlspecs.openjml.esc.JmlAssertionAdder.convertExpr(JmlAssertionAdder.java:1554)
+	at jdk.compiler/org.jmlspecs.openjml.esc.JmlAssertionAdder.lambda$visitJmlBinary$14(JmlAssertionAdder.java:15560)
+	at jdk.compiler/org.jmlspecs.openjml.esc.JmlAssertionAdder.collectStats(JmlAssertionAdder.java:8390)
+	at jdk.compiler/org.jmlspecs.openjml.esc.JmlAssertionAdder.collectBlock(JmlAssertionAdder.java:8402)
+	at jdk.compiler/org.jmlspecs.openjml.esc.JmlAssertionAdder.visitJmlBinary(JmlAssertionAdder.java:15559)
+	at jdk.compiler/org.jmlspecs.openjml.JmlTree$JmlBinary.accept(JmlTree.java:1647)
+	at jdk.compiler/com.sun.tools.javac.tree.TreeScanner.scan(TreeScanner.java:49)
+	at jdk.compiler/org.jmlspecs.openjml.visitors.JmlTreeScanner.scan(JmlTreeScanner.java:70)
+	at jdk.compiler/org.jmlspecs.openjml.esc.JmlAssertionAdder.convertExpr(JmlAssertionAdder.java:1554)
+	at jdk.compiler/org.jmlspecs.openjml.esc.JmlAssertionAdder.convertJML(JmlAssertionAdder.java:1648)
+	at jdk.compiler/org.jmlspecs.openjml.esc.JmlAssertionAdder.applyHelper(JmlAssertionAdder.java:10710)
+	at jdk.compiler/org.jmlspecs.openjml.esc.JmlAssertionAdder.visitApply(JmlAssertionAdder.java:8031)
+	at jdk.compiler/com.sun.tools.javac.tree.JCTree$JCMethodInvocation.accept(JCTree.java:1752)
+	at jdk.compiler/com.sun.tools.javac.tree.TreeScanner.scan(TreeScanner.java:49)
+	at jdk.compiler/org.jmlspecs.openjml.visitors.JmlTreeScanner.scan(JmlTreeScanner.java:70)
+	at jdk.compiler/org.jmlspecs.openjml.esc.JmlAssertionAdder.convertExpr(JmlAssertionAdder.java:1554)
+	at jdk.compiler/org.jmlspecs.openjml.esc.JmlAssertionAdder.visitBinary(JmlAssertionAdder.java:13597)
+	at jdk.compiler/com.sun.tools.javac.tree.JCTree$JCBinary.accept(JCTree.java:2111)
+	at jdk.compiler/com.sun.tools.javac.tree.TreeScanner.scan(TreeScanner.java:49)
+	at jdk.compiler/org.jmlspecs.openjml.visitors.JmlTreeScanner.scan(JmlTreeScanner.java:70)
+	at jdk.compiler/org.jmlspecs.openjml.esc.JmlAssertionAdder.convertExpr(JmlAssertionAdder.java:1554)
+	at jdk.compiler/org.jmlspecs.openjml.esc.JmlAssertionAdder.lambda$visitJmlBinary$14(JmlAssertionAdder.java:15560)
+	at jdk.compiler/org.jmlspecs.openjml.esc.JmlAssertionAdder.collectStats(JmlAssertionAdder.java:8390)
+	at jdk.compiler/org.jmlspecs.openjml.esc.JmlAssertionAdder.collectBlock(JmlAssertionAdder.java:8402)
+	at jdk.compiler/org.jmlspecs.openjml.esc.JmlAssertionAdder.visitJmlBinary(JmlAssertionAdder.java:15559)
+	at jdk.compiler/org.jmlspecs.openjml.JmlTree$JmlBinary.accept(JmlTree.java:1647)
+	at jdk.compiler/com.sun.tools.javac.tree.TreeScanner.scan(TreeScanner.java:49)
+	at jdk.compiler/org.jmlspecs.openjml.visitors.JmlTreeScanner.scan(JmlTreeScanner.java:70)
+	at jdk.compiler/org.jmlspecs.openjml.esc.JmlAssertionAdder.convertExpr(JmlAssertionAdder.java:1554)
+	at jdk.compiler/org.jmlspecs.openjml.esc.JmlAssertionAdder.convertJML(JmlAssertionAdder.java:1648)
+	at jdk.compiler/org.jmlspecs.openjml.esc.JmlAssertionAdder.addPostConditions(JmlAssertionAdder.java:5428)
+	at jdk.compiler/org.jmlspecs.openjml.esc.JmlAssertionAdder.convertMethodBodyNoInit(JmlAssertionAdder.java:1256)
+	at jdk.compiler/org.jmlspecs.openjml.esc.JmlAssertionAdder.visitJmlMethodDecl(JmlAssertionAdder.java:17247)
+	at jdk.compiler/org.jmlspecs.openjml.JmlTree$JmlMethodDecl.accept(JmlTree.java:1383)
+	at jdk.compiler/com.sun.tools.javac.tree.TreeScanner.scan(TreeScanner.java:49)
+	at jdk.compiler/org.jmlspecs.openjml.visitors.JmlTreeScanner.scan(JmlTreeScanner.java:70)
+	at jdk.compiler/org.jmlspecs.openjml.esc.JmlAssertionAdder.visitJmlClassDecl(JmlAssertionAdder.java:15904)
+	at jdk.compiler/org.jmlspecs.openjml.JmlTree$JmlClassDecl.accept(JmlTree.java:1295)
+	at jdk.compiler/com.sun.tools.javac.tree.TreeScanner.scan(TreeScanner.java:49)
+	at jdk.compiler/org.jmlspecs.openjml.visitors.JmlTreeScanner.scan(JmlTreeScanner.java:70)
+	at jdk.compiler/org.jmlspecs.openjml.esc.JmlAssertionAdder.convert(JmlAssertionAdder.java:1441)
+	at jdk.compiler/org.jmlspecs.openjml.esc.JmlEsc.check(JmlEsc.java:112)
+	at jdk.compiler/com.sun.tools.javac.main.JmlCompiler.esc(JmlCompiler.java:536)
+	at jdk.compiler/com.sun.tools.javac.main.JmlCompiler.flow(JmlCompiler.java:362)
+	at jdk.compiler/com.sun.tools.javac.main.JavaCompiler.compile(JavaCompiler.java:936)
+	at jdk.compiler/com.sun.tools.javac.main.JmlCompiler.compile(JmlCompiler.java:197)
+	at jdk.compiler/com.sun.tools.javac.main.Main.compile(Main.java:321)
+	at jdk.compiler/org.jmlspecs.openjml.Main.compile(Main.java:534)
+	at jdk.compiler/org.jmlspecs.openjml.Main.execute(Main.java:374)
+	at jdk.compiler/org.jmlspecs.openjml.Main.execute(Main.java:332)
+	at jdk.compiler/org.jmlspecs.openjml.Main.main(Main.java:295)
+	at jdk.compiler/com.sun.tools.javac.Main.main(Main.java:53)
+2 errors
+
+==============================
+public class PassPillowBranch_Original {
+
+    /*@ public normal_behavior
+      @ requires n >= 1;
+      @ requires time >= 0;
+      @ ensures \result >= 1 && \result <= n;
+      @ ensures (time % ((n - 1) * 2) < n ==> \result == (time % ((n - 1) * 2)) + 1;
+      @ ensures (time % ((n - 1) * 2)) >= n ==> \result == n * 2 - (time % ((n - 1) * 2)) - 1;
+      @ also
+      @ public exceptional_behavior
+      @ requires n < 1;
+      @ signals (IllegalArgumentException) true;
+      @*/
+    public static int passPillow(int n, int time) {
+        if(n - 1 < 0){
+            throw new IllegalArgumentException("n is less than 1");
+        }
+        time = time % ((n - 1) * 2);
+        if (time < n) {
+            return time + 1;
+        }
+        return n * 2 - time - 1;
+    }
+}
+==============================
+/root/specgen/SpecGen/project/081401-specgen/tmp/PassPillowBranch_Original.java:7: error: ')' expected
+      @ ensures (time % ((n - 1) * 2) < n ==> \result == (time % ((n - 1) * 2)) + 1;
+                                                                                   ^
+1 error
+
+==============================
+public class PassPillowBranch_Original {
+
+    /*@ public normal_behavior
+      @ requires n >= 1;
+      @ requires time >= 0;
+      @ ensures \result >= 1 && \result <= n;
+      @ ensures (time % ((n - 1) * 2)) < n ==> \result == (time % ((n - 1) * 2)) + 1;
+      @ ensures (time % ((n - 1) * 2)) >= n ==> \result == n * 2 - (time % ((n - 1) * 2)) - 1;
+      @ also
+      @ public exceptional_behavior
+      @ requires n < 1;
+      @ signals (IllegalArgumentException) true;
+      @*/
+    public static int passPillow(int n, int time) {
+        if(n - 1 < 0){
+            throw new IllegalArgumentException("n is less than 1");
+        }
+        time = time % ((n - 1) * 2);
+        if (time < n) {
+            return time + 1;
+        }
+        return n * 2 - time - 1;
+    }
+}
+==============================
+
+==============================

@@ -1,0 +1,376 @@
+public class PassPillowBranch_Mutant5 {
+    //@ requires n > 1 && time >= 0;
+    //@ ensures 1 <= \result && \result <= n;
+    //@ ensures \result == time + 1 ==> time < n;
+    //@ ensures \result == n * 3 - time - 1 ==> time >= n;
+    public static int passPillow(int n, int time) {
+        time = time % ((n - 1) * 2);
+        if (time < n) {
+            return time + 1;
+        }
+        return n * 3 - time - 1; // changed multiplication factor from 2 to 3
+    }
+}
+==============================
+/root/specgen/SpecGen/project/081402-specgen/tmp/PassPillowBranch_Mutant5.java:11: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081402-specgen/tmp/PassPillowBranch_Mutant5.java:3:) in method passPillow
+        return n * 3 - time - 1; // changed multiplication factor from 2 to 3
+        ^
+/root/specgen/SpecGen/project/081402-specgen/tmp/PassPillowBranch_Mutant5.java:3: verify: Associated declaration: /root/specgen/SpecGen/project/081402-specgen/tmp/PassPillowBranch_Mutant5.java:11:
+    //@ ensures 1 <= \result && \result <= n;
+        ^
+2 verification failures
+
+==============================
+public class PassPillowBranch_Mutant5 {
+    //@ requires n > 1 && time >= 0;
+    //@ ensures 1 < \result && \result < n;  
+    //@ ensures \result == time + 1 ==> time < n;
+    //@ ensures \result == n * 3 - time - 1 ==> time >= n;
+    public static int passPillow(int n, int time) {
+        time = time % ((n - 1) * 2);
+        if (time < n) {
+            return time + 1;
+        }
+        return n * 3 - time - 1; // changed multiplication factor from 2 to 3
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081402-specgen/tmp/PassPillowBranch_Mutant5.java:9: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081402-specgen/tmp/PassPillowBranch_Mutant5.java:3:) in method passPillow
+            return time + 1;
+            ^
+/root/specgen/SpecGen/project/081402-specgen/tmp/PassPillowBranch_Mutant5.java:3: verify: Associated declaration: /root/specgen/SpecGen/project/081402-specgen/tmp/PassPillowBranch_Mutant5.java:9:
+    //@ ensures 1 < \result && \result < n;  
+        ^
+2 verification failures
+
+==============================
+public class PassPillowBranch_Mutant5 {
+    //@ requires n > 1 && time >= 0;
+    //@ ensures 1 < \result && \result <= n;  
+    //@ ensures \result == time + 1 ==> time < n;
+    //@ ensures \result == n * 3 - time - 1 ==> time >= n;
+    public static int passPillow(int n, int time) {
+        time = time % ((n - 1) * 2);
+        if (time < n) {
+            return time + 1;
+        }
+        return n * 3 - time - 1; // changed multiplication factor from 2 to 3
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081402-specgen/tmp/PassPillowBranch_Mutant5.java:9: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081402-specgen/tmp/PassPillowBranch_Mutant5.java:3:) in method passPillow
+            return time + 1;
+            ^
+/root/specgen/SpecGen/project/081402-specgen/tmp/PassPillowBranch_Mutant5.java:3: verify: Associated declaration: /root/specgen/SpecGen/project/081402-specgen/tmp/PassPillowBranch_Mutant5.java:9:
+    //@ ensures 1 < \result && \result <= n;  
+        ^
+2 verification failures
+
+==============================
+public class PassPillowBranch_Mutant5 {
+    //@ requires n > 1 && time >= 0;
+    //@ ensures 1 < \result && \result - 1 <= n;  
+    //@ ensures \result == time + 1 ==> time < n;
+    //@ ensures \result == n * 3 - time - 1 ==> time >= n;
+    public static int passPillow(int n, int time) {
+        time = time % ((n - 1) * 2);
+        if (time < n) {
+            return time + 1;
+        }
+        return n * 3 - time - 1; // changed multiplication factor from 2 to 3
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081402-specgen/tmp/PassPillowBranch_Mutant5.java:9: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081402-specgen/tmp/PassPillowBranch_Mutant5.java:3:) in method passPillow
+            return time + 1;
+            ^
+/root/specgen/SpecGen/project/081402-specgen/tmp/PassPillowBranch_Mutant5.java:3: verify: Associated declaration: /root/specgen/SpecGen/project/081402-specgen/tmp/PassPillowBranch_Mutant5.java:9:
+    //@ ensures 1 < \result && \result - 1 <= n;  
+        ^
+2 verification failures
+
+==============================
+public class PassPillowBranch_Mutant5 {
+    //@ requires n > 1 && time >= 0;
+    //@ ensures 1 <= \result && \result < n;  
+    //@ ensures \result == time + 1 ==> time < n;
+    //@ ensures \result == n * 3 - time - 1 ==> time >= n;
+    public static int passPillow(int n, int time) {
+        time = time % ((n - 1) * 2);
+        if (time < n) {
+            return time + 1;
+        }
+        return n * 3 - time - 1; // changed multiplication factor from 2 to 3
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081402-specgen/tmp/PassPillowBranch_Mutant5.java:9: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081402-specgen/tmp/PassPillowBranch_Mutant5.java:3:) in method passPillow
+            return time + 1;
+            ^
+/root/specgen/SpecGen/project/081402-specgen/tmp/PassPillowBranch_Mutant5.java:3: verify: Associated declaration: /root/specgen/SpecGen/project/081402-specgen/tmp/PassPillowBranch_Mutant5.java:9:
+    //@ ensures 1 <= \result && \result < n;  
+        ^
+2 verification failures
+
+==============================
+public class PassPillowBranch_Mutant5 {
+    //@ requires n > 1 && time >= 0;
+    //@ ensures 1 <= \result && \result <= n;  
+    //@ ensures \result == time + 1 ==> time < n;
+    //@ ensures \result == n * 3 - time - 1 ==> time >= n;
+    public static int passPillow(int n, int time) {
+        time = time % ((n - 1) * 2);
+        if (time < n) {
+            return time + 1;
+        }
+        return n * 3 - time - 1; // changed multiplication factor from 2 to 3
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081402-specgen/tmp/PassPillowBranch_Mutant5.java:11: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081402-specgen/tmp/PassPillowBranch_Mutant5.java:3:) in method passPillow
+        return n * 3 - time - 1; // changed multiplication factor from 2 to 3
+        ^
+/root/specgen/SpecGen/project/081402-specgen/tmp/PassPillowBranch_Mutant5.java:3: verify: Associated declaration: /root/specgen/SpecGen/project/081402-specgen/tmp/PassPillowBranch_Mutant5.java:11:
+    //@ ensures 1 <= \result && \result <= n;  
+        ^
+2 verification failures
+
+==============================
+public class PassPillowBranch_Mutant5 {
+    //@ requires n > 1 && time >= 0;
+    //@ ensures 1 <= \result && \result - 1 <= n;  
+    //@ ensures \result == time + 1 ==> time < n;
+    //@ ensures \result == n * 3 - time - 1 ==> time >= n;
+    public static int passPillow(int n, int time) {
+        time = time % ((n - 1) * 2);
+        if (time < n) {
+            return time + 1;
+        }
+        return n * 3 - time - 1; // changed multiplication factor from 2 to 3
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081402-specgen/tmp/PassPillowBranch_Mutant5.java:11: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081402-specgen/tmp/PassPillowBranch_Mutant5.java:3:) in method passPillow
+        return n * 3 - time - 1; // changed multiplication factor from 2 to 3
+        ^
+/root/specgen/SpecGen/project/081402-specgen/tmp/PassPillowBranch_Mutant5.java:3: verify: Associated declaration: /root/specgen/SpecGen/project/081402-specgen/tmp/PassPillowBranch_Mutant5.java:11:
+    //@ ensures 1 <= \result && \result - 1 <= n;  
+        ^
+2 verification failures
+
+==============================
+public class PassPillowBranch_Mutant5 {
+    //@ requires n > 1 && time >= 0;
+    //@ ensures 1 - 1 <= \result && \result < n;  
+    //@ ensures \result == time + 1 ==> time < n;
+    //@ ensures \result == n * 3 - time - 1 ==> time >= n;
+    public static int passPillow(int n, int time) {
+        time = time % ((n - 1) * 2);
+        if (time < n) {
+            return time + 1;
+        }
+        return n * 3 - time - 1; // changed multiplication factor from 2 to 3
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081402-specgen/tmp/PassPillowBranch_Mutant5.java:9: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081402-specgen/tmp/PassPillowBranch_Mutant5.java:3:) in method passPillow
+            return time + 1;
+            ^
+/root/specgen/SpecGen/project/081402-specgen/tmp/PassPillowBranch_Mutant5.java:3: verify: Associated declaration: /root/specgen/SpecGen/project/081402-specgen/tmp/PassPillowBranch_Mutant5.java:9:
+    //@ ensures 1 - 1 <= \result && \result < n;  
+        ^
+2 verification failures
+
+==============================
+public class PassPillowBranch_Mutant5 {
+    //@ requires n > 1 && time >= 0;
+    //@ ensures 1 - 1 <= \result && \result <= n;  
+    //@ ensures \result == time + 1 ==> time < n;
+    //@ ensures \result == n * 3 - time - 1 ==> time >= n;
+    public static int passPillow(int n, int time) {
+        time = time % ((n - 1) * 2);
+        if (time < n) {
+            return time + 1;
+        }
+        return n * 3 - time - 1; // changed multiplication factor from 2 to 3
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081402-specgen/tmp/PassPillowBranch_Mutant5.java:11: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081402-specgen/tmp/PassPillowBranch_Mutant5.java:3:) in method passPillow
+        return n * 3 - time - 1; // changed multiplication factor from 2 to 3
+        ^
+/root/specgen/SpecGen/project/081402-specgen/tmp/PassPillowBranch_Mutant5.java:3: verify: Associated declaration: /root/specgen/SpecGen/project/081402-specgen/tmp/PassPillowBranch_Mutant5.java:11:
+    //@ ensures 1 - 1 <= \result && \result <= n;  
+        ^
+2 verification failures
+
+==============================
+public class PassPillowBranch_Mutant5 {
+    //@ requires n > 1 && time >= 0;
+    //@ ensures 1 - 1 <= \result && \result - 1 <= n;  
+    //@ ensures \result == time + 1 ==> time < n;
+    //@ ensures \result == n * 3 - time - 1 ==> time >= n;
+    public static int passPillow(int n, int time) {
+        time = time % ((n - 1) * 2);
+        if (time < n) {
+            return time + 1;
+        }
+        return n * 3 - time - 1; // changed multiplication factor from 2 to 3
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081402-specgen/tmp/PassPillowBranch_Mutant5.java:11: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081402-specgen/tmp/PassPillowBranch_Mutant5.java:3:) in method passPillow
+        return n * 3 - time - 1; // changed multiplication factor from 2 to 3
+        ^
+/root/specgen/SpecGen/project/081402-specgen/tmp/PassPillowBranch_Mutant5.java:3: verify: Associated declaration: /root/specgen/SpecGen/project/081402-specgen/tmp/PassPillowBranch_Mutant5.java:11:
+    //@ ensures 1 - 1 <= \result && \result - 1 <= n;  
+        ^
+2 verification failures
+
+==============================
+public class PassPillowBranch_Mutant5 {
+    //@ requires n > 1 && time >= 0;
+ 
+    //@ ensures \result == time + 1 ==> time < n;
+    //@ ensures \result == n * 3 - time - 1 ==> time >= n;
+    public static int passPillow(int n, int time) {
+        time = time % ((n - 1) * 2);
+        if (time < n) {
+            return time + 1;
+        }
+        return n * 3 - time - 1; // changed multiplication factor from 2 to 3
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081402-specgen/tmp/PassPillowBranch_Mutant5.java:11: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081402-specgen/tmp/PassPillowBranch_Mutant5.java:4:) in method passPillow
+        return n * 3 - time - 1; // changed multiplication factor from 2 to 3
+        ^
+/root/specgen/SpecGen/project/081402-specgen/tmp/PassPillowBranch_Mutant5.java:4: verify: Associated declaration: /root/specgen/SpecGen/project/081402-specgen/tmp/PassPillowBranch_Mutant5.java:11:
+    //@ ensures \result == time + 1 ==> time < n;
+        ^
+2 verification failures
+
+==============================
+public class PassPillowBranch_Mutant5 {
+    //@ requires n > 1 && time >= 0;
+ 
+    //@ ensures \result == time + 1 ==> time < n;  
+    //@ ensures \result == n * 3 - time - 1 ==> time >= n;
+    public static int passPillow(int n, int time) {
+        time = time % ((n - 1) * 2);
+        if (time < n) {
+            return time + 1;
+        }
+        return n * 3 - time - 1; // changed multiplication factor from 2 to 3
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081402-specgen/tmp/PassPillowBranch_Mutant5.java:11: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081402-specgen/tmp/PassPillowBranch_Mutant5.java:4:) in method passPillow
+        return n * 3 - time - 1; // changed multiplication factor from 2 to 3
+        ^
+/root/specgen/SpecGen/project/081402-specgen/tmp/PassPillowBranch_Mutant5.java:4: verify: Associated declaration: /root/specgen/SpecGen/project/081402-specgen/tmp/PassPillowBranch_Mutant5.java:11:
+    //@ ensures \result == time + 1 ==> time < n;  
+        ^
+2 verification failures
+
+==============================
+public class PassPillowBranch_Mutant5 {
+    //@ requires n > 1 && time >= 0;
+ 
+    //@ ensures \result == time + 1 ==> time <= n;  
+    //@ ensures \result == n * 3 - time - 1 ==> time >= n;
+    public static int passPillow(int n, int time) {
+        time = time % ((n - 1) * 2);
+        if (time < n) {
+            return time + 1;
+        }
+        return n * 3 - time - 1; // changed multiplication factor from 2 to 3
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081402-specgen/tmp/PassPillowBranch_Mutant5.java:11: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081402-specgen/tmp/PassPillowBranch_Mutant5.java:4:) in method passPillow
+        return n * 3 - time - 1; // changed multiplication factor from 2 to 3
+        ^
+/root/specgen/SpecGen/project/081402-specgen/tmp/PassPillowBranch_Mutant5.java:4: verify: Associated declaration: /root/specgen/SpecGen/project/081402-specgen/tmp/PassPillowBranch_Mutant5.java:11:
+    //@ ensures \result == time + 1 ==> time <= n;  
+        ^
+2 verification failures
+
+==============================
+public class PassPillowBranch_Mutant5 {
+    //@ requires n > 1 && time >= 0;
+ 
+    //@ ensures \result == time - 1 ==> time < n;  
+    //@ ensures \result == n * 3 - time - 1 ==> time >= n;
+    public static int passPillow(int n, int time) {
+        time = time % ((n - 1) * 2);
+        if (time < n) {
+            return time + 1;
+        }
+        return n * 3 - time - 1; // changed multiplication factor from 2 to 3
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081402-specgen/tmp/PassPillowBranch_Mutant5.java:9: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081402-specgen/tmp/PassPillowBranch_Mutant5.java:4:) in method passPillow
+            return time + 1;
+            ^
+/root/specgen/SpecGen/project/081402-specgen/tmp/PassPillowBranch_Mutant5.java:4: verify: Associated declaration: /root/specgen/SpecGen/project/081402-specgen/tmp/PassPillowBranch_Mutant5.java:9:
+    //@ ensures \result == time - 1 ==> time < n;  
+        ^
+2 verification failures
+
+==============================
+public class PassPillowBranch_Mutant5 {
+    //@ requires n > 1 && time >= 0;
+ 
+    //@ ensures \result == time - 1 ==> time <= n;  
+    //@ ensures \result == n * 3 - time - 1 ==> time >= n;
+    public static int passPillow(int n, int time) {
+        time = time % ((n - 1) * 2);
+        if (time < n) {
+            return time + 1;
+        }
+        return n * 3 - time - 1; // changed multiplication factor from 2 to 3
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081402-specgen/tmp/PassPillowBranch_Mutant5.java:9: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081402-specgen/tmp/PassPillowBranch_Mutant5.java:4:) in method passPillow
+            return time + 1;
+            ^
+/root/specgen/SpecGen/project/081402-specgen/tmp/PassPillowBranch_Mutant5.java:4: verify: Associated declaration: /root/specgen/SpecGen/project/081402-specgen/tmp/PassPillowBranch_Mutant5.java:9:
+    //@ ensures \result == time - 1 ==> time <= n;  
+        ^
+2 verification failures
+
+==============================
+public class PassPillowBranch_Mutant5 {
+    //@ requires n > 1 && time >= 0;
+ 
+ 
+    //@ ensures \result == n * 3 - time - 1 ==> time >= n;
+    public static int passPillow(int n, int time) {
+        time = time % ((n - 1) * 2);
+        if (time < n) {
+            return time + 1;
+        }
+        return n * 3 - time - 1; // changed multiplication factor from 2 to 3
+    }
+}
+
+==============================
+
+==============================

@@ -1,0 +1,1413 @@
+public class WaterFee_Original {
+    //@ requires tons >= 0;
+    //@ ensures \result == (tons > 30 ? 5*(tons-30) + 4*20 + 3*10 : (tons > 10 ? 4*(tons-10) + 3*10 : 3*tons));
+    public static int calcWaterFee(int tons) {
+        int n = tons;
+        int fee = 0;
+        //@ maintaining fee == (tons > 30 ? 5*(Math.max(0, (tons-30) - Math.max(0, n-30))) + 4*(Math.max(0, Math.min(20, tons-10) - Math.max(0, Math.min(20, n-10)))) + 3*(Math.max(0, Math.min(10, tons) - Math.max(0, Math.min(10, n)))) : (tons > 10 ? 4*(Math.max(0, (tons-10) - Math.max(0, n-10))) + 3*(Math.max(0, Math.min(10, tons) - Math.max(0, Math.min(10, n)))) : 3*(tons - n));
+        //@ maintaining n >= 0 && n <= tons;
+        //@ decreases n;
+        while (n > 0) {
+            if (n > 30) {
+                fee += 5;
+            } else if (n > 10) {
+                fee += 4;
+            } else {
+                fee += 3;
+            }
+            n--;
+        }
+        return fee;
+    }
+}
+==============================
+/root/specgen/SpecGen/project/082102-specgen/tmp/WaterFee_Original.java:7: error: ')' expected
+        //@ maintaining fee == (tons > 30 ? 5*(Math.max(0, (tons-30) - Math.max(0, n-30))) + 4*(Math.max(0, Math.min(20, tons-10) - Math.max(0, Math.min(20, n-10)))) + 3*(Math.max(0, Math.min(10, tons) - Math.max(0, Math.min(10, n)))) : (tons > 10 ? 4*(Math.max(0, (tons-10) - Math.max(0, n-10))) + 3*(Math.max(0, Math.min(10, tons) - Math.max(0, Math.min(10, n)))) : 3*(tons - n));
+                                                                                                                                                                                                                                                                                                                                                                                             ^
+1 error
+
+==============================
+public class WaterFee_Original {
+    //@ requires tons >= 0;
+    //@ ensures \result == (tons > 30 ? 5*(tons-30) + 4*20 + 3*10 : (tons > 10 ? 4*(tons-10) + 3*10 : 3*tons));
+    public static int calcWaterFee(int tons) {
+        int n = tons;
+        int fee = 0;
+        //@ maintaining fee == (tons - n) * (n > 30 ? 5 : (n > 10 ? 4 : 3));
+        //@ maintaining n >= 0 && n <= tons;
+        //@ decreases n;
+        while (n > 0) {
+            if (n > 30) {
+                fee += 5;
+            } else if (n > 10) {
+                fee += 4;
+            } else {
+                fee += 3;
+            }
+            n--;
+        }
+        return fee;
+    }
+}
+==============================
+/root/specgen/SpecGen/project/082102-specgen/tmp/WaterFee_Original.java:7: verify: The prover cannot establish an assertion (LoopInvariant) in method calcWaterFee
+        //@ maintaining fee == (tons - n) * (n > 30 ? 5 : (n > 10 ? 4 : 3));
+            ^
+1 verification failure
+
+==============================
+public class WaterFee_Original {
+    //@ requires tons >= 0;
+    //@ ensures \result == (tons > 30 ? 5*(tons-30) + 4*20 + 3*10 : (tons > 10 ? 4*(tons-10) + 3*10 : 3*tons));
+    public static int calcWaterFee(int tons) {
+        int n = tons;
+        int fee = 0;
+        //@ maintaining fee == (tons - n) * (n > 30 ? 5 : (n > 10 ? 4 : 3));  
+        //@ maintaining n >= 0 && n <= tons;
+        //@ decreases n;
+        while (n > 0) {
+            if (n > 30) {
+                fee += 5;
+            } else if (n > 10) {
+                fee += 4;
+            } else {
+                fee += 3;
+            }
+            n--;
+        }
+        return fee;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/082102-specgen/tmp/WaterFee_Original.java:7: verify: The prover cannot establish an assertion (LoopInvariant) in method calcWaterFee
+        //@ maintaining fee == (tons - n) * (n > 30 ? 5 : (n > 10 ? 4 : 3));  
+            ^
+1 verification failure
+
+==============================
+public class WaterFee_Original {
+    //@ requires tons >= 0;
+    //@ ensures \result == (tons > 30 ? 5*(tons-30) + 4*20 + 3*10 : (tons > 10 ? 4*(tons-10) + 3*10 : 3*tons));
+    public static int calcWaterFee(int tons) {
+        int n = tons;
+        int fee = 0;
+        //@ maintaining fee == (tons - n) * (n > 30 ? 5 : (n >= 10 ? 4 : 3));  
+        //@ maintaining n >= 0 && n <= tons;
+        //@ decreases n;
+        while (n > 0) {
+            if (n > 30) {
+                fee += 5;
+            } else if (n > 10) {
+                fee += 4;
+            } else {
+                fee += 3;
+            }
+            n--;
+        }
+        return fee;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/082102-specgen/tmp/WaterFee_Original.java:7: verify: The prover cannot establish an assertion (LoopInvariant) in method calcWaterFee
+        //@ maintaining fee == (tons - n) * (n > 30 ? 5 : (n >= 10 ? 4 : 3));  
+            ^
+1 verification failure
+
+==============================
+public class WaterFee_Original {
+    //@ requires tons >= 0;
+    //@ ensures \result == (tons > 30 ? 5*(tons-30) + 4*20 + 3*10 : (tons > 10 ? 4*(tons-10) + 3*10 : 3*tons));
+    public static int calcWaterFee(int tons) {
+        int n = tons;
+        int fee = 0;
+        //@ maintaining fee == (tons - n) * (n >= 30 ? 5 : (n > 10 ? 4 : 3));  
+        //@ maintaining n >= 0 && n <= tons;
+        //@ decreases n;
+        while (n > 0) {
+            if (n > 30) {
+                fee += 5;
+            } else if (n > 10) {
+                fee += 4;
+            } else {
+                fee += 3;
+            }
+            n--;
+        }
+        return fee;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/082102-specgen/tmp/WaterFee_Original.java:7: verify: The prover cannot establish an assertion (LoopInvariant) in method calcWaterFee
+        //@ maintaining fee == (tons - n) * (n >= 30 ? 5 : (n > 10 ? 4 : 3));  
+            ^
+1 verification failure
+
+==============================
+public class WaterFee_Original {
+    //@ requires tons >= 0;
+    //@ ensures \result == (tons > 30 ? 5*(tons-30) + 4*20 + 3*10 : (tons > 10 ? 4*(tons-10) + 3*10 : 3*tons));
+    public static int calcWaterFee(int tons) {
+        int n = tons;
+        int fee = 0;
+        //@ maintaining fee == (tons - n) * (n >= 30 ? 5 : (n >= 10 ? 4 : 3));  
+        //@ maintaining n >= 0 && n <= tons;
+        //@ decreases n;
+        while (n > 0) {
+            if (n > 30) {
+                fee += 5;
+            } else if (n > 10) {
+                fee += 4;
+            } else {
+                fee += 3;
+            }
+            n--;
+        }
+        return fee;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/082102-specgen/tmp/WaterFee_Original.java:7: verify: The prover cannot establish an assertion (LoopInvariant) in method calcWaterFee
+        //@ maintaining fee == (tons - n) * (n >= 30 ? 5 : (n >= 10 ? 4 : 3));  
+            ^
+1 verification failure
+
+==============================
+public class WaterFee_Original {
+    //@ requires tons >= 0;
+    //@ ensures \result == (tons > 30 ? 5*(tons-30) + 4*20 + 3*10 : (tons > 10 ? 4*(tons-10) + 3*10 : 3*tons));
+    public static int calcWaterFee(int tons) {
+        int n = tons;
+        int fee = 0;
+        //@ maintaining fee == (tons + n) * (n > 30 ? 5 : (n > 10 ? 4 : 3));  
+        //@ maintaining n >= 0 && n <= tons;
+        //@ decreases n;
+        while (n > 0) {
+            if (n > 30) {
+                fee += 5;
+            } else if (n > 10) {
+                fee += 4;
+            } else {
+                fee += 3;
+            }
+            n--;
+        }
+        return fee;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/082102-specgen/tmp/WaterFee_Original.java:7: verify: The prover cannot establish an assertion (LoopInvariantBeforeLoop) in method calcWaterFee
+        //@ maintaining fee == (tons + n) * (n > 30 ? 5 : (n > 10 ? 4 : 3));  
+            ^
+1 verification failure
+
+==============================
+public class WaterFee_Original {
+    //@ requires tons >= 0;
+    //@ ensures \result == (tons > 30 ? 5*(tons-30) + 4*20 + 3*10 : (tons > 10 ? 4*(tons-10) + 3*10 : 3*tons));
+    public static int calcWaterFee(int tons) {
+        int n = tons;
+        int fee = 0;
+        //@ maintaining fee == (tons + n) * (n > 30 ? 5 : (n >= 10 ? 4 : 3));  
+        //@ maintaining n >= 0 && n <= tons;
+        //@ decreases n;
+        while (n > 0) {
+            if (n > 30) {
+                fee += 5;
+            } else if (n > 10) {
+                fee += 4;
+            } else {
+                fee += 3;
+            }
+            n--;
+        }
+        return fee;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/082102-specgen/tmp/WaterFee_Original.java:7: verify: The prover cannot establish an assertion (LoopInvariantBeforeLoop) in method calcWaterFee
+        //@ maintaining fee == (tons + n) * (n > 30 ? 5 : (n >= 10 ? 4 : 3));  
+            ^
+1 verification failure
+
+==============================
+public class WaterFee_Original {
+    //@ requires tons >= 0;
+    //@ ensures \result == (tons > 30 ? 5*(tons-30) + 4*20 + 3*10 : (tons > 10 ? 4*(tons-10) + 3*10 : 3*tons));
+    public static int calcWaterFee(int tons) {
+        int n = tons;
+        int fee = 0;
+        //@ maintaining fee == (tons + n) * (n >= 30 ? 5 : (n > 10 ? 4 : 3));  
+        //@ maintaining n >= 0 && n <= tons;
+        //@ decreases n;
+        while (n > 0) {
+            if (n > 30) {
+                fee += 5;
+            } else if (n > 10) {
+                fee += 4;
+            } else {
+                fee += 3;
+            }
+            n--;
+        }
+        return fee;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/082102-specgen/tmp/WaterFee_Original.java:7: verify: The prover cannot establish an assertion (LoopInvariantBeforeLoop) in method calcWaterFee
+        //@ maintaining fee == (tons + n) * (n >= 30 ? 5 : (n > 10 ? 4 : 3));  
+            ^
+1 verification failure
+
+==============================
+public class WaterFee_Original {
+    //@ requires tons >= 0;
+    //@ ensures \result == (tons > 30 ? 5*(tons-30) + 4*20 + 3*10 : (tons > 10 ? 4*(tons-10) + 3*10 : 3*tons));
+    public static int calcWaterFee(int tons) {
+        int n = tons;
+        int fee = 0;
+        //@ maintaining fee == (tons + n) * (n >= 30 ? 5 : (n >= 10 ? 4 : 3));  
+        //@ maintaining n >= 0 && n <= tons;
+        //@ decreases n;
+        while (n > 0) {
+            if (n > 30) {
+                fee += 5;
+            } else if (n > 10) {
+                fee += 4;
+            } else {
+                fee += 3;
+            }
+            n--;
+        }
+        return fee;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/082102-specgen/tmp/WaterFee_Original.java:7: verify: The prover cannot establish an assertion (LoopInvariantBeforeLoop) in method calcWaterFee
+        //@ maintaining fee == (tons + n) * (n >= 30 ? 5 : (n >= 10 ? 4 : 3));  
+            ^
+1 verification failure
+
+==============================
+public class WaterFee_Original {
+    //@ requires tons >= 0;
+    //@ ensures \result == (tons > 30 ? 5*(tons-30) + 4*20 + 3*10 : (tons > 10 ? 4*(tons-10) + 3*10 : 3*tons));
+    public static int calcWaterFee(int tons) {
+        int n = tons;
+        int fee = 0;
+ 
+        //@ maintaining n >= 0 && n <= tons;
+        //@ decreases n;
+        while (n > 0) {
+            if (n > 30) {
+                fee += 5;
+            } else if (n > 10) {
+                fee += 4;
+            } else {
+                fee += 3;
+            }
+            n--;
+        }
+        return fee;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/082102-specgen/tmp/WaterFee_Original.java:20: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/082102-specgen/tmp/WaterFee_Original.java:3:) in method calcWaterFee
+        return fee;
+        ^
+/root/specgen/SpecGen/project/082102-specgen/tmp/WaterFee_Original.java:3: verify: Associated declaration: /root/specgen/SpecGen/project/082102-specgen/tmp/WaterFee_Original.java:20:
+    //@ ensures \result == (tons > 30 ? 5*(tons-30) + 4*20 + 3*10 : (tons > 10 ? 4*(tons-10) + 3*10 : 3*tons));
+        ^
+2 verification failures
+
+==============================
+public class WaterFee_Original {
+    //@ requires tons >= 0;
+    //@ ensures \result == (tons > 30 ? 5*(tons-30) + 4*20 + 3*10 : (tons > 10 ? 4*(tons-10) + 3*10 : 3*tons));  
+    public static int calcWaterFee(int tons) {
+        int n = tons;
+        int fee = 0;
+ 
+        //@ maintaining n >= 0 && n <= tons;
+        //@ decreases n;
+        while (n > 0) {
+            if (n > 30) {
+                fee += 5;
+            } else if (n > 10) {
+                fee += 4;
+            } else {
+                fee += 3;
+            }
+            n--;
+        }
+        return fee;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/082102-specgen/tmp/WaterFee_Original.java:20: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/082102-specgen/tmp/WaterFee_Original.java:3:) in method calcWaterFee
+        return fee;
+        ^
+/root/specgen/SpecGen/project/082102-specgen/tmp/WaterFee_Original.java:3: verify: Associated declaration: /root/specgen/SpecGen/project/082102-specgen/tmp/WaterFee_Original.java:20:
+    //@ ensures \result == (tons > 30 ? 5*(tons-30) + 4*20 + 3*10 : (tons > 10 ? 4*(tons-10) + 3*10 : 3*tons));  
+        ^
+2 verification failures
+
+==============================
+public class WaterFee_Original {
+    //@ requires tons >= 0;
+    //@ ensures \result == (tons > 30 ? 5*(tons-30) + 4*20 + 3*10 : (tons >= 10 ? 4*(tons-10) + 3*10 : 3*tons));  
+    public static int calcWaterFee(int tons) {
+        int n = tons;
+        int fee = 0;
+ 
+        //@ maintaining n >= 0 && n <= tons;
+        //@ decreases n;
+        while (n > 0) {
+            if (n > 30) {
+                fee += 5;
+            } else if (n > 10) {
+                fee += 4;
+            } else {
+                fee += 3;
+            }
+            n--;
+        }
+        return fee;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/082102-specgen/tmp/WaterFee_Original.java:20: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/082102-specgen/tmp/WaterFee_Original.java:3:) in method calcWaterFee
+        return fee;
+        ^
+/root/specgen/SpecGen/project/082102-specgen/tmp/WaterFee_Original.java:3: verify: Associated declaration: /root/specgen/SpecGen/project/082102-specgen/tmp/WaterFee_Original.java:20:
+    //@ ensures \result == (tons > 30 ? 5*(tons-30) + 4*20 + 3*10 : (tons >= 10 ? 4*(tons-10) + 3*10 : 3*tons));  
+        ^
+2 verification failures
+
+==============================
+public class WaterFee_Original {
+    //@ requires tons >= 0;
+    //@ ensures \result == (tons >= 30 ? 5*(tons-30) + 4*20 + 3*10 : (tons > 10 ? 4*(tons-10) + 3*10 : 3*tons));  
+    public static int calcWaterFee(int tons) {
+        int n = tons;
+        int fee = 0;
+ 
+        //@ maintaining n >= 0 && n <= tons;
+        //@ decreases n;
+        while (n > 0) {
+            if (n > 30) {
+                fee += 5;
+            } else if (n > 10) {
+                fee += 4;
+            } else {
+                fee += 3;
+            }
+            n--;
+        }
+        return fee;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/082102-specgen/tmp/WaterFee_Original.java:20: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/082102-specgen/tmp/WaterFee_Original.java:3:) in method calcWaterFee
+        return fee;
+        ^
+/root/specgen/SpecGen/project/082102-specgen/tmp/WaterFee_Original.java:3: verify: Associated declaration: /root/specgen/SpecGen/project/082102-specgen/tmp/WaterFee_Original.java:20:
+    //@ ensures \result == (tons >= 30 ? 5*(tons-30) + 4*20 + 3*10 : (tons > 10 ? 4*(tons-10) + 3*10 : 3*tons));  
+        ^
+2 verification failures
+
+==============================
+public class WaterFee_Original {
+    //@ requires tons >= 0;
+    //@ ensures \result == (tons >= 30 ? 5*(tons-30) + 4*20 + 3*10 : (tons >= 10 ? 4*(tons-10) + 3*10 : 3*tons));  
+    public static int calcWaterFee(int tons) {
+        int n = tons;
+        int fee = 0;
+ 
+        //@ maintaining n >= 0 && n <= tons;
+        //@ decreases n;
+        while (n > 0) {
+            if (n > 30) {
+                fee += 5;
+            } else if (n > 10) {
+                fee += 4;
+            } else {
+                fee += 3;
+            }
+            n--;
+        }
+        return fee;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/082102-specgen/tmp/WaterFee_Original.java:20: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/082102-specgen/tmp/WaterFee_Original.java:3:) in method calcWaterFee
+        return fee;
+        ^
+/root/specgen/SpecGen/project/082102-specgen/tmp/WaterFee_Original.java:3: verify: Associated declaration: /root/specgen/SpecGen/project/082102-specgen/tmp/WaterFee_Original.java:20:
+    //@ ensures \result == (tons >= 30 ? 5*(tons-30) + 4*20 + 3*10 : (tons >= 10 ? 4*(tons-10) + 3*10 : 3*tons));  
+        ^
+2 verification failures
+
+==============================
+public class WaterFee_Original {
+    //@ requires tons >= 0;
+    //@ ensures \result == (tons > 30 ? 5*(tons-30) + 4*20 + 3*10 : (tons > 10 ? 4*(tons-10) - 3*10 : 3*tons));  
+    public static int calcWaterFee(int tons) {
+        int n = tons;
+        int fee = 0;
+ 
+        //@ maintaining n >= 0 && n <= tons;
+        //@ decreases n;
+        while (n > 0) {
+            if (n > 30) {
+                fee += 5;
+            } else if (n > 10) {
+                fee += 4;
+            } else {
+                fee += 3;
+            }
+            n--;
+        }
+        return fee;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/082102-specgen/tmp/WaterFee_Original.java:20: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/082102-specgen/tmp/WaterFee_Original.java:3:) in method calcWaterFee
+        return fee;
+        ^
+/root/specgen/SpecGen/project/082102-specgen/tmp/WaterFee_Original.java:3: verify: Associated declaration: /root/specgen/SpecGen/project/082102-specgen/tmp/WaterFee_Original.java:20:
+    //@ ensures \result == (tons > 30 ? 5*(tons-30) + 4*20 + 3*10 : (tons > 10 ? 4*(tons-10) - 3*10 : 3*tons));  
+        ^
+2 verification failures
+
+==============================
+public class WaterFee_Original {
+    //@ requires tons >= 0;
+    //@ ensures \result == (tons > 30 ? 5*(tons-30) + 4*20 + 3*10 : (tons >= 10 ? 4*(tons-10) - 3*10 : 3*tons));  
+    public static int calcWaterFee(int tons) {
+        int n = tons;
+        int fee = 0;
+ 
+        //@ maintaining n >= 0 && n <= tons;
+        //@ decreases n;
+        while (n > 0) {
+            if (n > 30) {
+                fee += 5;
+            } else if (n > 10) {
+                fee += 4;
+            } else {
+                fee += 3;
+            }
+            n--;
+        }
+        return fee;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/082102-specgen/tmp/WaterFee_Original.java:20: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/082102-specgen/tmp/WaterFee_Original.java:3:) in method calcWaterFee
+        return fee;
+        ^
+/root/specgen/SpecGen/project/082102-specgen/tmp/WaterFee_Original.java:3: verify: Associated declaration: /root/specgen/SpecGen/project/082102-specgen/tmp/WaterFee_Original.java:20:
+    //@ ensures \result == (tons > 30 ? 5*(tons-30) + 4*20 + 3*10 : (tons >= 10 ? 4*(tons-10) - 3*10 : 3*tons));  
+        ^
+2 verification failures
+
+==============================
+public class WaterFee_Original {
+    //@ requires tons >= 0;
+    //@ ensures \result == (tons > 30 ? 5*(tons-30) + 4*20 - 3*10 : (tons > 10 ? 4*(tons-10) + 3*10 : 3*tons));  
+    public static int calcWaterFee(int tons) {
+        int n = tons;
+        int fee = 0;
+ 
+        //@ maintaining n >= 0 && n <= tons;
+        //@ decreases n;
+        while (n > 0) {
+            if (n > 30) {
+                fee += 5;
+            } else if (n > 10) {
+                fee += 4;
+            } else {
+                fee += 3;
+            }
+            n--;
+        }
+        return fee;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/082102-specgen/tmp/WaterFee_Original.java:20: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/082102-specgen/tmp/WaterFee_Original.java:3:) in method calcWaterFee
+        return fee;
+        ^
+/root/specgen/SpecGen/project/082102-specgen/tmp/WaterFee_Original.java:3: verify: Associated declaration: /root/specgen/SpecGen/project/082102-specgen/tmp/WaterFee_Original.java:20:
+    //@ ensures \result == (tons > 30 ? 5*(tons-30) + 4*20 - 3*10 : (tons > 10 ? 4*(tons-10) + 3*10 : 3*tons));  
+        ^
+2 verification failures
+
+==============================
+public class WaterFee_Original {
+    //@ requires tons >= 0;
+    //@ ensures \result == (tons > 30 ? 5*(tons-30) + 4*20 - 3*10 : (tons > 10 ? 4*(tons-10) - 3*10 : 3*tons));  
+    public static int calcWaterFee(int tons) {
+        int n = tons;
+        int fee = 0;
+ 
+        //@ maintaining n >= 0 && n <= tons;
+        //@ decreases n;
+        while (n > 0) {
+            if (n > 30) {
+                fee += 5;
+            } else if (n > 10) {
+                fee += 4;
+            } else {
+                fee += 3;
+            }
+            n--;
+        }
+        return fee;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/082102-specgen/tmp/WaterFee_Original.java:20: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/082102-specgen/tmp/WaterFee_Original.java:3:) in method calcWaterFee
+        return fee;
+        ^
+/root/specgen/SpecGen/project/082102-specgen/tmp/WaterFee_Original.java:3: verify: Associated declaration: /root/specgen/SpecGen/project/082102-specgen/tmp/WaterFee_Original.java:20:
+    //@ ensures \result == (tons > 30 ? 5*(tons-30) + 4*20 - 3*10 : (tons > 10 ? 4*(tons-10) - 3*10 : 3*tons));  
+        ^
+2 verification failures
+
+==============================
+public class WaterFee_Original {
+    //@ requires tons >= 0;
+    //@ ensures \result == (tons > 30 ? 5*(tons-30) + 4*20 - 3*10 : (tons >= 10 ? 4*(tons-10) + 3*10 : 3*tons));  
+    public static int calcWaterFee(int tons) {
+        int n = tons;
+        int fee = 0;
+ 
+        //@ maintaining n >= 0 && n <= tons;
+        //@ decreases n;
+        while (n > 0) {
+            if (n > 30) {
+                fee += 5;
+            } else if (n > 10) {
+                fee += 4;
+            } else {
+                fee += 3;
+            }
+            n--;
+        }
+        return fee;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/082102-specgen/tmp/WaterFee_Original.java:20: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/082102-specgen/tmp/WaterFee_Original.java:3:) in method calcWaterFee
+        return fee;
+        ^
+/root/specgen/SpecGen/project/082102-specgen/tmp/WaterFee_Original.java:3: verify: Associated declaration: /root/specgen/SpecGen/project/082102-specgen/tmp/WaterFee_Original.java:20:
+    //@ ensures \result == (tons > 30 ? 5*(tons-30) + 4*20 - 3*10 : (tons >= 10 ? 4*(tons-10) + 3*10 : 3*tons));  
+        ^
+2 verification failures
+
+==============================
+public class WaterFee_Original {
+    //@ requires tons >= 0;
+    //@ ensures \result == (tons > 30 ? 5*(tons-30) + 4*20 - 3*10 : (tons >= 10 ? 4*(tons-10) - 3*10 : 3*tons));  
+    public static int calcWaterFee(int tons) {
+        int n = tons;
+        int fee = 0;
+ 
+        //@ maintaining n >= 0 && n <= tons;
+        //@ decreases n;
+        while (n > 0) {
+            if (n > 30) {
+                fee += 5;
+            } else if (n > 10) {
+                fee += 4;
+            } else {
+                fee += 3;
+            }
+            n--;
+        }
+        return fee;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/082102-specgen/tmp/WaterFee_Original.java:20: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/082102-specgen/tmp/WaterFee_Original.java:3:) in method calcWaterFee
+        return fee;
+        ^
+/root/specgen/SpecGen/project/082102-specgen/tmp/WaterFee_Original.java:3: verify: Associated declaration: /root/specgen/SpecGen/project/082102-specgen/tmp/WaterFee_Original.java:20:
+    //@ ensures \result == (tons > 30 ? 5*(tons-30) + 4*20 - 3*10 : (tons >= 10 ? 4*(tons-10) - 3*10 : 3*tons));  
+        ^
+2 verification failures
+
+==============================
+public class WaterFee_Original {
+    //@ requires tons >= 0;
+    //@ ensures \result == (tons > 30 ? 5*(tons-30) - 4*20 + 3*10 : (tons > 10 ? 4*(tons-10) + 3*10 : 3*tons));  
+    public static int calcWaterFee(int tons) {
+        int n = tons;
+        int fee = 0;
+ 
+        //@ maintaining n >= 0 && n <= tons;
+        //@ decreases n;
+        while (n > 0) {
+            if (n > 30) {
+                fee += 5;
+            } else if (n > 10) {
+                fee += 4;
+            } else {
+                fee += 3;
+            }
+            n--;
+        }
+        return fee;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/082102-specgen/tmp/WaterFee_Original.java:20: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/082102-specgen/tmp/WaterFee_Original.java:3:) in method calcWaterFee
+        return fee;
+        ^
+/root/specgen/SpecGen/project/082102-specgen/tmp/WaterFee_Original.java:3: verify: Associated declaration: /root/specgen/SpecGen/project/082102-specgen/tmp/WaterFee_Original.java:20:
+    //@ ensures \result == (tons > 30 ? 5*(tons-30) - 4*20 + 3*10 : (tons > 10 ? 4*(tons-10) + 3*10 : 3*tons));  
+        ^
+2 verification failures
+
+==============================
+public class WaterFee_Original {
+    //@ requires tons >= 0;
+    //@ ensures \result == (tons > 30 ? 5*(tons-30) - 4*20 + 3*10 : (tons > 10 ? 4*(tons-10) - 3*10 : 3*tons));  
+    public static int calcWaterFee(int tons) {
+        int n = tons;
+        int fee = 0;
+ 
+        //@ maintaining n >= 0 && n <= tons;
+        //@ decreases n;
+        while (n > 0) {
+            if (n > 30) {
+                fee += 5;
+            } else if (n > 10) {
+                fee += 4;
+            } else {
+                fee += 3;
+            }
+            n--;
+        }
+        return fee;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/082102-specgen/tmp/WaterFee_Original.java:20: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/082102-specgen/tmp/WaterFee_Original.java:3:) in method calcWaterFee
+        return fee;
+        ^
+/root/specgen/SpecGen/project/082102-specgen/tmp/WaterFee_Original.java:3: verify: Associated declaration: /root/specgen/SpecGen/project/082102-specgen/tmp/WaterFee_Original.java:20:
+    //@ ensures \result == (tons > 30 ? 5*(tons-30) - 4*20 + 3*10 : (tons > 10 ? 4*(tons-10) - 3*10 : 3*tons));  
+        ^
+2 verification failures
+
+==============================
+public class WaterFee_Original {
+    //@ requires tons >= 0;
+    //@ ensures \result == (tons > 30 ? 5*(tons-30) - 4*20 + 3*10 : (tons >= 10 ? 4*(tons-10) + 3*10 : 3*tons));  
+    public static int calcWaterFee(int tons) {
+        int n = tons;
+        int fee = 0;
+ 
+        //@ maintaining n >= 0 && n <= tons;
+        //@ decreases n;
+        while (n > 0) {
+            if (n > 30) {
+                fee += 5;
+            } else if (n > 10) {
+                fee += 4;
+            } else {
+                fee += 3;
+            }
+            n--;
+        }
+        return fee;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/082102-specgen/tmp/WaterFee_Original.java:20: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/082102-specgen/tmp/WaterFee_Original.java:3:) in method calcWaterFee
+        return fee;
+        ^
+/root/specgen/SpecGen/project/082102-specgen/tmp/WaterFee_Original.java:3: verify: Associated declaration: /root/specgen/SpecGen/project/082102-specgen/tmp/WaterFee_Original.java:20:
+    //@ ensures \result == (tons > 30 ? 5*(tons-30) - 4*20 + 3*10 : (tons >= 10 ? 4*(tons-10) + 3*10 : 3*tons));  
+        ^
+2 verification failures
+
+==============================
+public class WaterFee_Original {
+    //@ requires tons >= 0;
+    //@ ensures \result == (tons > 30 ? 5*(tons-30) - 4*20 + 3*10 : (tons >= 10 ? 4*(tons-10) - 3*10 : 3*tons));  
+    public static int calcWaterFee(int tons) {
+        int n = tons;
+        int fee = 0;
+ 
+        //@ maintaining n >= 0 && n <= tons;
+        //@ decreases n;
+        while (n > 0) {
+            if (n > 30) {
+                fee += 5;
+            } else if (n > 10) {
+                fee += 4;
+            } else {
+                fee += 3;
+            }
+            n--;
+        }
+        return fee;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/082102-specgen/tmp/WaterFee_Original.java:20: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/082102-specgen/tmp/WaterFee_Original.java:3:) in method calcWaterFee
+        return fee;
+        ^
+/root/specgen/SpecGen/project/082102-specgen/tmp/WaterFee_Original.java:3: verify: Associated declaration: /root/specgen/SpecGen/project/082102-specgen/tmp/WaterFee_Original.java:20:
+    //@ ensures \result == (tons > 30 ? 5*(tons-30) - 4*20 + 3*10 : (tons >= 10 ? 4*(tons-10) - 3*10 : 3*tons));  
+        ^
+2 verification failures
+
+==============================
+public class WaterFee_Original {
+    //@ requires tons >= 0;
+    //@ ensures \result == (tons > 30 ? 5*(tons-30) - 4*20 - 3*10 : (tons > 10 ? 4*(tons-10) + 3*10 : 3*tons));  
+    public static int calcWaterFee(int tons) {
+        int n = tons;
+        int fee = 0;
+ 
+        //@ maintaining n >= 0 && n <= tons;
+        //@ decreases n;
+        while (n > 0) {
+            if (n > 30) {
+                fee += 5;
+            } else if (n > 10) {
+                fee += 4;
+            } else {
+                fee += 3;
+            }
+            n--;
+        }
+        return fee;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/082102-specgen/tmp/WaterFee_Original.java:20: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/082102-specgen/tmp/WaterFee_Original.java:3:) in method calcWaterFee
+        return fee;
+        ^
+/root/specgen/SpecGen/project/082102-specgen/tmp/WaterFee_Original.java:3: verify: Associated declaration: /root/specgen/SpecGen/project/082102-specgen/tmp/WaterFee_Original.java:20:
+    //@ ensures \result == (tons > 30 ? 5*(tons-30) - 4*20 - 3*10 : (tons > 10 ? 4*(tons-10) + 3*10 : 3*tons));  
+        ^
+2 verification failures
+
+==============================
+public class WaterFee_Original {
+    //@ requires tons >= 0;
+    //@ ensures \result == (tons > 30 ? 5*(tons-30) - 4*20 - 3*10 : (tons > 10 ? 4*(tons-10) - 3*10 : 3*tons));  
+    public static int calcWaterFee(int tons) {
+        int n = tons;
+        int fee = 0;
+ 
+        //@ maintaining n >= 0 && n <= tons;
+        //@ decreases n;
+        while (n > 0) {
+            if (n > 30) {
+                fee += 5;
+            } else if (n > 10) {
+                fee += 4;
+            } else {
+                fee += 3;
+            }
+            n--;
+        }
+        return fee;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/082102-specgen/tmp/WaterFee_Original.java:20: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/082102-specgen/tmp/WaterFee_Original.java:3:) in method calcWaterFee
+        return fee;
+        ^
+/root/specgen/SpecGen/project/082102-specgen/tmp/WaterFee_Original.java:3: verify: Associated declaration: /root/specgen/SpecGen/project/082102-specgen/tmp/WaterFee_Original.java:20:
+    //@ ensures \result == (tons > 30 ? 5*(tons-30) - 4*20 - 3*10 : (tons > 10 ? 4*(tons-10) - 3*10 : 3*tons));  
+        ^
+2 verification failures
+
+==============================
+public class WaterFee_Original {
+    //@ requires tons >= 0;
+    //@ ensures \result == (tons > 30 ? 5*(tons-30) - 4*20 - 3*10 : (tons >= 10 ? 4*(tons-10) + 3*10 : 3*tons));  
+    public static int calcWaterFee(int tons) {
+        int n = tons;
+        int fee = 0;
+ 
+        //@ maintaining n >= 0 && n <= tons;
+        //@ decreases n;
+        while (n > 0) {
+            if (n > 30) {
+                fee += 5;
+            } else if (n > 10) {
+                fee += 4;
+            } else {
+                fee += 3;
+            }
+            n--;
+        }
+        return fee;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/082102-specgen/tmp/WaterFee_Original.java:20: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/082102-specgen/tmp/WaterFee_Original.java:3:) in method calcWaterFee
+        return fee;
+        ^
+/root/specgen/SpecGen/project/082102-specgen/tmp/WaterFee_Original.java:3: verify: Associated declaration: /root/specgen/SpecGen/project/082102-specgen/tmp/WaterFee_Original.java:20:
+    //@ ensures \result == (tons > 30 ? 5*(tons-30) - 4*20 - 3*10 : (tons >= 10 ? 4*(tons-10) + 3*10 : 3*tons));  
+        ^
+2 verification failures
+
+==============================
+public class WaterFee_Original {
+    //@ requires tons >= 0;
+    //@ ensures \result == (tons > 30 ? 5*(tons-30) - 4*20 - 3*10 : (tons >= 10 ? 4*(tons-10) - 3*10 : 3*tons));  
+    public static int calcWaterFee(int tons) {
+        int n = tons;
+        int fee = 0;
+ 
+        //@ maintaining n >= 0 && n <= tons;
+        //@ decreases n;
+        while (n > 0) {
+            if (n > 30) {
+                fee += 5;
+            } else if (n > 10) {
+                fee += 4;
+            } else {
+                fee += 3;
+            }
+            n--;
+        }
+        return fee;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/082102-specgen/tmp/WaterFee_Original.java:20: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/082102-specgen/tmp/WaterFee_Original.java:3:) in method calcWaterFee
+        return fee;
+        ^
+/root/specgen/SpecGen/project/082102-specgen/tmp/WaterFee_Original.java:3: verify: Associated declaration: /root/specgen/SpecGen/project/082102-specgen/tmp/WaterFee_Original.java:20:
+    //@ ensures \result == (tons > 30 ? 5*(tons-30) - 4*20 - 3*10 : (tons >= 10 ? 4*(tons-10) - 3*10 : 3*tons));  
+        ^
+2 verification failures
+
+==============================
+public class WaterFee_Original {
+    //@ requires tons >= 0;
+    //@ ensures \result == (tons >= 30 ? 5*(tons-30) + 4*20 + 3*10 : (tons > 10 ? 4*(tons-10) - 3*10 : 3*tons));  
+    public static int calcWaterFee(int tons) {
+        int n = tons;
+        int fee = 0;
+ 
+        //@ maintaining n >= 0 && n <= tons;
+        //@ decreases n;
+        while (n > 0) {
+            if (n > 30) {
+                fee += 5;
+            } else if (n > 10) {
+                fee += 4;
+            } else {
+                fee += 3;
+            }
+            n--;
+        }
+        return fee;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/082102-specgen/tmp/WaterFee_Original.java:20: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/082102-specgen/tmp/WaterFee_Original.java:3:) in method calcWaterFee
+        return fee;
+        ^
+/root/specgen/SpecGen/project/082102-specgen/tmp/WaterFee_Original.java:3: verify: Associated declaration: /root/specgen/SpecGen/project/082102-specgen/tmp/WaterFee_Original.java:20:
+    //@ ensures \result == (tons >= 30 ? 5*(tons-30) + 4*20 + 3*10 : (tons > 10 ? 4*(tons-10) - 3*10 : 3*tons));  
+        ^
+2 verification failures
+
+==============================
+public class WaterFee_Original {
+    //@ requires tons >= 0;
+    //@ ensures \result == (tons >= 30 ? 5*(tons-30) + 4*20 + 3*10 : (tons >= 10 ? 4*(tons-10) - 3*10 : 3*tons));  
+    public static int calcWaterFee(int tons) {
+        int n = tons;
+        int fee = 0;
+ 
+        //@ maintaining n >= 0 && n <= tons;
+        //@ decreases n;
+        while (n > 0) {
+            if (n > 30) {
+                fee += 5;
+            } else if (n > 10) {
+                fee += 4;
+            } else {
+                fee += 3;
+            }
+            n--;
+        }
+        return fee;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/082102-specgen/tmp/WaterFee_Original.java:20: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/082102-specgen/tmp/WaterFee_Original.java:3:) in method calcWaterFee
+        return fee;
+        ^
+/root/specgen/SpecGen/project/082102-specgen/tmp/WaterFee_Original.java:3: verify: Associated declaration: /root/specgen/SpecGen/project/082102-specgen/tmp/WaterFee_Original.java:20:
+    //@ ensures \result == (tons >= 30 ? 5*(tons-30) + 4*20 + 3*10 : (tons >= 10 ? 4*(tons-10) - 3*10 : 3*tons));  
+        ^
+2 verification failures
+
+==============================
+public class WaterFee_Original {
+    //@ requires tons >= 0;
+    //@ ensures \result == (tons >= 30 ? 5*(tons-30) + 4*20 - 3*10 : (tons > 10 ? 4*(tons-10) + 3*10 : 3*tons));  
+    public static int calcWaterFee(int tons) {
+        int n = tons;
+        int fee = 0;
+ 
+        //@ maintaining n >= 0 && n <= tons;
+        //@ decreases n;
+        while (n > 0) {
+            if (n > 30) {
+                fee += 5;
+            } else if (n > 10) {
+                fee += 4;
+            } else {
+                fee += 3;
+            }
+            n--;
+        }
+        return fee;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/082102-specgen/tmp/WaterFee_Original.java:20: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/082102-specgen/tmp/WaterFee_Original.java:3:) in method calcWaterFee
+        return fee;
+        ^
+/root/specgen/SpecGen/project/082102-specgen/tmp/WaterFee_Original.java:3: verify: Associated declaration: /root/specgen/SpecGen/project/082102-specgen/tmp/WaterFee_Original.java:20:
+    //@ ensures \result == (tons >= 30 ? 5*(tons-30) + 4*20 - 3*10 : (tons > 10 ? 4*(tons-10) + 3*10 : 3*tons));  
+        ^
+2 verification failures
+
+==============================
+public class WaterFee_Original {
+    //@ requires tons >= 0;
+    //@ ensures \result == (tons >= 30 ? 5*(tons-30) + 4*20 - 3*10 : (tons > 10 ? 4*(tons-10) - 3*10 : 3*tons));  
+    public static int calcWaterFee(int tons) {
+        int n = tons;
+        int fee = 0;
+ 
+        //@ maintaining n >= 0 && n <= tons;
+        //@ decreases n;
+        while (n > 0) {
+            if (n > 30) {
+                fee += 5;
+            } else if (n > 10) {
+                fee += 4;
+            } else {
+                fee += 3;
+            }
+            n--;
+        }
+        return fee;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/082102-specgen/tmp/WaterFee_Original.java:20: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/082102-specgen/tmp/WaterFee_Original.java:3:) in method calcWaterFee
+        return fee;
+        ^
+/root/specgen/SpecGen/project/082102-specgen/tmp/WaterFee_Original.java:3: verify: Associated declaration: /root/specgen/SpecGen/project/082102-specgen/tmp/WaterFee_Original.java:20:
+    //@ ensures \result == (tons >= 30 ? 5*(tons-30) + 4*20 - 3*10 : (tons > 10 ? 4*(tons-10) - 3*10 : 3*tons));  
+        ^
+2 verification failures
+
+==============================
+public class WaterFee_Original {
+    //@ requires tons >= 0;
+    //@ ensures \result == (tons >= 30 ? 5*(tons-30) + 4*20 - 3*10 : (tons >= 10 ? 4*(tons-10) + 3*10 : 3*tons));  
+    public static int calcWaterFee(int tons) {
+        int n = tons;
+        int fee = 0;
+ 
+        //@ maintaining n >= 0 && n <= tons;
+        //@ decreases n;
+        while (n > 0) {
+            if (n > 30) {
+                fee += 5;
+            } else if (n > 10) {
+                fee += 4;
+            } else {
+                fee += 3;
+            }
+            n--;
+        }
+        return fee;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/082102-specgen/tmp/WaterFee_Original.java:20: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/082102-specgen/tmp/WaterFee_Original.java:3:) in method calcWaterFee
+        return fee;
+        ^
+/root/specgen/SpecGen/project/082102-specgen/tmp/WaterFee_Original.java:3: verify: Associated declaration: /root/specgen/SpecGen/project/082102-specgen/tmp/WaterFee_Original.java:20:
+    //@ ensures \result == (tons >= 30 ? 5*(tons-30) + 4*20 - 3*10 : (tons >= 10 ? 4*(tons-10) + 3*10 : 3*tons));  
+        ^
+2 verification failures
+
+==============================
+public class WaterFee_Original {
+    //@ requires tons >= 0;
+    //@ ensures \result == (tons >= 30 ? 5*(tons-30) + 4*20 - 3*10 : (tons >= 10 ? 4*(tons-10) - 3*10 : 3*tons));  
+    public static int calcWaterFee(int tons) {
+        int n = tons;
+        int fee = 0;
+ 
+        //@ maintaining n >= 0 && n <= tons;
+        //@ decreases n;
+        while (n > 0) {
+            if (n > 30) {
+                fee += 5;
+            } else if (n > 10) {
+                fee += 4;
+            } else {
+                fee += 3;
+            }
+            n--;
+        }
+        return fee;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/082102-specgen/tmp/WaterFee_Original.java:20: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/082102-specgen/tmp/WaterFee_Original.java:3:) in method calcWaterFee
+        return fee;
+        ^
+/root/specgen/SpecGen/project/082102-specgen/tmp/WaterFee_Original.java:3: verify: Associated declaration: /root/specgen/SpecGen/project/082102-specgen/tmp/WaterFee_Original.java:20:
+    //@ ensures \result == (tons >= 30 ? 5*(tons-30) + 4*20 - 3*10 : (tons >= 10 ? 4*(tons-10) - 3*10 : 3*tons));  
+        ^
+2 verification failures
+
+==============================
+public class WaterFee_Original {
+    //@ requires tons >= 0;
+    //@ ensures \result == (tons >= 30 ? 5*(tons-30) - 4*20 + 3*10 : (tons > 10 ? 4*(tons-10) + 3*10 : 3*tons));  
+    public static int calcWaterFee(int tons) {
+        int n = tons;
+        int fee = 0;
+ 
+        //@ maintaining n >= 0 && n <= tons;
+        //@ decreases n;
+        while (n > 0) {
+            if (n > 30) {
+                fee += 5;
+            } else if (n > 10) {
+                fee += 4;
+            } else {
+                fee += 3;
+            }
+            n--;
+        }
+        return fee;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/082102-specgen/tmp/WaterFee_Original.java:20: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/082102-specgen/tmp/WaterFee_Original.java:3:) in method calcWaterFee
+        return fee;
+        ^
+/root/specgen/SpecGen/project/082102-specgen/tmp/WaterFee_Original.java:3: verify: Associated declaration: /root/specgen/SpecGen/project/082102-specgen/tmp/WaterFee_Original.java:20:
+    //@ ensures \result == (tons >= 30 ? 5*(tons-30) - 4*20 + 3*10 : (tons > 10 ? 4*(tons-10) + 3*10 : 3*tons));  
+        ^
+2 verification failures
+
+==============================
+public class WaterFee_Original {
+    //@ requires tons >= 0;
+    //@ ensures \result == (tons >= 30 ? 5*(tons-30) - 4*20 + 3*10 : (tons > 10 ? 4*(tons-10) - 3*10 : 3*tons));  
+    public static int calcWaterFee(int tons) {
+        int n = tons;
+        int fee = 0;
+ 
+        //@ maintaining n >= 0 && n <= tons;
+        //@ decreases n;
+        while (n > 0) {
+            if (n > 30) {
+                fee += 5;
+            } else if (n > 10) {
+                fee += 4;
+            } else {
+                fee += 3;
+            }
+            n--;
+        }
+        return fee;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/082102-specgen/tmp/WaterFee_Original.java:20: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/082102-specgen/tmp/WaterFee_Original.java:3:) in method calcWaterFee
+        return fee;
+        ^
+/root/specgen/SpecGen/project/082102-specgen/tmp/WaterFee_Original.java:3: verify: Associated declaration: /root/specgen/SpecGen/project/082102-specgen/tmp/WaterFee_Original.java:20:
+    //@ ensures \result == (tons >= 30 ? 5*(tons-30) - 4*20 + 3*10 : (tons > 10 ? 4*(tons-10) - 3*10 : 3*tons));  
+        ^
+2 verification failures
+
+==============================
+public class WaterFee_Original {
+    //@ requires tons >= 0;
+    //@ ensures \result == (tons >= 30 ? 5*(tons-30) - 4*20 + 3*10 : (tons >= 10 ? 4*(tons-10) + 3*10 : 3*tons));  
+    public static int calcWaterFee(int tons) {
+        int n = tons;
+        int fee = 0;
+ 
+        //@ maintaining n >= 0 && n <= tons;
+        //@ decreases n;
+        while (n > 0) {
+            if (n > 30) {
+                fee += 5;
+            } else if (n > 10) {
+                fee += 4;
+            } else {
+                fee += 3;
+            }
+            n--;
+        }
+        return fee;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/082102-specgen/tmp/WaterFee_Original.java:20: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/082102-specgen/tmp/WaterFee_Original.java:3:) in method calcWaterFee
+        return fee;
+        ^
+/root/specgen/SpecGen/project/082102-specgen/tmp/WaterFee_Original.java:3: verify: Associated declaration: /root/specgen/SpecGen/project/082102-specgen/tmp/WaterFee_Original.java:20:
+    //@ ensures \result == (tons >= 30 ? 5*(tons-30) - 4*20 + 3*10 : (tons >= 10 ? 4*(tons-10) + 3*10 : 3*tons));  
+        ^
+2 verification failures
+
+==============================
+public class WaterFee_Original {
+    //@ requires tons >= 0;
+    //@ ensures \result == (tons >= 30 ? 5*(tons-30) - 4*20 + 3*10 : (tons >= 10 ? 4*(tons-10) - 3*10 : 3*tons));  
+    public static int calcWaterFee(int tons) {
+        int n = tons;
+        int fee = 0;
+ 
+        //@ maintaining n >= 0 && n <= tons;
+        //@ decreases n;
+        while (n > 0) {
+            if (n > 30) {
+                fee += 5;
+            } else if (n > 10) {
+                fee += 4;
+            } else {
+                fee += 3;
+            }
+            n--;
+        }
+        return fee;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/082102-specgen/tmp/WaterFee_Original.java:20: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/082102-specgen/tmp/WaterFee_Original.java:3:) in method calcWaterFee
+        return fee;
+        ^
+/root/specgen/SpecGen/project/082102-specgen/tmp/WaterFee_Original.java:3: verify: Associated declaration: /root/specgen/SpecGen/project/082102-specgen/tmp/WaterFee_Original.java:20:
+    //@ ensures \result == (tons >= 30 ? 5*(tons-30) - 4*20 + 3*10 : (tons >= 10 ? 4*(tons-10) - 3*10 : 3*tons));  
+        ^
+2 verification failures
+
+==============================
+public class WaterFee_Original {
+    //@ requires tons >= 0;
+    //@ ensures \result == (tons >= 30 ? 5*(tons-30) - 4*20 - 3*10 : (tons > 10 ? 4*(tons-10) + 3*10 : 3*tons));  
+    public static int calcWaterFee(int tons) {
+        int n = tons;
+        int fee = 0;
+ 
+        //@ maintaining n >= 0 && n <= tons;
+        //@ decreases n;
+        while (n > 0) {
+            if (n > 30) {
+                fee += 5;
+            } else if (n > 10) {
+                fee += 4;
+            } else {
+                fee += 3;
+            }
+            n--;
+        }
+        return fee;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/082102-specgen/tmp/WaterFee_Original.java:20: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/082102-specgen/tmp/WaterFee_Original.java:3:) in method calcWaterFee
+        return fee;
+        ^
+/root/specgen/SpecGen/project/082102-specgen/tmp/WaterFee_Original.java:3: verify: Associated declaration: /root/specgen/SpecGen/project/082102-specgen/tmp/WaterFee_Original.java:20:
+    //@ ensures \result == (tons >= 30 ? 5*(tons-30) - 4*20 - 3*10 : (tons > 10 ? 4*(tons-10) + 3*10 : 3*tons));  
+        ^
+2 verification failures
+
+==============================
+public class WaterFee_Original {
+    //@ requires tons >= 0;
+    //@ ensures \result == (tons >= 30 ? 5*(tons-30) - 4*20 - 3*10 : (tons > 10 ? 4*(tons-10) - 3*10 : 3*tons));  
+    public static int calcWaterFee(int tons) {
+        int n = tons;
+        int fee = 0;
+ 
+        //@ maintaining n >= 0 && n <= tons;
+        //@ decreases n;
+        while (n > 0) {
+            if (n > 30) {
+                fee += 5;
+            } else if (n > 10) {
+                fee += 4;
+            } else {
+                fee += 3;
+            }
+            n--;
+        }
+        return fee;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/082102-specgen/tmp/WaterFee_Original.java:20: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/082102-specgen/tmp/WaterFee_Original.java:3:) in method calcWaterFee
+        return fee;
+        ^
+/root/specgen/SpecGen/project/082102-specgen/tmp/WaterFee_Original.java:3: verify: Associated declaration: /root/specgen/SpecGen/project/082102-specgen/tmp/WaterFee_Original.java:20:
+    //@ ensures \result == (tons >= 30 ? 5*(tons-30) - 4*20 - 3*10 : (tons > 10 ? 4*(tons-10) - 3*10 : 3*tons));  
+        ^
+2 verification failures
+
+==============================
+public class WaterFee_Original {
+    //@ requires tons >= 0;
+    //@ ensures \result == (tons >= 30 ? 5*(tons-30) - 4*20 - 3*10 : (tons >= 10 ? 4*(tons-10) + 3*10 : 3*tons));  
+    public static int calcWaterFee(int tons) {
+        int n = tons;
+        int fee = 0;
+ 
+        //@ maintaining n >= 0 && n <= tons;
+        //@ decreases n;
+        while (n > 0) {
+            if (n > 30) {
+                fee += 5;
+            } else if (n > 10) {
+                fee += 4;
+            } else {
+                fee += 3;
+            }
+            n--;
+        }
+        return fee;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/082102-specgen/tmp/WaterFee_Original.java:20: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/082102-specgen/tmp/WaterFee_Original.java:3:) in method calcWaterFee
+        return fee;
+        ^
+/root/specgen/SpecGen/project/082102-specgen/tmp/WaterFee_Original.java:3: verify: Associated declaration: /root/specgen/SpecGen/project/082102-specgen/tmp/WaterFee_Original.java:20:
+    //@ ensures \result == (tons >= 30 ? 5*(tons-30) - 4*20 - 3*10 : (tons >= 10 ? 4*(tons-10) + 3*10 : 3*tons));  
+        ^
+2 verification failures
+
+==============================
+public class WaterFee_Original {
+    //@ requires tons >= 0;
+    //@ ensures \result == (tons >= 30 ? 5*(tons-30) - 4*20 - 3*10 : (tons >= 10 ? 4*(tons-10) - 3*10 : 3*tons));  
+    public static int calcWaterFee(int tons) {
+        int n = tons;
+        int fee = 0;
+ 
+        //@ maintaining n >= 0 && n <= tons;
+        //@ decreases n;
+        while (n > 0) {
+            if (n > 30) {
+                fee += 5;
+            } else if (n > 10) {
+                fee += 4;
+            } else {
+                fee += 3;
+            }
+            n--;
+        }
+        return fee;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/082102-specgen/tmp/WaterFee_Original.java:20: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/082102-specgen/tmp/WaterFee_Original.java:3:) in method calcWaterFee
+        return fee;
+        ^
+/root/specgen/SpecGen/project/082102-specgen/tmp/WaterFee_Original.java:3: verify: Associated declaration: /root/specgen/SpecGen/project/082102-specgen/tmp/WaterFee_Original.java:20:
+    //@ ensures \result == (tons >= 30 ? 5*(tons-30) - 4*20 - 3*10 : (tons >= 10 ? 4*(tons-10) - 3*10 : 3*tons));  
+        ^
+2 verification failures
+
+==============================
+public class WaterFee_Original {
+    //@ requires tons >= 0;
+ 
+    public static int calcWaterFee(int tons) {
+        int n = tons;
+        int fee = 0;
+ 
+        //@ maintaining n >= 0 && n <= tons;
+        //@ decreases n;
+        while (n > 0) {
+            if (n > 30) {
+                fee += 5;
+            } else if (n > 10) {
+                fee += 4;
+            } else {
+                fee += 3;
+            }
+            n--;
+        }
+        return fee;
+    }
+}
+
+==============================
+
+==============================

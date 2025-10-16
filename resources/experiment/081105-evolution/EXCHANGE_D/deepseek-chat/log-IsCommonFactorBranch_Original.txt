@@ -1,0 +1,69 @@
+start role user
+Please modify the following code according to the modified FSF:
+```Code
+
+
+public class IsCommonFactorBranch_Original {
+    public static boolean isCommonFactor (int a, int b, int factor) {
+        if (a % factor != 0) {
+            return false;
+        }
+        if (b % factor != 0) {
+            return false;
+        }
+        return true;
+    }
+}
+
+```
+```Original FSF
+T0: factor == 0
+D0: Exception
+
+T1: factor != 0 && (a % factor != 0 || b % factor != 0)
+D1: return_value == false
+
+T2: factor != 0 && a % factor == 0 && b % factor == 0
+D2: return_value == true
+
+```Modified FSF
+T0: (factor == 0) || (factor != 0 && a % factor == 0 && b % factor == 0)
+D0: Exception
+
+T1: factor != 0 && (a % factor != 0 || b % factor != 0)
+D1: return_value == false
+
+```
+
+
+*end* role user
+start role assistant
+```
+public class IsCommonFactorBranch_Modified {
+    public static boolean isCommonFactor(int a, int b, int factor) {
+        if (factor == 0 || (factor != 0 && a % factor == 0 && b % factor == 0)) {
+            throw new IllegalArgumentException("Invalid factor");
+        }
+        if (a % factor != 0 || b % factor != 0) {
+            return false;
+        }
+        return true;
+    }
+}
+```
+
+The modified code:
+1. Changes the behavior to throw an exception when either:
+   - factor is 0 (original condition)
+   - OR when factor is a common divisor (new condition)
+2. Otherwise returns false if the factor doesn't divide either number
+3. Note that the last return true is now unreachable since that case is covered by the exception condition
+
+The code structure follows the modified FSF by:
+- Combining T0 and T2 from original FSF into a single exception case
+- Keeping T1 as the only non-exceptional case that returns false
+- Eliminating the original T2 case that returned true (now throws exception)
+*end* role assistant
+start role remark
+Validation SUCCESS!
+*end* role remark

@@ -1,0 +1,30 @@
+public class AddLoop_Mutant2 {
+    //@ ensures y > 0 ==> \result == x + y;
+    //@ ensures y <= 0 ==> \result == x - (2 * (-y));
+    public static int AddLoop(int x, int y) {
+        int sum = x;
+        if (y > 0) {
+            int n = y;
+            //@ maintaining sum == x + (y - n);
+            //@ maintaining n >= 0;
+            //@ decreases n;
+            while (n > 0) {
+                sum = sum + 1;
+                n = n - 1;
+            }
+        } else {
+            int n = -y;
+            //@ maintaining sum == x - (2 * ((-y) - n));
+            //@ maintaining n >= 0;
+            //@ decreases n;
+            while (n > 0) {
+                sum = sum - 2;
+                n = n - 1;
+            }
+        }
+        return sum;
+    }
+}
+==============================
+
+==============================

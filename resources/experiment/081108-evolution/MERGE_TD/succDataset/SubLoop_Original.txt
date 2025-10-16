@@ -1,0 +1,296 @@
+START ORIGINAL CODE
+
+public class SubLoop_Original {
+    public static int subLoop(int x, int y) {
+        int sum = x;
+        if (y > 0) {
+            int n = y;
+            while (n > 0) {
+                sum = sum - 1;
+                n = n - 1;
+            }
+        } else {
+            int n = -y;
+            while (n > 0) {
+                sum = sum + 1;
+                n = n - 1;
+            }
+        }
+        return sum;
+    }
+}
+
+*END* ORIGINAL CODE
+START ORIGINAL FSF
+T1: y > 0
+D1: sum == x - y
+T2: y < 0
+D2: sum == x + (-y)
+T3: y == 0
+D3: sum == x
+*END* ORIGINAL FSF
+START MODIFIED FSF
+T1: y > 0
+D1: sum == x - y
+T2: (y < 0) || (y == 0)
+D2: sum == x + (-y)
+*END* MODIFIED FSF
+START ORIGINAL CODE
+
+public class SubLoop_Original {
+    public static int subLoop(int x, int y) {
+        int sum = x;
+        if (y > 0) {
+            int n = y;
+            while (n > 0) {
+                sum = sum - 1;
+                n = n - 1;
+            }
+        } else {
+            int n = -y;
+            while (n > 0) {
+                sum = sum + 1;
+                n = n - 1;
+            }
+        }
+        return sum;
+    }
+}
+
+*END* ORIGINAL CODE
+START ORIGINAL FSF
+T1: y > 0
+D1: sum == x - y
+T2: y < 0
+D2: sum == x + (-y)
+T3: y == 0
+D3: sum == x
+*END* ORIGINAL FSF
+START MODIFIED FSF
+T1: y > 0
+D1: sum == x - y
+T2: (y < 0) || (y == 0)
+D2: sum == x + (-y)
+*END* MODIFIED FSF
+START ORIGINAL CODE
+
+public class SubLoop_Original {
+    public static int subLoop(int x, int y) {
+        int sum = x;
+        if (y > 0) {
+            int n = y;
+            while (n > 0) {
+                sum = sum - 1;
+                n = n - 1;
+            }
+        } else {
+            int n = -y;
+            while (n > 0) {
+                sum = sum + 1;
+                n = n - 1;
+            }
+        }
+        return sum;
+    }
+}
+
+*END* ORIGINAL CODE
+START ORIGINAL FSF
+T1: y > 0
+D1: sum == x - y
+T2: y < 0
+D2: sum == x + (-y)
+T3: y == 0
+D3: sum == x
+*END* ORIGINAL FSF
+START MODIFIED FSF
+T1: (y < 0) || (y > 0)
+D1: sum == x + (-y)
+T2: y == 0
+D2: sum == x
+*END* MODIFIED FSF
+START ORIGINAL CODE
+
+public class SubLoop_Original {
+    public static int subLoop(int x, int y) {
+        int sum = x;
+        if (y > 0) {
+            int n = y;
+            while (n > 0) {
+                sum = sum - 1;
+                n = n - 1;
+            }
+        } else {
+            int n = -y;
+            while (n > 0) {
+                sum = sum + 1;
+                n = n - 1;
+            }
+        }
+        return sum;
+    }
+}
+
+*END* ORIGINAL CODE
+START ORIGINAL FSF
+T1: y > 0
+D1: sum == x - y
+T2: y < 0
+D2: sum == x + (-y)
+T3: y == 0
+D3: sum == x
+*END* ORIGINAL FSF
+START MODIFIED FSF
+T1: (y > 0) || (y == 0)
+D1: sum == x - y
+T2: y < 0
+D2: sum == x + (-y)
+*END* MODIFIED FSF
+START ORIGINAL CODE
+
+public class SubLoop_Original {
+    public static int subLoop(int x, int y) {
+        int sum = x;
+        if (y > 0) {
+            int n = y;
+            while (n > 0) {
+                sum = sum - 1;
+                n = n - 1;
+            }
+        } else {
+            int n = -y;
+            while (n > 0) {
+                sum = sum + 1;
+                n = n - 1;
+            }
+        }
+        return sum;
+    }
+}
+
+*END* ORIGINAL CODE
+START ORIGINAL FSF
+T1: y > 0
+D1: sum == x - y
+T2: y < 0
+D2: sum == x + (-y)
+T3: y == 0
+D3: sum == x
+*END* ORIGINAL FSF
+START MODIFIED FSF
+T1: y > 0
+D1: sum == x - y
+T2: (y == 0) || (y < 0)
+D2: sum == x
+*END* MODIFIED FSF
+START ORIGINAL CODE
+
+public class SubLoop_Original {
+    public static int subLoop(int x, int y) {
+        int sum = x;
+        if (y > 0) {
+            int n = y;
+            while (n > 0) {
+                sum = sum - 1;
+                n = n - 1;
+            }
+        } else {
+            int n = -y;
+            while (n > 0) {
+                sum = sum + 1;
+                n = n - 1;
+            }
+        }
+        return sum;
+    }
+}
+
+*END* ORIGINAL CODE
+START ORIGINAL FSF
+T1: y > 0
+D1: sum == x - y
+T2: y < 0
+D2: sum == x + (-y)
+T3: y == 0
+D3: sum == x
+*END* ORIGINAL FSF
+START MODIFIED FSF
+T1: (y > 0) || (y == 0)
+D1: sum == x - y
+T2: y < 0
+D2: sum == x + (-y)
+*END* MODIFIED FSF
+START ORIGINAL CODE
+
+public class SubLoop_Original {
+    public static int subLoop(int x, int y) {
+        int sum = x;
+        if (y > 0) {
+            int n = y;
+            while (n > 0) {
+                sum = sum - 1;
+                n = n - 1;
+            }
+        } else {
+            int n = -y;
+            while (n > 0) {
+                sum = sum + 1;
+                n = n - 1;
+            }
+        }
+        return sum;
+    }
+}
+
+*END* ORIGINAL CODE
+START ORIGINAL FSF
+T1: y > 0
+D1: sum == x - y
+T2: y < 0
+D2: sum == x + (-y)
+T3: y == 0
+D3: sum == x
+*END* ORIGINAL FSF
+START MODIFIED FSF
+T1: y > 0
+D1: sum == x - y
+T2: (y < 0) || (y == 0)
+D2: sum == x + (-y)
+*END* MODIFIED FSF
+START ORIGINAL CODE
+
+public class SubLoop_Original {
+    public static int subLoop(int x, int y) {
+        int sum = x;
+        if (y > 0) {
+            int n = y;
+            while (n > 0) {
+                sum = sum - 1;
+                n = n - 1;
+            }
+        } else {
+            int n = -y;
+            while (n > 0) {
+                sum = sum + 1;
+                n = n - 1;
+            }
+        }
+        return sum;
+    }
+}
+
+*END* ORIGINAL CODE
+START ORIGINAL FSF
+T1: y > 0
+D1: sum == x - y
+T2: y < 0
+D2: sum == x + (-y)
+T3: y == 0
+D3: sum == x
+*END* ORIGINAL FSF
+START MODIFIED FSF
+T1: (y < 0) || (y > 0)
+D1: sum == x + (-y)
+T2: y == 0
+D2: sum == x
+*END* MODIFIED FSF

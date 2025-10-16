@@ -1,0 +1,82 @@
+start role user
+Please modify the following code according to the modified FSF:
+```Code
+
+
+public class ChangeCase_Original {
+
+    public static char changeCase(char c) {
+        char result = ' ';
+        if (c > 'z') {
+            result = c;
+        } else if (c >= 'a') {
+            result = (char) (c - 'a' + 'A');
+        } else if (c > 'Z') {
+            result = c;
+        } else if (c >= 'A') {
+            result = (char) (c - 'A' + 'a');
+        } else {
+            result = c;
+        }
+        return result;
+    }
+}
+
+```
+```Original FSF
+T0: c > 'z' || (c < 'A') || (c > 'Z' && c < 'a')
+D0: result == c
+
+T1: c >= 'a' && c <= 'z'
+D1: result == (char)(c - 'a' + 'A')
+
+T2: c >= 'A' && c <= 'Z'
+D2: result == (char)(c - 'A' + 'a')
+
+```Modified FSF
+T0: c > 'z' || (c < 'A') || (c > 'Z' && c < 'a')
+D0: result == (char)(c - 'a' + 'A')
+
+T1: c >= 'a' && c <= 'z'
+D1: result == c
+
+T2: c >= 'A' && c <= 'Z'
+D2: result == (char)(c - 'A' + 'a')
+
+```
+
+
+*end* role user
+start role assistant
+```
+public class ChangeCase_Modified {
+    public static char changeCase(char c) {
+        char result = ' ';
+        if (c > 'z' || (c < 'A') || (c > 'Z' && c < 'a')) {
+            result = (char)(c - 'a' + 'A');
+        } else if (c >= 'a') {
+            result = c;
+        } else if (c >= 'A') {
+            result = (char)(c - 'A' + 'a');
+        } else {
+            result = c;
+        }
+        return result;
+    }
+}
+```
+
+Key changes made:
+1. Modified the condition for T0 to apply the case conversion (c - 'a' + 'A') instead of returning the character unchanged
+2. Kept the same logic for uppercase letters (T2 condition)
+3. Changed the lowercase letter case (T1 condition) to return the character unchanged
+4. Simplified the logic by removing redundant conditions since the first condition now covers all cases in T0
+
+The modified code now:
+- Converts non-alphabetic and out-of-range characters to uppercase (T0)
+- Leaves lowercase letters unchanged (T1)
+- Still converts uppercase letters to lowercase (T2)
+*end* role assistant
+start role remark
+Validation SUCCESS!
+*end* role remark

@@ -1,0 +1,539 @@
+public class AddLoop_Mutant1 {
+    /*@ requires y >= 0 ==> y % 2 == 0;
+      @ requires y < 0 ==> (-y) % 2 == 0;
+      @ ensures \result == x + y;
+      @*/
+    public static int AddLoop(int x, int y) {
+        int sum = x;
+        if (y > 0) {
+            int n = y;
+            /*@ maintaining sum == x + (y - n);
+              @ maintaining n >= 0 && n <= y;
+              @ maintaining n % 2 == 0;
+              @ decreases n;
+              @*/
+            while (n > 0) {
+                sum = sum + 1;
+                n = n - 2;
+            }
+        } else {
+            int n = -y;
+            /*@ maintaining sum == x - (-y - n);
+              @ maintaining n >= 0 && n <= -y;
+              @ maintaining n % 2 == 0;
+              @ decreases n;
+              @*/
+            while (n > 0) {
+                sum = sum - 1;
+                n = n - 2;
+            }
+        }
+        return sum;
+    }
+}
+==============================
+/root/specgen/SpecGen/project/081401-specgen/tmp/AddLoop_Mutant1.java:10: verify: The prover cannot establish an assertion (LoopInvariant) in method AddLoop
+            /*@ maintaining sum == x + (y - n);
+                ^
+1 verification failure
+
+==============================
+public class AddLoop_Mutant1 {
+    /*@ requires y >= 0 ==> y % 2 == 0;
+      @ requires y < 0 ==> (-y) % 2 == 0;
+      @ ensures \result == x + y;
+      @*/
+    public static int AddLoop(int x, int y) {
+        int sum = x;
+        if (y > 0) {
+            int n = y;
+            /*@ maintaining sum == x + (y - n);  
+              @ maintaining n >= 0 && n <= y;
+              @ maintaining n % 2 == 0;
+              @ decreases n;
+              @*/
+            while (n > 0) {
+                sum = sum + 1;
+                n = n - 2;
+            }
+        } else {
+            int n = -y;
+            /*@ maintaining sum == x - (-y - n);
+              @ maintaining n >= 0 && n <= -y;
+              @ maintaining n % 2 == 0;
+              @ decreases n;
+              @*/
+            while (n > 0) {
+                sum = sum - 1;
+                n = n - 2;
+            }
+        }
+        return sum;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081401-specgen/tmp/AddLoop_Mutant1.java:10: verify: The prover cannot establish an assertion (LoopInvariant) in method AddLoop
+            /*@ maintaining sum == x + (y - n);  
+                ^
+1 verification failure
+
+==============================
+public class AddLoop_Mutant1 {
+    /*@ requires y >= 0 ==> y % 2 == 0;
+      @ requires y < 0 ==> (-y) % 2 == 0;
+      @ ensures \result == x + y;
+      @*/
+    public static int AddLoop(int x, int y) {
+        int sum = x;
+        if (y > 0) {
+            int n = y;
+            /*@ maintaining sum == x + (y + n);  
+              @ maintaining n >= 0 && n <= y;
+              @ maintaining n % 2 == 0;
+              @ decreases n;
+              @*/
+            while (n > 0) {
+                sum = sum + 1;
+                n = n - 2;
+            }
+        } else {
+            int n = -y;
+            /*@ maintaining sum == x - (-y - n);
+              @ maintaining n >= 0 && n <= -y;
+              @ maintaining n % 2 == 0;
+              @ decreases n;
+              @*/
+            while (n > 0) {
+                sum = sum - 1;
+                n = n - 2;
+            }
+        }
+        return sum;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081401-specgen/tmp/AddLoop_Mutant1.java:10: verify: The prover cannot establish an assertion (LoopInvariantBeforeLoop) in method AddLoop
+            /*@ maintaining sum == x + (y + n);  
+                ^
+1 verification failure
+
+==============================
+public class AddLoop_Mutant1 {
+    /*@ requires y >= 0 ==> y % 2 == 0;
+      @ requires y < 0 ==> (-y) % 2 == 0;
+      @ ensures \result == x + y;
+      @*/
+    public static int AddLoop(int x, int y) {
+        int sum = x;
+        if (y > 0) {
+            int n = y;
+            /*@ maintaining sum == x - (y + n);  
+              @ maintaining n >= 0 && n <= y;
+              @ maintaining n % 2 == 0;
+              @ decreases n;
+              @*/
+            while (n > 0) {
+                sum = sum + 1;
+                n = n - 2;
+            }
+        } else {
+            int n = -y;
+            /*@ maintaining sum == x - (-y - n);
+              @ maintaining n >= 0 && n <= -y;
+              @ maintaining n % 2 == 0;
+              @ decreases n;
+              @*/
+            while (n > 0) {
+                sum = sum - 1;
+                n = n - 2;
+            }
+        }
+        return sum;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081401-specgen/tmp/AddLoop_Mutant1.java:10: verify: The prover cannot establish an assertion (LoopInvariantBeforeLoop) in method AddLoop
+            /*@ maintaining sum == x - (y + n);  
+                ^
+1 verification failure
+
+==============================
+public class AddLoop_Mutant1 {
+    /*@ requires y >= 0 ==> y % 2 == 0;
+      @ requires y < 0 ==> (-y) % 2 == 0;
+      @ ensures \result == x + y;
+      @*/
+    public static int AddLoop(int x, int y) {
+        int sum = x;
+        if (y > 0) {
+            int n = y;
+            /*@ maintaining sum == x - (y - n);  
+              @ maintaining n >= 0 && n <= y;
+              @ maintaining n % 2 == 0;
+              @ decreases n;
+              @*/
+            while (n > 0) {
+                sum = sum + 1;
+                n = n - 2;
+            }
+        } else {
+            int n = -y;
+            /*@ maintaining sum == x - (-y - n);
+              @ maintaining n >= 0 && n <= -y;
+              @ maintaining n % 2 == 0;
+              @ decreases n;
+              @*/
+            while (n > 0) {
+                sum = sum - 1;
+                n = n - 2;
+            }
+        }
+        return sum;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081401-specgen/tmp/AddLoop_Mutant1.java:31: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081401-specgen/tmp/AddLoop_Mutant1.java:4:) in method AddLoop
+        return sum;
+        ^
+/root/specgen/SpecGen/project/081401-specgen/tmp/AddLoop_Mutant1.java:4: verify: Associated declaration: /root/specgen/SpecGen/project/081401-specgen/tmp/AddLoop_Mutant1.java:31:
+      @ ensures \result == x + y;
+        ^
+2 verification failures
+
+==============================
+public class AddLoop_Mutant1 {
+    /*@ requires y >= 0 ==> y % 2 == 0;
+      @ requires y < 0 ==> (-y) % 2 == 0;
+      @ ensures \result == x + y;  
+      @*/
+    public static int AddLoop(int x, int y) {
+        int sum = x;
+        if (y > 0) {
+            int n = y;
+            /*@ maintaining sum == x - (y - n);  
+              @ maintaining n >= 0 && n <= y;
+              @ maintaining n % 2 == 0;
+              @ decreases n;
+              @*/
+            while (n > 0) {
+                sum = sum + 1;
+                n = n - 2;
+            }
+        } else {
+            int n = -y;
+            /*@ maintaining sum == x - (-y - n);
+              @ maintaining n >= 0 && n <= -y;
+              @ maintaining n % 2 == 0;
+              @ decreases n;
+              @*/
+            while (n > 0) {
+                sum = sum - 1;
+                n = n - 2;
+            }
+        }
+        return sum;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081401-specgen/tmp/AddLoop_Mutant1.java:31: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081401-specgen/tmp/AddLoop_Mutant1.java:4:) in method AddLoop
+        return sum;
+        ^
+/root/specgen/SpecGen/project/081401-specgen/tmp/AddLoop_Mutant1.java:4: verify: Associated declaration: /root/specgen/SpecGen/project/081401-specgen/tmp/AddLoop_Mutant1.java:31:
+      @ ensures \result == x + y;  
+        ^
+2 verification failures
+
+==============================
+public class AddLoop_Mutant1 {
+    /*@ requires y >= 0 ==> y % 2 == 0;
+      @ requires y < 0 ==> (-y) % 2 == 0;
+      @ ensures \result == x - y;  
+      @*/
+    public static int AddLoop(int x, int y) {
+        int sum = x;
+        if (y > 0) {
+            int n = y;
+            /*@ maintaining sum == x - (y - n);  
+              @ maintaining n >= 0 && n <= y;
+              @ maintaining n % 2 == 0;
+              @ decreases n;
+              @*/
+            while (n > 0) {
+                sum = sum + 1;
+                n = n - 2;
+            }
+        } else {
+            int n = -y;
+            /*@ maintaining sum == x - (-y - n);
+              @ maintaining n >= 0 && n <= -y;
+              @ maintaining n % 2 == 0;
+              @ decreases n;
+              @*/
+            while (n > 0) {
+                sum = sum - 1;
+                n = n - 2;
+            }
+        }
+        return sum;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081401-specgen/tmp/AddLoop_Mutant1.java:10: verify: The prover cannot establish an assertion (LoopInvariant) in method AddLoop
+            /*@ maintaining sum == x - (y - n);  
+                ^
+1 verification failure
+
+==============================
+public class AddLoop_Mutant1 {
+    /*@ requires y >= 0 ==> y % 2 == 0;
+      @ requires y < 0 ==> (-y) % 2 == 0;
+      @ ensures \result == x - y;  
+      @*/
+    public static int AddLoop(int x, int y) {
+        int sum = x;
+        if (y > 0) {
+            int n = y;
+ 
+              @ maintaining n >= 0 && n <= y;
+              @ maintaining n % 2 == 0;
+              @ decreases n;
+              @*/
+            while (n > 0) {
+                sum = sum + 1;
+                n = n - 2;
+            }
+        } else {
+            int n = -y;
+            /*@ maintaining sum == x - (-y - n);
+              @ maintaining n >= 0 && n <= -y;
+              @ maintaining n % 2 == 0;
+              @ decreases n;
+              @*/
+            while (n > 0) {
+                sum = sum - 1;
+                n = n - 2;
+            }
+        }
+        return sum;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081401-specgen/tmp/AddLoop_Mutant1.java:11: error: <identifier> expected
+              @ maintaining n >= 0 && n <= y;
+                             ^
+/root/specgen/SpecGen/project/081401-specgen/tmp/AddLoop_Mutant1.java:11: error: not a statement
+              @ maintaining n >= 0 && n <= y;
+                                        ^
+/root/specgen/SpecGen/project/081401-specgen/tmp/AddLoop_Mutant1.java:12: error: <identifier> expected
+              @ maintaining n % 2 == 0;
+                             ^
+/root/specgen/SpecGen/project/081401-specgen/tmp/AddLoop_Mutant1.java:13: error: <identifier> expected
+              @ decreases n;
+                           ^
+/root/specgen/SpecGen/project/081401-specgen/tmp/AddLoop_Mutant1.java:14: error: <identifier> expected
+              @*/
+               ^
+5 errors
+
+==============================
+public class AddLoop_Mutant1 {
+    /*@ requires y >= 0 ==> y % 2 == 0;
+      @ requires y < 0 ==> (-y) % 2 == 0;
+      @ ensures \result == x - y;  
+      @*/
+    public static int AddLoop(int x, int y) {
+        int sum = x;
+        if (y > 0) {
+            int n = y;
+ 
+              @ maintaining n > 0 && n <= y;  
+              @ maintaining n % 2 == 0;  
+              @ decreases n;  
+              @*/
+            while (n > 0) {
+                sum = sum + 1;
+                n = n - 2;
+            }
+        } else {
+            int n = -y;
+            /*@ maintaining sum == x - (-y - n);
+              @ maintaining n >= 0 && n <= -y;
+              @ maintaining n % 2 == 0;
+              @ decreases n;
+              @*/
+            while (n > 0) {
+                sum = sum - 1;
+                n = n - 2;
+            }
+        }
+        return sum;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081401-specgen/tmp/AddLoop_Mutant1.java:11: error: <identifier> expected
+              @ maintaining n > 0 && n <= y;  
+                             ^
+/root/specgen/SpecGen/project/081401-specgen/tmp/AddLoop_Mutant1.java:11: error: not a statement
+              @ maintaining n > 0 && n <= y;  
+                                       ^
+/root/specgen/SpecGen/project/081401-specgen/tmp/AddLoop_Mutant1.java:12: error: <identifier> expected
+              @ maintaining n % 2 == 0;  
+                             ^
+/root/specgen/SpecGen/project/081401-specgen/tmp/AddLoop_Mutant1.java:13: error: <identifier> expected
+              @ decreases n;  
+                           ^
+/root/specgen/SpecGen/project/081401-specgen/tmp/AddLoop_Mutant1.java:14: error: <identifier> expected
+              @*/
+               ^
+5 errors
+
+==============================
+public class AddLoop_Mutant1 {
+    /*@ requires y >= 0 ==> y % 2 == 0;
+      @ requires y < 0 ==> (-y) % 2 == 0;
+      @ ensures \result == x - y;  
+      @*/
+    public static int AddLoop(int x, int y) {
+        int sum = x;
+        if (y > 0) {
+            int n = y;
+ 
+              @ maintaining n >= 0 && n < y;  
+ 
+ 
+              @*/
+            while (n > 0) {
+                sum = sum + 1;
+                n = n - 2;
+            }
+        } else {
+            int n = -y;
+            /*@ maintaining sum == x - (-y - n);
+              @ maintaining n >= 0 && n <= -y;
+              @ maintaining n % 2 == 0;
+              @ decreases n;
+              @*/
+            while (n > 0) {
+                sum = sum - 1;
+                n = n - 2;
+            }
+        }
+        return sum;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081401-specgen/tmp/AddLoop_Mutant1.java:11: error: <identifier> expected
+              @ maintaining n >= 0 && n < y;  
+                             ^
+/root/specgen/SpecGen/project/081401-specgen/tmp/AddLoop_Mutant1.java:11: error: > expected
+              @ maintaining n >= 0 && n < y;  
+                                           ^
+/root/specgen/SpecGen/project/081401-specgen/tmp/AddLoop_Mutant1.java:11: error: not a statement
+              @ maintaining n >= 0 && n < y;  
+                                        ^
+/root/specgen/SpecGen/project/081401-specgen/tmp/AddLoop_Mutant1.java:14: error: <identifier> expected
+              @*/
+               ^
+4 errors
+
+==============================
+public class AddLoop_Mutant1 {
+    /*@ requires y >= 0 ==> y % 2 == 0;
+      @ requires y < 0 ==> (-y) % 2 == 0;
+      @ ensures \result == x - y;  
+      @*/
+    public static int AddLoop(int x, int y) {
+        int sum = x;
+        if (y > 0) {
+            int n = y;
+ 
+              @ maintaining n + 1 >= 0 && n < y;  
+ 
+ 
+              @*/
+            while (n > 0) {
+                sum = sum + 1;
+                n = n - 2;
+            }
+        } else {
+            int n = -y;
+            /*@ maintaining sum == x - (-y - n);
+              @ maintaining n >= 0 && n <= -y;
+              @ maintaining n % 2 == 0;
+              @ decreases n;
+              @*/
+            while (n > 0) {
+                sum = sum - 1;
+                n = n - 2;
+            }
+        }
+        return sum;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081401-specgen/tmp/AddLoop_Mutant1.java:11: error: <identifier> expected
+              @ maintaining n + 1 >= 0 && n < y;  
+                             ^
+/root/specgen/SpecGen/project/081401-specgen/tmp/AddLoop_Mutant1.java:11: error: > expected
+              @ maintaining n + 1 >= 0 && n < y;  
+                                               ^
+/root/specgen/SpecGen/project/081401-specgen/tmp/AddLoop_Mutant1.java:11: error: not a statement
+              @ maintaining n + 1 >= 0 && n < y;  
+                                            ^
+/root/specgen/SpecGen/project/081401-specgen/tmp/AddLoop_Mutant1.java:14: error: <identifier> expected
+              @*/
+               ^
+4 errors
+
+==============================
+public class AddLoop_Mutant1 {
+    /*@ requires y >= 0 ==> y % 2 == 0;
+      @ requires y < 0 ==> (-y) % 2 == 0;
+      @ ensures \result == x - y;  
+      @*/
+    public static int AddLoop(int x, int y) {
+        int sum = x;
+        if (y > 0) {
+            int n = y;
+ 
+ 
+ 
+ 
+              @*/
+            while (n > 0) {
+                sum = sum + 1;
+                n = n - 2;
+            }
+        } else {
+            int n = -y;
+            /*@ maintaining sum == x - (-y - n);
+              @ maintaining n >= 0 && n <= -y;
+              @ maintaining n % 2 == 0;
+              @ decreases n;
+              @*/
+            while (n > 0) {
+                sum = sum - 1;
+                n = n - 2;
+            }
+        }
+        return sum;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081401-specgen/tmp/AddLoop_Mutant1.java:14: error: <identifier> expected
+              @*/
+               ^
+1 error
+
+==============================

@@ -1,0 +1,17 @@
+public class PowerOfTwoBranch_Mutant4 {
+    //@ ensures \result == (n > 0 && (n & (n - 1)) != 0) || (n > 0);
+    //@ ensures n <= 0 ==> \result == false;
+    //@ ensures n > 0 ==> \result == true;
+    public static boolean isPowerOfTwo(int n) {
+        if (n <= 0) {
+            return false;
+        }
+        if ((n & (n - 1)) != 0) {
+            return true;
+        }
+        return true;
+    }
+}
+==============================
+
+==============================

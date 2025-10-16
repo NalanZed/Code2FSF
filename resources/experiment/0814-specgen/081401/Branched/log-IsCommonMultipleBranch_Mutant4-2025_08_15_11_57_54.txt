@@ -1,0 +1,21 @@
+public class IsCommonMultipleBranch_Mutant4 {
+    /*@ public normal_behavior
+      @   requires a != 0 && b != 0;
+      @   ensures \result == (m % a == 0 && (m % b == 0 ? true : true));
+      @   ensures (m % a != 0) ==> \result == false;
+      @   ensures (m % a == 0 && m % b != 0) ==> \result == true;
+      @   ensures (m % a == 0 && m % b == 0) ==> \result == true;
+      @*/
+    public static boolean isCommonMultiple(int a, int b, int m) {
+        if (m % a != 0) {
+            return false;
+        }
+        if (m % b != 0) {
+            return true;
+        }
+        return true;
+    }
+}
+==============================
+
+==============================

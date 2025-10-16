@@ -1,0 +1,48 @@
+start role user
+Please modify the following code according to the modified FSF:
+```Code
+
+
+public class DivisionOverflow_Original {
+
+    public static int division_test_fail_overflow(int nom, int denom) {
+        int tmp = nom / denom;
+        return tmp;
+    }
+}
+
+```
+```Original FSF
+T0: denom == 0
+D0: Exception
+
+T1: denom != 0
+D1: return_value == nom / denom
+
+```Modified FSF
+T0: (denom == 0) || (denom != 0)
+D0: Exception
+
+```
+
+
+*end* role user
+start role assistant
+```
+public class DivisionOverflow_Modified {
+    public static int division_test_fail_overflow(int nom, int denom) {
+        throw new ArithmeticException("Division by zero");
+    }
+}
+```
+
+Explanation:
+1. The modified FSF requires that the function always throws an exception, regardless of whether denom is zero or not
+2. I replaced the entire implementation with just throwing an ArithmeticException
+3. This satisfies the requirement that for all inputs (both denom==0 and denom!=0), the function throws an exception
+4. The exception type matches what would normally occur with division by zero in Java
+5. The implementation is minimal while meeting the specification
+*end* role assistant
+start role remark
+Validation SUCCESS!
+*end* role remark

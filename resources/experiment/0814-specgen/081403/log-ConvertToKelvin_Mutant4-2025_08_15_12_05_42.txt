@@ -1,0 +1,55 @@
+public class ConvertToKelvin_Mutant4 {
+    //@ requires Double.isFinite(celsius);
+    //@ requires celsius >= -273.15; // Minimum possible temperature in Celsius (absolute zero)
+    //@ ensures \result == celsius + 273.15;
+    //@ ensures Double.isFinite(\result);
+    public static double convertTemperature(double celsius) {
+        double result = celsius + 273.15; // Added intermediate step
+        return result;
+    }
+}
+==============================
+/root/specgen/SpecGen/project/081403-specgen/tmp/ConvertToKelvin_Mutant4.java:8: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081403-specgen/tmp/ConvertToKelvin_Mutant4.java:5:) in method convertTemperature
+        return result;
+        ^
+/root/specgen/SpecGen/project/081403-specgen/tmp/ConvertToKelvin_Mutant4.java:5: verify: Associated declaration: /root/specgen/SpecGen/project/081403-specgen/tmp/ConvertToKelvin_Mutant4.java:8:
+    //@ ensures Double.isFinite(\result);
+        ^
+2 verification failures
+
+==============================
+public class ConvertToKelvin_Mutant4 {
+    //@ requires Double.isFinite(celsius);
+    //@ requires celsius >= -273.15; // Minimum possible temperature in Celsius (absolute zero)
+    //@ ensures \result == celsius + 273.15;
+    //@ ensures Double.isFinite(\result);  
+    public static double convertTemperature(double celsius) {
+        double result = celsius + 273.15; // Added intermediate step
+        return result;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081403-specgen/tmp/ConvertToKelvin_Mutant4.java:8: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081403-specgen/tmp/ConvertToKelvin_Mutant4.java:5:) in method convertTemperature
+        return result;
+        ^
+/root/specgen/SpecGen/project/081403-specgen/tmp/ConvertToKelvin_Mutant4.java:5: verify: Associated declaration: /root/specgen/SpecGen/project/081403-specgen/tmp/ConvertToKelvin_Mutant4.java:8:
+    //@ ensures Double.isFinite(\result);  
+        ^
+2 verification failures
+
+==============================
+public class ConvertToKelvin_Mutant4 {
+    //@ requires Double.isFinite(celsius);
+    //@ requires celsius >= -273.15; // Minimum possible temperature in Celsius (absolute zero)
+    //@ ensures \result == celsius + 273.15;
+ 
+    public static double convertTemperature(double celsius) {
+        double result = celsius + 273.15; // Added intermediate step
+        return result;
+    }
+}
+
+==============================
+
+==============================

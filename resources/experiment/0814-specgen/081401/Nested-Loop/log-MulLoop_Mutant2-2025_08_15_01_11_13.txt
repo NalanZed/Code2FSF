@@ -1,0 +1,161 @@
+public class MulLoop_Mutant2 {
+    /*@ requires b != Integer.MIN_VALUE;
+      @ ensures \result == a * b;
+      @*/
+    public static int mulLoop(int a, int b) {
+        int res = 0;
+        if (b > 0) { // changed >= to >
+            //@ maintaining 0 <= i && i <= b;
+            //@ maintaining res == i * a;
+            //@ decreases b - i;
+            for(int i = 0; i < b; i++) {
+                res = res + a;
+            }
+        } else {
+            //@ maintaining 0 <= i && i <= -b;
+            //@ maintaining res == -i * a;
+            //@ decreases (-b) - i;
+            for(int i = 0; i < -b; i++) {
+                res = res - a;
+            }
+        }
+        return res;
+    }
+}
+==============================
+/root/specgen/SpecGen/project/081401-specgen/tmp/MulLoop_Mutant2.java:16: verify: The prover cannot establish an assertion (LoopInvariant) in method mulLoop
+            //@ maintaining res == -i * a;
+                ^
+1 verification failure
+
+==============================
+public class MulLoop_Mutant2 {
+    /*@ requires b != Integer.MIN_VALUE;
+      @ ensures \result == a * b;
+      @*/
+    public static int mulLoop(int a, int b) {
+        int res = 0;
+        if (b > 0) { // changed >= to >
+            //@ maintaining 0 <= i && i <= b;
+            //@ maintaining res == i * a;
+            //@ decreases b - i;
+            for(int i = 0; i < b; i++) {
+                res = res + a;
+            }
+        } else {
+            //@ maintaining 0 <= i && i <= -b;
+            //@ maintaining res == -i * a;  
+            //@ decreases (-b) - i;
+            for(int i = 0; i < -b; i++) {
+                res = res - a;
+            }
+        }
+        return res;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081401-specgen/tmp/MulLoop_Mutant2.java:16: verify: The prover cannot establish an assertion (LoopInvariant) in method mulLoop
+            //@ maintaining res == -i * a;  
+                ^
+1 verification failure
+
+==============================
+public class MulLoop_Mutant2 {
+    /*@ requires b != Integer.MIN_VALUE;
+      @ ensures \result == a * b;
+      @*/
+    public static int mulLoop(int a, int b) {
+        int res = 0;
+        if (b > 0) { // changed >= to >
+            //@ maintaining 0 <= i && i <= b;
+            //@ maintaining res == i * a;
+            //@ decreases b - i;
+            for(int i = 0; i < b; i++) {
+                res = res + a;
+            }
+        } else {
+            //@ maintaining 0 <= i && i <= -b;
+ 
+            //@ decreases (-b) - i;
+            for(int i = 0; i < -b; i++) {
+                res = res - a;
+            }
+        }
+        return res;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081401-specgen/tmp/MulLoop_Mutant2.java:22: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081401-specgen/tmp/MulLoop_Mutant2.java:3:) in method mulLoop
+        return res;
+        ^
+/root/specgen/SpecGen/project/081401-specgen/tmp/MulLoop_Mutant2.java:3: verify: Associated declaration: /root/specgen/SpecGen/project/081401-specgen/tmp/MulLoop_Mutant2.java:22:
+      @ ensures \result == a * b;
+        ^
+2 verification failures
+
+==============================
+public class MulLoop_Mutant2 {
+    /*@ requires b != Integer.MIN_VALUE;
+      @ ensures \result == a * b;  
+      @*/
+    public static int mulLoop(int a, int b) {
+        int res = 0;
+        if (b > 0) { // changed >= to >
+            //@ maintaining 0 <= i && i <= b;
+            //@ maintaining res == i * a;
+            //@ decreases b - i;
+            for(int i = 0; i < b; i++) {
+                res = res + a;
+            }
+        } else {
+            //@ maintaining 0 <= i && i <= -b;
+ 
+            //@ decreases (-b) - i;
+            for(int i = 0; i < -b; i++) {
+                res = res - a;
+            }
+        }
+        return res;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081401-specgen/tmp/MulLoop_Mutant2.java:22: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081401-specgen/tmp/MulLoop_Mutant2.java:3:) in method mulLoop
+        return res;
+        ^
+/root/specgen/SpecGen/project/081401-specgen/tmp/MulLoop_Mutant2.java:3: verify: Associated declaration: /root/specgen/SpecGen/project/081401-specgen/tmp/MulLoop_Mutant2.java:22:
+      @ ensures \result == a * b;  
+        ^
+2 verification failures
+
+==============================
+public class MulLoop_Mutant2 {
+    /*@ requires b != Integer.MIN_VALUE;
+ 
+      @*/
+    public static int mulLoop(int a, int b) {
+        int res = 0;
+        if (b > 0) { // changed >= to >
+            //@ maintaining 0 <= i && i <= b;
+            //@ maintaining res == i * a;
+            //@ decreases b - i;
+            for(int i = 0; i < b; i++) {
+                res = res + a;
+            }
+        } else {
+            //@ maintaining 0 <= i && i <= -b;
+ 
+            //@ decreases (-b) - i;
+            for(int i = 0; i < -b; i++) {
+                res = res - a;
+            }
+        }
+        return res;
+    }
+}
+
+==============================
+
+==============================

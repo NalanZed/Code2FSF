@@ -1,0 +1,82 @@
+start role user
+Please modify the following code according to the modified FSF:
+```Code
+
+
+public class ChangeCase_Original {
+
+    public static char changeCase(char c) {
+        char result = ' ';
+        if (c > 'z') {
+            result = c;
+        } else if (c >= 'a') {
+            result = (char) (c - 'a' + 'A');
+        } else if (c > 'Z') {
+            result = c;
+        } else if (c >= 'A') {
+            result = (char) (c - 'A' + 'a');
+        } else {
+            result = c;
+        }
+        return result;
+    }
+}
+
+```
+```Original FSF
+T0: c > 'z' || (c < 'A') || (c > 'Z' && c < 'a')
+D0: result == c
+
+T1: c >= 'a' && c <= 'z'
+D1: result == (char)(c - 'a' + 'A')
+
+T2: c >= 'A' && c <= 'Z'
+D2: result == (char)(c - 'A' + 'a')
+
+```Modified FSF
+T0: c > 'z' || (c < 'A') || (c > 'Z' && c < 'a')
+D0: result == (char)(c - 'a' + 'A')
+
+T1: c >= 'a' && c <= 'z'
+D1: result == c
+
+T2: c >= 'A' && c <= 'Z'
+D2: result == (char)(c - 'A' + 'a')
+
+```
+
+
+*end* role user
+start role assistant
+```
+public class ChangeCase_Modified {
+    public static char changeCase(char c) {
+        char result = ' ';
+        if (c > 'z' || (c < 'A') || (c > 'Z' && c < 'a')) {
+            result = (char)(c - 'a' + 'A');
+        } else if (c >= 'a') {
+            result = c;
+        } else if (c >= 'A') {
+            result = (char)(c - 'A' + 'a');
+        } else {
+            result = c;
+        }
+        return result;
+    }
+}
+```
+
+Key changes made:
+1. Changed the condition and behavior for T0 (first if branch) to convert to uppercase instead of returning unchanged
+2. Simplified the condition checking since we now handle all non-alphabetic and out-of-range characters in the first branch
+3. Kept the same basic structure but modified the return values to match the new FSF requirements
+4. Maintained the same logic flow but with different transformations
+
+Note that this implementation will now:
+- Convert non-alphabetic characters and characters above 'z' to uppercase (though this may produce unexpected results for non-letters)
+- Leave lowercase letters unchanged
+- Still convert uppercase letters to lowercase as before
+*end* role assistant
+start role remark
+Validation SUCCESS!
+*end* role remark

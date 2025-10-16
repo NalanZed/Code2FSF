@@ -1,0 +1,136 @@
+public class AddLoopFor_Mutant4 {
+    //@ requires Integer.MIN_VALUE <= x + y && x + y <= Integer.MAX_VALUE;
+    //@ ensures \result == x + y;
+    public static int addLoop(int x, int y) {
+        int sum = y;
+        if (x > 0) {
+            int n = 0;
+            //@ maintaining sum == y - (x - n) && 0 <= n && n <= x;
+            //@ decreases n;
+            for(n = x; n > 0; ) {
+                sum = sum - 1;
+                n = n - 1;
+            }
+        } else {
+            int n = 0;
+            //@ maintaining sum == y + (-x - n) && 0 <= n && n <= -x;
+            //@ decreases n;
+            for(n = -x; n > 0; ) {
+                sum = sum + 1;
+                n = n - 1;
+            }
+        }
+        return sum;
+    }
+}
+==============================
+/root/specgen/SpecGen/project/081403-specgen/tmp/AddLoopFor_Mutant4.java:23: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081403-specgen/tmp/AddLoopFor_Mutant4.java:3:) in method addLoop
+        return sum;
+        ^
+/root/specgen/SpecGen/project/081403-specgen/tmp/AddLoopFor_Mutant4.java:3: verify: Associated declaration: /root/specgen/SpecGen/project/081403-specgen/tmp/AddLoopFor_Mutant4.java:23:
+    //@ ensures \result == x + y;
+        ^
+2 verification failures
+
+==============================
+public class AddLoopFor_Mutant4 {
+    //@ requires Integer.MIN_VALUE <= x + y && x + y <= Integer.MAX_VALUE;
+    //@ ensures \result == x + y;  
+    public static int addLoop(int x, int y) {
+        int sum = y;
+        if (x > 0) {
+            int n = 0;
+            //@ maintaining sum == y - (x - n) && 0 <= n && n <= x;
+            //@ decreases n;
+            for(n = x; n > 0; ) {
+                sum = sum - 1;
+                n = n - 1;
+            }
+        } else {
+            int n = 0;
+            //@ maintaining sum == y + (-x - n) && 0 <= n && n <= -x;
+            //@ decreases n;
+            for(n = -x; n > 0; ) {
+                sum = sum + 1;
+                n = n - 1;
+            }
+        }
+        return sum;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081403-specgen/tmp/AddLoopFor_Mutant4.java:23: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081403-specgen/tmp/AddLoopFor_Mutant4.java:3:) in method addLoop
+        return sum;
+        ^
+/root/specgen/SpecGen/project/081403-specgen/tmp/AddLoopFor_Mutant4.java:3: verify: Associated declaration: /root/specgen/SpecGen/project/081403-specgen/tmp/AddLoopFor_Mutant4.java:23:
+    //@ ensures \result == x + y;  
+        ^
+2 verification failures
+
+==============================
+public class AddLoopFor_Mutant4 {
+    //@ requires Integer.MIN_VALUE <= x + y && x + y <= Integer.MAX_VALUE;
+    //@ ensures \result == x - y;  
+    public static int addLoop(int x, int y) {
+        int sum = y;
+        if (x > 0) {
+            int n = 0;
+            //@ maintaining sum == y - (x - n) && 0 <= n && n <= x;
+            //@ decreases n;
+            for(n = x; n > 0; ) {
+                sum = sum - 1;
+                n = n - 1;
+            }
+        } else {
+            int n = 0;
+            //@ maintaining sum == y + (-x - n) && 0 <= n && n <= -x;
+            //@ decreases n;
+            for(n = -x; n > 0; ) {
+                sum = sum + 1;
+                n = n - 1;
+            }
+        }
+        return sum;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081403-specgen/tmp/AddLoopFor_Mutant4.java:23: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081403-specgen/tmp/AddLoopFor_Mutant4.java:3:) in method addLoop
+        return sum;
+        ^
+/root/specgen/SpecGen/project/081403-specgen/tmp/AddLoopFor_Mutant4.java:3: verify: Associated declaration: /root/specgen/SpecGen/project/081403-specgen/tmp/AddLoopFor_Mutant4.java:23:
+    //@ ensures \result == x - y;  
+        ^
+2 verification failures
+
+==============================
+public class AddLoopFor_Mutant4 {
+    //@ requires Integer.MIN_VALUE <= x + y && x + y <= Integer.MAX_VALUE;
+ 
+    public static int addLoop(int x, int y) {
+        int sum = y;
+        if (x > 0) {
+            int n = 0;
+            //@ maintaining sum == y - (x - n) && 0 <= n && n <= x;
+            //@ decreases n;
+            for(n = x; n > 0; ) {
+                sum = sum - 1;
+                n = n - 1;
+            }
+        } else {
+            int n = 0;
+            //@ maintaining sum == y + (-x - n) && 0 <= n && n <= -x;
+            //@ decreases n;
+            for(n = -x; n > 0; ) {
+                sum = sum + 1;
+                n = n - 1;
+            }
+        }
+        return sum;
+    }
+}
+
+==============================
+
+==============================

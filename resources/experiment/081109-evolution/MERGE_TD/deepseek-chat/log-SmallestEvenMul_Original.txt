@@ -1,0 +1,48 @@
+start role user
+Please modify the following code according to the modified FSF:
+```Code
+
+
+public class SmallestEvenMul_Original {
+
+    public static int smallestEvenMultiple(int n) {
+        return n % 2 == 0 ? n : 2 * n;
+    }
+}
+
+```
+```Original FSF
+T0: n % 2 == 0
+D0: return_value == n
+
+T1: n % 2 != 0
+D1: return_value == 2 * n
+
+```Modified FSF
+T0: (n % 2 != 0) || (n % 2 == 0)
+D0: return_value == 2 * n
+
+```
+
+
+*end* role user
+start role assistant
+```
+public class SmallestEvenMul_Modified {
+    public static int smallestEvenMultiple(int n) {
+        return 2 * n;
+    }
+}
+```
+
+Explanation:
+1. The original code had two cases:
+   - If n was even, return n
+   - If n was odd, return 2*n
+2. The modified FSF specifies that in all cases (both when n is even or odd), we should return 2*n
+3. Therefore, we simplified the code to always return 2*n regardless of the input's parity
+4. The modified code satisfies the requirement that for all integers n (whether even or odd), the return value is 2*n
+*end* role assistant
+start role remark
+Validation SUCCESS!
+*end* role remark

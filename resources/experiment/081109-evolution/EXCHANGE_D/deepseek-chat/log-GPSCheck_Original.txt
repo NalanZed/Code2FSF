@@ -1,0 +1,77 @@
+start role user
+Please modify the following code according to the modified FSF:
+```Code
+
+
+public class GPSCheck_Original {
+    public static int GPSCheck(int satellites, int signalStrength) {
+        int alarm = 0;
+        if (satellites < 4) {
+            alarm = 1;
+        }
+        if (signalStrength < 20) {
+            alarm = 2;
+        }
+        return alarm;
+    }
+}
+
+```
+```Original FSF
+T0: satellites < 4 && signalStrength < 20
+D0: alarm == 2
+
+T1: satellites < 4 && signalStrength >= 20
+D1: alarm == 1
+
+T2: satellites >= 4 && signalStrength < 20
+D2: alarm == 2
+
+T3: satellites >= 4 && signalStrength >= 20
+D3: alarm == 0
+
+```Modified FSF
+T0: satellites < 4 && signalStrength < 20
+D0: alarm == 2
+
+T1: satellites < 4 && signalStrength >= 20
+D1: alarm == 1
+
+T2: satellites >= 4 && signalStrength < 20
+D2: alarm == 2
+
+T3: satellites >= 4 && signalStrength >= 20
+D3: alarm == 0
+
+```
+
+
+*end* role user
+start role assistant
+The modified FSF is identical to the original FSF, so no changes to the code are needed. The original code already perfectly matches the modified FSF requirements.
+
+Here's the code as it stands (unchanged):
+
+```
+public class GPSCheck_Original {
+    public static int GPSCheck(int satellites, int signalStrength) {
+        int alarm = 0;
+        if (satellites < 4) {
+            alarm = 1;
+        }
+        if (signalStrength < 20) {
+            alarm = 2;
+        }
+        return alarm;
+    }
+}
+```
+
+The code correctly implements:
+1. Priority to signal strength alarm (alarm=2) over satellite count alarm (alarm=1)
+2. No alarm (alarm=0) when both conditions are good
+3. The conditions are mutually exclusive and cover all possibilities as required by the FSF
+*end* role assistant
+start role remark
+Validation SUCCESS!
+*end* role remark

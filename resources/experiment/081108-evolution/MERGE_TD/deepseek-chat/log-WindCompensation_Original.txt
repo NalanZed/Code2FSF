@@ -1,0 +1,63 @@
+start role user
+Please modify the following code according to the modified FSF:
+```Code
+
+
+public class WindCompensation_Original {
+    public static int windCompensation(int windSpeed) {
+        int compensation = 0;
+        if (windSpeed > 20) {
+            compensation = (windSpeed - 20) * 2;
+        } else if (windSpeed > 10) {
+            compensation = windSpeed - 10;
+        }
+        return compensation;
+    }
+}
+
+```
+```Original FSF
+T0: windSpeed > 20
+D0: compensation == (windSpeed - 20) * 2
+
+T1: windSpeed > 10 && windSpeed <= 20
+D1: compensation == windSpeed - 10
+
+T2: windSpeed <= 10
+D2: compensation == 0
+
+```Modified FSF
+T0: (windSpeed > 20) || (windSpeed > 10 && windSpeed <= 20)
+D0: compensation == (windSpeed - 20) * 2
+
+T1: windSpeed <= 10
+D1: compensation == 0
+
+```
+
+
+*end* role user
+start role assistant
+```
+public class WindCompensation_Modified {
+    public static int windCompensation(int windSpeed) {
+        int compensation = 0;
+        if (windSpeed > 10) {
+            compensation = (windSpeed - 20) * 2;
+        }
+        return compensation;
+    }
+}
+```
+
+The modified code:
+1. Combines the two conditions (windSpeed > 20 and windSpeed > 10 && windSpeed <= 20) into a single condition (windSpeed > 10)
+2. Uses the same calculation ((windSpeed - 20) * 2) for both cases where windSpeed > 10
+3. Maintains the same behavior for windSpeed <= 10 (compensation = 0)
+4. Preserves the original structure while implementing the modified requirements
+
+Note that for wind speeds between 10 and 20, this will now calculate negative compensation values (since windSpeed-20 will be negative), which is different from the original behavior but matches the modified FSF requirements.
+*end* role assistant
+start role remark
+Validation SUCCESS!
+*end* role remark

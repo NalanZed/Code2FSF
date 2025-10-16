@@ -1,0 +1,256 @@
+public class NegAbs_Mutant3 {
+    //@ requires num != Integer.MIN_VALUE;  // Avoid overflow edge case
+    //@ ensures \result <= 0;
+    //@ ensures (num < 0 ==> \result == num) && (num >= 0 ==> \result == -num);
+    public static int negAbs(int num) {
+        if (num < 0)
+            return -num;
+        else
+            return -num;
+    }
+}
+==============================
+/root/specgen/SpecGen/project/081402-specgen/tmp/NegAbs_Mutant3.java:7: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081402-specgen/tmp/NegAbs_Mutant3.java:3:) in method negAbs
+            return -num;
+            ^
+/root/specgen/SpecGen/project/081402-specgen/tmp/NegAbs_Mutant3.java:3: verify: Associated declaration: /root/specgen/SpecGen/project/081402-specgen/tmp/NegAbs_Mutant3.java:7:
+    //@ ensures \result <= 0;
+        ^
+2 verification failures
+
+==============================
+public class NegAbs_Mutant3 {
+    //@ requires num != Integer.MIN_VALUE;  // Avoid overflow edge case
+    //@ ensures \result < 0;  
+    //@ ensures (num < 0 ==> \result == num) && (num >= 0 ==> \result == -num);
+    public static int negAbs(int num) {
+        if (num < 0)
+            return -num;
+        else
+            return -num;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081402-specgen/tmp/NegAbs_Mutant3.java:7: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081402-specgen/tmp/NegAbs_Mutant3.java:3:) in method negAbs
+            return -num;
+            ^
+/root/specgen/SpecGen/project/081402-specgen/tmp/NegAbs_Mutant3.java:3: verify: Associated declaration: /root/specgen/SpecGen/project/081402-specgen/tmp/NegAbs_Mutant3.java:7:
+    //@ ensures \result < 0;  
+        ^
+2 verification failures
+
+==============================
+public class NegAbs_Mutant3 {
+    //@ requires num != Integer.MIN_VALUE;  // Avoid overflow edge case
+    //@ ensures \result <= 0;  
+    //@ ensures (num < 0 ==> \result == num) && (num >= 0 ==> \result == -num);
+    public static int negAbs(int num) {
+        if (num < 0)
+            return -num;
+        else
+            return -num;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081402-specgen/tmp/NegAbs_Mutant3.java:7: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081402-specgen/tmp/NegAbs_Mutant3.java:3:) in method negAbs
+            return -num;
+            ^
+/root/specgen/SpecGen/project/081402-specgen/tmp/NegAbs_Mutant3.java:3: verify: Associated declaration: /root/specgen/SpecGen/project/081402-specgen/tmp/NegAbs_Mutant3.java:7:
+    //@ ensures \result <= 0;  
+        ^
+2 verification failures
+
+==============================
+public class NegAbs_Mutant3 {
+    //@ requires num != Integer.MIN_VALUE;  // Avoid overflow edge case
+    //@ ensures \result - 1 <= 0;  
+    //@ ensures (num < 0 ==> \result == num) && (num >= 0 ==> \result == -num);
+    public static int negAbs(int num) {
+        if (num < 0)
+            return -num;
+        else
+            return -num;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081402-specgen/tmp/NegAbs_Mutant3.java:7: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081402-specgen/tmp/NegAbs_Mutant3.java:3:) in method negAbs
+            return -num;
+            ^
+/root/specgen/SpecGen/project/081402-specgen/tmp/NegAbs_Mutant3.java:3: verify: Associated declaration: /root/specgen/SpecGen/project/081402-specgen/tmp/NegAbs_Mutant3.java:7:
+    //@ ensures \result - 1 <= 0;  
+        ^
+2 verification failures
+
+==============================
+public class NegAbs_Mutant3 {
+    //@ requires num != Integer.MIN_VALUE;  // Avoid overflow edge case
+ 
+    //@ ensures (num < 0 ==> \result == num) && (num >= 0 ==> \result == -num);
+    public static int negAbs(int num) {
+        if (num < 0)
+            return -num;
+        else
+            return -num;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081402-specgen/tmp/NegAbs_Mutant3.java:7: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081402-specgen/tmp/NegAbs_Mutant3.java:4:) in method negAbs
+            return -num;
+            ^
+/root/specgen/SpecGen/project/081402-specgen/tmp/NegAbs_Mutant3.java:4: verify: Associated declaration: /root/specgen/SpecGen/project/081402-specgen/tmp/NegAbs_Mutant3.java:7:
+    //@ ensures (num < 0 ==> \result == num) && (num >= 0 ==> \result == -num);
+        ^
+2 verification failures
+
+==============================
+public class NegAbs_Mutant3 {
+    //@ requires num != Integer.MIN_VALUE;  // Avoid overflow edge case
+ 
+    //@ ensures (num < 0 ==> \result == num) && (num > 0 ==> \result == -num);  
+    public static int negAbs(int num) {
+        if (num < 0)
+            return -num;
+        else
+            return -num;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081402-specgen/tmp/NegAbs_Mutant3.java:7: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081402-specgen/tmp/NegAbs_Mutant3.java:4:) in method negAbs
+            return -num;
+            ^
+/root/specgen/SpecGen/project/081402-specgen/tmp/NegAbs_Mutant3.java:4: verify: Associated declaration: /root/specgen/SpecGen/project/081402-specgen/tmp/NegAbs_Mutant3.java:7:
+    //@ ensures (num < 0 ==> \result == num) && (num > 0 ==> \result == -num);  
+        ^
+2 verification failures
+
+==============================
+public class NegAbs_Mutant3 {
+    //@ requires num != Integer.MIN_VALUE;  // Avoid overflow edge case
+ 
+    //@ ensures (num < 0 ==> \result == num) && (num >= 0 ==> \result == -num);  
+    public static int negAbs(int num) {
+        if (num < 0)
+            return -num;
+        else
+            return -num;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081402-specgen/tmp/NegAbs_Mutant3.java:7: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081402-specgen/tmp/NegAbs_Mutant3.java:4:) in method negAbs
+            return -num;
+            ^
+/root/specgen/SpecGen/project/081402-specgen/tmp/NegAbs_Mutant3.java:4: verify: Associated declaration: /root/specgen/SpecGen/project/081402-specgen/tmp/NegAbs_Mutant3.java:7:
+    //@ ensures (num < 0 ==> \result == num) && (num >= 0 ==> \result == -num);  
+        ^
+2 verification failures
+
+==============================
+public class NegAbs_Mutant3 {
+    //@ requires num != Integer.MIN_VALUE;  // Avoid overflow edge case
+ 
+    //@ ensures (num < 0 ==> \result == num) && (num + 1 >= 0 ==> \result == -num);  
+    public static int negAbs(int num) {
+        if (num < 0)
+            return -num;
+        else
+            return -num;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081402-specgen/tmp/NegAbs_Mutant3.java:7: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081402-specgen/tmp/NegAbs_Mutant3.java:4:) in method negAbs
+            return -num;
+            ^
+/root/specgen/SpecGen/project/081402-specgen/tmp/NegAbs_Mutant3.java:4: verify: Associated declaration: /root/specgen/SpecGen/project/081402-specgen/tmp/NegAbs_Mutant3.java:7:
+    //@ ensures (num < 0 ==> \result == num) && (num + 1 >= 0 ==> \result == -num);  
+        ^
+2 verification failures
+
+==============================
+public class NegAbs_Mutant3 {
+    //@ requires num != Integer.MIN_VALUE;  // Avoid overflow edge case
+ 
+    //@ ensures (num <= 0 ==> \result == num) && (num > 0 ==> \result == -num);  
+    public static int negAbs(int num) {
+        if (num < 0)
+            return -num;
+        else
+            return -num;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081402-specgen/tmp/NegAbs_Mutant3.java:7: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081402-specgen/tmp/NegAbs_Mutant3.java:4:) in method negAbs
+            return -num;
+            ^
+/root/specgen/SpecGen/project/081402-specgen/tmp/NegAbs_Mutant3.java:4: verify: Associated declaration: /root/specgen/SpecGen/project/081402-specgen/tmp/NegAbs_Mutant3.java:7:
+    //@ ensures (num <= 0 ==> \result == num) && (num > 0 ==> \result == -num);  
+        ^
+2 verification failures
+
+==============================
+public class NegAbs_Mutant3 {
+    //@ requires num != Integer.MIN_VALUE;  // Avoid overflow edge case
+ 
+    //@ ensures (num <= 0 ==> \result == num) && (num >= 0 ==> \result == -num);  
+    public static int negAbs(int num) {
+        if (num < 0)
+            return -num;
+        else
+            return -num;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081402-specgen/tmp/NegAbs_Mutant3.java:7: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081402-specgen/tmp/NegAbs_Mutant3.java:4:) in method negAbs
+            return -num;
+            ^
+/root/specgen/SpecGen/project/081402-specgen/tmp/NegAbs_Mutant3.java:4: verify: Associated declaration: /root/specgen/SpecGen/project/081402-specgen/tmp/NegAbs_Mutant3.java:7:
+    //@ ensures (num <= 0 ==> \result == num) && (num >= 0 ==> \result == -num);  
+        ^
+2 verification failures
+
+==============================
+public class NegAbs_Mutant3 {
+    //@ requires num != Integer.MIN_VALUE;  // Avoid overflow edge case
+ 
+    //@ ensures (num <= 0 ==> \result == num) && (num + 1 >= 0 ==> \result == -num);  
+    public static int negAbs(int num) {
+        if (num < 0)
+            return -num;
+        else
+            return -num;
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081402-specgen/tmp/NegAbs_Mutant3.java:7: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081402-specgen/tmp/NegAbs_Mutant3.java:4:) in method negAbs
+            return -num;
+            ^
+/root/specgen/SpecGen/project/081402-specgen/tmp/NegAbs_Mutant3.java:4: verify: Associated declaration: /root/specgen/SpecGen/project/081402-specgen/tmp/NegAbs_Mutant3.java:7:
+    //@ ensures (num <= 0 ==> \result == num) && (num + 1 >= 0 ==> \result == -num);  
+        ^
+2 verification failures
+
+==============================
+public class NegAbs_Mutant3 {
+    //@ requires num != Integer.MIN_VALUE;  // Avoid overflow edge case
+ 
+ 
+    public static int negAbs(int num) {
+        if (num < 0)
+            return -num;
+        else
+            return -num;
+    }
+}
+
+==============================
+
+==============================

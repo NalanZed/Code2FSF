@@ -1,0 +1,49 @@
+public class ReLUSeq_Mutant3 {
+    //@ ensures x <= 0.0 ==> \result == x;
+    //@ ensures x > 0.0 ==> \result == 0;
+    //@ ensures Double.isNaN(x) ==> Double.isNaN(\result);
+    public static /*@ pure @*/ double computeReLU(double x) {
+        return ((x <= 0.0) ? x : 0);
+    }
+}
+==============================
+/root/specgen/SpecGen/project/081402-specgen/tmp/ReLUSeq_Mutant3.java:6: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081402-specgen/tmp/ReLUSeq_Mutant3.java:4:) in method computeReLU
+        return ((x <= 0.0) ? x : 0);
+        ^
+/root/specgen/SpecGen/project/081402-specgen/tmp/ReLUSeq_Mutant3.java:4: verify: Associated declaration: /root/specgen/SpecGen/project/081402-specgen/tmp/ReLUSeq_Mutant3.java:6:
+    //@ ensures Double.isNaN(x) ==> Double.isNaN(\result);
+        ^
+2 verification failures
+
+==============================
+public class ReLUSeq_Mutant3 {
+    //@ ensures x <= 0.0 ==> \result == x;
+    //@ ensures x > 0.0 ==> \result == 0;
+    //@ ensures Double.isNaN(x) ==> Double.isNaN(\result);  
+    public static /*@ pure @*/ double computeReLU(double x) {
+        return ((x <= 0.0) ? x : 0);
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081402-specgen/tmp/ReLUSeq_Mutant3.java:6: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081402-specgen/tmp/ReLUSeq_Mutant3.java:4:) in method computeReLU
+        return ((x <= 0.0) ? x : 0);
+        ^
+/root/specgen/SpecGen/project/081402-specgen/tmp/ReLUSeq_Mutant3.java:4: verify: Associated declaration: /root/specgen/SpecGen/project/081402-specgen/tmp/ReLUSeq_Mutant3.java:6:
+    //@ ensures Double.isNaN(x) ==> Double.isNaN(\result);  
+        ^
+2 verification failures
+
+==============================
+public class ReLUSeq_Mutant3 {
+    //@ ensures x <= 0.0 ==> \result == x;
+    //@ ensures x > 0.0 ==> \result == 0;
+ 
+    public static /*@ pure @*/ double computeReLU(double x) {
+        return ((x <= 0.0) ? x : 0);
+    }
+}
+
+==============================
+
+==============================

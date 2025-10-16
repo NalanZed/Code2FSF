@@ -1,0 +1,77 @@
+start role user
+Please modify the following code according to the modified FSF:
+```Code
+
+
+public class AddLoopFor_Original {
+    public static int addLoop(int x, int y) {
+        int sum = y;
+        if (x > 0) {
+            int n = 0;
+            for(n = x; n > 0; ) {
+                sum = sum + 1;
+                n = n - 1;
+            }
+        } else {
+            int n = 0;
+            for(n = -x; n > 0; ) {
+                sum = sum - 1;
+                n = n - 1;
+            }
+        }
+        return sum;
+    }
+}
+
+```
+```Original FSF
+T0: x > 0
+D0: sum == y + x
+
+T1: x < 0
+D1: sum == y + x
+
+T2: x == 0
+D2: sum == y
+
+```Modified FSF
+T0: (x < 0) || (x > 0)
+D0: sum == y + x
+
+T1: x == 0
+D1: sum == y
+
+```
+
+
+*end* role user
+start role assistant
+The modified FSF simplifies the conditions while maintaining the same behavior, so no actual code changes are needed. The original code already satisfies the modified FSF requirements. Here's the output (which is identical to the original code):
+
+```
+public class AddLoopFor_Modified {
+    public static int addLoop(int x, int y) {
+        int sum = y;
+        if (x > 0) {
+            int n = 0;
+            for(n = x; n > 0; ) {
+                sum = sum + 1;
+                n = n - 1;
+            }
+        } else {
+            int n = 0;
+            for(n = -x; n > 0; ) {
+                sum = sum - 1;
+                n = n - 1;
+            }
+        }
+        return sum;
+    }
+}
+```
+
+The modified FSF just combines T0 and T1 from the original FSF into a single condition (x != 0), but the actual behavior of the program remains unchanged. The code correctly implements both the original and modified FSF specifications.
+*end* role assistant
+start role remark
+Validation SUCCESS!
+*end* role remark

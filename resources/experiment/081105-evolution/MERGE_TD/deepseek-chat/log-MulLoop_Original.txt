@@ -1,0 +1,75 @@
+start role user
+Please modify the following code according to the modified FSF:
+```Code
+
+
+public class MulLoop_Original {
+
+	public static int mulLoop(int a, int b) {
+        int res = 0;
+        if (b >= 0) {
+            for(int i = 0; i < b; i++) {
+                res = res + a;
+            }
+        } else {
+            for(int i = 0; i < -b; i++) {
+                res = res - a;
+            }
+        }
+        return res;
+    }
+
+}
+
+```
+```Original FSF
+T0: b == 0
+D0: res == 0
+
+T1: b > 0
+D1: res == a * b
+
+T2: b < 0
+D2: res == a * b
+
+```Modified FSF
+T0: (b == 0) || (b > 0)
+D0: res == 0
+
+T1: b < 0
+D1: res == a * b
+
+```
+
+
+*end* role user
+start role assistant
+```
+public class MulLoop_Modified {
+
+    public static int mulLoop(int a, int b) {
+        int res = 0;
+        if (b < 0) {
+            for(int i = 0; i < -b; i++) {
+                res = res - a;
+            }
+        }
+        return res;
+    }
+}
+```
+
+The modified code:
+1. Removes the positive b case (since T0 now covers both b==0 and b>0 cases with res==0)
+2. Only keeps the negative b case (T1) which performs the multiplication
+3. Returns 0 by default for all other cases (b==0 or b>0)
+4. Maintains the same structure and variable names as the original code
+5. Performs the minimal changes needed to match the modified FSF requirements
+
+The modified FSF is satisfied because:
+- When (b==0) || (b>0), the code returns 0 (matches D0)
+- When b<0, the code returns a*b (matches D1)
+*end* role assistant
+start role remark
+Validation SUCCESS!
+*end* role remark

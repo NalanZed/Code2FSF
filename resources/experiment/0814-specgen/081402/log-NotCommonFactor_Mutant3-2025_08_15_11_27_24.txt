@@ -1,0 +1,55 @@
+public class NotCommonFactor_Mutant3 {
+    /*@ public normal_behavior
+      @   requires factor != 0;
+      @   ensures \result == (a % factor != 0 || b % factor == 0);
+      @   ensures \result <==> !(\old(a % factor == 0 && b % factor == 0));
+      @*/
+    public static boolean notCommonFactor(int a, int b, int factor) {
+        return a % factor != 0 || b % factor == 0; // Changed != to == in second condition
+    }
+}
+==============================
+/root/specgen/SpecGen/project/081402-specgen/tmp/NotCommonFactor_Mutant3.java:8: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081402-specgen/tmp/NotCommonFactor_Mutant3.java:5:) in method notCommonFactor
+        return a % factor != 0 || b % factor == 0; // Changed != to == in second condition
+        ^
+/root/specgen/SpecGen/project/081402-specgen/tmp/NotCommonFactor_Mutant3.java:5: verify: Associated declaration: /root/specgen/SpecGen/project/081402-specgen/tmp/NotCommonFactor_Mutant3.java:8:
+      @   ensures \result <==> !(\old(a % factor == 0 && b % factor == 0));
+          ^
+2 verification failures
+
+==============================
+public class NotCommonFactor_Mutant3 {
+    /*@ public normal_behavior
+      @   requires factor != 0;
+      @   ensures \result == (a % factor != 0 || b % factor == 0);
+      @   ensures \result <==> !(\old(a % factor == 0 && b % factor == 0));  
+      @*/
+    public static boolean notCommonFactor(int a, int b, int factor) {
+        return a % factor != 0 || b % factor == 0; // Changed != to == in second condition
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081402-specgen/tmp/NotCommonFactor_Mutant3.java:8: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081402-specgen/tmp/NotCommonFactor_Mutant3.java:5:) in method notCommonFactor
+        return a % factor != 0 || b % factor == 0; // Changed != to == in second condition
+        ^
+/root/specgen/SpecGen/project/081402-specgen/tmp/NotCommonFactor_Mutant3.java:5: verify: Associated declaration: /root/specgen/SpecGen/project/081402-specgen/tmp/NotCommonFactor_Mutant3.java:8:
+      @   ensures \result <==> !(\old(a % factor == 0 && b % factor == 0));  
+          ^
+2 verification failures
+
+==============================
+public class NotCommonFactor_Mutant3 {
+    /*@ public normal_behavior
+      @   requires factor != 0;
+      @   ensures \result == (a % factor != 0 || b % factor == 0);
+ 
+      @*/
+    public static boolean notCommonFactor(int a, int b, int factor) {
+        return a % factor != 0 || b % factor == 0; // Changed != to == in second condition
+    }
+}
+
+==============================
+
+==============================

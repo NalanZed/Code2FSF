@@ -252,7 +252,7 @@ Key improvements:
 5. Maintained complete coverage and mutual exclusivity
 
 This version accurately models the program's behavior where:
-- For x=-1, the result alternates between 1 and -1 based on whether n+1 is even or odd
+- For x=-1, the TBFVResult alternates between 1 and -1 based on whether n+1 is even or odd
 - All other special cases are properly handled
 - General case computes x^(n+1)
 *end* role assistant

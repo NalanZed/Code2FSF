@@ -72,7 +72,7 @@ The key improvements are:
 2. For factor!=0 cases:
    - T2 correctly captures when both a and b are divisible by factor (should return false)
    - T3 captures when a is divisible but b isn't (should return true)
-   - T4 combines the remaining cases where a isn't divisible (result depends on b's divisibility)
+   - T4 combines the remaining cases where a isn't divisible (TBFVResult depends on b's divisibility)
 
 This handles the counterexample correctly since:
 - For a=66, b=-32768, factor=2:

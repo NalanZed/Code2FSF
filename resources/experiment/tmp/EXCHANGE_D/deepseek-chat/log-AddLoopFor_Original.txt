@@ -1,0 +1,83 @@
+start role user
+Please modify the following code according to the modified FSF:
+```Code
+
+
+public class AddLoopFor_Original {
+    public static int addLoop(int x, int y) {
+        int sum = y;
+        if (x > 0) {
+            int n = 0;
+            for(n = x; n > 0; ) {
+                sum = sum + 1;
+                n = n - 1;
+            }
+        } else {
+            int n = 0;
+            for(n = -x; n > 0; ) {
+                sum = sum - 1;
+                n = n - 1;
+            }
+        }
+        return sum;
+    }
+}
+
+```
+```Original FSF
+T0: x > 0
+D0: sum == y + x
+
+T1: x < 0
+D1: sum == y + x
+
+T2: x == 0
+D2: sum == y
+
+```Modified FSF
+T0: x > 0
+D0: sum == y + x
+
+T1: x < 0
+D1: sum == y
+
+T2: x == 0
+D2: sum == y + x
+
+```
+
+
+*end* role user
+start role assistant
+```
+public class AddLoopFor_Modified {
+    public static int addLoop(int x, int y) {
+        int sum = y;
+        if (x > 0) {
+            int n = 0;
+            for(n = x; n > 0; ) {
+                sum = sum + 1;
+                n = n - 1;
+            }
+        } else if (x == 0) {
+            sum = sum + x;  // This will just keep sum = y since x is 0
+        }
+        // For x < 0 case, we just return y without modification
+        return sum;
+    }
+}
+```
+
+The modified code:
+1. Keeps the original behavior for x > 0 (adding x to y)
+2. For x == 0, explicitly shows we're adding x (which is 0) to y (though this is redundant)
+3. For x < 0, we simply return y without any modification (the original else branch is removed)
+
+This matches the modified FSF requirements where:
+- When x > 0: sum = y + x (unchanged from original)
+- When x < 0: sum = y (new behavior)
+- When x == 0: sum = y + x (which is equivalent to sum = y)
+*end* role assistant
+start role remark
+Validation SUCCESS!
+*end* role remark

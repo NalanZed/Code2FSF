@@ -1,0 +1,65 @@
+public class MySqrt_Mutant5 {
+    //@ requires x >= 0;
+    //@ ensures \result >= 0;
+    //@ ensures (\long) \result * \result <= x;
+    //@ ensures (\long) (\result + 1) * (\result + 1) > x || \result == 46340;
+    public static int mySqrt(int x) {
+        int l = 0, r = x, ans = -1;
+        //@ maintaining 0 <= l && l <= r + 1;
+        //@ maintaining r >= -1 && r <= x;
+        //@ maintaining ans >= -1;
+        //@ maintaining (\forall int i; 0 <= i && i < l; (long) i * i <= x);
+        //@ maintaining (\forall int i; r < i && i <= x; (long) i * i > x);
+        //@ maintaining ans == -1 || (ans >= 0 && (long) ans * ans <= x);
+        //@ decreases r - l;
+        while (l <= r) {
+            int mid = l + (r - l) / 3;
+            if ((long) mid * mid <= x) {
+                ans = mid;
+                l = mid + 1;
+            } else {
+                r = mid - 1;
+            }
+        }
+        return ans;
+    }
+}
+==============================
+/root/specgen/SpecGen/project/082102-specgen/tmp/MySqrt_Mutant5.java:4: error: This backslash token is unknown: \long
+    //@ ensures (\long) \result * \result <= x;
+                 ^
+/root/specgen/SpecGen/project/082102-specgen/tmp/MySqrt_Mutant5.java:5: error: This backslash token is unknown: \long
+    //@ ensures (\long) (\result + 1) * (\result + 1) > x || \result == 46340;
+                 ^
+2 errors
+
+==============================
+public class MySqrt_Mutant5 {
+    //@ requires x >= 0;
+    //@ ensures \result >= 0;
+    //@ ensures (long) \result * \result <= x;
+    //@ ensures (long) (\result + 1) * (\result + 1) > x || \result == 46340;
+    public static int mySqrt(int x) {
+        int l = 0, r = x, ans = -1;
+        //@ maintaining 0 <= l && l <= r + 1;
+        //@ maintaining r >= -1 && r <= x;
+        //@ maintaining ans >= -1;
+        //@ maintaining (\forall int i; 0 <= i && i < l; (long) i * i <= x);
+        //@ maintaining (\forall int i; r < i && i <= x; (long) i * i > x);
+        //@ maintaining ans == -1 || (ans >= 0 && (long) ans * ans <= x);
+        //@ decreases r - l;
+        while (l <= r) {
+            int mid = l + (r - l) / 3;
+            if ((long) mid * mid <= x) {
+                ans = mid;
+                l = mid + 1;
+            } else {
+                r = mid - 1;
+            }
+        }
+        return ans;
+    }
+}
+==============================
+
+==============================

@@ -1,0 +1,268 @@
+public class Abs_Mutant3 {
+
+    //@ requires num != Integer.MIN_VALUE;  // Absolute value of MIN_VALUE is out of int range
+    //@ ensures \result >= 0;
+    //@ ensures (num >= 0 ==> \result == num) && (num < 0 ==> \result == -num);
+    public static int Abs(int num) {
+        if (num < 0)
+            return -num;
+        else
+            return -num;  // BUG: Should return 'num' instead of '-num'
+    }
+}
+==============================
+/root/specgen/SpecGen/project/081403-specgen/tmp/Abs_Mutant3.java:10: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081403-specgen/tmp/Abs_Mutant3.java:4:) in method Abs
+            return -num;  // BUG: Should return 'num' instead of '-num'
+            ^
+/root/specgen/SpecGen/project/081403-specgen/tmp/Abs_Mutant3.java:4: verify: Associated declaration: /root/specgen/SpecGen/project/081403-specgen/tmp/Abs_Mutant3.java:10:
+    //@ ensures \result >= 0;
+        ^
+2 verification failures
+
+==============================
+public class Abs_Mutant3 {
+
+    //@ requires num != Integer.MIN_VALUE;  // Absolute value of MIN_VALUE is out of int range
+    //@ ensures \result > 0;  
+    //@ ensures (num >= 0 ==> \result == num) && (num < 0 ==> \result == -num);
+    public static int Abs(int num) {
+        if (num < 0)
+            return -num;
+        else
+            return -num;  // BUG: Should return 'num' instead of '-num'
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081403-specgen/tmp/Abs_Mutant3.java:10: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081403-specgen/tmp/Abs_Mutant3.java:4:) in method Abs
+            return -num;  // BUG: Should return 'num' instead of '-num'
+            ^
+/root/specgen/SpecGen/project/081403-specgen/tmp/Abs_Mutant3.java:4: verify: Associated declaration: /root/specgen/SpecGen/project/081403-specgen/tmp/Abs_Mutant3.java:10:
+    //@ ensures \result > 0;  
+        ^
+2 verification failures
+
+==============================
+public class Abs_Mutant3 {
+
+    //@ requires num != Integer.MIN_VALUE;  // Absolute value of MIN_VALUE is out of int range
+    //@ ensures \result >= 0;  
+    //@ ensures (num >= 0 ==> \result == num) && (num < 0 ==> \result == -num);
+    public static int Abs(int num) {
+        if (num < 0)
+            return -num;
+        else
+            return -num;  // BUG: Should return 'num' instead of '-num'
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081403-specgen/tmp/Abs_Mutant3.java:10: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081403-specgen/tmp/Abs_Mutant3.java:4:) in method Abs
+            return -num;  // BUG: Should return 'num' instead of '-num'
+            ^
+/root/specgen/SpecGen/project/081403-specgen/tmp/Abs_Mutant3.java:4: verify: Associated declaration: /root/specgen/SpecGen/project/081403-specgen/tmp/Abs_Mutant3.java:10:
+    //@ ensures \result >= 0;  
+        ^
+2 verification failures
+
+==============================
+public class Abs_Mutant3 {
+
+    //@ requires num != Integer.MIN_VALUE;  // Absolute value of MIN_VALUE is out of int range
+    //@ ensures \result + 1 >= 0;  
+    //@ ensures (num >= 0 ==> \result == num) && (num < 0 ==> \result == -num);
+    public static int Abs(int num) {
+        if (num < 0)
+            return -num;
+        else
+            return -num;  // BUG: Should return 'num' instead of '-num'
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081403-specgen/tmp/Abs_Mutant3.java:10: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081403-specgen/tmp/Abs_Mutant3.java:4:) in method Abs
+            return -num;  // BUG: Should return 'num' instead of '-num'
+            ^
+/root/specgen/SpecGen/project/081403-specgen/tmp/Abs_Mutant3.java:4: verify: Associated declaration: /root/specgen/SpecGen/project/081403-specgen/tmp/Abs_Mutant3.java:10:
+    //@ ensures \result + 1 >= 0;  
+        ^
+2 verification failures
+
+==============================
+public class Abs_Mutant3 {
+
+    //@ requires num != Integer.MIN_VALUE;  // Absolute value of MIN_VALUE is out of int range
+ 
+    //@ ensures (num >= 0 ==> \result == num) && (num < 0 ==> \result == -num);
+    public static int Abs(int num) {
+        if (num < 0)
+            return -num;
+        else
+            return -num;  // BUG: Should return 'num' instead of '-num'
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081403-specgen/tmp/Abs_Mutant3.java:10: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081403-specgen/tmp/Abs_Mutant3.java:5:) in method Abs
+            return -num;  // BUG: Should return 'num' instead of '-num'
+            ^
+/root/specgen/SpecGen/project/081403-specgen/tmp/Abs_Mutant3.java:5: verify: Associated declaration: /root/specgen/SpecGen/project/081403-specgen/tmp/Abs_Mutant3.java:10:
+    //@ ensures (num >= 0 ==> \result == num) && (num < 0 ==> \result == -num);
+        ^
+2 verification failures
+
+==============================
+public class Abs_Mutant3 {
+
+    //@ requires num != Integer.MIN_VALUE;  // Absolute value of MIN_VALUE is out of int range
+ 
+    //@ ensures (num > 0 ==> \result == num) && (num < 0 ==> \result == -num);  
+    public static int Abs(int num) {
+        if (num < 0)
+            return -num;
+        else
+            return -num;  // BUG: Should return 'num' instead of '-num'
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081403-specgen/tmp/Abs_Mutant3.java:10: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081403-specgen/tmp/Abs_Mutant3.java:5:) in method Abs
+            return -num;  // BUG: Should return 'num' instead of '-num'
+            ^
+/root/specgen/SpecGen/project/081403-specgen/tmp/Abs_Mutant3.java:5: verify: Associated declaration: /root/specgen/SpecGen/project/081403-specgen/tmp/Abs_Mutant3.java:10:
+    //@ ensures (num > 0 ==> \result == num) && (num < 0 ==> \result == -num);  
+        ^
+2 verification failures
+
+==============================
+public class Abs_Mutant3 {
+
+    //@ requires num != Integer.MIN_VALUE;  // Absolute value of MIN_VALUE is out of int range
+ 
+    //@ ensures (num > 0 ==> \result == num) && (num <= 0 ==> \result == -num);  
+    public static int Abs(int num) {
+        if (num < 0)
+            return -num;
+        else
+            return -num;  // BUG: Should return 'num' instead of '-num'
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081403-specgen/tmp/Abs_Mutant3.java:10: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081403-specgen/tmp/Abs_Mutant3.java:5:) in method Abs
+            return -num;  // BUG: Should return 'num' instead of '-num'
+            ^
+/root/specgen/SpecGen/project/081403-specgen/tmp/Abs_Mutant3.java:5: verify: Associated declaration: /root/specgen/SpecGen/project/081403-specgen/tmp/Abs_Mutant3.java:10:
+    //@ ensures (num > 0 ==> \result == num) && (num <= 0 ==> \result == -num);  
+        ^
+2 verification failures
+
+==============================
+public class Abs_Mutant3 {
+
+    //@ requires num != Integer.MIN_VALUE;  // Absolute value of MIN_VALUE is out of int range
+ 
+    //@ ensures (num >= 0 ==> \result == num) && (num < 0 ==> \result == -num);  
+    public static int Abs(int num) {
+        if (num < 0)
+            return -num;
+        else
+            return -num;  // BUG: Should return 'num' instead of '-num'
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081403-specgen/tmp/Abs_Mutant3.java:10: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081403-specgen/tmp/Abs_Mutant3.java:5:) in method Abs
+            return -num;  // BUG: Should return 'num' instead of '-num'
+            ^
+/root/specgen/SpecGen/project/081403-specgen/tmp/Abs_Mutant3.java:5: verify: Associated declaration: /root/specgen/SpecGen/project/081403-specgen/tmp/Abs_Mutant3.java:10:
+    //@ ensures (num >= 0 ==> \result == num) && (num < 0 ==> \result == -num);  
+        ^
+2 verification failures
+
+==============================
+public class Abs_Mutant3 {
+
+    //@ requires num != Integer.MIN_VALUE;  // Absolute value of MIN_VALUE is out of int range
+ 
+    //@ ensures (num >= 0 ==> \result == num) && (num <= 0 ==> \result == -num);  
+    public static int Abs(int num) {
+        if (num < 0)
+            return -num;
+        else
+            return -num;  // BUG: Should return 'num' instead of '-num'
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081403-specgen/tmp/Abs_Mutant3.java:10: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081403-specgen/tmp/Abs_Mutant3.java:5:) in method Abs
+            return -num;  // BUG: Should return 'num' instead of '-num'
+            ^
+/root/specgen/SpecGen/project/081403-specgen/tmp/Abs_Mutant3.java:5: verify: Associated declaration: /root/specgen/SpecGen/project/081403-specgen/tmp/Abs_Mutant3.java:10:
+    //@ ensures (num >= 0 ==> \result == num) && (num <= 0 ==> \result == -num);  
+        ^
+2 verification failures
+
+==============================
+public class Abs_Mutant3 {
+
+    //@ requires num != Integer.MIN_VALUE;  // Absolute value of MIN_VALUE is out of int range
+ 
+    //@ ensures (num + 1 >= 0 ==> \result == num) && (num < 0 ==> \result == -num);  
+    public static int Abs(int num) {
+        if (num < 0)
+            return -num;
+        else
+            return -num;  // BUG: Should return 'num' instead of '-num'
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081403-specgen/tmp/Abs_Mutant3.java:8: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081403-specgen/tmp/Abs_Mutant3.java:5:) in method Abs
+            return -num;
+            ^
+/root/specgen/SpecGen/project/081403-specgen/tmp/Abs_Mutant3.java:5: verify: Associated declaration: /root/specgen/SpecGen/project/081403-specgen/tmp/Abs_Mutant3.java:8:
+    //@ ensures (num + 1 >= 0 ==> \result == num) && (num < 0 ==> \result == -num);  
+        ^
+2 verification failures
+
+==============================
+public class Abs_Mutant3 {
+
+    //@ requires num != Integer.MIN_VALUE;  // Absolute value of MIN_VALUE is out of int range
+ 
+    //@ ensures (num + 1 >= 0 ==> \result == num) && (num <= 0 ==> \result == -num);  
+    public static int Abs(int num) {
+        if (num < 0)
+            return -num;
+        else
+            return -num;  // BUG: Should return 'num' instead of '-num'
+    }
+}
+
+==============================
+/root/specgen/SpecGen/project/081403-specgen/tmp/Abs_Mutant3.java:8: verify: The prover cannot establish an assertion (Postcondition: /root/specgen/SpecGen/project/081403-specgen/tmp/Abs_Mutant3.java:5:) in method Abs
+            return -num;
+            ^
+/root/specgen/SpecGen/project/081403-specgen/tmp/Abs_Mutant3.java:5: verify: Associated declaration: /root/specgen/SpecGen/project/081403-specgen/tmp/Abs_Mutant3.java:8:
+    //@ ensures (num + 1 >= 0 ==> \result == num) && (num <= 0 ==> \result == -num);  
+        ^
+2 verification failures
+
+==============================
+public class Abs_Mutant3 {
+
+    //@ requires num != Integer.MIN_VALUE;  // Absolute value of MIN_VALUE is out of int range
+ 
+ 
+    public static int Abs(int num) {
+        if (num < 0)
+            return -num;
+        else
+            return -num;  // BUG: Should return 'num' instead of '-num'
+    }
+}
+
+==============================
+
+==============================

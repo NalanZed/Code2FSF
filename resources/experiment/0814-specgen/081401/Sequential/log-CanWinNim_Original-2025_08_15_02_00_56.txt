@@ -1,0 +1,11 @@
+public class CanWinNim_Original {
+
+    //@ requires n >= 0;
+    //@ ensures \result <==> (n % 4 != 0);
+    public static boolean canWinNim(int n) {
+        return n % 4 != 0;
+    }
+}
+==============================
+
+==============================
